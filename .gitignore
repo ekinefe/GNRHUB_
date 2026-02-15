@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production Build Artifacts
+dist/
+build/
+out/
+
+# Environment Variables (CRITICAL: Never commit these!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# Supabase & Database
+supabase/.temp/
+supabase/.branches/
+# We keep schema.sql but ignore local connection configs if any
+database/config.json 
+
+# Render / Docker / Microservices
+.dockerignore
+microservices/cv-generator/node_modules/
+microservices/cv-generator/dist/
+
+# LaTeX Artifacts (Generated during local testing)
+*.aux
+*.log
+*.pdf
+*.gz
+*.fdb_latexmk
+*.fls
+microservices/cv-generator/temp_cvs/
+
+# OS Junk
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Editor Directories
+.vscode/
+.idea/
+
+# privet
+AccountDetails.md
+
