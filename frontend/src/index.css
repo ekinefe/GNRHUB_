@@ -2,30 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global "High-Tech" Reset */
-body {
-  @apply bg-cyber-black text-gray-200 font-sans antialiased;
-  /* Optional: Add a subtle grid pattern overlay */
-  background-image: linear-gradient(rgba(30, 41, 59, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
+@layer base {
+  body {
+    @apply bg-cyber-black text-cyber-text font-sans antialiased min-h-screen overflow-x-hidden;
 
-/* Scrollbar customization (Chrome/Safari) */
-::-webkit-scrollbar {
-  width: 8px;
-}
+    /* Graph Paper Background */
+    background-image: linear-gradient(theme('colors.cyber.border') 1px, transparent 1px),
+      linear-gradient(90deg, theme('colors.cyber.border') 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center top;
+  }
 
-::-webkit-scrollbar-track {
-  background: #020617;
-}
+  /* === 1. GLOBAL HIGHLIGHT (Pink Accent) === */
+  ::selection {
+    @apply bg-cyber-pink text-cyber-black;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
-}
+  /* === 2. TERMINAL HIGHLIGHT (The "Matrix" Look) === */
+  pre::selection,
+  code::selection,
+  pre *::selection,
+  code *::selection {
+    @apply bg-white text-cyber-success;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #00f0ff;
-  /* Turns Cyan on hover */
+  /* Text Safety */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  span,
+  div,
+  li,
+  a {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  /* Cyber Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: theme('colors.cyber.black');
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.cyber.border');
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.cyber.pink');
+  }
 }

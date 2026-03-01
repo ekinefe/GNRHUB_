@@ -1,0 +1,47 @@
+export const mockTools = [
+    // {
+    //     id: '1',
+    //     title: 'Network Scanner GUI',
+    //     excerpt: 'A lightweight cross-platform GUI for scanning local networks and managing active devices.',
+    //     category: 'Networking',
+    //     tags: ['Python', 'PyQt', 'Security'],
+    //     date: '2023-08-12',
+    //     link: '/tools/net-scanner',
+    // },
+    {
+        id: '1',
+        title: 'Brandbook Maker',
+        excerpt: 'hlp to creat your brand book easly and share with others.',
+        category: 'Design',
+        tags: ['brandbook', 'design', 'pdf'],
+        date: '2026-02-27',
+        link: '/tools/brandbook',
+    },
+    {
+        id: '2',
+        title: 'Log Analyzer CLI',
+        excerpt: 'Command-line tool to parse access logs and generate quick security threat summaries.',
+        category: 'Security',
+        tags: ['Bash', 'CLI', 'Logs'],
+        date: '2023-09-24',
+        link: '/tools/log-analyzer',
+    },
+    {
+        id: '3',
+        title: 'React Component Generator',
+        excerpt: 'A CLI script to quickly scaffold React components, storybook files, and test templates.',
+        category: 'Development',
+        tags: ['Node.js', 'React', 'Productivity'],
+        date: '2024-03-05',
+        link: '/tools/react-gen',
+    },
+    {
+        id: '4',
+        title: 'Hardware Serial Monitor',
+        excerpt: 'Serial monitor application optimized for embedded systems debugging and telemetry.',
+        category: 'Embedded',
+        tags: ['C++', 'Arduino', 'Debugging'],
+        date: '2024-04-18',
+        link: '/tools/serial-monitor',
+    }
+];

@@ -1,40 +1,68 @@
-import { useState } from 'react'
-// IMPORT THE COMPONENT HERE
-import FuzzyText from './components/animations/FuzzyText';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Layouts
+import DashboardLayout from './layouts/DashboardLayout';
+import ScrollToTop from './components/ScrollToTop';
+
+// Auth Pages
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+
+// Legal Pages
+import Privacy from './pages/legal/Privacy';
+import Terms from './pages/legal/Terms';
+
+// Pages
+import Home from './pages/Home';
+import DesignSystem from './pages/DesignSystem';
+import AboutMe from './pages/aboutMe/AboutMe';
+import Projects from './pages/aboutMe/Projects';
+import BlogsMain from './pages/BlogsMain';
+import ToolsMain from './pages/ToolsMain';
+import BrandBookStart from './pages/tools/brandbook/BrandbookStart';
+import BrandBookEditor from './pages/tools/brandbook/BrandBookEditor';
+
+// Error Pages
+import NotFound from './pages/errors/NotFound';
+import Unauthorized from './pages/errors/Unauthorized';
+import ServerError from './pages/errors/ServerError';
 
 function App() {
   return (
-    // The "min-h-screen" ensures the background covers the whole page
-    <div className="min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center p-4">
+    <Router>
+      <ScrollToTop />
+      <Routes>
 
-      <div className="text-center space-y-8">
-        {/* The FuzzyText Component */}
-        <div className="flex justify-center">
-          <FuzzyText
-            baseIntensity={0.2}
-            hoverIntensity={0.5}
-            enableHover
-          >
-            GNRHUB [v2]
-          </FuzzyText>
-        </div>
+        {/* === AUTH ROUTES === */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
 
-        <p className="text-zinc-400 text-xl font-light">
-          System Status: <span className="text-green-400 font-mono font-bold">ONLINE</span>
-        </p>
+        {/* === PUBLIC LAYOUT ROUTES (With Header) === */}
+        <Route element={<DashboardLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/design" element={<DesignSystem />} />
 
-        <div className="flex gap-4 justify-center">
-          <button className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-lg border border-zinc-700 transition-all cursor-pointer">
-            Initialize System
-          </button>
-          <button className="px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-bold transition-all cursor-pointer">
-            Access Dashboard
-          </button>
-        </div>
-      </div>
+          {/* Placeholders for future pages */}
+          <Route path="/dashboard" element={<div className="p-12">Dashboard Coming Soon</div>} />
+          <Route path="/blogs" element={<BlogsMain />} />
+          <Route path="/tools" element={<ToolsMain />} />
+          <Route path="/tools/brandbook" element={<BrandBookStart />} />
+          <Route path="/tools/brandbook/workspace" element={<BrandBookEditor />} />
+          <Route path="/about" element={<AboutMe />} />
+          <Route path="/projects" element={<Projects />} />
+        </Route>
 
-    </div>
-  )
+        {/* === ERROR ROUTES (No Header, Full Screen) === */}
+        <Route path="/403" element={<Unauthorized />} />
+        <Route path="/500" element={<ServerError />} />
+        <Route path="*" element={<NotFound />} />
+
+      </Routes>
+
+    </Router>
+  );
 }
 
-export default App
+export default App;
