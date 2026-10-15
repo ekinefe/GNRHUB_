@@ -93,7 +93,7 @@ const Login = () => {
                                 value={identifier}
                                 onChange={(e) => setIdentifier(e.target.value)}
                                 className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-cyan transition-colors placeholder-cyber-muted/50"
-                                placeholder="sysadmin@gnrhub.com OR johndoe_99"
+                                placeholder="name@example.com OR johndoe_99"
                             />
                         </div>
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { brand } from '../../config/brand';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download } from 'lucide-react';
 import CyberButton from '../../components/ui/CyberButton';
 import TextType from '../../components/animations/TextType';
@@ -39,8 +40,8 @@ const AboutMe = () => {
                                 <a href="mailto:ekinefegnr@gmail.com">
                                     <CyberButton variant="secondary" icon={PersonStanding}>EMAIL_ME</CyberButton>
                                 </a>
-                                <a href="https://gnrhub.pages.dev" target="_blank" rel="noreferrer">
-                                    <CyberButton variant="ghost" icon={ExternalLink}>GNRHUB</CyberButton>
+                                <a href={brand.publicUrl} target="_blank" rel="noreferrer">
+                                    <CyberButton variant="ghost" icon={ExternalLink}>{brand.name}</CyberButton>
                                 </a>
                                 <a href="https://github.com/ekinefe" target="_blank" rel="noreferrer">
                                     <CyberButton variant="ghost" icon={Github}>GITHUB</CyberButton>
@@ -163,12 +164,12 @@ const AboutMe = () => {
                                 </div>
                             </div>
 
-                            {/* Project 3: GNRHUB */}
+                            {/* Project 3: GNRdigital */}
                             <div>
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
 
                                     <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                        <span className="text-cyber-pink">&gt;</span> GNRHUB_V2 (Personal Platform)
+                                        <span className="text-cyber-pink">&gt;</span> {brand.name} {brand.version} (Personal Platform)
                                     </h3>
                                     {/* <a href="https://github.com/ekinefe" target="_blank" rel="noreferrer">
                                         <CyberButton variant="ghost" icon={ExternalLink}>Live Site</CyberButton>

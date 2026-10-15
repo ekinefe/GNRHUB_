@@ -176,7 +176,7 @@ const Register = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-pink transition-colors placeholder-cyber-muted/50"
-                                placeholder="sysadmin@gnrhub.com"
+                                placeholder="name@example.com"
                             />
                         </div>
 

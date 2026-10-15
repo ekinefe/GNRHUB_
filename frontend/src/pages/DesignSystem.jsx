@@ -1,4 +1,5 @@
 import React from 'react';
+import { brand } from '../config/brand';
 import CyberButton from '../components/ui/CyberButton';
 import CyberCard from '../components/ui/CyberCard';
 import { Zap, Shield, Terminal, Layout } from 'lucide-react';
@@ -74,7 +75,7 @@ const DesignSystem = () => {
 
                                 <pre className="overflow-x-auto text-cyber-text">
                                     <code>
-                                        <span className="text-cyber-pink">root@gnrhub:~$</span> ./init_sequence.sh{'\n'}
+                                        <span className="text-cyber-pink">{brand.prompt}$</span> ./init_sequence.sh{'\n'}
                                         <span className="text-cyber-muted">&gt; Loading modules...</span>{'\n'}
                                         <span className="text-cyber-success">[OK]</span> Core Processor{'\n'}
                                         <span className="text-cyber-success">[OK]</span> Memory Banks (32GB){'\n'}

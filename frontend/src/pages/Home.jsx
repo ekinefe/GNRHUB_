@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'; import { Link } from 'react-router-dom';
+import { brand } from '../config/brand';
 import { Terminal, Cpu, Network, Github, Linkedin, ChevronRight, Download, PersonStanding, LucidePersonStanding } from 'lucide-react';
 import CyberButton from '../components/ui/CyberButton';
 import CyberCard from '../components/ui/CyberCard';
@@ -103,7 +104,7 @@ const Home = () => {
 
                                 {/* Terminal Header */}
                                 {/* <div className="flex items-center justify-between mb-4 border-b border-cyber-border pb-2">
-                                    <span className="text-cyber-muted text-xs">root@gnrhub:~</span>
+                                    <span className="text-cyber-muted text-xs">{brand.prompt}</span>
 
                                 </div> */}
 
@@ -111,7 +112,7 @@ const Home = () => {
                                 <div className="space-y-2 overflow-x-auto">
                                     {/* Command Line */}
                                     <div className="flex gap-2">
-                                        <span className="text-cyber-pink">root@gnrhub:~#</span>
+                                        <span className="text-cyber-pink">{brand.prompt}#</span>
                                         <span className="text-white">
                                             <TextType
                                                 text={["./profile.sh"]}
@@ -141,7 +142,7 @@ const Home = () => {
                                             <br />
                                             {/* New Prompt Line */}
                                             <div className="flex gap-2">
-                                                <span className="text-cyber-pink">root@gnrhub:~#</span>
+                                                <span className="text-cyber-pink">{brand.prompt}#</span>
                                                 <span className="text-white">
                                                     <TextType
                                                         text={[""]}
@@ -198,8 +199,8 @@ const Home = () => {
                                 </a>
                             </CyberCard>
 
-                            {/* Project 2: GNRHUB */}
-                            <CyberCard title="GNRHUB (SAAS)" className="h-full border-cyber-pink/40">
+                            {/* Project 2: GNRdigital */}
+                            <CyberCard title={`${brand.name} (SAAS)`} className="h-full border-cyber-pink/40">
                                 <div className="mb-4 text-cyber-pink">
                                     <Network className="w-8 h-8 mb-2" />
                                 </div>

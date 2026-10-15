@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { brand } from '../../config/brand';
 import { Link, useLocation } from 'react-router-dom';
 import { Terminal, Dumbbell, House, ScanText, Box, Menu, PersonStanding } from 'lucide-react';
 
@@ -25,7 +26,7 @@ const Header = () => {
                 {/* === LEFT: LOGO === */}
                 <Link to="/" className="group z-50 flex-shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
                     <div className="border border-cyber-text bg-cyber-black px-3 py-1.5 font-mono font-bold text-lg uppercase text-cyber-text transition-colors duration-300 group-hover:border-cyber-pink group-hover:text-cyber-pink">
-                        GNRHUB_ <span className="text-cyber-pink text-xs align-top">v2</span>
+                        {brand.wordmark} <span className="text-cyber-pink text-xs align-top">{brand.version}</span>
                     </div>
                 </Link>
 
