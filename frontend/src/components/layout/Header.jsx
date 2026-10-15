@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { brand } from '../../config/brand';
 import { Link, useLocation } from 'react-router-dom';
-import { Terminal, Dumbbell, House, ScanText, Box, Menu, PersonStanding } from 'lucide-react';
+import { Terminal, House, ScanText, Menu, X, PersonStanding } from 'lucide-react';
 
 const Header = () => {
     const location = useLocation();
