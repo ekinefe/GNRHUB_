@@ -81,7 +81,7 @@ const DesignSystem = () => {
                                         <span className="text-cyber-success">[OK]</span> Memory Banks (32GB){'\n'}
                                         <span className="text-cyber-success">[OK]</span> Network Interface{'\n'}
                                         <span className="text-cyber-muted">&gt; Establishing secure connection...</span>{'\n'}
-                                        <span className="text-cyber-primary">Connection established (Latency: 12ms)</span>
+                                        <span className="text-cyber-pink">Connection established (Latency: 12ms)</span>
                                     </code>
                                 </pre>
                             </div>

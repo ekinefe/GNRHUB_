@@ -7,8 +7,8 @@ import FuzzyText from '../../components/animations/FuzzyText';
 const Unauthorized = () => {
     return (
         <div className="min-h-screen bg-cyber-black flex flex-col items-center justify-center p-4 text-center">
-            <div className="p-6 border border-cyber-alert/50 rounded-lg bg-cyber-alert/5 max-w-md w-full">
-                <Lock className="w-16 h-16 text-cyber-alert mx-auto mb-4 animate-pulse" />
+            <div className="p-6 border border-cyber-offline/50 rounded-lg bg-cyber-offline/5 max-w-md w-full">
+                <Lock className="w-16 h-16 text-cyber-offline mx-auto mb-4 animate-pulse" />
 
                 {/* 2. Fixed: 'classNamee' typo -> 'className' */}
                 <div className="mb-8">
@@ -30,7 +30,7 @@ const Unauthorized = () => {
                     Clearance Level: INSUFFICIENT<br />
                     You do not have the required permissions to access this restricted area.
                 </p>
-                <Link to="/" className="text-cyber-primary hover:text-white underline font-mono text-sm">
+                <Link to="/" className="text-cyber-pink hover:text-white underline font-mono text-sm">
                     // ABORT_MISSION (GO HOME)
                 </Link>
             </div>
