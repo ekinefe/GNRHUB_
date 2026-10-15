@@ -1,17 +1,36 @@
-import { render, screen } from '@testing-library/react'
-import App from './App'
+import { render, screen, within } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
+import App from './App'
+import { brand } from './config/brand'
 
-// Mock the heavy animations
+// Heavy canvas animation and the real Supabase client (needs env vars that CI does not have)
+// are replaced; this test is about routing and layout, not those.
 vi.mock('./components/animations/FuzzyText', () => ({
     default: ({ children }) => <div data-testid="mock-fuzzy">{children}</div>
 }))
+vi.mock('./lib/supabase', () => ({
+    supabase: {
+        auth: {
+            getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
+            onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
+        },
+        rpc: vi.fn(),
+    },
+}))
 
 describe('App Routing System', () => {
-    it('renders the Landing Page by default', () => {
+    it('renders the home route with the brand header and main navigation', () => {
         render(<App />)
 
-        // We now look for "Landing" because that is what your Home component renders
-        expect(screen.getByText(/GNRHUB \[v2\] Landing/i)).toBeInTheDocument()
+        // The wordmark comes from src/config/brand.js, so a rename does not break this test.
+        expect(screen.getByText(brand.wordmark)).toBeInTheDocument()
+
+        const nav = screen.getByRole('navigation')
+        for (const label of ['Home', 'Blogs', 'Tools', 'About_Me']) {
+            expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument()
+        }
+
+        // Home content that renders immediately (the typed hero text animates in later).
+        expect(screen.getByRole('link', { name: /More About Me/i })).toBeInTheDocument()
     })
 })
