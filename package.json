@@ -1,5 +1,5 @@
 {
-    "name": "gnrhub-v2-root",
+    "name": "gnrdigital-v2-root",
     "private": true,
     "scripts": {
         "dev:frontend": "npm run dev --prefix frontend",

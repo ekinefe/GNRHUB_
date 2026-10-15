@@ -1,4 +1,4 @@
-# **GNRHUB [v2] - Master Project Documentation**
+# **GNRdigital [v2] - Master Project Documentation**
 
 **Goal:** Create an "Ultimate Portfolio" that showcases technical skills while hosting real SaaS products.
 **Constraint:** Zero Budget (Student Project).
@@ -34,7 +34,7 @@ To keep costs at **$0** while handling heavy tasks, we use a hybrid approach:
 ## **Directory Structure**
 
 ```text
-GNRHUB_v2/
+GNRdigital_v2/
 ├── .gitignore               # Global gitignore (node_modules, .env, dist, etc.)
 ├── README.md                # Project documentation and setup guide
 ├── ProjectInfo.md           # Your personal notes
