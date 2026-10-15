@@ -1,5 +1,6 @@
 import React from 'react';
 import { brand } from '../../config/brand';
+import { profile } from '../../data/profile';
 import { Link } from 'react-router-dom';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download, Mail } from 'lucide-react';
 import CyberButton from '../../components/ui/CyberButton';
@@ -67,13 +68,13 @@ const AboutMe = () => {
 
                             {/* Actions */}
                             <div className="flex flex-wrap gap-2 pt-2">
-                                <a href="mailto:[EMAIL_ADDRESS]">
+                                <a href={`mailto:${profile.email}`}>
                                     <CyberButton variant="secondary" icon={Mail}>EMAIL_ME</CyberButton>
                                 </a>
-                                <a href="https://www.linkedin.com/in/ekin-efe-gungor-18336a20a/" target="_blank" rel="noreferrer">
+                                <a href={profile.linkedin} target="_blank" rel="noreferrer">
                                     <CyberButton variant="ghost" icon={Linkedin}>LINKEDIN</CyberButton>
                                 </a>
-                                <a href="https://github.com/ekinefe" target="_blank" rel="noreferrer">
+                                <a href={profile.github} target="_blank" rel="noreferrer">
                                     <CyberButton variant="ghost" icon={Github}>GITHUB</CyberButton>
                                 </a>
                                 <a href={cv} target='_blank'>
@@ -294,7 +295,7 @@ const AboutMe = () => {
                                             <span className="text-cyber-pink">&gt;</span> CW Keyer
 
                                         </h3>
-                                        <a href="https://github.com/ekinefegungor" target="_blank" rel="noreferrer">
+                                        <a href={profile.repos.cwKeyer} target="_blank" rel="noreferrer">
                                             <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
                                         </a>
                                     </div>
@@ -314,7 +315,7 @@ const AboutMe = () => {
                                             <span className="text-cyber-pink">&gt;</span> {brand.name} (Personal Platform)
 
                                         </h3>
-                                        <a href="https://github.com/ekinefegungor" target="_blank" rel="noreferrer">
+                                        <a href={profile.repos.platform} target="_blank" rel="noreferrer">
                                             <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
                                         </a>
                                     </div>
@@ -335,9 +336,7 @@ const AboutMe = () => {
                                             <span className="text-cyber-pink">&gt;</span> EasyAdmin
 
                                         </h3>
-                                        <a href="https://github.com/ekinefegungor" target="_blank" rel="noreferrer">
-                                            <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
-                                        </a>
+                                        <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
                                     </div>
                                     <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
                                         <ul className="space-y-2 text-cyber-muted font-mono text-sm">

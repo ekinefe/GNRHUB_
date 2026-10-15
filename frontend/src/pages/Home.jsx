@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'; import { Link } from 'react-router-dom';
 import { brand } from '../config/brand';
+import { profile } from '../data/profile';
 import { Terminal, Cpu, Network, Github, Linkedin, ChevronRight, Download, PersonStanding, LucidePersonStanding } from 'lucide-react';
 import CyberButton from '../components/ui/CyberButton';
 import CyberCard from '../components/ui/CyberCard';
@@ -194,7 +195,7 @@ const Home = () => {
                                     <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">C++</span>
                                     <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Embedded</span>
                                 </div>
-                                <a href="https://github.com/ekinefe/CW_keyer-GNR" target="_blank" rel="noreferrer" className="text-cyber-pink text-xs font-mono hover:underline">
+                                <a href={profile.repos.cwKeyer} target="_blank" rel="noreferrer" className="text-cyber-pink text-xs font-mono hover:underline">
                                     SOURCE_CODE &gt;&gt;
                                 </a>
                             </CyberCard>
