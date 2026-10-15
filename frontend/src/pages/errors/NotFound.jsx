@@ -9,7 +9,7 @@ const NotFound = () => {
 
             {/* Background Grid Effect (Optional) */}
             <div className="absolute inset-0 opacity-10 pointer-events-none"
-                style={{ backgroundImage: 'radial-gradient(#3b82f6 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+                style={{ backgroundImage: 'radial-gradient(#333333 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
             </div>
 
             <div className="relative z-10 text-center space-y-6">
@@ -30,7 +30,7 @@ const NotFound = () => {
 
                 {/* Technical Error Message */}
                 <div className="space-y-2">
-                    <h2 className="text-2xl font-sans text-cyber-primary tracking-widest uppercase">
+                    <h2 className="text-2xl font-sans text-cyber-pink tracking-widest uppercase">
                         System Failure: Coordinates Unknown
                     </h2>
                     <p className="text-zinc-500 font-mono text-sm">
@@ -41,7 +41,7 @@ const NotFound = () => {
 
                 {/* Action Button */}
                 <div className="pt-8">
-                    <Link to="/" className="inline-flex items-center gap-2 px-8 py-3 bg-zinc-900 border border-cyber-primary text-cyber-primary hover:bg-cyber-primary hover:text-black transition-all duration-300 font-mono uppercase tracking-wider group">
+                    <Link to="/" className="inline-flex items-center gap-2 px-8 py-3 bg-zinc-900 border border-cyber-pink text-cyber-pink hover:bg-cyber-pink hover:text-black transition-all duration-300 font-mono uppercase tracking-wider group">
                         <ShieldAlert className="w-4 h-4 group-hover:animate-pulse" />
                         <span>Return to Base</span>
                     </Link>

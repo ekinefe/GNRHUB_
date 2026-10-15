@@ -16,7 +16,7 @@ const ServerError = () => {
 
                 {/* Critical Error Icon */}
                 <div className="flex justify-center mb-6">
-                    <ServerCrash className="w-24 h-24 text-cyber-alert animate-pulse" />
+                    <ServerCrash className="w-24 h-24 text-cyber-offline animate-pulse" />
                 </div>
 
                 {/* Glitchy 500 Title */}
@@ -34,8 +34,8 @@ const ServerError = () => {
                 </div>
 
                 {/* Diagnostic Message */}
-                <div className="space-y-4 border-l-2 border-cyber-alert pl-6 text-left bg-cyber-alert/5 p-4 rounded-r-lg">
-                    <h2 className="text-xl font-sans text-cyber-primary tracking-widest uppercase">
+                <div className="space-y-4 border-l-2 border-cyber-offline pl-6 text-left bg-cyber-offline/5 p-4 rounded-r-lg">
+                    <h2 className="text-xl font-sans text-cyber-pink tracking-widest uppercase">
                         CRITICAL SYSTEM FAILURE
                     </h2>
                     <p className="text-zinc-400 font-mono text-sm leading-relaxed">
@@ -50,13 +50,13 @@ const ServerError = () => {
                 <div className="pt-8 flex gap-4 justify-center">
                     <button
                         onClick={() => window.location.reload()}
-                        className="inline-flex items-center gap-2 px-8 py-3 bg-cyber-alert text-black font-bold hover:bg-white transition-all duration-300 font-mono uppercase tracking-wider cursor-pointer"
+                        className="inline-flex items-center gap-2 px-8 py-3 bg-cyber-offline text-black font-bold hover:bg-white transition-all duration-300 font-mono uppercase tracking-wider cursor-pointer"
                     >
                         <RefreshCw className="w-4 h-4" />
                         <span>Initiate Reboot</span>
                     </button>
 
-                    <Link to="/" className="inline-flex items-center gap-2 px-8 py-3 border border-zinc-700 text-zinc-400 hover:border-cyber-primary hover:text-cyber-primary transition-all duration-300 font-mono uppercase tracking-wider">
+                    <Link to="/" className="inline-flex items-center gap-2 px-8 py-3 border border-zinc-700 text-zinc-400 hover:border-cyber-pink hover:text-cyber-pink transition-all duration-300 font-mono uppercase tracking-wider">
                         <span>Safe Mode (Home)</span>
                     </Link>
                 </div>
