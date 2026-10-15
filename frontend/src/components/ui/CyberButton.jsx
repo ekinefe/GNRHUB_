@@ -1,7 +1,10 @@
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
-const CyberButton = ({ children, onClick, variant = 'primary', icon: Icon }) => {
-    const baseStyles = "relative px-6 py-3 font-mono font-bold uppercase tracking-wider transition-all duration-200 clip-path-polygon group active:scale-95 flex items-center gap-2";
+// `type` is passed through untouched on purpose: left undefined, a button inside a <form> still submits it
+// (the Login/Register forms rely on that). Extra props (aria-*, data-*, title...) are forwarded too.
+const CyberButton = ({ children, onClick, variant = 'primary', icon: Icon, className = '', disabled = false, type, ...rest }) => {
+    const baseStyles = "relative px-6 py-3 font-mono font-bold uppercase tracking-wider transition-all duration-200 group active:scale-95 flex items-center gap-2 disabled:opacity-50 disabled:pointer-events-none";
 
     const variants = {
         // OLD: bg-cyber-primary (Cyan) -> NEW: bg-cyber-pink (Your preference)
@@ -18,7 +21,13 @@ const CyberButton = ({ children, onClick, variant = 'primary', icon: Icon }) => 
     };
 
     return (
-        <button onClick={onClick} className={`${baseStyles} ${variants[variant]}`}>
+        <button
+            {...rest}
+            type={type}
+            onClick={onClick}
+            disabled={disabled}
+            className={twMerge(baseStyles, variants[variant], className)}
+        >
             {Icon && <Icon className="w-4 h-4" />}
             {children}
         </button>
