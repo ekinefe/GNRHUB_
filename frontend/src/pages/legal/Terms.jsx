@@ -1,4 +1,5 @@
 import React from 'react';
+import { brand } from '../../config/brand';
 import { Terminal, ShieldAlert, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -38,7 +39,7 @@ const Terms = () => {
                                 <span className="text-cyber-pink">01.</span> ACCEPTANCE OF PROTOCOLS
                             </h2>
                             <p className="pl-6 border-l border-cyber-border/50 text-cyber-muted">
-                                By initializing a session, creating an account, or accessing the GNRHUB infrastructure (the "System"), you agree to be bound by these System Protocols. If you do not agree to every clause within this document, you must immediately terminate your connection and cease all use of the System.
+                                By initializing a session, creating an account, or accessing the {brand.name} infrastructure (the "System"), you agree to be bound by these System Protocols. If you do not agree to every clause within this document, you must immediately terminate your connection and cease all use of the System.
                             </p>
                         </section>
 

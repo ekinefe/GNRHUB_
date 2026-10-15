@@ -1,4 +1,4 @@
-## 🚀 GNRHUB [v2] Change Summary
+## 🚀 GNRdigital [v2] Change Summary
 **Task:** [What was done?]
 **Testing:** [How did you test it?]
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { brand } from '../../config/brand';
 import { Link } from 'react-router-dom';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download, Mail } from 'lucide-react';
 import CyberButton from '../../components/ui/CyberButton';
@@ -306,11 +307,11 @@ const AboutMe = () => {
                                     </div>
                                 </div>
 
-                                {/* Project 2: GNRHUB */}
+                                {/* Project 2: GNRdigital */}
                                 <div>
                                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
                                         <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                            <span className="text-cyber-pink">&gt;</span> GNRHUB (Personal Platform)
+                                            <span className="text-cyber-pink">&gt;</span> {brand.name} (Personal Platform)
 
                                         </h3>
                                         <a href="https://github.com/ekinefegungor" target="_blank" rel="noreferrer">
