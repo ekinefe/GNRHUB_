@@ -4,8 +4,6 @@ import { profile } from '../../data/profile';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download } from 'lucide-react';
 import CyberButton from '../../components/ui/CyberButton';
 import TextType from '../../components/animations/TextType';
-import avatar from '../../assets/AboutMe/avatar.jpg';
-import cv from '../../assets/Ekin_Efe_GUNGOR_CV_ATS.pdf';
 
 const AboutMe = () => {
     return (

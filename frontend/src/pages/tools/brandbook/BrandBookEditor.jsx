@@ -292,7 +292,7 @@ const BrandBookEditor = () => {
                         <h3 className="font-mono text-sm text-cyber-cyan font-bold flex items-center gap-2 uppercase border-b border-cyber-border/50 pb-2">
                             <Users className="w-4 h-4" /> Team Members
                         </h3>
-                        {team.map((member, index) => (
+                        {team.map((member) => (
                             <div key={member.id} className="p-4 border border-cyber-border bg-cyber-panel/20 space-y-3 relative">
                                 <button onClick={() => removeItem(setTeam, member.id)} className="absolute top-2 right-2 text-cyber-muted hover:text-red-500"><X className="w-4 h-4" /></button>
 

@@ -37,7 +37,7 @@ const Login = () => {
             }
 
             // 2. Authenticate with Supabase using the email
-            const { data, error: authError } = await supabase.auth.signInWithPassword({
+            const { error: authError } = await supabase.auth.signInWithPassword({
                 email: loginEmail,
                 password,
             });

@@ -47,7 +47,7 @@ const Register = () => {
 
         // --- 2. SEND TO SUPABASE ---
         try {
-            const { data, error } = await supabase.auth.signUp({
+            const { error } = await supabase.auth.signUp({
                 email,
                 password,
                 // Pass the extra fields into Supabase's user metadata
