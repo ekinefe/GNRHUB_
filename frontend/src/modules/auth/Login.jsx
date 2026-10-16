@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Terminal, User, Lock, LogIn } from 'lucide-react';
 import { supabase } from '@/shared/lib/supabase';
+import Input from '@/shared/ui/Input';
 import CyberButton from '@/shared/ui/CyberButton';
 
 const Login = () => {
@@ -83,33 +84,15 @@ const Login = () => {
 
                     {/* Form */}
                     <form onSubmit={handleLogin} className="space-y-6">
-                        <div className="space-y-2">
-                            <label className="font-mono text-xs text-cyber-muted uppercase tracking-wider flex items-center gap-2">
-                                <User className="w-3 h-3" /> USERNAME_OR_EMAIL
-                            </label>
-                            <input
-                                type="text"
-                                required
-                                value={identifier}
-                                onChange={(e) => setIdentifier(e.target.value)}
-                                className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-cyan transition-colors placeholder-cyber-muted/50"
-                                placeholder="name@example.com OR johndoe_99"
-                            />
-                        </div>
+                        <Input
+                            label={<><User className="w-3 h-3" /> USERNAME_OR_EMAIL</>}
+                            type="text" required value={identifier} onChange={(e) => setIdentifier(e.target.value)} placeholder="name@example.com OR johndoe_99"
+                        />
 
-                        <div className="space-y-2">
-                            <label className="font-mono text-xs text-cyber-muted uppercase tracking-wider flex items-center gap-2">
-                                <Lock className="w-3 h-3" /> SECURITY_KEY (PASSWORD)
-                            </label>
-                            <input
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-cyan transition-colors placeholder-cyber-muted/50"
-                                placeholder="••••••••"
-                            />
-                        </div>
+                        <Input
+                            label={<><Lock className="w-3 h-3" /> SECURITY_KEY (PASSWORD)</>}
+                            type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••"
+                        />
 
                         <div className="pt-2">
                             <CyberButton

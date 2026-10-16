@@ -1,6 +1,15 @@
 import React from 'react';
 import { brand } from '@/shared/config/brand';
 import CyberButton from '@/shared/ui/CyberButton';
+import Input from '@/shared/ui/Input';
+import Textarea from '@/shared/ui/Textarea';
+import Select from '@/shared/ui/Select';
+import Checkbox from '@/shared/ui/Checkbox';
+import Badge from '@/shared/ui/Badge';
+import Modal from '@/shared/ui/Modal';
+import Tabs from '@/shared/ui/Tabs';
+import Tooltip from '@/shared/ui/Tooltip';
+import { useToast } from '@/shared/ui/Toast';
 import CyberCard from '@/shared/ui/CyberCard';
 import { Zap, Shield, Terminal, Layout } from 'lucide-react';
 
@@ -129,9 +138,54 @@ const DesignSystem = () => {
                     </div>
                 </section>
 
+                {/* Section: Forms & feedback */}
+                <FormsDemo />
+
             </div>
         </div>
     );
 };
+
+function FormsDemo() {
+    const toast = useToast();
+    const [open, setOpen] = React.useState(false);
+    return (
+        <section className="mb-16">
+            <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                04 // FORMS &amp; FEEDBACK
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <Input label="Default" placeholder="name@example.com" hint="We never share it." />
+                <Input label="Error" defaultValue="not-an-email" error="Enter a valid email address." required />
+                <Input label="Disabled" defaultValue="read only" disabled />
+                <Select label="Select" options={['Design', 'Security', 'Development']} />
+                <Textarea label="Textarea" placeholder="Say something..." />
+                <div className="space-y-4">
+                    <Checkbox label="Checkbox" />
+                    <Checkbox label="Checkbox with error" error="You must accept to continue." />
+                </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-4 mb-8">
+                <Badge>neutral</Badge>
+                <Badge tone="pink">pink</Badge>
+                <Badge tone="cyan">cyan</Badge>
+                <Badge tone="success">live</Badge>
+                <Badge tone="beta">beta</Badge>
+                <Badge tone="offline">offline</Badge>
+                <Tooltip text="Keyboard focus works too"><button type="button" className="font-mono text-xs text-cyber-cyan underline focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">Hover or focus me</button></Tooltip>
+                <CyberButton variant="secondary" onClick={() => setOpen(true)}>Open modal</CyberButton>
+                <CyberButton variant="ghost" onClick={() => toast({ message: 'Saved.', tone: 'success' })}>Show toast</CyberButton>
+            </div>
+            <Tabs tabs={[
+                { key: 'one', label: 'Overview', content: <p className="font-mono text-sm text-cyber-muted">Arrow keys, Home and End switch tabs.</p> },
+                { key: 'two', label: 'Details', content: <p className="font-mono text-sm text-cyber-muted">Second panel.</p> },
+            ]} />
+            <Modal open={open} onClose={() => setOpen(false)} title="Confirm">
+                <p className="mb-4">Escape, the backdrop and the close button all dismiss this.</p>
+                <CyberButton onClick={() => setOpen(false)}>Got it</CyberButton>
+            </Modal>
+        </section>
+    );
+}
 
 export default DesignSystem;

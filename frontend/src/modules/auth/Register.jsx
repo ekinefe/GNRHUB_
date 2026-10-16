@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Terminal, Mail, Lock, UserPlus, User } from 'lucide-react';
 import { supabase } from '@/shared/lib/supabase';
+import Input from '@/shared/ui/Input';
+import Checkbox from '@/shared/ui/Checkbox';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 
@@ -123,114 +125,46 @@ const Register = () => {
 
                         {/* 2-Column Grid for Names */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="font-mono text-xs text-cyber-muted uppercase tracking-wider flex items-center gap-2">
-                                    <User className="w-3 h-3" /> FIRST_NAME
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={firstName}
-                                    onChange={(e) => setFirstName(e.target.value)}
-                                    className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-pink transition-colors placeholder-cyber-muted/50"
-                                    placeholder="John"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="font-mono text-xs text-cyber-muted uppercase tracking-wider flex items-center gap-2">
-                                    <User className="w-3 h-3" /> LAST_NAME
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={lastName}
-                                    onChange={(e) => setLastName(e.target.value)}
-                                    className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-pink transition-colors placeholder-cyber-muted/50"
-                                    placeholder="Doe"
-                                />
-                            </div>
+                            <Input
+                                label={<><User className="w-3 h-3" /> FIRST_NAME</>}
+                                type="text" required value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="John" className="focus:border-cyber-pink focus-visible:ring-cyber-pink"
+                            />
+                            <Input
+                                label={<><User className="w-3 h-3" /> LAST_NAME</>}
+                                type="text" required value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Doe" className="focus:border-cyber-pink focus-visible:ring-cyber-pink"
+                            />
                         </div>
 
                         {/* Username & Email */}
-                        <div className="space-y-2">
-                            <label className="font-mono text-xs text-cyber-muted uppercase tracking-wider flex items-center gap-2">
-                                <Terminal className="w-3 h-3" /> USERNAME
-                            </label>
-                            <input
-                                type="text"
-                                required
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-pink transition-colors placeholder-cyber-muted/50"
-                                placeholder="johndoe_99"
-                            />
-                        </div>
+                        <Input
+                            label={<><Terminal className="w-3 h-3" /> USERNAME</>}
+                            type="text" required value={username} onChange={(e) => setUsername(e.target.value)} placeholder="johndoe_99" className="focus:border-cyber-pink focus-visible:ring-cyber-pink"
+                        />
 
-                        <div className="space-y-2">
-                            <label className="font-mono text-xs text-cyber-muted uppercase tracking-wider flex items-center gap-2">
-                                <Mail className="w-3 h-3" /> EMAIL_ADDRESS
-                            </label>
-                            <input
-                                type="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-pink transition-colors placeholder-cyber-muted/50"
-                                placeholder="name@example.com"
-                            />
-                        </div>
+                        <Input
+                            label={<><Mail className="w-3 h-3" /> EMAIL_ADDRESS</>}
+                            type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" className="focus:border-cyber-pink focus-visible:ring-cyber-pink"
+                        />
 
                         {/* 2-Column Grid for Passwords */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="font-mono text-xs text-cyber-muted uppercase tracking-wider flex items-center gap-2">
-                                    <Lock className="w-3 h-3" /> PASSWORD
-                                </label>
-                                <input
-                                    type="password"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-pink transition-colors placeholder-cyber-muted/50"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="font-mono text-xs text-cyber-muted uppercase tracking-wider flex items-center gap-2">
-                                    <Lock className="w-3 h-3" /> CONFIRM_PASSWORD
-                                </label>
-                                <input
-                                    type="password"
-                                    required
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    className="w-full bg-cyber-panel border border-cyber-border text-white font-mono p-3 focus:outline-none focus:border-cyber-pink transition-colors placeholder-cyber-muted/50"
-                                    placeholder="••••••••"
-                                />
-                            </div>
+                            <Input
+                                label={<><Lock className="w-3 h-3" /> PASSWORD</>}
+                                type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="focus:border-cyber-pink focus-visible:ring-cyber-pink"
+                            />
+                            <Input
+                                label={<><Lock className="w-3 h-3" /> CONFIRM_PASSWORD</>}
+                                type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" className="focus:border-cyber-pink focus-visible:ring-cyber-pink"
+                            />
                         </div>
 
                         {/* Terms & Conditions Checkbox */}
                         <div className="pt-2">
-                            <label className="flex items-start gap-3 cursor-pointer group">
-                                <div className="relative flex items-center justify-center mt-1">
-                                    <input
-                                        type="checkbox"
-                                        checked={agreedToTerms}
-                                        onChange={(e) => setAgreedToTerms(e.target.checked)}
-                                        className="peer sr-only"
-                                    />
-                                    <div className="w-5 h-5 bg-cyber-black border border-cyber-muted peer-checked:border-cyber-pink peer-checked:bg-cyber-pink/20 transition-colors" />
-                                    {agreedToTerms && (
-                                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                            <div className="w-2.5 h-2.5 bg-cyber-pink shadow-neon-pink" />
-                                        </div>
-                                    )}
-                                </div>
-                                <span className="font-mono text-xs text-cyber-muted group-hover:text-white transition-colors leading-relaxed">
-                                    I acknowledge that I have read and agree to the <Link to="/terms" className="text-cyber-cyan hover:text-cyber-pink underline underline-offset-2">System Protocols (Terms)</Link> and <Link to="/privacy" className="text-cyber-cyan hover:text-cyber-pink underline underline-offset-2">Data Privacy Directives</Link>.
-                                </span>
-                            </label>
+                            <Checkbox
+                                checked={agreedToTerms}
+                                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                                label={<span className="text-xs text-cyber-muted leading-relaxed">I acknowledge that I have read and agree to the <Link to="/terms" className="text-cyber-cyan hover:text-cyber-pink underline underline-offset-2">System Protocols (Terms)</Link> and <Link to="/privacy" className="text-cyber-cyan hover:text-cyber-pink underline underline-offset-2">Data Privacy Directives</Link>.</span>}
+                            />
                         </div>
 
                         <div className="pt-4">
