@@ -23,6 +23,8 @@ import ToolsMain from '@/modules/tools/ToolsMain';
 import BrandBookStart from '@/modules/brandbook/BrandbookStart';
 import BrandBookEditor from '@/modules/brandbook/BrandBookEditor';
 
+import Contact from '@/modules/contact/Contact';
+
 // Error Pages
 import NotFound from '@/shared/errors/NotFound';
 import Unauthorized from '@/shared/errors/Unauthorized';
@@ -54,6 +56,7 @@ function App() {
           <Route path="/tools/brandbook/workspace" element={<BrandBookEditor />} />
           <Route path="/about" element={<AboutMe />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
 
         {/* === ERROR ROUTES (No Header, Full Screen) === */}

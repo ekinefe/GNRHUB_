@@ -9,6 +9,7 @@ const nav = [
     { to: '/blogs', label: 'Blogs' },
     { to: '/projects', label: 'Projects' },
     { to: '/about', label: 'About' },
+    { to: '/contact', label: 'Contact' },
 ];
 
 const external = [
