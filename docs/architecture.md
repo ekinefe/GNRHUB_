@@ -12,6 +12,7 @@ frontend/src/
     blog/         blog list
     portfolio/    home, about, projects, design system
     legal/        privacy, terms
+    contact/      mailto + copy-email page
     registry.js   one entry per product: key, path, minimum access level
   shared/         ui, animations, layout, errors, lib/supabase, config/brand
 frontend/functions/
@@ -37,3 +38,14 @@ frontend/functions/
 1. `src/modules/<key>/` for the UI, `functions/modules/<key>/` for the backend.
 2. Entry in `modules/registry.js`, route in `app/App.jsx`.
 3. A `functions/api/<name>.js` file that re-exports the handler (Pages needs it for the URL).
+
+## Motion rules
+- Ask `shared/config/effects.js` (`effectsReduced()` / `useReducedEffects()`), never check `prefers-reduced-motion` yourself. It combines the OS setting with the footer "Reduce effects" switch.
+- Heavy effects (canvas, WebGL) go inside `SceneBoundary` so a failure shows a fallback, not an error page.
+- Canvas loops stop while the tab is hidden or the element is off screen (`useInView`, `document.hidden`).
+- Use the duration tokens (`duration-fast|base|slow`) and `Decrypt` for text effects.
+
+## Accessibility notes
+- Text contrast on the dark background (WCAG AA needs 4.5:1): muted 5.7, pink 5.9, offline red 5.6, cyan 14.8, amber 11.7. Borders are decorative (1.6) and never carry meaning alone.
+- `DashboardLayout` has a skip link to `#main`; the header toggle is labelled and reports `aria-expanded`; the mobile menu closes on Escape and route change.
+- Account controls (login / user menu) are behind `VITE_FEATURE_ACCOUNT` and passed to the header as a slot, so `shared/` never imports `modules/`.

@@ -1,18 +1,19 @@
 import React from 'react';
 import { brand } from '@/shared/config/brand';
-import { profile } from './profile';
+import { profile } from '@/shared/config/profile';
 import { Link } from 'react-router-dom';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download, Mail } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 import avatar from '@/assets/AboutMe/avatar.jpg';
 import cv from '@/assets/Ekin_Efe_GUNGOR_CV_ATS.pdf';
+import PageShell from '@/shared/layout/PageShell';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const AboutMe = () => {
+    useDocumentMeta({ title: 'About', description: 'Who I am, what I have built and what I work with.' });
     return (
-        <div className="min-h-screen bg-cyber-black bg-grid-pattern [background-size:50px_50px] text-cyber-text p-4 md:p-12 flex justify-center">
-
-            <div className="max-w-5xl w-full bg-cyber-black border-l border-r border-cyber-border min-h-screen p-8 shadow-2xl relative">
+        <PageShell width="5xl">
 
                 {/* Hero Section */}
                 <section className="relative pt-24 pb-16 mb-12 border-b border-cyber-border/40">
@@ -69,16 +70,16 @@ const AboutMe = () => {
                             {/* Actions */}
                             <div className="flex flex-wrap gap-2 pt-2">
                                 <a href={`mailto:${profile.email}`}>
-                                    <CyberButton variant="secondary" icon={Mail}>EMAIL_ME</CyberButton>
+                                    <CyberButton variant="secondary" icon={Mail}>Email me</CyberButton>
                                 </a>
                                 <a href={profile.linkedin} target="_blank" rel="noreferrer">
-                                    <CyberButton variant="ghost" icon={Linkedin}>LINKEDIN</CyberButton>
+                                    <CyberButton variant="ghost" icon={Linkedin}>LinkedIn</CyberButton>
                                 </a>
                                 <a href={profile.github} target="_blank" rel="noreferrer">
-                                    <CyberButton variant="ghost" icon={Github}>GITHUB</CyberButton>
+                                    <CyberButton variant="ghost" icon={Github}>GitHub</CyberButton>
                                 </a>
                                 <a href={cv} target='_blank'>
-                                    <CyberButton variant="ghost" icon={Download}>DOWNLOAD_CV</CyberButton>
+                                    <CyberButton variant="ghost" icon={Download}>Download CV</CyberButton>
                                 </a>
                             </div>
                         </div>
@@ -368,8 +369,7 @@ const AboutMe = () => {
                         </div>
                     </div>
                 </section>
-            </div >
-        </div >
+        </PageShell>
     );
 };
 

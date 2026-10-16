@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { Lock } from 'lucide-react';
 // 1. Fixed: Import the component
 import FuzzyText from '@/shared/animations/FuzzyText';
+import { tokenColor } from '@/shared/config/tokens';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Unauthorized = () => {
+    useDocumentMeta({ title: 'Access denied', noindex: true });
     return (
         <div className="min-h-screen bg-cyber-black flex flex-col items-center justify-center p-4 text-center">
             <div className="p-6 border border-cyber-offline/50 rounded-lg bg-cyber-offline/5 max-w-md w-full">
@@ -17,7 +20,7 @@ const Unauthorized = () => {
                     <FuzzyText
                         fontSize="3rem"
                         fontWeight={900}
-                        color="#fff"
+                        color={tokenColor('text')}
                         baseIntensity={0.1}
                         hoverIntensity={0.3}
                         enableHover={true}

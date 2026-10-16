@@ -1,10 +1,22 @@
 import React from 'react';
 import { brand } from '@/shared/config/brand';
 import CyberButton from '@/shared/ui/CyberButton';
+import Input from '@/shared/ui/Input';
+import Textarea from '@/shared/ui/Textarea';
+import Select from '@/shared/ui/Select';
+import Checkbox from '@/shared/ui/Checkbox';
+import Decrypt from '@/shared/animations/Decrypt';
+import Badge from '@/shared/ui/Badge';
+import Modal from '@/shared/ui/Modal';
+import Tabs from '@/shared/ui/Tabs';
+import Tooltip from '@/shared/ui/Tooltip';
+import { useToast } from '@/shared/ui/Toast';
 import CyberCard from '@/shared/ui/CyberCard';
 import { Zap, Shield, Terminal, Layout } from 'lucide-react';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const DesignSystem = () => {
+    useDocumentMeta({ title: 'Design system', description: 'Tokens, components and states used across GNRdigital.', noindex: true });
     return (
         // 1. The Outer Wrapper (Grid Background)
         <div className="min-h-screen bg-cyber-black bg-grid-pattern [background-size:50px_50px] text-cyber-text p-4 md:p-12 flex justify-center">
@@ -25,9 +37,33 @@ const DesignSystem = () => {
                     </h1>
                     <p className="text-cyber-muted font-mono max-w-2xl">
                         &gt; Establishing visual coherence using the "JetBrains" monospace standard.<br />
-                        &gt; Primary visual signature: <span className="text-cyber-pink">#FF318C (Cyber Pink)</span>.
+                        &gt; Primary visual signature: <span className="text-cyber-pink">--cyber-pink (Cyber Pink)</span>.
                     </p>
                 </header>
+
+                {/* Section: Tokens */}
+                <section className="mb-16">
+                    <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                        00 // TOKENS
+                    </h2>
+                    <p className="font-mono text-xs text-cyber-muted mb-4">
+                        Defined once in src/index.css (:root) and mapped in tailwind.config.js. Use the Tailwind class, never a raw color.
+                    </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                        {['black', 'panel', 'border', 'text', 'muted', 'pink', 'cyan', 'purple', 'active', 'beta', 'offline', 'alert'].map((name) => (
+                            <div key={name} className="border border-cyber-border">
+                                <div className={`h-10 bg-cyber-${name}`} />
+                                <p className="font-mono text-xs text-cyber-muted p-2">cyber-{name}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex flex-wrap gap-6 font-mono text-xs text-cyber-muted">
+                        <span>glow: <span className="inline-block w-4 h-4 align-middle bg-cyber-pink shadow-neon-pink" /> shadow-neon-pink / -cyan</span>
+                        <span>motion: duration-fast 150ms / duration-base 300ms / duration-slow 600ms</span>
+                        <span>layers: z-header 50 / z-modal 60 / z-toast 70</span>
+                        <span>radius: rounded-sm / md / lg</span>
+                    </div>
+                </section>
 
                 {/* Section: Typography */}
                 <section className="mb-16">
@@ -129,9 +165,73 @@ const DesignSystem = () => {
                     </div>
                 </section>
 
+                {/* Section: Forms & feedback */}
+                <FormsDemo />
+
             </div>
         </div>
     );
 };
+
+function DecryptDemo() {
+    const [count, setCount] = React.useState(3);
+    const [typed, setTyped] = React.useState('');
+    return (
+        <div className="mb-8 space-y-3">
+            <h3 className="font-mono text-sm text-cyber-muted uppercase tracking-wider">Decrypt (replays when replayKey changes)</h3>
+            <p className="font-mono text-xs text-cyber-muted">Props: text, replayKey (default text), tone (info | success | alert | pink | muted), as, className. Key counters by count, not by query. Screen readers get plain text; reduced motion disables the effect.</p>
+            <div className="flex flex-wrap items-center gap-4 font-mono text-sm">
+                <Decrypt text={`Found ${count} results`} replayKey={count} />
+                <CyberButton variant="secondary" onClick={() => setCount((c) => c + 1)}>Change count</CyberButton>
+                <Input aria-label="Type here" placeholder="Typing does not replay" value={typed} onChange={(e) => setTyped(e.target.value)} className="w-56" />
+                <Decrypt text="Saved" tone="success" />
+                <Decrypt text="Offline" tone="alert" />
+            </div>
+        </div>
+    );
+}
+
+function FormsDemo() {
+    const toast = useToast();
+    const [open, setOpen] = React.useState(false);
+    return (
+        <section className="mb-16">
+            <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                04 // FORMS &amp; FEEDBACK
+            </h2>
+            <DecryptDemo />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <Input label="Default" placeholder="name@example.com" hint="We never share it." />
+                <Input label="Error" defaultValue="not-an-email" error="Enter a valid email address." required />
+                <Input label="Disabled" defaultValue="read only" disabled />
+                <Select label="Select" options={['Design', 'Security', 'Development']} />
+                <Textarea label="Textarea" placeholder="Say something..." />
+                <div className="space-y-4">
+                    <Checkbox label="Checkbox" />
+                    <Checkbox label="Checkbox with error" error="You must accept to continue." />
+                </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-4 mb-8">
+                <Badge>neutral</Badge>
+                <Badge tone="pink">pink</Badge>
+                <Badge tone="cyan">cyan</Badge>
+                <Badge tone="success">live</Badge>
+                <Badge tone="beta">beta</Badge>
+                <Badge tone="offline">offline</Badge>
+                <Tooltip text="Keyboard focus works too"><button type="button" className="font-mono text-xs text-cyber-cyan underline focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">Hover or focus me</button></Tooltip>
+                <CyberButton variant="secondary" onClick={() => setOpen(true)}>Open modal</CyberButton>
+                <CyberButton variant="ghost" onClick={() => toast({ message: 'Saved.', tone: 'success' })}>Show toast</CyberButton>
+            </div>
+            <Tabs tabs={[
+                { key: 'one', label: 'Overview', content: <p className="font-mono text-sm text-cyber-muted">Arrow keys, Home and End switch tabs.</p> },
+                { key: 'two', label: 'Details', content: <p className="font-mono text-sm text-cyber-muted">Second panel.</p> },
+            ]} />
+            <Modal open={open} onClose={() => setOpen(false)} title="Confirm">
+                <p className="mb-4">Escape, the backdrop and the close button all dismiss this.</p>
+                <CyberButton onClick={() => setOpen(false)}>Got it</CyberButton>
+            </Modal>
+        </section>
+    );
+}
 
 export default DesignSystem;

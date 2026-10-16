@@ -1,15 +1,16 @@
 import React from 'react';
 import { brand } from '@/shared/config/brand';
-import { profile } from './profile';
+import { profile } from '@/shared/config/profile';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
+import PageShell from '@/shared/layout/PageShell';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const AboutMe = () => {
+    useDocumentMeta({ title: 'Projects', description: 'Selected projects: repos, status and the tech behind them.' });
     return (
-        <div className="min-h-screen bg-cyber-black bg-grid-pattern [background-size:50px_50px] text-cyber-text p-4 md:p-12 flex justify-center">
-
-            <div className="max-w-5xl w-full bg-cyber-black border-l border-r border-cyber-border min-h-screen p-8 shadow-2xl relative">
+        <PageShell width="5xl">
 
                 {/* Hero Section */}
                 <section className="relative pt-24 pb-16 mb-12 border-b border-cyber-border/40">
@@ -37,16 +38,16 @@ const AboutMe = () => {
                             Actions
                             <div className="flex flex-wrap gap-2 pt-2">
                                 <a href={`mailto:${profile.email}`}>
-                                    <CyberButton variant="secondary" icon={PersonStanding}>EMAIL_ME</CyberButton>
+                                    <CyberButton variant="secondary" icon={PersonStanding}>Email me</CyberButton>
                                 </a>
                                 <a href={brand.publicUrl} target="_blank" rel="noreferrer">
                                     <CyberButton variant="ghost" icon={ExternalLink}>{brand.name}</CyberButton>
                                 </a>
                                 <a href={profile.github} target="_blank" rel="noreferrer">
-                                    <CyberButton variant="ghost" icon={Github}>GITHUB</CyberButton>
+                                    <CyberButton variant="ghost" icon={Github}>GitHub</CyberButton>
                                 </a>
                                 <a href={cv} target='_blank'>
-                                    <CyberButton variant="ghost" icon={Download}>DOWNLOAD_CV</CyberButton>
+                                    <CyberButton variant="ghost" icon={Download}>Download CV</CyberButton>
                                 </a>
                             </div>
                         </div>
@@ -91,7 +92,7 @@ const AboutMe = () => {
                                     </div>
                                     <div>
                                         <a href={profile.dyrk1a} target="_blank" rel="noopener noreferrer">
-                                            <CyberButton variant="ghost" icon={ExternalLink}>VISIT_SITE</CyberButton>
+                                            <CyberButton variant="ghost" icon={ExternalLink}>Visit site</CyberButton>
                                         </a>
                                     </div>
 
@@ -230,8 +231,7 @@ const AboutMe = () => {
                     </div>
 
                 </div>
-            </div>
-        </div>
+        </PageShell>
     );
 };
 

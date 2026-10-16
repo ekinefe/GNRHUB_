@@ -25,12 +25,19 @@ describe('App Routing System', () => {
         // The wordmark comes from src/config/brand.js, so a rename does not break this test.
         expect(screen.getByText(brand.wordmark)).toBeInTheDocument()
 
-        const nav = screen.getByRole('navigation')
-        for (const label of ['Home', 'Blogs', 'Tools', 'About_Me']) {
+        const nav = screen.getByRole('navigation', { name: 'Main' })
+        for (const label of ['Home', 'Blogs', 'Tools', 'About']) {
             expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument()
         }
 
         // Home content that renders immediately (the typed hero text animates in later).
         expect(screen.getByRole('link', { name: /More About Me/i })).toBeInTheDocument()
+    })
+
+    it('loads a lazy route on demand', async () => {
+        window.history.pushState({}, '', '/contact')
+        render(<App />)
+        expect(await screen.findByText('/CONTACT')).toBeInTheDocument()
+        window.history.pushState({}, '', '/')
     })
 })
