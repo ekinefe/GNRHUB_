@@ -5,6 +5,7 @@ import { Terminal, Cpu, Network, Github, Linkedin, ChevronRight, Download, Perso
 import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
+import PageShell from '@/shared/layout/PageShell';
 
 const Home = () => {
     const [showProfile, setShowProfile] = useState(false);
@@ -16,11 +17,7 @@ const Home = () => {
         return () => clearTimeout(timer); // Cleanup on unmount
     }, []);
     return (
-        // 1. The Outer Wrapper (Grid Background)
-        <div className="min-h-screen bg-cyber-black bg-grid-pattern [background-size:50px_50px] text-cyber-text p-4 md:p-12 flex justify-center">
-
-            {/* 2. The Content Container (The "Background behind the text") */}
-            <div className="max-w-5xl w-full bg-cyber-black border-l border-r border-cyber-border min-h-screen p-8 shadow-2xl relative">
+        <PageShell width="5xl">
 
                 {/* === HERO SECTION === */}
                 <section className="relative pt-24 pb-16 px-4 md:px-12 max-w-7xl mx-auto">
@@ -252,8 +249,7 @@ const Home = () => {
                         </div>
                     </div>
                 </section>
-            </div >
-        </div >
+        </PageShell>
     );
 };
 
