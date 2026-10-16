@@ -26,7 +26,7 @@ describe('App Routing System', () => {
         expect(screen.getByText(brand.wordmark)).toBeInTheDocument()
 
         const nav = screen.getByRole('navigation', { name: 'Main' })
-        for (const label of ['Home', 'Blogs', 'Tools', 'About_Me']) {
+        for (const label of ['Home', 'Blogs', 'Tools', 'About']) {
             expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument()
         }
 

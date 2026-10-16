@@ -22,7 +22,7 @@ export default function CopyEmail({ email }) {
     return (
         <>
             <CyberButton type="button" variant="secondary" icon={state === 'copied' ? Check : Copy} onClick={copy}>
-                {state === 'copied' ? 'COPIED' : 'COPY_EMAIL'}
+                {state === 'copied' ? 'Copied' : 'Copy email'}
             </CyberButton>
             <span role="status" className="sr-only">
                 {state === 'copied' ? 'Email address copied to clipboard' : state === 'failed' ? 'Could not copy, select the address and copy it by hand' : ''}

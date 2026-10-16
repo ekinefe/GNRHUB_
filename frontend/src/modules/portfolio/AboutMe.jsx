@@ -70,16 +70,16 @@ const AboutMe = () => {
                             {/* Actions */}
                             <div className="flex flex-wrap gap-2 pt-2">
                                 <a href={`mailto:${profile.email}`}>
-                                    <CyberButton variant="secondary" icon={Mail}>EMAIL_ME</CyberButton>
+                                    <CyberButton variant="secondary" icon={Mail}>Email me</CyberButton>
                                 </a>
                                 <a href={profile.linkedin} target="_blank" rel="noreferrer">
-                                    <CyberButton variant="ghost" icon={Linkedin}>LINKEDIN</CyberButton>
+                                    <CyberButton variant="ghost" icon={Linkedin}>LinkedIn</CyberButton>
                                 </a>
                                 <a href={profile.github} target="_blank" rel="noreferrer">
-                                    <CyberButton variant="ghost" icon={Github}>GITHUB</CyberButton>
+                                    <CyberButton variant="ghost" icon={Github}>GitHub</CyberButton>
                                 </a>
                                 <a href={cv} target='_blank'>
-                                    <CyberButton variant="ghost" icon={Download}>DOWNLOAD_CV</CyberButton>
+                                    <CyberButton variant="ghost" icon={Download}>Download CV</CyberButton>
                                 </a>
                             </div>
                         </div>
