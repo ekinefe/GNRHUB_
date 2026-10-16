@@ -5,6 +5,7 @@ import Input from '@/shared/ui/Input';
 import Textarea from '@/shared/ui/Textarea';
 import Select from '@/shared/ui/Select';
 import Checkbox from '@/shared/ui/Checkbox';
+import Decrypt from '@/shared/animations/Decrypt';
 import Badge from '@/shared/ui/Badge';
 import Modal from '@/shared/ui/Modal';
 import Tabs from '@/shared/ui/Tabs';
@@ -148,6 +149,24 @@ const DesignSystem = () => {
     );
 };
 
+function DecryptDemo() {
+    const [count, setCount] = React.useState(3);
+    const [typed, setTyped] = React.useState('');
+    return (
+        <div className="mb-8 space-y-3">
+            <h3 className="font-mono text-sm text-cyber-muted uppercase tracking-wider">Decrypt (replays when replayKey changes)</h3>
+            <p className="font-mono text-xs text-cyber-muted">Props: text, replayKey (default text), tone (info | success | alert | pink | muted), as, className. Key counters by count, not by query. Screen readers get plain text; reduced motion disables the effect.</p>
+            <div className="flex flex-wrap items-center gap-4 font-mono text-sm">
+                <Decrypt text={`Found ${count} results`} replayKey={count} />
+                <CyberButton variant="secondary" onClick={() => setCount((c) => c + 1)}>Change count</CyberButton>
+                <Input aria-label="Type here" placeholder="Typing does not replay" value={typed} onChange={(e) => setTyped(e.target.value)} className="w-56" />
+                <Decrypt text="Saved" tone="success" />
+                <Decrypt text="Offline" tone="alert" />
+            </div>
+        </div>
+    );
+}
+
 function FormsDemo() {
     const toast = useToast();
     const [open, setOpen] = React.useState(false);
@@ -156,6 +175,7 @@ function FormsDemo() {
             <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
                 04 // FORMS &amp; FEEDBACK
             </h2>
+            <DecryptDemo />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <Input label="Default" placeholder="name@example.com" hint="We never share it." />
                 <Input label="Error" defaultValue="not-an-email" error="Enter a valid email address." required />
