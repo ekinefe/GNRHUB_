@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { tokenColor } from '@/shared/config/tokens';
+import { effectsReduced } from '@/shared/config/effects';
+import SceneBoundary from './SceneBoundary';
 
-const FuzzyText = ({
+const FuzzyTextCanvas = ({
     children,
     fontSize = 'clamp(2rem, 10vw, 10rem)',
     fontWeight = 900,
@@ -27,6 +29,7 @@ const FuzzyText = ({
     useEffect(() => {
         let animationFrameId;
         let isCancelled = false;
+        let observer = null;
         let glitchTimeoutId;
         let glitchEndTimeoutId;
         let clickTimeoutId;
@@ -151,8 +154,23 @@ const FuzzyText = ({
 
             if (glitchMode) startGlitchLoop();
 
+            // Effects rules: nothing animates while the tab is hidden or the canvas is scrolled out of view,
+            // and with reduced effects the text is drawn once, still.
+            let onScreen = true;
+            observer = typeof IntersectionObserver !== 'undefined'
+                ? new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; })
+                : null;
+            observer?.observe(canvas);
+            const reduced = effectsReduced();
+            let drewStill = false;
+
             const run = timestamp => {
                 if (isCancelled) return;
+
+                if (document.hidden || !onScreen || (reduced && drewStill)) {
+                    animationFrameId = window.requestAnimationFrame(run);
+                    return;
+                }
 
                 if (timestamp - lastFrameTime < frameDuration) {
                     animationFrameId = window.requestAnimationFrame(run);
@@ -192,13 +210,14 @@ const FuzzyText = ({
                     let dx = 0,
                         dy = 0;
                     if (direction === 'horizontal' || direction === 'both') {
-                        dx = Math.floor(currentIntensity * (Math.random() - 0.5) * fuzzRange);
+                        dx = reduced ? 0 : Math.floor(currentIntensity * (Math.random() - 0.5) * fuzzRange);
                     }
                     if (direction === 'vertical' || direction === 'both') {
-                        dy = Math.floor(currentIntensity * (Math.random() - 0.5) * fuzzRange * 0.5);
+                        dy = reduced ? 0 : Math.floor(currentIntensity * (Math.random() - 0.5) * fuzzRange * 0.5);
                     }
                     ctx.drawImage(offscreen, 0, j, offscreenWidth, 1, dx, j + dy, offscreenWidth, 1);
                 }
+                if (reduced) drewStill = true;
                 animationFrameId = window.requestAnimationFrame(run);
             };
 
@@ -277,6 +296,7 @@ const FuzzyText = ({
 
         return () => {
             isCancelled = true;
+            observer?.disconnect();
             window.cancelAnimationFrame(animationFrameId);
             clearTimeout(glitchTimeoutId);
             clearTimeout(glitchEndTimeoutId);
@@ -306,7 +326,15 @@ const FuzzyText = ({
         letterSpacing
     ]);
 
-    return <canvas ref={canvasRef} className={className} />;
+    // role="img" + label: the canvas has no text of its own for screen readers.
+    return <canvas ref={canvasRef} className={className} role="img" aria-label={typeof children === 'string' ? children : undefined} />;
 };
+
+// A failing canvas never takes the page down: fall back to the plain text.
+const FuzzyText = (props) => (
+    <SceneBoundary fallback={<span className={props.className} style={{ fontSize: props.fontSize, fontWeight: props.fontWeight ?? 900, color: props.color }}>{props.children}</span>}>
+        <FuzzyTextCanvas {...props} />
+    </SceneBoundary>
+);
 
 export default FuzzyText;
