@@ -32,12 +32,43 @@ describe('CatalogPage', () => {
     it('searches after the debounce and shows the empty state with a way out', async () => {
         vi.useFakeTimers()
         setup()
-        fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'zzz' } })
+        fireEvent.change(screen.getByLabelText('Search...'), { target: { value: 'zzz' } })
         await act(async () => { vi.advanceTimersByTime(50) })
         expect(screen.getByText(/No results found/)).toBeInTheDocument()
         fireEvent.click(screen.getByText(/CLEAR_FILTERS/))
         await act(async () => { vi.advanceTimersByTime(50) })
         expect(screen.getByText('Brandbook Maker')).toBeInTheDocument()
         vi.useRealTimers()
+    })
+
+    it('finds a misspelled word and highlights exact matches', async () => {
+        vi.useFakeTimers()
+        setup({ renderItem: (i, { highlight }) => <article key={i.id}>{highlight(i.title)}</article> })
+        fireEvent.change(screen.getByLabelText('Search...'), { target: { value: 'brnd' } })
+        await act(async () => { vi.advanceTimersByTime(50) })
+        expect(screen.getByText(/Brandbook/)).toBeInTheDocument()
+        expect(screen.queryByText('Log Analyzer')).toBeNull()
+        vi.useRealTimers()
+    })
+
+    it('offers clickable tag suggestions when nothing matches', async () => {
+        vi.useFakeTimers()
+        setup()
+        fireEvent.change(screen.getByLabelText('Search...'), { target: { value: 'zzzz' } })
+        await act(async () => { vi.advanceTimersByTime(50) })
+        fireEvent.click(screen.getAllByRole('button', { name: '#pdf' }).at(-1)) // the suggestion, not the sidebar tag
+        expect(screen.getByText('Brandbook Maker')).toBeInTheDocument()
+        expect(screen.queryByText('Log Analyzer')).toBeNull()
+        vi.useRealTimers()
+    })
+
+    it('"/" focuses the search and Escape clears it', () => {
+        setup()
+        const input = screen.getByLabelText('Search...')
+        fireEvent.keyDown(window, { key: '/' })
+        expect(document.activeElement).toBe(input)
+        fireEvent.change(input, { target: { value: 'abc' } })
+        fireEvent.keyDown(input, { key: 'Escape' })
+        expect(input.value).toBe('')
     })
 })

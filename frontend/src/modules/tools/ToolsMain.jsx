@@ -15,7 +15,7 @@ const ToolsMain = () => {
         navigate(user ? link : '/login');
     };
 
-    const renderTool = (tool) => (
+    const renderTool = (tool, { highlight }) => (
         <article key={tool.id} className="border border-cyber-border bg-cyber-black p-6 transition-colors hover:border-cyber-pink/50 group block">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
                 <div>
@@ -29,7 +29,7 @@ const ToolsMain = () => {
                         onClick={() => handleToolAccess(tool.link)}
                         className="text-2xl font-bold text-white group-hover:text-cyber-pink transition-colors cursor-pointer"
                     >
-                        {tool.title}
+                        {highlight(tool.title)}
                     </h3>
                 </div>
 
@@ -46,7 +46,7 @@ const ToolsMain = () => {
             </div>
 
             <p className="font-mono text-cyber-muted text-sm mb-6 max-w-3xl leading-relaxed">
-                {tool.excerpt}
+                {highlight(tool.excerpt)}
             </p>
 
             <div className="flex flex-wrap items-center justify-between gap-4">

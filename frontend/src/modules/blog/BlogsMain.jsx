@@ -5,7 +5,7 @@ import CyberButton from '@/shared/ui/CyberButton';
 import CatalogPage from '@/shared/catalog/CatalogPage';
 import { mockBlogs } from './mockBlogs';
 
-const renderBlog = (blog) => (
+const renderBlog = (blog, { highlight }) => (
     <article key={blog.id} className="border border-cyber-border bg-cyber-black p-6 transition-colors hover:border-cyber-pink/50 group block">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
                 <div>
@@ -14,7 +14,7 @@ const renderBlog = (blog) => (
                         <span className="text-cyber-muted flex items-center gap-1"><Calendar className="w-3 h-3" /> {blog.date}</span>
                     </div>
                     <h3 className="text-2xl font-bold text-white group-hover:text-cyber-pink transition-colors">
-                        <Link to={blog.link}>{blog.title}</Link>
+                        <Link to={blog.link}>{highlight(blog.title)}</Link>
                     </h3>
                 </div>
                 <Link to={blog.link} className="hidden md:block">
@@ -23,7 +23,7 @@ const renderBlog = (blog) => (
             </div>
 
             <p className="font-mono text-cyber-muted text-sm mb-6 max-w-3xl leading-relaxed">
-                {blog.excerpt}
+                {highlight(blog.excerpt)}
             </p>
 
             <div className="flex flex-wrap items-center justify-between gap-4">
