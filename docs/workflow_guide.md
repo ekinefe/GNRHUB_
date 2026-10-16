@@ -1,7 +1,7 @@
 # 🛠️ Engineering Standard Operating Procedure (SOP)
 
 **Objective:** Standardize the workflow for adding new features to GNRdigital [v2].
-**Branching Strategy:** Git Flow (Feature Branches → Develop → Main).
+**Branching Strategy:** superseded. The current model is `feature/GNR-n` → integration branch → `main`; see [WORKFLOW.md](WORKFLOW.md). `develop` is retired, so read "develop" below as the integration branch.
 
 ---
 

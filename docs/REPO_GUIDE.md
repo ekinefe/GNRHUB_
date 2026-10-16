@@ -35,7 +35,7 @@ Optional: `VITE_FEATURES=account,tools,blogs,dashboard` switches on unfinished a
 `guest` (no login) < `member` (logged in) < `admin` (`profiles.role = 'admin'`). Guard a route with `<ProtectedRoute minAccess="member" />`. Nothing is guarded yet.
 
 ## Branches and PRs
-- **Integration branch:** `feat/auth-and-BrandBookEditor`. All work merges here through PRs. (`develop` is old; ignore it.)
+- **Integration branch:** `feat/auth-and-BrandBookEditor`. All work merges here through PRs, and it merges into `main` at launch. (`develop` is retired; see [WORKFLOW.md](WORKFLOW.md).)
 - **Branch names:** `feature/GNR-<n>` or `hotfix/GNR-<n>`, where `GNR-<n>` is the ticket.
 - **Commits:** `type(scope): summary`. Never commit straight to the integration branch or `main`.
 - **Stacked PRs:** if one PR builds on another, set each PR's base to the previous branch **and retarget it to the integration branch before merging**, or it merges into its parent and never arrives.
