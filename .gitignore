@@ -61,3 +61,6 @@ AccountDetails.md
 # Cloudflare local secrets and state
 .dev.vars
 .wrangler/
+
+# graphify output
+graphify-out/
