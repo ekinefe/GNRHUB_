@@ -1,6 +1,6 @@
 # Credits and third-party licenses
 
-The site's own code is under the project [LICENSE](LICENSE). Everything below stays under its authors' licenses. Licenses were read from the installed packages (`node_modules/<pkg>/package.json`) on 2026-10-16.
+The site's own code is under the project [LICENSE](LICENSE) (MIT), except the third-party files and packages listed here. My text, photo and CV are not licensed for reuse. Everything below stays under its authors' licenses. Licenses were read from the installed packages (`node_modules/<pkg>/package.json`) on 2026-10-16.
 
 ## Code shipped to the browser
 | Package | Version | License |
