@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useState } from 'react';
-import { brand } from '@/shared/config/brand';
+import Wordmark from '@/shared/ui/Wordmark';
+import { features } from '@/shared/config/features';
 import { Link, useLocation } from 'react-router-dom';
 import { Terminal, House, ScanText, Menu, X, PersonStanding } from 'lucide-react';
 
@@ -33,11 +34,10 @@ const Header = ({ account = null }) => {
     // Centralized Navigation Data (keeps code DRY)
     const navItems = [
         { path: "/", icon: House, label: "Home" },
-        // { path: "/dashboard", icon: Box, label: "Dashboard" },
-        { path: "/blogs", icon: ScanText, label: "Blogs" },
-        { path: "/tools", icon: Terminal, label: "Tools" },
+        features.blogs && { path: "/blogs", icon: ScanText, label: "Blogs" },
+        features.tools && { path: "/tools", icon: Terminal, label: "Tools" },
         { path: "/about", icon: PersonStanding, label: "About" }
-    ];
+    ].filter(Boolean);
 
     return (
         <header className="fixed top-0 left-0 w-full z-header border-b border-cyber-border bg-cyber-black/90 backdrop-blur-md">
@@ -45,8 +45,8 @@ const Header = ({ account = null }) => {
 
                 {/* === LEFT: LOGO === */}
                 <Link to="/" className="group z-header flex-shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="border border-cyber-text bg-cyber-black px-3 py-1.5 font-mono font-bold text-lg uppercase text-cyber-text transition-colors duration-300 group-hover:border-cyber-pink group-hover:text-cyber-pink">
-                        {brand.wordmark} <span className="text-cyber-pink text-xs align-top">{brand.version}</span>
+                    <div className="border border-cyber-text bg-cyber-black px-3 py-1.5 font-mono text-lg text-cyber-text transition-colors duration-300 group-hover:border-cyber-pink group-hover:text-cyber-pink">
+                        <Wordmark />
                     </div>
                 </Link>
 

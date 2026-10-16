@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect } from 'vitest'
 import Footer from './Footer'
+import { profile } from '@/shared/config/profile'
 
 describe('Footer', () => {
     it('links to the legal pages and shows build info', () => {
@@ -25,5 +26,12 @@ describe('Footer reduce-effects switch', () => {
         fireEvent.click(button)
         expect(screen.getByRole('button', { name: /Reduce effects: on/ })).toHaveAttribute('aria-pressed', 'true')
         fireEvent.click(screen.getByRole('button', { name: /Reduce effects/ }))
+    })
+})
+
+describe('Footer licence', () => {
+    it('states the code licence once, from profile data', () => {
+        render(<MemoryRouter><Footer /></MemoryRouter>)
+        expect(screen.getByRole('link', { name: 'MIT licence' })).toHaveAttribute('href', profile.license.url)
     })
 })

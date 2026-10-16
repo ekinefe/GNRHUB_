@@ -1,10 +1,11 @@
 import React from 'react';
-import { brand } from '@/shared/config/brand';
 import { profile } from '@/shared/config/profile';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
+import ProjectEntry from './ProjectEntry';
+import { projects, experiments } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const AboutMe = () => {
@@ -124,84 +125,7 @@ const AboutMe = () => {
                         </h2>
 
                         <div className="space-y-8">
-                            {/* Project 1: CW Keyer */}
-                            <div>
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
-                                    <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                        <span className="text-cyber-pink">&gt;</span> CW Keyer
-
-                                    </h3>
-                                    <a href={profile.repos.cwKeyer} target="_blank" rel="noreferrer">
-                                        <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
-                                    </a>
-                                </div>
-                                <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                                    <ul className="space-y-2 text-cyber-muted font-mono text-sm">
-                                        <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">TECH:</span> C++, Arduino, Embedded Systems</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Designed and built a hardware device from scratch to standardize Morse code transmission and reception.</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Developed firmware in C/C++ and designed circuitry for real-time operation with an LCD and paddles.</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            {/* Project 2: CW Trainer */}
-                            <div>
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
-
-                                    <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                        <span className="text-cyber-pink">&gt;</span> CW Trainer (Desktop)
-                                    </h3>
-                                    <a href={profile.repos.cwTrainer} target="_blank" rel="noreferrer">
-                                        <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
-                                    </a>
-                                </div>
-                                <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                                    <ul className="space-y-2 text-cyber-muted font-mono text-sm">
-                                        <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">TECH:</span> C++, Qt6, Python</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Developed a cross-platform (Windows/Linux) training app to interface with the hardware keyer.</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Features adaptive difficulty and live performance tracking for error-free long-form text training.</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            {/* Project 3: GNRdigital */}
-                            <div>
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
-
-                                    <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                        <span className="text-cyber-pink">&gt;</span> {brand.name} {brand.version} (Personal Platform)
-                                    </h3>
-                                    <a href={profile.repos.platform} target="_blank" rel="noreferrer">
-                                        <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
-                                    </a>
-                                </div>
-                                <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                                    <ul className="space-y-2 text-cyber-muted font-mono text-sm">
-                                        <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">TECH:</span> React.js, Node.js, Cloudflare, Bcrypt</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Full-stack sandbox currently being developed into a micro-SaaS platform.</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Implemented secure user authentication using bcryptjs for password hashing.</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Infrastructure hosted on Cloudflare with sensitive API keys secured via environment variables.</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            {/* Project 4: EasyAdmin */}
-                            <div>
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
-
-                                    <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                        <span className="text-cyber-pink">&gt;</span> EasyAdmin
-                                    </h3>
-                                    <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
-                                </div>
-                                <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                                    <ul className="space-y-2 text-cyber-muted font-mono text-sm">
-                                        <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">TECH:</span> Bash, Linux Automation</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Multilingual (TR/EN/PL) CLI framework for automated headless server management.</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Automates user management, permissions, and log archiving for Debian-based (Ubuntu) systems.</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            {projects.map((project) => <ProjectEntry key={project.id} project={project} detailed />)}
 
                         </div>
                     </div>
@@ -214,18 +138,11 @@ const AboutMe = () => {
                         </h2>
                         <div className="border border-cyber-border bg-cyber-black p-5">
                             <ul className="space-y-4 text-cyber-muted font-mono text-sm">
-                                <li>
-                                    <span className="text-cyber-pink">&gt;</span> <span className="text-white font-bold">PixelART (Python):</span> A generative art algorithm using randomized color-flow logic for unique digital transitions.
-                                </li>
-                                <li>
-                                    <span className="text-cyber-pink">&gt;</span> <span className="text-white font-bold">YT Video Downloader (Python):</span> Terminal utility to fetch high-bitrate audio directly from YouTube servers.
-                                </li>
-                                <li>
-                                    <span className="text-cyber-pink">&gt;</span> <span className="text-white font-bold">Focus Timer CLI (C++):</span> A productivity tool utilizing the ncurses library for a functional terminal UI.
-                                </li>
-                                <li>
-                                    <span className="text-cyber-pink">&gt;</span> <span className="text-white font-bold">Security & Web Tools:</span> Developed a high-entropy Password Generator (Python) and various Web Scrapers (Selenium) for automation and data practice.
-                                </li>
+                                {experiments.map((item) => (
+                                    <li key={item.name}>
+                                        <span className="text-cyber-pink">&gt;</span> <span className="text-white font-bold">{item.name}:</span> {item.text}
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>

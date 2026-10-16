@@ -1,4 +1,5 @@
 'use client';
+// Adapted from React Bits (https://reactbits.dev), (c) 2026 David Haz, MIT + Commons Clause. See CREDITS.md.
 
 import { useEffect, useRef, useState, createElement, useMemo, useCallback } from 'react';
 import { gsap } from 'gsap';

@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react'; import { Link } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
-import { profile } from '@/shared/config/profile';
-import { Terminal, Cpu, Network, Github, Linkedin, ChevronRight, Download, PersonStanding, LucidePersonStanding } from 'lucide-react';
+import { Terminal, Cpu, Network, ChevronRight, LucidePersonStanding, Mail, Code } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
+import { profile } from '@/shared/config/profile';
+import WarsawClock from './WarsawClock';
+import { features } from '@/shared/config/features';
+import { featuredProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
+// Card icon per project kind
+const KIND_ICON = { Hardware: Cpu, Platform: Network, CLI: Terminal };
+
+// TextType types one character at a time, so its box grows and pushes the content below it.
+// An invisible copy of the full text sits in the same grid cell and reserves the final size up front.
+const Reserve = ({ text, children }) => (
+    <span className="grid">
+        <span aria-hidden="true" className="invisible col-start-1 row-start-1">{text}</span>
+        <span className="col-start-1 row-start-1">{children}</span>
+    </span>
+);
+
 const Home = () => {
-    useDocumentMeta({ description: 'Ekin Efe Gungor - engineer, builder of small tools, and the home of GNRdigital.' });
+    useDocumentMeta({ description: `Ekin Efe Gungor - CS student in ${profile.location.city} building reliable tools in Python, Bash and embedded C++.${profile.availability.open ? ` ${profile.availability.text}.` : ''}` });
     const [showProfile, setShowProfile] = useState(false);
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -22,7 +37,7 @@ const Home = () => {
         <PageShell width="5xl">
 
                 {/* === HERO SECTION === */}
-                <section className="relative pt-24 pb-16 px-4 md:px-12 max-w-7xl mx-auto">
+                <section className="relative pt-8 md:pt-16 pb-16 px-4 md:px-12 max-w-7xl mx-auto">
 
                     {/* Decorative Top Line */}
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-border to-transparent" />
@@ -31,16 +46,19 @@ const Home = () => {
 
                         {/* Left: Intro Text */}
                         <div className="space-y-6">
-                            {/* <div className="inline-flex items-center gap-2 px-3 py-1 border border-cyber-active/30 bg-cyber-active/5 rounded-full">
-                                <span className="w-2 h-2 bg-cyber-active rounded-full animate-pulse" />
-                                <span className="text-xs font-mono font-bold text-cyber-active tracking-widest">
-                                    SYSTEM ONLINE // WARSAW, PL
-                                </span>
-                            </div> */}
+                            <div className="inline-flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-1 border border-cyber-active/30 bg-cyber-active/5 rounded-full text-xs font-mono font-bold tracking-widest">
+                                {profile.availability.open && (
+                                    <span className="flex items-center gap-2 text-cyber-active">
+                                        <span aria-hidden="true" className="w-2 h-2 bg-cyber-active rounded-full animate-pulse" />
+                                        {profile.availability.text.toUpperCase()}
+                                    </span>
+                                )}
+                                <span className="text-cyber-muted">{profile.location.city.toUpperCase()}, {profile.location.country} · <WarsawClock /></span>
+                            </div>
 
                             <div className="space-y-2">
-                                <h1 className="text-5xl md:text-7xl font-sans font-bold text-white tracking-tighter leading-tight">
-                                    &gt; <TextType
+                                <h1 className="text-4xl sm:text-5xl md:text-7xl font-sans font-bold text-white tracking-tighter leading-tight">
+                                    &gt; <Reserve text="EKIN EFE GUNGOR"><TextType
                                         text={["EKIN EFE GUNGOR"]}
                                         typingSpeed={75}
                                         pauseDuration={1500}
@@ -53,11 +71,11 @@ const Home = () => {
                                         variableSpeedMin={60}
                                         variableSpeedMax={120}
                                         cursorBlinkDuration={0.5}
-                                    />
+                                    /></Reserve>
                                 </h1>
                                 <p className="text-xl md:text-2xl font-mono text-cyber-muted">
                                     &gt;
-                                    <TextType
+                                    <Reserve text="CS Student (AI & Data Science)"><TextType
                                         text={["CS Student (AI & Data Science)"]}
                                         initialDelay={1000}
                                         typingSpeed={75}
@@ -71,28 +89,26 @@ const Home = () => {
                                         variableSpeedMin={60}
                                         variableSpeedMax={120}
                                         cursorBlinkDuration={0.5}
-                                    />
+                                    /></Reserve>
                                 </p>
                             </div>
 
-                            <p className="text-lg text-cyber-text/80 max-w-lg leading-relaxed font-sans">
-                                Building reliable tools and CLI utilities that clarify workflows. Specializing in Python, Linux Automation, and Embedded Systems.
-                            </p>
-
-                            <div className="flex flex-wrap gap-4 pt-4">
-                                {/* <a href="https://github.com/ekinefe" target="_blank" rel="noreferrer">
-                                    <CyberButton variant="primary" icon={Github}>GitHub</CyberButton>
-                                </a>
-                                <a href="https://www.linkedin.com/in/ekin-efe-gungor-18336a20a/" target="_blank" rel="noreferrer">
-                                    <CyberButton variant="secondary" icon={Linkedin}>LinkedIn</CyberButton>
-                                </a> */}
-                                {/* <Link to="/cv">
-                                    <CyberButton variant="ghost" icon={LucidePersonStanding}>More About Me</CyberButton>
-                                </Link> */}
+                            <div className="flex flex-wrap gap-4 pt-0">
+                                <Link to="/contact">
+                                    <CyberButton variant="primary" icon={Mail}>Get in touch</CyberButton>
+                                </Link>
+                                <Link to="/projects">
+                                    <CyberButton variant="secondary" icon={Code}>View projects</CyberButton>
+                                </Link>
                                 <Link to="/about">
-                                    <CyberButton variant="secondary" icon={LucidePersonStanding}>More About Me</CyberButton>
+                                    <CyberButton variant="ghost" icon={LucidePersonStanding}>More About Me</CyberButton>
                                 </Link>
                             </div>
+
+                            <p className="text-lg text-cyber-text/80 max-w-lg leading-relaxed font-sans">
+                                Python and Bash automation on Linux, embedded C++ on Arduino. I build small, reliable tools that remove manual steps, and I am looking for a team to learn from and ship with.
+                            </p>
+
                         </div>
 
 
@@ -175,63 +191,33 @@ const Home = () => {
                                     /projects/featured
                                 </p>
                             </div>
-                            <Link to="/tools" className="hidden md:flex items-center gap-2 text-cyber-pink hover:text-white transition-colors font-mono text-sm">
-                                VIEW ALL TOOLS <ChevronRight className="w-4 h-4" />
+                            <Link to={features.tools ? '/tools' : '/projects'} className="hidden md:flex items-center gap-2 text-cyber-pink hover:text-white transition-colors font-mono text-sm">
+                                {features.tools ? 'VIEW ALL TOOLS' : 'VIEW ALL PROJECTS'} <ChevronRight className="w-4 h-4" />
                             </Link>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                            {/* Project 1: CW Keyer */}
-                            <CyberCard title="CW KEYER (HARDWARE)" className="h-full">
-                                <div className="mb-4 text-cyber-cyan">
-                                    <Cpu className="w-8 h-8 mb-2" />
-                                </div>
-                                <p className="text-sm text-cyber-text mb-4 min-h-[40px]">
-                                    Real-time Morse code keyer built with Arduino/C++. Standalone operation with LCD & paddles.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">C++</span>
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Embedded</span>
-                                </div>
-                                <a href={profile.repos.cwKeyer} target="_blank" rel="noreferrer" className="text-cyber-pink text-xs font-mono hover:underline">
-                                    SOURCE_CODE &gt;&gt;
-                                </a>
-                            </CyberCard>
-
-                            {/* Project 2: GNRdigital */}
-                            <CyberCard title={`${brand.name} (SAAS)`} className="h-full border-cyber-pink/40">
-                                <div className="mb-4 text-cyber-pink">
-                                    <Network className="w-8 h-8 mb-2" />
-                                </div>
-                                <p className="text-sm text-cyber-text mb-4 min-h-[40px]">
-                                    Full-stack sandbox & micro-SaaS platform. Hosted on Cloudflare with React & Node.js.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">React</span>
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Cloudflare</span>
-                                </div>
-                                <span className="text-cyber-active text-xs font-mono flex items-center gap-2">
-                                    <span className="w-2 h-2 bg-cyber-active rounded-full animate-pulse" />
-                                    DEPLOYED
-                                </span>
-                            </CyberCard>
-
-                            {/* Project 3: Easy Admin */}
-                            <CyberCard title="EASY ADMIN (CLI)" className="h-full">
-                                <div className="mb-4 text-cyber-cyan">
-                                    <Terminal className="w-8 h-8 mb-2" />
-                                </div>
-                                <p className="text-sm text-cyber-text mb-4 min-h-[40px]">
-                                    Bash framework automating Linux admin tasks like user management and log archiving.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Bash</span>
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Linux</span>
-                                </div>
-                                <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
-                            </CyberCard>
-
+                            {featuredProjects.map((project) => (
+                                <CyberCard key={project.id} title={`${project.name.replace(/ \(.*\)$/, '').toUpperCase()} (${project.kind.toUpperCase()})`} className="h-full">
+                                    <div className="mb-4 text-cyber-cyan">
+                                        {React.createElement(KIND_ICON[project.kind] ?? Terminal, { className: 'w-8 h-8 mb-2' })}
+                                    </div>
+                                    <p className="text-sm text-cyber-text mb-4 min-h-[40px]">{project.summary}</p>
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        {project.tech.slice(0, 2).map((t) => (
+                                            <span key={t} className="px-2 py-1 bg-cyber-panel border border-cyber-border text-xs font-mono rounded text-cyber-muted">{t}</span>
+                                        ))}
+                                    </div>
+                                    {project.repo ? (
+                                        <a href={project.repo} target="_blank" rel="noreferrer" className="text-cyber-pink text-xs font-mono hover:underline">
+                                            SOURCE_CODE &gt;&gt;
+                                        </a>
+                                    ) : (
+                                        <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
+                                    )}
+                                </CyberCard>
+                            ))}
                         </div>
                     </div>
                 </section>

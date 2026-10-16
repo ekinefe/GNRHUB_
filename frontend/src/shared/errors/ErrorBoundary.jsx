@@ -16,8 +16,8 @@ class Boundary extends React.Component {
     componentDidCatch(error, info) {
         console.error('Uncaught render error:', error, info?.componentStack);
         // A chunk that 404s after a deploy is fixed by one reload; guard against a reload loop.
-        if (isChunkError(error) && !sessionStorage.getItem('chunk-reloaded')) {
-            sessionStorage.setItem('chunk-reloaded', '1');
+        if (isChunkError(error) && !sessionStorage.getItem('gnrdigital:chunk-reloaded')) {
+            sessionStorage.setItem('gnrdigital:chunk-reloaded', '1');
             window.location.reload();
         }
     }

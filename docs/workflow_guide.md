@@ -1,7 +1,7 @@
-# 🚀 SOP: Pushing the High-Tech Theme to GitHub
+# 🛠️ Engineering Standard Operating Procedure (SOP)
 
-**Objective:** Commit and push the new Tailwind configuration, fonts, and CSS variables without breaking the build.
-**Target Branch:** `develop` via Pull Request.
+**Objective:** Standardize the workflow for adding new features to GNRdigital [v2].
+**Branching Strategy:** superseded. The current model is `feature/GNR-n` → integration branch → `main`; see [WORKFLOW.md](WORKFLOW.md). `develop` is retired, so read "develop" below as the integration branch.
 
 ---
 
@@ -17,69 +17,86 @@ git pull origin develop
 ```
 
 ## 2. Create a Feature Branch
-We never push directly to develop. Create a specific "container" for this task.
+Never push directly to develop. Create a specific "container" for your task.
+
+- Naming Convention: type/description
+    - feat/ = New features
+    - fix/ = Bug fixes
+    - docs/ = Documentation changes
 
 ```Bash
-# Syntax: git checkout -b feature/<descriptive-name>
-git checkout -b feature/high-tech-theme
+# Example: git checkout -b feat/add-login-screen
+git checkout -b <type>/<descriptive-name>
 ```
 
-## 3. Stage the Files
-Select exactly which files belong to this "Theme Update".
+## 3. Stage & Verify
+Add only the files related to your task.
 
 ```Bash
-# Add the configuration files
-git add frontend/tailwind.config.js
-git add frontend/postcss.config.js
+# Add all changes in the current folder
+git add .
 
-# Add the global CSS and HTML updates
-git add frontend/src/index.css
-git add frontend/index.html
+# OR add specific files
+# git add frontend/src/App.jsx
 
-# Check what you are about to commit (Verify!)
+# ALWAYS check status before committing
 git status
-Check: You should see green text listing only the 4 files above.
 ```
 
-## 4. Commit the Changes
-Write a "Conventional Commit" message. This creates a clean history log.
+## 4. Commit the Changes (Conventional Commits)
+We use Conventional Commits to keep our history clean.
 
 ```Bash
 # Format: type(scope): description
-git commit -m "feat(ui): implement jetbrains mono and cyberpunk theme tokens"
+# Example: feat(auth): implement supabase login logic
+git commit -m "<type>(<scope>): <description>"
 ```
 
 ## 5. Push to GitHub
 Send your feature branch to the remote server.
 
 ```Bash
-git push -u origin feature/high-tech-theme
+git push -u origin <your-branch-name>
 ```
 
 ## 6. The Pull Request (GitHub UI)
-1. Go to your repository: https://github.com/ekinefe/GNRHUB_
-2. You will see a yellow banner: "feature/high-tech-theme had recent pushes".
-3. Click Compare & pull request.
-4. Base: develop | Compare: feature/high-tech-theme.
-5. Title: feat: high-tech theme implementation.
-6. Description:
-
-    ```Markdown
-    ## 🎨 Theme Update
-    - Added `JetBrains Mono` and `Space Grotesk` fonts.
-    - Configured Tailwind `cyber` color palette.
-    - Added global dark mode reset in `index.css`.
-    ```
-7. Click Create Pull Request.
+1. Go to the GitHub Repository.
+2. Click Compare & pull request on the yellow banner.
+3. Base: develop | Compare: <your-branch-name>.
+4. Title: <type>: <description>.
+5. Description: Fill out the PR Template (What did you do? How did you test it?).
+6. Click Create Pull Request.
 
 ## 7. Merge & Cleanup
-1. Wait for the Gatekeeper (CI) to pass (if active).
+1. Wait for the Gatekeeper (CI) to pass.
 2. Click Merge pull request.
-3. Click Delete branch (the remote feature branch).
-4. Back in your terminal:
-    ``` Bash
-    git checkout develop
-    git pull origin develop
-    git branch -d feature/high-tech-theme
-    Status: Your local develop is now synced with the new theme!
+3. Click Delete branch (on GitHub).
+4. Sync your local machine:
+
+```Bash
+git checkout develop
+git pull origin develop
+git branch -d <your-branch-name>
+git fetch -p
+```
+---
+
+
+### **How to Update This Now**
+Since you are already on the `feature/high-tech-theme` branch, you can update this file and include it in your current Push.
+
+1.  **Edit the file:** Paste the new text above into `docs/workflow_guide.md`.
+2.  **Add the change:**
+    ```bash
+    git add docs/workflow_guide.md
     ```
+3.  **Amend your previous commit:** (This is a pro tip to avoid having two commits for the same setup).
+    ```bash
+    git commit --amend --no-edit
+    ```
+4.  **Force Push:** (Since you modified history with `--amend`, you need to force update the remote branch).
+    ```bash
+    git push -f origin feature/high-tech-theme
+    ```
+
+**After this, your Pull Request on GitHub will automatically update to show the new, professional guide!**

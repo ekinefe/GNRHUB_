@@ -20,3 +20,18 @@ describe('index.html', () => {
         }
     })
 })
+
+describe('index.html privacy', () => {
+    it('loads no third-party stylesheets or fonts (the Privacy page says fonts are self-hosted)', () => {
+        expect(html).not.toMatch(/<link[^>]+href="https?:/)
+        expect(html).not.toMatch(/fonts\.(googleapis|gstatic)\.com/)
+    })
+})
+
+describe('index.html social image', () => {
+    it('points og:image and twitter:image at the generated 1200x630 PNG', () => {
+        expect(html).toContain('property="og:image" content="%BRAND_URL%/og.png"')
+        expect(html).toContain('name="twitter:image" content="%BRAND_URL%/og.png"')
+        expect(existsSync('public/og.png')).toBe(true)
+    })
+})

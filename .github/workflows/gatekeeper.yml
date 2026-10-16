@@ -2,7 +2,7 @@ name: 🛡️ Gatekeeper (CI)
 
 on:
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop, feat/auth-and-BrandBookEditor]
 
 jobs:
   test-frontend:
@@ -21,6 +21,23 @@ jobs:
           cd frontend
           npm install
           npm run test:unit # Runs Vitest
+
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      - name: Check external links (fails on a broken link; bot-blocked sites are reported, not failed)
+        run: |
+          cd frontend
+          npm install
+          npm run check:links
+      # Internal links are checked by the unit tests (src/links.test.js).
 
   test-microservices:
     runs-on: ubuntu-latest
