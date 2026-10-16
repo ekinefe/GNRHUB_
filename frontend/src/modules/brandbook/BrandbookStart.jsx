@@ -24,7 +24,7 @@ const BrandBookStart = () => {
                 <div className="relative bg-cyber-black border border-cyber-border p-8 md:p-12 shadow-2xl flex flex-col items-center text-center">
 
                     {/* Icon */}
-                    <div className="w-16 h-16 bg-cyber-panel border border-cyber-cyan flex items-center justify-center mb-8 shadow-[0_0_15px_rgba(0,255,255,0.1)]">
+                    <div className="w-16 h-16 bg-cyber-panel border border-cyber-cyan flex items-center justify-center mb-8 shadow-[0_0_15px_rgb(var(--cyber-cyan)/0.1)]">
                         <Palette className="w-8 h-8 text-cyber-cyan" />
                     </div>
 

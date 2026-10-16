@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import FuzzyText from '@/shared/animations/FuzzyText';
+import { tokenColor } from '@/shared/config/tokens';
 
 const TONES = {
-    alert: { color: '#ff003c', border: 'border-cyber-offline', bg: 'bg-cyber-offline/5', glow: 'text-cyber-offline' },
-    pink: { color: '#ff003c', border: 'border-cyber-pink', bg: 'bg-cyber-pink/5', glow: 'text-cyber-pink' },
+    alert: { color: 'alert', border: 'border-cyber-offline', bg: 'bg-cyber-offline/5', glow: 'text-cyber-offline' },
+    pink: { color: 'alert', border: 'border-cyber-pink', bg: 'bg-cyber-pink/5', glow: 'text-cyber-pink' },
 };
 
 // One layout for the error pages (404, 500, later 403).
@@ -44,13 +45,13 @@ export default function ErrorScreen({ code, heading, log = [], actions, tone = '
     return (
         <div className="min-h-screen bg-cyber-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 pointer-events-none"
-                style={{ backgroundImage: 'radial-gradient(#333333 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+                style={{ backgroundImage: 'radial-gradient(rgb(var(--cyber-border)) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
             <div className="relative z-10 text-center space-y-8 max-w-2xl">
                 {icon && <div className="flex justify-center">{icon}</div>}
 
                 <div>
-                    <FuzzyText fontSize="clamp(4rem, 12vw, 9rem)" fontWeight={900} color={t.color} baseIntensity={0.2} hoverIntensity={0.5} enableHover={true}>
+                    <FuzzyText fontSize="clamp(4rem, 12vw, 9rem)" fontWeight={900} color={tokenColor(t.color)} baseIntensity={0.2} hoverIntensity={0.5} enableHover={true}>
                         {code}
                     </FuzzyText>
                 </div>

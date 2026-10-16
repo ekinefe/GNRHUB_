@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Lock } from 'lucide-react';
 // 1. Fixed: Import the component
 import FuzzyText from '@/shared/animations/FuzzyText';
+import { tokenColor } from '@/shared/config/tokens';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Unauthorized = () => {
@@ -19,7 +20,7 @@ const Unauthorized = () => {
                     <FuzzyText
                         fontSize="3rem"
                         fontWeight={900}
-                        color="#fff"
+                        color={tokenColor('text')}
                         baseIntensity={0.1}
                         hoverIntensity={0.3}
                         enableHover={true}

@@ -20,11 +20,11 @@ const Header = () => {
     ];
 
     return (
-        <header className="fixed top-0 left-0 w-full z-50 border-b border-cyber-border bg-cyber-black/90 backdrop-blur-md">
+        <header className="fixed top-0 left-0 w-full z-header border-b border-cyber-border bg-cyber-black/90 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
 
                 {/* === LEFT: LOGO === */}
-                <Link to="/" className="group z-50 flex-shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link to="/" className="group z-header flex-shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
                     <div className="border border-cyber-text bg-cyber-black px-3 py-1.5 font-mono font-bold text-lg uppercase text-cyber-text transition-colors duration-300 group-hover:border-cyber-pink group-hover:text-cyber-pink">
                         {brand.wordmark} <span className="text-cyber-pink text-xs align-top">{brand.version}</span>
                     </div>
@@ -54,7 +54,7 @@ const Header = () => {
                 </nav>
 
                 {/* === RIGHT: MOBILE MENU TOGGLE === */}
-                <div className="md:hidden flex items-center z-50">
+                <div className="md:hidden flex items-center z-header">
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="text-cyber-text hover:text-cyber-pink transition-colors p-2 border border-transparent hover:border-cyber-border"
