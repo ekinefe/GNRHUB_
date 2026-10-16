@@ -1,5 +1,4 @@
 import React from 'react';
-import { brand } from '@/shared/config/brand';
 import { profile } from '@/shared/config/profile';
 import { Link } from 'react-router-dom';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download, Mail } from 'lucide-react';
@@ -8,6 +7,8 @@ import TextType from '@/shared/animations/TextType';
 import avatar from '@/assets/AboutMe/avatar.jpg';
 import cv from '@/assets/Ekin_Efe_GUNGOR_CV_ATS.pdf';
 import PageShell from '@/shared/layout/PageShell';
+import ProjectEntry from './ProjectEntry';
+import { aboutProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const AboutMe = () => {
@@ -289,64 +290,7 @@ const AboutMe = () => {
                             {/* Inner container for the projects with a smaller gap between each project */}
                             <div className="space-y-8">
 
-                                {/* Project 1: CW Keyer */}
-                                <div>
-                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
-                                        <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                            <span className="text-cyber-pink">&gt;</span> CW Keyer
-
-                                        </h3>
-                                        <a href={profile.repos.cwKeyer} target="_blank" rel="noreferrer">
-                                            <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
-                                        </a>
-                                    </div>
-                                    <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                                        <ul className="space-y-2 text-cyber-muted font-mono text-sm">
-                                            <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">TECH:</span> C++, Arduino, Embedded Systems</li>
-                                            <li><span className="text-cyber-pink">&gt;</span> Real-time Morse code keyer with standalone operation via LCD and paddles.</li>
-                                            <li><span className="text-cyber-pink">&gt;</span> Developed firmware in C/C++ and designed circuitry from scratch.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                {/* Project 2: GNRdigital */}
-                                <div>
-                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
-                                        <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                            <span className="text-cyber-pink">&gt;</span> {brand.name} (Personal Platform)
-
-                                        </h3>
-                                        <a href={profile.repos.platform} target="_blank" rel="noreferrer">
-                                            <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
-                                        </a>
-                                    </div>
-                                    <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                                        <ul className="space-y-2 text-cyber-muted font-mono text-sm">
-                                            <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">TECH:</span> React.js, Node.js, Cloudflare, Tailwind</li>
-                                            <li><span className="text-cyber-pink">&gt;</span> Full-stack sandbox developed into a micro-SaaS platform.</li>
-                                            <li><span className="text-cyber-pink">&gt;</span> Implemented secure user authentication and secured API environments.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                {/* Project 3: Easy Admin */}
-                                <div>
-                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
-
-                                        <h3 className='text-xl font-bold text-white mb-3 flex items-center gap-2'>
-                                            <span className="text-cyber-pink">&gt;</span> EasyAdmin
-
-                                        </h3>
-                                        <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
-                                    </div>
-                                    <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                                        <ul className="space-y-2 text-cyber-muted font-mono text-sm">
-                                            <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">TECH:</span> Bash, Linux Automation, Cron</li>
-                                            <li><span className="text-cyber-pink">&gt;</span> Multilingual (TR/EN/PL) CLI framework for automated headless server management.</li>
-                                            <li><span className="text-cyber-pink">&gt;</span> Automates user management, permissions, and log archiving for Debian-based systems.</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                {aboutProjects.map((project) => <ProjectEntry key={project.id} project={project} points={2} />)}
 
                             </div>
                         </div>

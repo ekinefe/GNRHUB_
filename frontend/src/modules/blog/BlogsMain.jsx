@@ -3,7 +3,7 @@ import { Folder, Calendar, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CyberButton from '@/shared/ui/CyberButton';
 import CatalogPage from '@/shared/catalog/CatalogPage';
-import { mockBlogs } from './mockBlogs';
+import { blogs } from '@/shared/content/blogs';
 
 const renderBlog = (blog, { highlight }) => (
     <article key={blog.id} className="border border-cyber-border bg-cyber-black p-6 transition-colors hover:border-cyber-pink/50 group block">
@@ -43,7 +43,7 @@ const renderBlog = (blog, { highlight }) => (
 
 const BlogsMain = () => (
     <CatalogPage
-        items={mockBlogs}
+        items={blogs}
         heroTitle="/BLOGS_&_RESEARCH"
         heroText="A collection of technical write-ups, project logs, and research notes. Covering everything from embedded systems to web development and data science."
         metaTitle="Blogs"

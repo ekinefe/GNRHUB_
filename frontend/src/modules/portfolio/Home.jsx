@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'; import { Link } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
-import { profile } from '@/shared/config/profile';
 import { Terminal, Cpu, Network, Github, Linkedin, ChevronRight, Download, PersonStanding, LucidePersonStanding } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
 import { features } from '@/shared/config/features';
+import { featuredProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
+
+// Card icon per project kind
+const KIND_ICON = { Hardware: Cpu, Platform: Network, CLI: Terminal };
 
 const Home = () => {
     useDocumentMeta({ description: 'Ekin Efe Gungor - engineer, builder of small tools, and the home of GNRdigital.' });
@@ -183,56 +186,26 @@ const Home = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                            {/* Project 1: CW Keyer */}
-                            <CyberCard title="CW KEYER (HARDWARE)" className="h-full">
-                                <div className="mb-4 text-cyber-cyan">
-                                    <Cpu className="w-8 h-8 mb-2" />
-                                </div>
-                                <p className="text-sm text-cyber-text mb-4 min-h-[40px]">
-                                    Real-time Morse code keyer built with Arduino/C++. Standalone operation with LCD & paddles.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">C++</span>
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Embedded</span>
-                                </div>
-                                <a href={profile.repos.cwKeyer} target="_blank" rel="noreferrer" className="text-cyber-pink text-xs font-mono hover:underline">
-                                    SOURCE_CODE &gt;&gt;
-                                </a>
-                            </CyberCard>
-
-                            {/* Project 2: GNRdigital */}
-                            <CyberCard title={`${brand.name} (SAAS)`} className="h-full border-cyber-pink/40">
-                                <div className="mb-4 text-cyber-pink">
-                                    <Network className="w-8 h-8 mb-2" />
-                                </div>
-                                <p className="text-sm text-cyber-text mb-4 min-h-[40px]">
-                                    Full-stack sandbox & micro-SaaS platform. Hosted on Cloudflare with React & Node.js.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">React</span>
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Cloudflare</span>
-                                </div>
-                                <span className="text-cyber-active text-xs font-mono flex items-center gap-2">
-                                    <span className="w-2 h-2 bg-cyber-active rounded-full animate-pulse" />
-                                    DEPLOYED
-                                </span>
-                            </CyberCard>
-
-                            {/* Project 3: Easy Admin */}
-                            <CyberCard title="EASY ADMIN (CLI)" className="h-full">
-                                <div className="mb-4 text-cyber-cyan">
-                                    <Terminal className="w-8 h-8 mb-2" />
-                                </div>
-                                <p className="text-sm text-cyber-text mb-4 min-h-[40px]">
-                                    Bash framework automating Linux admin tasks like user management and log archiving.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Bash</span>
-                                    <span className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">Linux</span>
-                                </div>
-                                <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
-                            </CyberCard>
-
+                            {featuredProjects.map((project) => (
+                                <CyberCard key={project.id} title={`${project.name.replace(/ \(.*\)$/, '').toUpperCase()} (${project.kind.toUpperCase()})`} className="h-full">
+                                    <div className="mb-4 text-cyber-cyan">
+                                        {React.createElement(KIND_ICON[project.kind] ?? Terminal, { className: 'w-8 h-8 mb-2' })}
+                                    </div>
+                                    <p className="text-sm text-cyber-text mb-4 min-h-[40px]">{project.summary}</p>
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        {project.tech.slice(0, 2).map((t) => (
+                                            <span key={t} className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">{t}</span>
+                                        ))}
+                                    </div>
+                                    {project.repo ? (
+                                        <a href={project.repo} target="_blank" rel="noreferrer" className="text-cyber-pink text-xs font-mono hover:underline">
+                                            SOURCE_CODE &gt;&gt;
+                                        </a>
+                                    ) : (
+                                        <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
+                                    )}
+                                </CyberCard>
+                            ))}
                         </div>
                     </div>
                 </section>

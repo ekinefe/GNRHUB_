@@ -3,7 +3,7 @@ import { Folder, Calendar, ChevronRight, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CyberButton from '@/shared/ui/CyberButton';
 import CatalogPage from '@/shared/catalog/CatalogPage';
-import { mockTools } from './mockTools';
+import { tools } from '@/shared/content/tools';
 import { useAuth } from '@/modules/auth/AuthContext';
 
 const ToolsMain = () => {
@@ -74,7 +74,7 @@ const ToolsMain = () => {
 
     return (
         <CatalogPage
-            items={mockTools}
+            items={tools}
             heroTitle="/TOOLS_&_UTILITIES"
             heroText="A collection of practical tools, CLI utilities, and scripts I've built to automate workflows and diagnose problems."
             metaTitle="Tools"
