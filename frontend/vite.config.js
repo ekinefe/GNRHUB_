@@ -22,6 +22,20 @@ export default defineConfig({
     // Fills %BRAND_NAME% in index.html from src/config/brand.js (single source of truth)
     { name: 'brand-html', transformIndexHtml: (html) => html.replaceAll('%BRAND_NAME%', brand.name) },
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        // Stable vendor chunks cache well across deploys and keep the app chunk small.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return undefined
+          if (/node_modules\/(react|react-dom|react-router|react-router-dom|scheduler)\//.test(id)) return 'vendor-react'
+          if (/node_modules\/(motion|framer-motion|gsap)\//.test(id)) return 'vendor-motion'
+          if (id.includes('@supabase')) return 'vendor-supabase'
+          return undefined
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

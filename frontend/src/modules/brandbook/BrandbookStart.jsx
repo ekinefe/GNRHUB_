@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Palette, Monitor, ChevronRight } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
-import BrandBookEditor from './BrandBookEditor';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const BrandBookStart = () => {
