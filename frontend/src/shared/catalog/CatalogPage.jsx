@@ -6,6 +6,7 @@ import PageShell from '@/shared/layout/PageShell';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { matchesQuery, closestTags } from '@/shared/lib/searchText';
 import Highlight from '@/shared/ui/Highlight';
+import Input from '@/shared/ui/Input';
 
 const ALL = 'All';
 
@@ -88,7 +89,7 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                             Search
                         </h2>
                         <div className="relative">
-                            <input
+                            <Input
                                 type="text"
                                 ref={searchRef}
                                 placeholder={`${searchPlaceholder}  ( / )`}
@@ -96,7 +97,7 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Escape' && setSearchQuery('')}
-                                className="w-full bg-cyber-black border border-cyber-border text-cyber-text p-3 font-mono text-sm focus:outline-none focus:border-cyber-pink transition-colors mb-2"
+                                className="mb-2 focus:border-cyber-pink focus-visible:ring-cyber-pink"
                             />
                             <div className="h-6 font-mono text-xs">
                                 {debouncedQuery && (
