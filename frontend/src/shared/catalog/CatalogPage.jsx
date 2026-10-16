@@ -8,13 +8,16 @@ import { useDebounce } from '@/shared/hooks/useDebounce';
 import { matchesQuery, closestTags } from '@/shared/lib/searchText';
 import Highlight from '@/shared/ui/Highlight';
 import Input from '@/shared/ui/Input';
+import EmptyState from '@/shared/ui/EmptyState';
+import { ListSkeleton } from '@/shared/ui/Skeleton';
 
 const ALL = 'All';
 
 // A searchable, filterable list page (tools, blogs, ...).
 //   items: [{ id, title, excerpt, category, tags[] }]
+//   status: 'ready' | 'loading' | 'error' (loading shows skeletons; error shows a retry via onRetry)
 //   renderItem(item, { highlight }) -> the card for one item; highlight(text) marks the search matches
-export default function CatalogPage({ items, heroTitle, heroText, searchPlaceholder, renderItem, metaTitle, metaDescription, debounceMs = 250 }) {
+export default function CatalogPage({ items, heroTitle, heroText, searchPlaceholder, renderItem, metaTitle, metaDescription, status = 'ready', onRetry, debounceMs = 250 }) {
     useDocumentMeta({ title: metaTitle, description: metaDescription });
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(ALL);
@@ -169,11 +172,18 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                         </div>
                     </div>
 
-                    {filtered.length > 0 ? (
+                    {status === 'loading' ? (
+                        <ListSkeleton />
+                    ) : status === 'error' ? (
+                        <EmptyState variant="error" title="Could not load the list.">
+                            {onRetry && (
+                                <button onClick={onRetry} className="font-mono text-sm text-cyber-pink hover:underline">[ RETRY ]</button>
+                            )}
+                        </EmptyState>
+                    ) : filtered.length > 0 ? (
                         <div className="space-y-6">{filtered.map((item) => renderItem(item, { highlight }))}</div>
                     ) : (
-                        <div className="border border-dashed border-cyber-border p-12 text-center">
-                            <p className="font-mono text-cyber-muted mb-4">No results found matching your criteria.</p>
+                        <EmptyState title="No results found matching your criteria.">
                             {suggestions.length > 0 && (
                                 <div className="mb-6">
                                     <p className="font-mono text-xs text-cyber-muted mb-3">Try one of these tags:</p>
@@ -193,7 +203,7 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                             <button onClick={clearFilters} className="font-mono text-sm text-cyber-pink hover:underline">
                                 [ CLEAR_FILTERS ]
                             </button>
-                        </div>
+                        </EmptyState>
                     )}
                 </main>
             </div>
