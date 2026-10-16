@@ -1,29 +1,33 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Layouts
 import DashboardLayout from '@/shared/layout/DashboardLayout';
 import ScrollToTop from '@/shared/layout/ScrollToTop';
 import ErrorBoundary from '@/shared/errors/ErrorBoundary';
+import { ListSkeleton } from '@/shared/ui/Skeleton';
 
 // Auth Pages
-import Login from '@/modules/auth/Login';
-import Register from '@/modules/auth/Register';
 
 // Legal Pages
-import Privacy from '@/modules/legal/Privacy';
-import Terms from '@/modules/legal/Terms';
 
 // Pages
 import Home from '@/modules/portfolio/Home';
-import DesignSystem from '@/modules/portfolio/DesignSystem';
-import AboutMe from '@/modules/portfolio/AboutMe';
-import Projects from '@/modules/portfolio/Projects';
-import BlogsMain from '@/modules/blog/BlogsMain';
-import ToolsMain from '@/modules/tools/ToolsMain';
-import BrandBookStart from '@/modules/brandbook/BrandbookStart';
-import BrandBookEditor from '@/modules/brandbook/BrandBookEditor';
 
-import Contact from '@/modules/contact/Contact';
+// Every page except Home loads on demand, so the first visit downloads only what it shows.
+// (BrandBookEditor pulls in html2pdf, which now only loads on the editor route.)
+const Login = lazy(() => import('@/modules/auth/Login'));
+const Register = lazy(() => import('@/modules/auth/Register'));
+const Privacy = lazy(() => import('@/modules/legal/Privacy'));
+const Terms = lazy(() => import('@/modules/legal/Terms'));
+const DesignSystem = lazy(() => import('@/modules/portfolio/DesignSystem'));
+const AboutMe = lazy(() => import('@/modules/portfolio/AboutMe'));
+const Projects = lazy(() => import('@/modules/portfolio/Projects'));
+const BlogsMain = lazy(() => import('@/modules/blog/BlogsMain'));
+const ToolsMain = lazy(() => import('@/modules/tools/ToolsMain'));
+const BrandBookStart = lazy(() => import('@/modules/brandbook/BrandbookStart'));
+const BrandBookEditor = lazy(() => import('@/modules/brandbook/BrandBookEditor'));
+const Contact = lazy(() => import('@/modules/contact/Contact'));
 
 // Error Pages
 import NotFound from '@/shared/errors/NotFound';
@@ -35,6 +39,7 @@ function App() {
     <Router>
       <ScrollToTop />
       <ErrorBoundary>
+      <Suspense fallback={<div className="min-h-screen bg-cyber-black p-12"><ListSkeleton /></div>}>
       <Routes>
 
         {/* === AUTH ROUTES === */}
@@ -65,6 +70,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
 
       </Routes>
+      </Suspense>
       </ErrorBoundary>
 
     </Router>

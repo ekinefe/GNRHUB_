@@ -33,4 +33,11 @@ describe('App Routing System', () => {
         // Home content that renders immediately (the typed hero text animates in later).
         expect(screen.getByRole('link', { name: /More About Me/i })).toBeInTheDocument()
     })
+
+    it('loads a lazy route on demand', async () => {
+        window.history.pushState({}, '', '/contact')
+        render(<App />)
+        expect(await screen.findByText('/CONTACT')).toBeInTheDocument()
+        window.history.pushState({}, '', '/')
+    })
 })
