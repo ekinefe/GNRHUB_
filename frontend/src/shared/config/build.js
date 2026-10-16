@@ -2,4 +2,5 @@
 export const build = {
     sha: typeof __BUILD_SHA__ !== 'undefined' ? __BUILD_SHA__ : 'dev',
     date: typeof __BUILD_DATE__ !== 'undefined' ? __BUILD_DATE__ : '',
+    stack: typeof __STACK__ !== 'undefined' ? __STACK__ : {},
 };

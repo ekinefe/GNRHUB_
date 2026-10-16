@@ -52,6 +52,7 @@ const Footer = () => {
                 <p className="text-cyber-text uppercase tracking-wider mb-2">Legal</p>
                 <Link to="/privacy" className={`block ${linkClass}`}>Privacy</Link>
                 <Link to="/terms" className={`block ${linkClass}`}>Terms</Link>
+                <Link to="/colophon" className={`block ${linkClass}`}>Colophon</Link>
             </div>
         </div>
 

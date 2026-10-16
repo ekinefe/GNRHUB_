@@ -29,6 +29,7 @@ const BlogsMain = lazy(() => import('@/modules/blog/BlogsMain'));
 const ToolsMain = lazy(() => import('@/modules/tools/ToolsMain'));
 const BrandBookStart = lazy(() => import('@/modules/brandbook/BrandbookStart'));
 const BrandBookEditor = lazy(() => import('@/modules/brandbook/BrandBookEditor'));
+const Colophon = lazy(() => import('@/modules/colophon/Colophon'));
 const Contact = lazy(() => import('@/modules/contact/Contact'));
 
 // Error Pages
@@ -64,6 +65,7 @@ function App() {
           <Route path="/about" element={<AboutMe />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/colophon" element={<Colophon />} />
         </Route>
 
         {/* === ERROR ROUTES (No Header, Full Screen) === */}
