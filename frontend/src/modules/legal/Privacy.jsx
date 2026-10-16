@@ -1,8 +1,10 @@
 import React from 'react';
 import { Database, Lock, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Privacy = () => {
+    useDocumentMeta({ title: 'Privacy', description: 'How this site handles your data.' });
     return (
         <div className="min-h-screen p-4 py-12 flex justify-center">
             <div className="max-w-4xl w-full">

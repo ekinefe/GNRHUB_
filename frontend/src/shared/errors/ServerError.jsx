@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ServerCrash, RefreshCw } from 'lucide-react';
 import FuzzyText from '@/shared/animations/FuzzyText';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const ServerError = () => {
+    useDocumentMeta({ title: 'Something went wrong', noindex: true });
     return (
         <div className="min-h-screen bg-cyber-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
 

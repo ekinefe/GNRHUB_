@@ -4,8 +4,10 @@ import { Terminal, User, Lock, LogIn } from 'lucide-react';
 import { supabase } from '@/shared/lib/supabase';
 import Input from '@/shared/ui/Input';
 import CyberButton from '@/shared/ui/CyberButton';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Login = () => {
+    useDocumentMeta({ title: 'Log in', noindex: true });
     // Changed 'email' to 'identifier' to handle both formats
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');

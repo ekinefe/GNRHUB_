@@ -3,6 +3,7 @@ import { Search, Tag, Folder } from 'lucide-react';
 import TextType from '@/shared/animations/TextType';
 import DecryptedText from '@/shared/animations/DecryptedText';
 import PageShell from '@/shared/layout/PageShell';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { matchesQuery, closestTags } from '@/shared/lib/searchText';
 import Highlight from '@/shared/ui/Highlight';
@@ -13,7 +14,8 @@ const ALL = 'All';
 // A searchable, filterable list page (tools, blogs, ...).
 //   items: [{ id, title, excerpt, category, tags[] }]
 //   renderItem(item, { highlight }) -> the card for one item; highlight(text) marks the search matches
-export default function CatalogPage({ items, heroTitle, heroText, searchPlaceholder, renderItem, debounceMs = 250 }) {
+export default function CatalogPage({ items, heroTitle, heroText, searchPlaceholder, renderItem, metaTitle, metaDescription, debounceMs = 250 }) {
+    useDocumentMeta({ title: metaTitle, description: metaDescription });
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(ALL);
     const [selectedTag, setSelectedTag] = useState(ALL);

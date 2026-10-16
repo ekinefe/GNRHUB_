@@ -76,6 +76,8 @@ const ToolsMain = () => {
             items={mockTools}
             heroTitle="/TOOLS_&_UTILITIES"
             heroText="A collection of practical tools, CLI utilities, and scripts I've built to automate workflows and diagnose problems."
+            metaTitle="Tools"
+            metaDescription="Practical tools, CLI utilities and scripts built to automate workflows."
             searchPlaceholder="Search tools..."
             renderItem={renderTool}
         />

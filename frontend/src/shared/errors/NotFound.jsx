@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FuzzyText from '@/shared/animations/FuzzyText';
 import { ShieldAlert } from 'lucide-react'; // Icon for visual flair
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const NotFound = () => {
+    useDocumentMeta({ title: 'Page not found', noindex: true });
     return (
         <div className="min-h-screen bg-cyber-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
 
