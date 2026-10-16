@@ -6,6 +6,7 @@ import TextType from '@/shared/animations/TextType';
 import DecryptedText from '@/shared/animations/DecryptedText';
 import { mockTools } from './mockTools';
 import { useAuth } from '@/modules/auth/AuthContext'; // <-- ADDED AUTH CONTEXT
+import PageShell from '@/shared/layout/PageShell';
 
 const ToolsMain = () => {
     // Auth & Navigation
@@ -55,8 +56,7 @@ const ToolsMain = () => {
     };
 
     return (
-        <div className="min-h-screen bg-cyber-black bg-grid-pattern [background-size:50px_50px] text-cyber-text p-4 md:p-12 flex justify-center">
-            <div className="max-w-7xl w-full bg-cyber-black border-l border-r border-cyber-border min-h-screen p-4 md:p-8 shadow-2xl relative">
+        <PageShell width="7xl">
 
                 {/* Hero Section */}
                 <section className="relative pt-24 pb-12 mb-8 border-b border-cyber-border/40">
@@ -258,8 +258,7 @@ const ToolsMain = () => {
                         )}
                     </main>
                 </div>
-            </div>
-        </div>
+        </PageShell>
     );
 };
 

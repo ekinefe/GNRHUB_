@@ -4,12 +4,11 @@ import { profile } from './profile';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
+import PageShell from '@/shared/layout/PageShell';
 
 const AboutMe = () => {
     return (
-        <div className="min-h-screen bg-cyber-black bg-grid-pattern [background-size:50px_50px] text-cyber-text p-4 md:p-12 flex justify-center">
-
-            <div className="max-w-5xl w-full bg-cyber-black border-l border-r border-cyber-border min-h-screen p-8 shadow-2xl relative">
+        <PageShell width="5xl">
 
                 {/* Hero Section */}
                 <section className="relative pt-24 pb-16 mb-12 border-b border-cyber-border/40">
@@ -230,8 +229,7 @@ const AboutMe = () => {
                     </div>
 
                 </div>
-            </div>
-        </div>
+        </PageShell>
     );
 };
 
