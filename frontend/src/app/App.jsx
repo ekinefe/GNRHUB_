@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Layouts
 import DashboardLayout from '@/shared/layout/DashboardLayout';
+import AccountMenu from '@/modules/auth/AccountMenu';
+import { features } from '@/shared/config/features';
 import ScrollToTop from '@/shared/layout/ScrollToTop';
 import ErrorBoundary from '@/shared/errors/ErrorBoundary';
 import { ListSkeleton } from '@/shared/ui/Skeleton';
@@ -49,7 +51,7 @@ function App() {
         <Route path="/terms" element={<Terms />} />
 
         {/* === PUBLIC LAYOUT ROUTES (With Header) === */}
-        <Route element={<DashboardLayout />}>
+        <Route element={<DashboardLayout account={features.account ? <AccountMenu /> : null} />}>
           <Route path="/" element={<Home />} />
           <Route path="/design" element={<DesignSystem />} />
 
