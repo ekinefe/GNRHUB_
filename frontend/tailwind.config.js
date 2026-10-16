@@ -13,40 +13,52 @@ export default {
                 mono: ['"JetBrains Mono"', 'monospace'],
             },
             colors: {
+                // Values live in src/index.css (:root) as RGB triplets; edit them there.
                 cyber: {
-                    // Your exact background colors
-                    black: '#050505',  // --bg-dark
-                    panel: '#111111',  // --bg-panel
-                    border: '#333333', // --border
-
-                    // Your text colors
-                    text: '#eeeeee',   // --text-main
-                    muted: '#888888',  // --text-muted
-
-                    // Accents (Pink is default to match your habit)
-                    pink: '#FF318C',   // --accent (Cyber Pink)
-                    cyan: '#00f3ff',   // Alternative High-Tech Cyan
-                    purple: '#7000ff', // Alternative Electric Purple
-
-                    // Status Colors (from your CSS)
-                    active: '#00ff9d', // --status-active
-                    success: '#00ff9d', // Added for compatibility with index.css
-                    beta: '#ffb700',   // --status-beta
-                    offline: '#ff3333',// --status-offline
-                }
+                    black: 'rgb(var(--cyber-black) / <alpha-value>)',
+                    panel: 'rgb(var(--cyber-panel) / <alpha-value>)',
+                    border: 'rgb(var(--cyber-border) / <alpha-value>)',
+                    text: 'rgb(var(--cyber-text) / <alpha-value>)',
+                    muted: 'rgb(var(--cyber-muted) / <alpha-value>)',
+                    pink: 'rgb(var(--cyber-pink) / <alpha-value>)',
+                    cyan: 'rgb(var(--cyber-cyan) / <alpha-value>)',
+                    purple: 'rgb(var(--cyber-purple) / <alpha-value>)',
+                    active: 'rgb(var(--cyber-active) / <alpha-value>)',
+                    success: 'rgb(var(--cyber-success) / <alpha-value>)',
+                    beta: 'rgb(var(--cyber-beta) / <alpha-value>)',
+                    offline: 'rgb(var(--cyber-offline) / <alpha-value>)',
+                    alert: 'rgb(var(--cyber-alert) / <alpha-value>)',
+                },
             },
             // Matches your 50px graph paper grid
             backgroundImage: {
-                'grid-pattern': "linear-gradient(to right, #333333 1px, transparent 1px), linear-gradient(to bottom, #333333 1px, transparent 1px)",
+                'grid-pattern': "linear-gradient(to right, rgb(var(--cyber-border)) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--cyber-border)) 1px, transparent 1px)",
             },
             backgroundSize: {
                 'grid-50': '50px 50px',
             },
             boxShadow: {
-                // Adjusted glows to match the Pink accent
-                'neon-pink': '0 0 5px #FF318C, 0 0 20px rgba(255, 49, 140, 0.4)',
-                'neon-cyan': '0 0 5px #00f3ff, 0 0 20px rgba(0, 243, 255, 0.4)',
-            }
+                'neon-pink': 'var(--glow-pink)',
+                'neon-cyan': 'var(--glow-cyan)',
+            },
+            borderRadius: {
+                sm: 'var(--radius-sm)',
+                md: 'var(--radius-md)',
+                lg: 'var(--radius-lg)',
+            },
+            zIndex: {
+                header: 'var(--z-header)',
+                modal: 'var(--z-modal)',
+                toast: 'var(--z-toast)',
+            },
+            transitionDuration: {
+                fast: 'var(--motion-fast)',
+                base: 'var(--motion-base)',
+                slow: 'var(--motion-slow)',
+            },
+            transitionTimingFunction: {
+                token: 'var(--motion-ease)',
+            },
         },
     },
     plugins: [],

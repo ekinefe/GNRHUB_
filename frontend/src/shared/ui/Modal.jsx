@@ -32,7 +32,7 @@ export default function Modal({ open, onClose, title, children }) {
 
     if (!open) return null;
     return (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+        <div className="fixed inset-0 z-modal flex items-center justify-center p-4 bg-black/70" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
             <div ref={panel} role="dialog" aria-modal="true" aria-labelledby={titleId} className="w-full max-w-md bg-cyber-black border border-cyber-border shadow-2xl">
                 <div className="flex items-center justify-between border-b border-cyber-border px-5 py-3">
                     <h2 id={titleId} className="font-mono text-sm font-bold text-white uppercase tracking-wider">{title}</h2>

@@ -37,9 +37,33 @@ const DesignSystem = () => {
                     </h1>
                     <p className="text-cyber-muted font-mono max-w-2xl">
                         &gt; Establishing visual coherence using the "JetBrains" monospace standard.<br />
-                        &gt; Primary visual signature: <span className="text-cyber-pink">#FF318C (Cyber Pink)</span>.
+                        &gt; Primary visual signature: <span className="text-cyber-pink">--cyber-pink (Cyber Pink)</span>.
                     </p>
                 </header>
+
+                {/* Section: Tokens */}
+                <section className="mb-16">
+                    <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                        00 // TOKENS
+                    </h2>
+                    <p className="font-mono text-xs text-cyber-muted mb-4">
+                        Defined once in src/index.css (:root) and mapped in tailwind.config.js. Use the Tailwind class, never a raw color.
+                    </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                        {['black', 'panel', 'border', 'text', 'muted', 'pink', 'cyan', 'purple', 'active', 'beta', 'offline', 'alert'].map((name) => (
+                            <div key={name} className="border border-cyber-border">
+                                <div className={`h-10 bg-cyber-${name}`} />
+                                <p className="font-mono text-xs text-cyber-muted p-2">cyber-{name}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex flex-wrap gap-6 font-mono text-xs text-cyber-muted">
+                        <span>glow: <span className="inline-block w-4 h-4 align-middle bg-cyber-pink shadow-neon-pink" /> shadow-neon-pink / -cyan</span>
+                        <span>motion: duration-fast 150ms / duration-base 300ms / duration-slow 600ms</span>
+                        <span>layers: z-header 50 / z-modal 60 / z-toast 70</span>
+                        <span>radius: rounded-sm / md / lg</span>
+                    </div>
+                </section>
 
                 {/* Section: Typography */}
                 <section className="mb-16">
