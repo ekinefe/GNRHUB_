@@ -7,11 +7,12 @@ import { mockTools } from './mockTools';
 import { useAuth } from '@/modules/auth/AuthContext';
 
 const ToolsMain = () => {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const navigate = useNavigate();
 
     // Guests are bounced to login, signed-in users go straight to the tool.
     const handleToolAccess = (link) => {
+        if (loading) return; // session still being checked: do not treat a signed-in user as a guest
         navigate(user ? link : '/login');
     };
 

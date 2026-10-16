@@ -71,4 +71,14 @@ describe('CatalogPage', () => {
         fireEvent.keyDown(input, { key: 'Escape' })
         expect(input.value).toBe('')
     })
+
+    it('shows skeletons while loading and a retry when the list fails', () => {
+        const onRetry = vi.fn()
+        const { rerender } = setup({ status: 'loading' })
+        expect(screen.getByRole('status', { name: 'Loading' })).toHaveAttribute('aria-busy', 'true')
+        expect(screen.queryByText('Brandbook Maker')).toBeNull()
+        rerender(<CatalogPage items={items} heroTitle="/T" heroText="x" searchPlaceholder="Search..." renderItem={renderItem} status="error" onRetry={onRetry} />)
+        fireEvent.click(screen.getByText(/RETRY/))
+        expect(onRetry).toHaveBeenCalled()
+    })
 })
