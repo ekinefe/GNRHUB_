@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'; import { Link } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
-import { Terminal, Cpu, Network, Github, Linkedin, ChevronRight, Download, PersonStanding, LucidePersonStanding } from 'lucide-react';
+import { Terminal, Cpu, Network, ChevronRight, LucidePersonStanding, Mail, Code } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
+import { profile } from '@/shared/config/profile';
+import WarsawClock from './WarsawClock';
 import { features } from '@/shared/config/features';
 import { featuredProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
@@ -13,7 +15,7 @@ import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 const KIND_ICON = { Hardware: Cpu, Platform: Network, CLI: Terminal };
 
 const Home = () => {
-    useDocumentMeta({ description: 'Ekin Efe Gungor - engineer, builder of small tools, and the home of GNRdigital.' });
+    useDocumentMeta({ description: `Ekin Efe Gungor - CS student in ${profile.location.city} building reliable tools in Python, Bash and embedded C++.${profile.availability.open ? ` ${profile.availability.text}.` : ''}` });
     const [showProfile, setShowProfile] = useState(false);
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -26,7 +28,7 @@ const Home = () => {
         <PageShell width="5xl">
 
                 {/* === HERO SECTION === */}
-                <section className="relative pt-24 pb-16 px-4 md:px-12 max-w-7xl mx-auto">
+                <section className="relative pt-8 md:pt-16 pb-16 px-4 md:px-12 max-w-7xl mx-auto">
 
                     {/* Decorative Top Line */}
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-border to-transparent" />
@@ -35,15 +37,18 @@ const Home = () => {
 
                         {/* Left: Intro Text */}
                         <div className="space-y-6">
-                            {/* <div className="inline-flex items-center gap-2 px-3 py-1 border border-cyber-active/30 bg-cyber-active/5 rounded-full">
-                                <span className="w-2 h-2 bg-cyber-active rounded-full animate-pulse" />
-                                <span className="text-xs font-mono font-bold text-cyber-active tracking-widest">
-                                    SYSTEM ONLINE // WARSAW, PL
-                                </span>
-                            </div> */}
+                            <div className="inline-flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-1 border border-cyber-active/30 bg-cyber-active/5 rounded-full text-xs font-mono font-bold tracking-widest">
+                                {profile.availability.open && (
+                                    <span className="flex items-center gap-2 text-cyber-active">
+                                        <span aria-hidden="true" className="w-2 h-2 bg-cyber-active rounded-full animate-pulse" />
+                                        {profile.availability.text.toUpperCase()}
+                                    </span>
+                                )}
+                                <span className="text-cyber-muted">{profile.location.city.toUpperCase()}, {profile.location.country} · <WarsawClock /></span>
+                            </div>
 
                             <div className="space-y-2">
-                                <h1 className="text-5xl md:text-7xl font-sans font-bold text-white tracking-tighter leading-tight">
+                                <h1 className="text-4xl sm:text-5xl md:text-7xl font-sans font-bold text-white tracking-tighter leading-tight">
                                     &gt; <TextType
                                         text={["EKIN EFE GUNGOR"]}
                                         typingSpeed={75}
@@ -79,24 +84,22 @@ const Home = () => {
                                 </p>
                             </div>
 
-                            <p className="text-lg text-cyber-text/80 max-w-lg leading-relaxed font-sans">
-                                Building reliable tools and CLI utilities that clarify workflows. Specializing in Python, Linux Automation, and Embedded Systems.
-                            </p>
-
-                            <div className="flex flex-wrap gap-4 pt-4">
-                                {/* <a href="https://github.com/ekinefe" target="_blank" rel="noreferrer">
-                                    <CyberButton variant="primary" icon={Github}>GitHub</CyberButton>
-                                </a>
-                                <a href="https://www.linkedin.com/in/ekin-efe-gungor-18336a20a/" target="_blank" rel="noreferrer">
-                                    <CyberButton variant="secondary" icon={Linkedin}>LinkedIn</CyberButton>
-                                </a> */}
-                                {/* <Link to="/cv">
-                                    <CyberButton variant="ghost" icon={LucidePersonStanding}>More About Me</CyberButton>
-                                </Link> */}
+                            <div className="flex flex-wrap gap-4 pt-0">
+                                <Link to="/contact">
+                                    <CyberButton variant="primary" icon={Mail}>Get in touch</CyberButton>
+                                </Link>
+                                <Link to="/projects">
+                                    <CyberButton variant="secondary" icon={Code}>View projects</CyberButton>
+                                </Link>
                                 <Link to="/about">
-                                    <CyberButton variant="secondary" icon={LucidePersonStanding}>More About Me</CyberButton>
+                                    <CyberButton variant="ghost" icon={LucidePersonStanding}>More About Me</CyberButton>
                                 </Link>
                             </div>
+
+                            <p className="text-lg text-cyber-text/80 max-w-lg leading-relaxed font-sans">
+                                Python and Bash automation on Linux, embedded C++ on Arduino. I build small, reliable tools that remove manual steps, and I am looking for a team to learn from and ship with.
+                            </p>
+
                         </div>
 
 

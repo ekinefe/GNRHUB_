@@ -10,5 +10,8 @@ export const profile = {
         cwTrainer: 'https://github.com/ekinefe/CW_trainer-GNR',
         platform: 'https://github.com/ekinefe/GNRHUB_', // GitHub redirects automatically if the repo is renamed
     },
+    location: { city: 'Warsaw', country: 'PL', timeZone: 'Europe/Warsaw' },
+    // Shown as the badge on Home. Set open: false to hide it.
+    availability: { open: true, text: 'Open to internships' },
     dyrk1a: 'https://dyrk1aprot.com',
 };
