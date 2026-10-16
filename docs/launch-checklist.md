@@ -13,7 +13,7 @@ Last reviewed: 2026-10-16 (GNR-155). Ticked = verified, with how. Unticked = sti
 - [x] Fonts self-hosted: built `dist/index.html` and CSS contain no third-party URLs (GNR-81).
 - [x] Privacy and Terms match what the site does (GNR-81).
 - [ ] Confirm in DevTools on the deployed site: Application tab shows no cookies, Network tab shows no third-party requests.
-- [ ] Review the CV PDF for personal data. **It contains a phone number and is bundled into the public build** (About page "Download CV"). Decide: remove the number, publish a redacted copy, or drop the button.
+- [ ] CV download: the "Download CV" button is **removed for now**. The PDF was never in git (CI build failed on the missing import) and it contains a phone number. To bring it back: make a redacted copy, commit it under `frontend/public/`, and link to it.
 
 ## Licenses and credits
 - [x] `CREDITS.md` lists runtime packages, fonts and images with their licenses; adapted React Bits files carry a copyright header.

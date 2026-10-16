@@ -1,11 +1,10 @@
 import React from 'react';
 import { profile } from '@/shared/config/profile';
 import { Link } from 'react-router-dom';
-import { Code, Linkedin, Github, Download, Mail } from 'lucide-react';
+import { Code, Linkedin, Github, Mail } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 import avatar from '@/assets/AboutMe/avatar.jpg';
-import cv from '@/assets/Ekin_Efe_GUNGOR_CV_ATS.pdf';
 import PageShell from '@/shared/layout/PageShell';
 import ProjectEntry from './ProjectEntry';
 import { about, skillsPackageJson } from '@/shared/content/about';
@@ -97,9 +96,6 @@ const AboutMe = () => {
                                 </a>
                                 <a href={profile.github} target="_blank" rel="noreferrer">
                                     <CyberButton variant="ghost" icon={Github}>GitHub</CyberButton>
-                                </a>
-                                <a href={cv} target='_blank'>
-                                    <CyberButton variant="ghost" icon={Download}>Download CV</CyberButton>
                                 </a>
                             </div>
                         </div>
