@@ -1,5 +1,6 @@
 import React from 'react';
 import { Database, Lock, ArrowLeft } from 'lucide-react';
+import { features } from '@/shared/config/features';
 import { Link } from 'react-router-dom';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
@@ -11,7 +12,7 @@ const Privacy = () => {
 
                 {/* Back Navigation */}
                 <div className="mb-6">
-                    <Link to="/register" className="flex items-center gap-2 text-cyber-muted hover:text-cyber-pink transition-colors font-mono text-sm w-fit">
+                    <Link to={features.account ? '/register' : '/'} className="flex items-center gap-2 text-cyber-muted hover:text-cyber-pink transition-colors font-mono text-sm w-fit">
                         <ArrowLeft className="w-4 h-4" /> RETURN_TO_PREVIOUS
                     </Link>
                 </div>

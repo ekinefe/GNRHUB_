@@ -12,14 +12,14 @@ describe('Header mobile menu', () => {
         )
 
         // Closed: only the desktop nav renders each label once.
-        expect(screen.getAllByText('Tools')).toHaveLength(1)
+        expect(screen.getAllByText('About')).toHaveLength(1)
 
         const toggle = screen.getByRole('button')
         fireEvent.click(toggle)
         // Open: the mobile overlay renders a second copy of every link.
-        expect(screen.getAllByText('Tools')).toHaveLength(2)
+        expect(screen.getAllByText('About')).toHaveLength(2)
 
         fireEvent.click(screen.getByRole('button'))
-        expect(screen.getAllByText('Tools')).toHaveLength(1)
+        expect(screen.getAllByText('About')).toHaveLength(1)
     })
 })

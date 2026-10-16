@@ -6,6 +6,7 @@ import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
+import { features } from '@/shared/config/features';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Home = () => {
@@ -175,8 +176,8 @@ const Home = () => {
                                     /projects/featured
                                 </p>
                             </div>
-                            <Link to="/tools" className="hidden md:flex items-center gap-2 text-cyber-pink hover:text-white transition-colors font-mono text-sm">
-                                VIEW ALL TOOLS <ChevronRight className="w-4 h-4" />
+                            <Link to={features.tools ? '/tools' : '/projects'} className="hidden md:flex items-center gap-2 text-cyber-pink hover:text-white transition-colors font-mono text-sm">
+                                {features.tools ? 'VIEW ALL TOOLS' : 'VIEW ALL PROJECTS'} <ChevronRight className="w-4 h-4" />
                             </Link>
                         </div>
 

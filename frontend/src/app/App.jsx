@@ -46,8 +46,8 @@ function App() {
       <Routes>
 
         {/* === AUTH ROUTES === */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {features.account && <Route path="/login" element={<Login />} />}
+        {features.account && <Route path="/register" element={<Register />} />}
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
 
@@ -56,12 +56,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/design" element={<DesignSystem />} />
 
-          {/* Placeholders for future pages */}
-          <Route path="/dashboard" element={<div className="p-12">Dashboard Coming Soon</div>} />
-          <Route path="/blogs" element={<BlogsMain />} />
-          <Route path="/tools" element={<ToolsMain />} />
-          <Route path="/tools/brandbook" element={<BrandBookStart />} />
-          <Route path="/tools/brandbook/workspace" element={<BrandBookEditor />} />
+          {/* Unfinished areas: flagged off, they fall through to the 404 route (see shared/config/features.js) */}
+          {features.dashboard && <Route path="/dashboard" element={<div className="p-12">Dashboard Coming Soon</div>} />}
+          {features.blogs && <Route path="/blogs" element={<BlogsMain />} />}
+          {features.tools && <Route path="/tools" element={<ToolsMain />} />}
+          {features.tools && <Route path="/tools/brandbook" element={<BrandBookStart />} />}
+          {features.tools && <Route path="/tools/brandbook/workspace" element={<BrandBookEditor />} />}
           <Route path="/about" element={<AboutMe />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />

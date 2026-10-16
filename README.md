@@ -15,6 +15,9 @@ cp .dev.vars.example .dev.vars        # only needed to run the Functions locally
 npm run dev                           # http://localhost:5173
 ```
 
+Feature flags: unfinished areas are off by default and their routes show the 404. Switch them on at build time with
+`VITE_FEATURES=account,tools,blogs,dashboard` (any subset) in `.env.local`. Email sending needs `VITE_FEATURE_MAIL=true` and `MAIL_ENABLED=true` on the server.
+
 Checks: `npm run lint`, `npm run test:unit`, `npm run build` (all run in CI).
 
 ## Layout

@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
 import { build } from '@/shared/config/build';
 import { profile } from '@/shared/config/profile';
+import { features } from '@/shared/config/features';
 import { setReduceEffects, useUserReducedEffects } from '@/shared/config/effects';
 
 const nav = [
-    { to: '/tools', label: 'Tools' },
-    { to: '/blogs', label: 'Blogs' },
+    features.tools && { to: '/tools', label: 'Tools' },
+    features.blogs && { to: '/blogs', label: 'Blogs' },
     { to: '/projects', label: 'Projects' },
     { to: '/about', label: 'About' },
     { to: '/contact', label: 'Contact' },
-];
+].filter(Boolean);
 
 const external = [
     { href: profile.github, label: 'GitHub' },
