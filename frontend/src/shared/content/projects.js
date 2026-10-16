@@ -1,6 +1,9 @@
 // Launch content as plain data: Home, Projects and About all read this file.
 // status: 'live' (works today) | 'soon' (planned, shown as such). `repo: null` means a private repo.
 // Public URLs come from shared/config/profile.js, never typed here.
+// Optional per project: url (live site), image + imageAlt (screenshot in public/projects/),
+// caseStudy (an internal route), learned (a short "what I learned" line, shown when present).
+import { brand } from '@/shared/config/brand';
 import { profile } from '@/shared/config/profile';
 
 export const projects = [
@@ -46,6 +49,10 @@ export const projects = [
         ],
         status: 'live',
         repo: profile.repos.platform,
+        url: brand.publicUrl,
+        image: '/projects/gnrdigital.png',
+        imageAlt: 'The GNRdigital home page: availability badge, name, call to action and terminal bio',
+        caseStudy: '/colophon',
         featured: true,
         inAbout: true,
     },

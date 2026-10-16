@@ -125,7 +125,7 @@ const AboutMe = () => {
                         </h2>
 
                         <div className="space-y-8">
-                            {projects.map((project) => <ProjectEntry key={project.id} project={project} />)}
+                            {projects.map((project) => <ProjectEntry key={project.id} project={project} detailed />)}
 
                         </div>
                     </div>
