@@ -6,8 +6,10 @@ import Input from '@/shared/ui/Input';
 import Checkbox from '@/shared/ui/Checkbox';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Register = () => {
+    useDocumentMeta({ title: 'Create account', noindex: true });
     // State for all form fields
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');

@@ -2,8 +2,10 @@ import React from 'react';
 import { brand } from '@/shared/config/brand';
 import { Terminal, ShieldAlert, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Terms = () => {
+    useDocumentMeta({ title: 'Terms', description: 'Terms of use for this site and its tools.' });
     return (
         <div className="min-h-screen p-4 py-12 flex justify-center">
             <div className="max-w-4xl w-full">

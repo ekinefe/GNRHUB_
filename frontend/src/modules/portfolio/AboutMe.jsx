@@ -8,8 +8,10 @@ import TextType from '@/shared/animations/TextType';
 import avatar from '@/assets/AboutMe/avatar.jpg';
 import cv from '@/assets/Ekin_Efe_GUNGOR_CV_ATS.pdf';
 import PageShell from '@/shared/layout/PageShell';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const AboutMe = () => {
+    useDocumentMeta({ title: 'About', description: 'Who I am, what I have built and what I work with.' });
     return (
         <PageShell width="5xl">
 

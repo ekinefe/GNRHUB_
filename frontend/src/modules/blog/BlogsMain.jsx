@@ -46,6 +46,8 @@ const BlogsMain = () => (
         items={mockBlogs}
         heroTitle="/BLOGS_&_RESEARCH"
         heroText="A collection of technical write-ups, project logs, and research notes. Covering everything from embedded systems to web development and data science."
+        metaTitle="Blogs"
+        metaDescription="Technical write-ups, project logs and research notes."
         searchPlaceholder="Search articles..."
         renderItem={renderBlog}
     />

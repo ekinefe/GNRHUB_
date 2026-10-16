@@ -4,8 +4,10 @@ import { Palette, Monitor, ChevronRight } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 import BrandBookEditor from './BrandBookEditor';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const BrandBookStart = () => {
+    useDocumentMeta({ title: 'Brandbook Maker', description: 'Create a brand book PDF with logos, colors and typography.' });
     const navigate = useNavigate();
 
     const handleStart = () => {

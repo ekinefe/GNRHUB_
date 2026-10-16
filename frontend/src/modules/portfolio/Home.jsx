@@ -6,8 +6,10 @@ import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Home = () => {
+    useDocumentMeta({ description: 'Ekin Efe Gungor - engineer, builder of small tools, and the home of GNRdigital.' });
     const [showProfile, setShowProfile] = useState(false);
     useEffect(() => {
         const timer = setTimeout(() => {

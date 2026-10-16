@@ -5,8 +5,10 @@ import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, D
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const AboutMe = () => {
+    useDocumentMeta({ title: 'Projects', description: 'Selected projects: repos, status and the tech behind them.' });
     return (
         <PageShell width="5xl">
 

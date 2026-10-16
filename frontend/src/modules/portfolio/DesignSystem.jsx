@@ -12,8 +12,10 @@ import Tooltip from '@/shared/ui/Tooltip';
 import { useToast } from '@/shared/ui/Toast';
 import CyberCard from '@/shared/ui/CyberCard';
 import { Zap, Shield, Terminal, Layout } from 'lucide-react';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const DesignSystem = () => {
+    useDocumentMeta({ title: 'Design system', description: 'Tokens, components and states used across GNRdigital.', noindex: true });
     return (
         // 1. The Outer Wrapper (Grid Background)
         <div className="min-h-screen bg-cyber-black bg-grid-pattern [background-size:50px_50px] text-cyber-text p-4 md:p-12 flex justify-center">
