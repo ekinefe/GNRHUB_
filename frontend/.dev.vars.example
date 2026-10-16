@@ -1,0 +1,2 @@
+# Copy to .dev.vars (Cloudflare Functions secrets for local dev). Never commit real values.
+RESEND_API_KEY=

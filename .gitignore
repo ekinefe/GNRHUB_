@@ -57,3 +57,7 @@ logs/
 # privet
 AccountDetails.md
 
+
+# Cloudflare local secrets and state
+.dev.vars
+.wrangler/
