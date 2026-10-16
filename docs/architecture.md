@@ -12,6 +12,7 @@ frontend/src/
     blog/         blog list
     portfolio/    home, about, projects, design system
     legal/        privacy, terms
+    contact/      mailto + copy-email page
     registry.js   one entry per product: key, path, minimum access level
   shared/         ui, animations, layout, errors, lib/supabase, config/brand
 frontend/functions/
