@@ -2,7 +2,7 @@ name: 🛡️ Gatekeeper (CI)
 
 on:
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop, feat/auth-and-BrandBookEditor]
 
 jobs:
   test-frontend:
