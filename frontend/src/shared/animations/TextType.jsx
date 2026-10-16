@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, createElement, useMemo, useCallback } from 'react';
 import { gsap } from 'gsap';
+import { useReducedEffects } from '@/shared/config/effects';
 
 const TextType = ({
     text,
@@ -30,6 +31,7 @@ const TextType = ({
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
     const [isVisible, setIsVisible] = useState(!startOnVisible);
     const cursorRef = useRef(null);
+    const reduced = useReducedEffects(); // reduced effects: no typing, no blinking cursor
     const containerRef = useRef(null);
 
     const textArray = useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
@@ -66,6 +68,8 @@ const TextType = ({
     useEffect(() => {
         if (showCursor && cursorRef.current) {
             gsap.set(cursorRef.current, { opacity: 1 });
+            if (reduced) return undefined;
+            const el = cursorRef.current;
             gsap.to(cursorRef.current, {
                 opacity: 0,
                 duration: cursorBlinkDuration,
@@ -73,11 +77,17 @@ const TextType = ({
                 yoyo: true,
                 ease: 'power2.inOut'
             });
+            return () => gsap.killTweensOf(el);
         }
-    }, [showCursor, cursorBlinkDuration]);
+        return undefined;
+    }, [showCursor, cursorBlinkDuration, reduced]);
 
     useEffect(() => {
         if (!isVisible) return;
+        if (reduced) {
+            setDisplayedText(textArray[currentTextIndex]);
+            return;
+        }
 
         let timeout;
 
@@ -131,6 +141,7 @@ const TextType = ({
         return () => clearTimeout(timeout);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
+        reduced,
         currentCharIndex,
         displayedText,
         isDeleting,

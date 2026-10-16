@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
 import { build } from '@/shared/config/build';
 import { profile } from '@/shared/config/profile';
+import { setReduceEffects, useUserReducedEffects } from '@/shared/config/effects';
 
 const nav = [
     { to: '/tools', label: 'Tools' },
@@ -20,7 +21,9 @@ const external = [
 
 const linkClass = 'text-cyber-muted hover:text-cyber-pink transition-colors';
 
-const Footer = () => (
+const Footer = () => {
+    const reduce = useUserReducedEffects();
+    return (
     <footer className="border-t border-cyber-border bg-cyber-black font-mono text-xs">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 grid gap-8 md:grid-cols-4">
             <div>
@@ -55,10 +58,14 @@ const Footer = () => (
         <div className="border-t border-cyber-border/60">
             <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-wrap items-center justify-between gap-2 text-cyber-muted">
                 <span>&copy; {new Date().getFullYear()} {brand.name}</span>
+                <button type="button" aria-pressed={reduce} onClick={() => setReduceEffects(!reduce)} className="hover:text-cyber-pink transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">
+                    Reduce effects: {reduce ? 'on' : 'off'}
+                </button>
                 <span data-testid="build-info">build {build.sha}{build.date ? ` · ${build.date}` : ''}</span>
             </div>
         </div>
     </footer>
-);
+    );
+};
 
 export default Footer;

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect } from 'vitest'
 import Footer from './Footer'
@@ -14,5 +14,16 @@ describe('Footer', () => {
     it('opens external links safely', () => {
         render(<MemoryRouter><Footer /></MemoryRouter>)
         expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('rel', 'noopener noreferrer')
+    })
+})
+
+describe('Footer reduce-effects switch', () => {
+    it('toggles and reports its state', () => {
+        render(<MemoryRouter><Footer /></MemoryRouter>)
+        const button = screen.getByRole('button', { name: /Reduce effects/ })
+        expect(button).toHaveAttribute('aria-pressed', 'false')
+        fireEvent.click(button)
+        expect(screen.getByRole('button', { name: /Reduce effects: on/ })).toHaveAttribute('aria-pressed', 'true')
+        fireEvent.click(screen.getByRole('button', { name: /Reduce effects/ }))
     })
 })

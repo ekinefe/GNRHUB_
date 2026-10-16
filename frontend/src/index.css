@@ -41,7 +41,7 @@
     --motion-ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Respect the OS setting: no animation or smooth scrolling for people who ask for less motion. */
+  /* Reduced effects: the OS setting, or the footer switch (sets data-reduce-effects on <html>). */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -49,6 +49,13 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+
+  [data-reduce-effects="true"] *, [data-reduce-effects="true"] *::before, [data-reduce-effects="true"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

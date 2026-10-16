@@ -4,6 +4,9 @@ import './index.css'
 import App from '@/app/App.jsx'
 import { AuthProvider } from '@/modules/auth/AuthContext.jsx';
 import { ToastProvider } from '@/shared/ui/Toast.jsx';
+import { initEffects } from '@/shared/config/effects';
+
+initEffects();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

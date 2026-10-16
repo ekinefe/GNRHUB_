@@ -1,6 +1,6 @@
 import React from 'react';
 import DecryptedText from './DecryptedText';
-import { usePrefersReducedMotion } from '@/shared/hooks/usePrefersReducedMotion';
+import { useReducedEffects } from '@/shared/config/effects';
 
 const TONES = {
     info: 'text-cyber-cyan font-bold',
@@ -17,10 +17,10 @@ const TONES = {
 //              Key a search counter by the result COUNT, not the query, so typing does not make it flicker.
 //   tone       info | success | alert | pink | muted
 //
-// Screen readers get the plain text (the scrambling is aria-hidden); with prefers-reduced-motion
+// Screen readers get the plain text (the scrambling is aria-hidden); with reduced effects (OS setting or the footer switch)
 // the text is shown as is, with no animation.
 export default function Decrypt({ text, replayKey = text, tone = 'info', className = '', as: Tag = 'span' }) {
-    const reduced = usePrefersReducedMotion();
+    const reduced = useReducedEffects();
     const classes = `${TONES[tone]} ${className}`.trim();
 
     if (reduced) return <Tag className={classes}>{text}</Tag>;
