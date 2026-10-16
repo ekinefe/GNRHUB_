@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Layouts
 import DashboardLayout from '@/shared/layout/DashboardLayout';
 import ScrollToTop from '@/shared/layout/ScrollToTop';
+import ErrorBoundary from '@/shared/errors/ErrorBoundary';
 
 // Auth Pages
 import Login from '@/modules/auth/Login';
@@ -31,6 +32,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <ErrorBoundary>
       <Routes>
 
         {/* === AUTH ROUTES === */}
@@ -60,6 +62,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
 
       </Routes>
+      </ErrorBoundary>
 
     </Router>
   );
