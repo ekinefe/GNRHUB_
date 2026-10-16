@@ -1,33 +1,61 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Search, Tag, Folder } from 'lucide-react';
 import TextType from '@/shared/animations/TextType';
 import DecryptedText from '@/shared/animations/DecryptedText';
 import PageShell from '@/shared/layout/PageShell';
 import { useDebounce } from '@/shared/hooks/useDebounce';
+import { matchesQuery, closestTags } from '@/shared/lib/searchText';
+import Highlight from '@/shared/ui/Highlight';
 
 const ALL = 'All';
 
 // A searchable, filterable list page (tools, blogs, ...).
 //   items: [{ id, title, excerpt, category, tags[] }]
-//   renderItem(item) -> the card for one item
-export default function CatalogPage({ items, heroTitle, heroText, searchPlaceholder, renderItem, debounceMs = 800 }) {
+//   renderItem(item, { highlight }) -> the card for one item; highlight(text) marks the search matches
+export default function CatalogPage({ items, heroTitle, heroText, searchPlaceholder, renderItem, debounceMs = 250 }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(ALL);
     const [selectedTag, setSelectedTag] = useState(ALL);
-    const [debouncedQuery, isSearching] = useDebounce(searchQuery, debounceMs);
+    const [debouncedQuery] = useDebounce(searchQuery, debounceMs);
+    const searchRef = useRef(null);
 
-    const categories = [ALL, ...new Set(items.map((item) => item.category))];
-    const tags = [ALL, ...new Set(items.flatMap((item) => item.tags))];
+    // "/" focuses the search from anywhere on the page
+    useEffect(() => {
+        const onKey = (e) => {
+            const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable;
+            if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
+                e.preventDefault();
+                searchRef.current?.focus();
+            }
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, []);
+
+    const categories = useMemo(() => [ALL, ...new Set(items.map((item) => item.category))], [items]);
+    const tags = useMemo(() => [ALL, ...new Set(items.flatMap((item) => item.tags))], [items]);
 
     const filtered = useMemo(() => {
-        const q = debouncedQuery.toLowerCase();
         return items.filter((item) => {
-            const matchesSearch = item.title.toLowerCase().includes(q) || item.excerpt.toLowerCase().includes(q);
+            const matchesSearch = matchesQuery(debouncedQuery, [item.title, item.excerpt, item.category, ...item.tags]);
             const matchesCategory = selectedCategory === ALL || item.category === selectedCategory;
             const matchesTag = selectedTag === ALL || item.tags.includes(selectedTag);
             return matchesSearch && matchesCategory && matchesTag;
         });
     }, [items, debouncedQuery, selectedCategory, selectedTag]);
+
+    const suggestions = useMemo(() => {
+        const close = closestTags(debouncedQuery, tags.slice(1));
+        return close.length ? close : tags.slice(1, 6);
+    }, [debouncedQuery, tags]);
+
+    const pickSuggestion = (tag) => {
+        setSearchQuery('');
+        setSelectedCategory(ALL);
+        setSelectedTag(tag);
+    };
+
+    const highlight = (text) => <Highlight text={text} query={debouncedQuery} />;
 
     const clearFilters = () => {
         setSearchQuery('');
@@ -62,35 +90,26 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                         <div className="relative">
                             <input
                                 type="text"
-                                placeholder={searchPlaceholder}
+                                ref={searchRef}
+                                placeholder={`${searchPlaceholder}  ( / )`}
+                                aria-label={searchPlaceholder}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Escape' && setSearchQuery('')}
                                 className="w-full bg-cyber-black border border-cyber-border text-cyber-text p-3 font-mono text-sm focus:outline-none focus:border-cyber-pink transition-colors mb-2"
                             />
                             <div className="h-6 font-mono text-xs">
-                                {searchQuery && (
-                                    isSearching ? (
-                                        <DecryptedText
-                                            text="Searching"
-                                            animateOn="view"
-                                            sequential={true}
-                                            speed={100}
-                                            maxIterations={20}
-                                            className="text-cyber-pink font-bold"
-                                            encryptedClassName="text-cyber-muted"
-                                        />
-                                    ) : (
-                                        <DecryptedText
-                                            key={debouncedQuery} // remount to replay the animation when a search completes
-                                            text={`Found ${filtered.length} result${filtered.length !== 1 ? 's' : ''}`}
-                                            animateOn="view"
-                                            sequential={true}
-                                            speed={100}
-                                            maxIterations={10}
-                                            className="text-cyber-cyan font-bold"
-                                            encryptedClassName="text-cyber-muted"
-                                        />
-                                    )
+                                {debouncedQuery && (
+                                    <DecryptedText
+                                        key={`${debouncedQuery}:${filtered.length}`} // replays once per settled result, not per keystroke
+                                        text={`Found ${filtered.length} result${filtered.length !== 1 ? 's' : ''}`}
+                                        animateOn="view"
+                                        sequential={true}
+                                        speed={100}
+                                        maxIterations={10}
+                                        className="text-cyber-cyan font-bold"
+                                        encryptedClassName="text-cyber-muted"
+                                    />
                                 )}
                             </div>
                         </div>
@@ -156,10 +175,26 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                     </div>
 
                     {filtered.length > 0 ? (
-                        <div className="space-y-6">{filtered.map((item) => renderItem(item))}</div>
+                        <div className="space-y-6">{filtered.map((item) => renderItem(item, { highlight }))}</div>
                     ) : (
                         <div className="border border-dashed border-cyber-border p-12 text-center">
                             <p className="font-mono text-cyber-muted mb-4">No results found matching your criteria.</p>
+                            {suggestions.length > 0 && (
+                                <div className="mb-6">
+                                    <p className="font-mono text-xs text-cyber-muted mb-3">Try one of these tags:</p>
+                                    <div className="flex flex-wrap justify-center gap-2">
+                                        {suggestions.map((tag) => (
+                                            <button
+                                                key={tag}
+                                                onClick={() => pickSuggestion(tag)}
+                                                className="font-mono text-xs px-2 py-1 border border-cyber-border text-cyber-cyan hover:border-cyber-cyan transition-colors"
+                                            >
+                                                #{tag}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                             <button onClick={clearFilters} className="font-mono text-sm text-cyber-pink hover:underline">
                                 [ CLEAR_FILTERS ]
                             </button>
