@@ -265,7 +265,7 @@ const BrandBookEditor = () => {
             {/* Top Navigation Bar */}
             <header className="flex-none flex items-center justify-between p-4 border-b border-cyber-border bg-cyber-black z-20 print:hidden">
                 <div className="flex items-center gap-4">
-                    <Link to="/services/brand-book" className="text-cyber-muted hover:text-cyber-pink transition-colors">
+                    <Link to="/tools/brandbook" className="text-cyber-muted hover:text-cyber-pink transition-colors">
                         <ArrowLeft className="w-5 h-5" />
                     </Link>
                     <h1 className="text-xl font-sans font-bold text-white uppercase tracking-widest flex items-center gap-2">

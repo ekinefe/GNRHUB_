@@ -1,3 +1,4 @@
+// Adapted from React Bits (https://reactbits.dev), (c) 2026 David Haz, MIT + Commons Clause. See CREDITS.md.
 import React, { useEffect, useRef } from 'react';
 import { tokenColor } from '@/shared/config/tokens';
 import { effectsReduced } from '@/shared/config/effects';

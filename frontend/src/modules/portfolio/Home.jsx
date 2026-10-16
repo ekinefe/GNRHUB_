@@ -14,6 +14,15 @@ import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 // Card icon per project kind
 const KIND_ICON = { Hardware: Cpu, Platform: Network, CLI: Terminal };
 
+// TextType types one character at a time, so its box grows and pushes the content below it.
+// An invisible copy of the full text sits in the same grid cell and reserves the final size up front.
+const Reserve = ({ text, children }) => (
+    <span className="grid">
+        <span aria-hidden="true" className="invisible col-start-1 row-start-1">{text}</span>
+        <span className="col-start-1 row-start-1">{children}</span>
+    </span>
+);
+
 const Home = () => {
     useDocumentMeta({ description: `Ekin Efe Gungor - CS student in ${profile.location.city} building reliable tools in Python, Bash and embedded C++.${profile.availability.open ? ` ${profile.availability.text}.` : ''}` });
     const [showProfile, setShowProfile] = useState(false);
@@ -49,7 +58,7 @@ const Home = () => {
 
                             <div className="space-y-2">
                                 <h1 className="text-4xl sm:text-5xl md:text-7xl font-sans font-bold text-white tracking-tighter leading-tight">
-                                    &gt; <TextType
+                                    &gt; <Reserve text="EKIN EFE GUNGOR"><TextType
                                         text={["EKIN EFE GUNGOR"]}
                                         typingSpeed={75}
                                         pauseDuration={1500}
@@ -62,11 +71,11 @@ const Home = () => {
                                         variableSpeedMin={60}
                                         variableSpeedMax={120}
                                         cursorBlinkDuration={0.5}
-                                    />
+                                    /></Reserve>
                                 </h1>
                                 <p className="text-xl md:text-2xl font-mono text-cyber-muted">
                                     &gt;
-                                    <TextType
+                                    <Reserve text="CS Student (AI & Data Science)"><TextType
                                         text={["CS Student (AI & Data Science)"]}
                                         initialDelay={1000}
                                         typingSpeed={75}
@@ -80,7 +89,7 @@ const Home = () => {
                                         variableSpeedMin={60}
                                         variableSpeedMax={120}
                                         cursorBlinkDuration={0.5}
-                                    />
+                                    /></Reserve>
                                 </p>
                             </div>
 
@@ -197,7 +206,7 @@ const Home = () => {
                                     <p className="text-sm text-cyber-text mb-4 min-h-[40px]">{project.summary}</p>
                                     <div className="flex flex-wrap gap-2 mb-6">
                                         {project.tech.slice(0, 2).map((t) => (
-                                            <span key={t} className="px-2 py-1 bg-cyber-border text-xs font-mono rounded text-cyber-muted">{t}</span>
+                                            <span key={t} className="px-2 py-1 bg-cyber-panel border border-cyber-border text-xs font-mono rounded text-cyber-muted">{t}</span>
                                         ))}
                                     </div>
                                     {project.repo ? (

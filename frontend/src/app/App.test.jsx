@@ -1,7 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import App from './App'
-import { brand } from '@/shared/config/brand'
 
 // Heavy canvas animation and the real Supabase client (needs env vars that CI does not have)
 // are replaced; this test is about routing and layout, not those.
@@ -23,7 +22,7 @@ describe('App Routing System', () => {
         render(<App />)
 
         // The logo link is labelled from brand.js, so a rename does not break this test.
-        expect(screen.getByRole('link', { name: `${brand.name} home` })).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: /GNR\s*digital/i })).toBeInTheDocument()
 
         const nav = screen.getByRole('navigation', { name: 'Main' })
         for (const label of ['Home', 'About']) {

@@ -1,3 +1,4 @@
+// Adapted from React Bits (https://reactbits.dev), (c) 2026 David Haz, MIT + Commons Clause. See CREDITS.md.
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'motion/react';
 
