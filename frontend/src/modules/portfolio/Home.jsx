@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'; import { Link } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
-import { profile } from './profile';
+import { profile } from '@/shared/config/profile';
 import { Terminal, Cpu, Network, Github, Linkedin, ChevronRight, Download, PersonStanding, LucidePersonStanding } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';

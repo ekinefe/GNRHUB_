@@ -1,6 +1,6 @@
 import React from 'react';
 import { brand } from '@/shared/config/brand';
-import { profile } from './profile';
+import { profile } from '@/shared/config/profile';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';

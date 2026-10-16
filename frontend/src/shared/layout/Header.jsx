@@ -31,7 +31,7 @@ const Header = () => {
                 </Link>
 
                 {/* === MIDDLE: NAVIGATION (Desktop) === */}
-                <nav className="hidden md:flex items-center gap-2">
+                <nav aria-label="Main" className="hidden md:flex items-center gap-2">
                     {navItems.map((item) => (
                         <Link
                             key={item.path}
@@ -68,7 +68,7 @@ const Header = () => {
             {/* === MOBILE MENU OVERLAY === */}
             {isMobileMenuOpen && (
                 <div className="md:hidden absolute top-16 left-0 w-full bg-cyber-black border-b border-cyber-border shadow-2xl">
-                    <nav className="flex flex-col px-4 py-6 space-y-4">
+                    <nav aria-label="Mobile" className="flex flex-col px-4 py-6 space-y-4">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}

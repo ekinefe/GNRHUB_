@@ -25,7 +25,7 @@ describe('App Routing System', () => {
         // The wordmark comes from src/config/brand.js, so a rename does not break this test.
         expect(screen.getByText(brand.wordmark)).toBeInTheDocument()
 
-        const nav = screen.getByRole('navigation')
+        const nav = screen.getByRole('navigation', { name: 'Main' })
         for (const label of ['Home', 'Blogs', 'Tools', 'About_Me']) {
             expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument()
         }
