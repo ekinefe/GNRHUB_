@@ -1,6 +1,6 @@
 import React from 'react';
 import { brand } from '@/shared/config/brand';
-import { profile } from './profile';
+import { profile } from '@/shared/config/profile';
 import { Link } from 'react-router-dom';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download, Mail } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
