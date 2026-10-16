@@ -20,3 +20,10 @@ describe('index.html', () => {
         }
     })
 })
+
+describe('index.html privacy', () => {
+    it('loads no third-party stylesheets or fonts (the Privacy page says fonts are self-hosted)', () => {
+        expect(html).not.toMatch(/<link[^>]+href="https?:/)
+        expect(html).not.toMatch(/fonts\.(googleapis|gstatic)\.com/)
+    })
+})
