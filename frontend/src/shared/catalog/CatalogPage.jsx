@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Search, Tag, Folder } from 'lucide-react';
 import TextType from '@/shared/animations/TextType';
-import DecryptedText from '@/shared/animations/DecryptedText';
+import Decrypt from '@/shared/animations/Decrypt';
 import PageShell from '@/shared/layout/PageShell';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { useDebounce } from '@/shared/hooks/useDebounce';
@@ -103,16 +103,8 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                             />
                             <div className="h-6 font-mono text-xs">
                                 {debouncedQuery && (
-                                    <DecryptedText
-                                        key={`${debouncedQuery}:${filtered.length}`} // replays once per settled result, not per keystroke
-                                        text={`Found ${filtered.length} result${filtered.length !== 1 ? 's' : ''}`}
-                                        animateOn="view"
-                                        sequential={true}
-                                        speed={100}
-                                        maxIterations={10}
-                                        className="text-cyber-cyan font-bold"
-                                        encryptedClassName="text-cyber-muted"
-                                    />
+                                    // keyed by the count: replays when the results change, not on every keystroke
+                                    <Decrypt text={`Found ${filtered.length} result${filtered.length !== 1 ? 's' : ''}`} replayKey={filtered.length} />
                                 )}
                             </div>
                         </div>
