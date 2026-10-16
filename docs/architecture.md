@@ -20,6 +20,9 @@ frontend/functions/
   modules/<key>/  backend logic for a module
 ```
 
+## Repo layout
+One app folder, `frontend/`, holds both the SPA (`src/`) and the backend (`functions/`). `docs/` and `.github/workflows/` sit at the repo root. The folder was deliberately not renamed to `web/` (GNR-141), and the Worker will be called `gnrdigital`. See the README for the tree.
+
 ## Access levels
 | Level  | Who                         | How decided                       |
 |--------|-----------------------------|-----------------------------------|

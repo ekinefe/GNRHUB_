@@ -89,7 +89,18 @@ Do not run any remote or production command (`wrangler`, database migrations) wi
 The code is released under the [MIT licence](LICENSE) (copyright Ekin Efe Gungor). Not covered by it: my written text, photo and CV, and the third-party material in [CREDITS.md](CREDITS.md) (including three React Bits components under MIT + Commons Clause, and the GSAP library, which keep their own terms). A stricter "No-SaaS" draft is parked in [docs/license-draft-no-saas.md](docs/license-draft-no-saas.md).
 
 ## Repository layout
+
+```
+GNRdigital_v2/
+  frontend/        the one app folder: React SPA (src/) and the backend (functions/) side by side
+  docs/            guides, architecture, brand, launch checklist
+  .github/         workflows live at the repo root (GitHub only reads them there)
+  database/, microservices/   empty placeholders for later releases
+```
+
+Decisions (GNR-141): the app folder stays `frontend/` (no rename to `web/`; it would conflict with every open branch and buy nothing), and the future Worker is named `gnrdigital`. CI runs from `frontend/` (`cd frontend`, cache key `frontend/package-lock.json`), so keep those paths in `gatekeeper.yml` in sync with any move.
+
+Inside the app folder:
 - `frontend/src/modules/<feature>`: one folder per feature (auth, brandbook, tools, blog, portfolio, legal, contact, colophon)
 - `frontend/src/shared`: UI, layout, config, content and helpers any module may use
 - `frontend/functions`: Pages Functions (`api/` route files, logic in `modules/`)
-- `docs/`: guides · `.github/workflows/`: CI (`gatekeeper.yml`)
