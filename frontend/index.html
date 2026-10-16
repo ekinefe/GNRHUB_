@@ -12,12 +12,17 @@
   <meta name="color-scheme" content="dark" />
 
   <!-- Open Graph / Twitter. Per-page title, description and URL are set at runtime (useDocumentMeta).
-       og:image is left out until the site has a real domain and a 1200x630 PNG. -->
+       og:image is public/og.png (regenerate with scripts/og/make-og.sh); its URL follows brand.publicUrl. -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="%BRAND_NAME%" />
   <meta property="og:title" content="%BRAND_NAME%" />
   <meta property="og:description" content="%BRAND_NAME% - portfolio and small tools by Ekin Efe Gungor." />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="%BRAND_URL%/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="%BRAND_NAME%: bold GNR, light digital, pink cursor and v2 tag" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="%BRAND_URL%/og.png" />
 </head>
 
 <body>

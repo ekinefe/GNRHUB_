@@ -57,6 +57,9 @@ const AboutMe = () => {
                             <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed max-w-2xl">
                                 {about.intro}
                             </p>
+                            <p className="font-mono text-cyber-muted text-sm leading-relaxed max-w-2xl" data-testid="name-story">
+                                {about.nameStory}
+                            </p>
 
                             {/* Separators */}
                             <div className="font-mono text-[10px] sm:text-xs flex flex-wrap items-center gap-x-6 gap-y-3 uppercase pt-2 pb-2">

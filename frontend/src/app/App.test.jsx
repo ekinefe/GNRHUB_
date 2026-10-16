@@ -22,8 +22,8 @@ describe('App Routing System', () => {
     it('renders the home route with the brand header and main navigation', () => {
         render(<App />)
 
-        // The wordmark comes from src/config/brand.js, so a rename does not break this test.
-        expect(screen.getByText(brand.wordmark)).toBeInTheDocument()
+        // The logo link is labelled from brand.js, so a rename does not break this test.
+        expect(screen.getByRole('link', { name: `${brand.name} home` })).toBeInTheDocument()
 
         const nav = screen.getByRole('navigation', { name: 'Main' })
         for (const label of ['Home', 'About']) {

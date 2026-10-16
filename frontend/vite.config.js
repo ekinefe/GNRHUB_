@@ -29,7 +29,7 @@ export default defineConfig({
   plugins: [
     react(),
     // Fills %BRAND_NAME% in index.html from src/config/brand.js (single source of truth)
-    { name: 'brand-html', transformIndexHtml: (html) => html.replaceAll('%BRAND_NAME%', brand.name) },
+    { name: 'brand-html', transformIndexHtml: (html) => html.replaceAll('%BRAND_NAME%', brand.name).replaceAll('%BRAND_URL%', brand.publicUrl) },
   ],
   build: {
     rollupOptions: {

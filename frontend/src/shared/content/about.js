@@ -5,6 +5,8 @@ export const about = {
     name: 'Ekin Efe Gungor',
     role: 'CS Student | AI & Data Science',
     intro: 'I build practical tools across web, data, and embedded systems—everything from Morse code hardware to Linux automation scripts. Currently studying AI & Data Science in Warsaw, Poland.',
+    // First person on purpose: a personal brand, not a studio.
+    nameStory: 'GNR comes from my surname, Gungor, and “digital” is what I make with it. This is my personal portfolio and workshop, not a studio or a company.',
     summary: 'CS student (AI and Data Science) with 3+ years of Python and Bash on Linux and hands-on embedded work (Arduino, C/C++, KiCad). I build small, reliable tools (CLI utilities and microcontroller apps) that remove manual steps and clarify workflows. Looking for opportunities to learn quickly and contribute directly by solving real problems for teams.',
     languages: { English: 'C1', Turkish: 'native', Polish: 'A1' },
     skills: {

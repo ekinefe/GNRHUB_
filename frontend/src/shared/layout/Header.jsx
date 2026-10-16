@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useState } from 'react';
 import { brand } from '@/shared/config/brand';
+import Wordmark from '@/shared/ui/Wordmark';
 import { features } from '@/shared/config/features';
 import { Link, useLocation } from 'react-router-dom';
 import { Terminal, House, ScanText, Menu, X, PersonStanding } from 'lucide-react';
@@ -44,9 +45,9 @@ const Header = ({ account = null }) => {
             <div className={`max-w-7xl mx-auto px-4 md:px-6 ${scrolled ? 'h-14' : 'h-16'} transition-[height] duration-base flex items-center justify-between`}>
 
                 {/* === LEFT: LOGO === */}
-                <Link to="/" className="group z-header flex-shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="border border-cyber-text bg-cyber-black px-3 py-1.5 font-mono font-bold text-lg uppercase text-cyber-text transition-colors duration-300 group-hover:border-cyber-pink group-hover:text-cyber-pink">
-                        {brand.wordmark} <span className="text-cyber-pink text-xs align-top">{brand.version}</span>
+                <Link to="/" aria-label={`${brand.name} home`} className="group z-header flex-shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="border border-cyber-text bg-cyber-black px-3 py-1.5 font-mono text-lg text-cyber-text transition-colors duration-300 group-hover:border-cyber-pink group-hover:text-cyber-pink">
+                        <Wordmark />
                     </div>
                 </Link>
 

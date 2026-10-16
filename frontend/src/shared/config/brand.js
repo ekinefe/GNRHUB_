@@ -10,5 +10,6 @@ export const brand = {
     version: 'v2',                          // pink tag next to the logo
     slug: name.toLowerCase(),               // gnrdigital    (terminal prompts, ids)
     prompt: `root@${name.toLowerCase()}:~`, // root@gnrdigital:~
+    tagline: 'Small, reliable tools.',     // see docs/brand.md for the alternatives
     publicUrl: 'https://gnrhub.pages.dev',  // current live URL; change when the new domain is attached
 };

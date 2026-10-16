@@ -23,6 +23,12 @@ describe('About page', () => {
             for (const entry of group.entries) expect(screen.getByText(entry.title)).toBeInTheDocument()
         }
     })
+    it('explains the name in the first person', () => {
+        wrap()
+        const story = screen.getByTestId('name-story')
+        expect(story).toHaveTextContent(/my surname/i)
+        expect(story).toHaveTextContent(/not a studio/i)
+    })
     it('uses the contact email from profile data', () => {
         wrap()
         expect(screen.getByRole('link', { name: /email me/i })).toHaveAttribute('href', `mailto:${profile.email}`)
