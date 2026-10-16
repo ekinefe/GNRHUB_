@@ -42,7 +42,7 @@ Optional: `VITE_FEATURES=account,tools,blogs,dashboard` switches on unfinished a
 - **Tickets** live in your ticket tool (export: `GNR-export.json`). A ticket is Done when its PR has merged into the integration branch.
 
 ## Deploying
-Planned: a Cloudflare Pages project named `gnrdigital` (`gnrdigital.pages.dev`): root `frontend`, build `npm run build`, output `dist`, with the Supabase variables set. Not created yet.
+See [README.md](../README.md) (Deploy and Rollback). Hosting moves from Pages to a Worker in GNR-16.
 
 ## Still open / easy to trip on
 - `frontend/functions/`, the brandbook email feature and `ProjectInfo.md` edits are uncommitted (ticket GNR-5).

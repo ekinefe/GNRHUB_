@@ -1,5 +1,10 @@
 # **GNRdigital [v2] - Master Project Documentation**
 
+> **Status (2026-10-16): read this first.** This file is the original plan and design notes. It is **not** a description of what exists.
+> - Built: the React + Vite frontend (Cloudflare Pages), Supabase sign-in, and the Brandbook Maker. For the real layout and how to run it, see [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
+> - Not built yet: Gym Tracker, CV Maker (Render/LaTeX microservice), Mail Sender, `database/` and `microservices/` (the folders are empty), and the extra roles below (only `guest`, `member`, `admin` exist in code).
+> - The `src/` tree under "Directory Structure" is outdated: code is now grouped by feature in `src/modules` and `src/shared`.
+
 **Goal:** Create an "Ultimate Portfolio" that showcases technical skills while hosting real SaaS products.
 **Constraint:** Zero Budget (Student Project).
 **Live URL:** `https://gnrhub.pages.dev/` (Previous Version)
@@ -22,6 +27,8 @@
 
 ## **Architecture Strategy (The "Hybrid" Stack)**
 
+> **Superseded (Render, GitHub Actions mailing, Supabase and Pages are replaced by one Cloudflare Worker with D1 and Better Auth).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprints 2, 6, 7); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
+
 To keep costs at **$0** while handling heavy tasks, we use a hybrid approach:
 * **Frontend & Light Backend:** **Cloudflare Pages**. Instant speed, handles UI and quick API calls (Auth, Data fetching).
 * **Heavy Backend:** **Render**. Hosts the Docker container for LaTeX generation. Selected because it allows custom Docker containers for free.
@@ -32,6 +39,8 @@ To keep costs at **$0** while handling heavy tasks, we use a hybrid approach:
 ---
 
 ## **Directory Structure**
+
+> **Superseded (the tree is outdated; `database/` and `microservices/` are empty and the frontend is grouped by feature in `src/modules` and `src/shared`).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 2, GNR-141); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 
 ```text
 GNRdigital_v2/
@@ -80,6 +89,8 @@ GNRdigital_v2/
 ## **Technical Details**
 
 ### **Frontend (Cloudflare Pages)**
+
+> **Superseded (hosting moves from Pages to a single Worker; the component wish-list below is a design note, not what is installed).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 2, GNR-16); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 * **Hosting:** Cloudflare Pages (connected to GitHub).
 * **Styling:** TailwindCSS.
 * **Framework:** React + Vite.
@@ -120,6 +131,8 @@ GNRdigital_v2/
 
 
 ### **Backend Layer 1: The "Light" API (Cloudflare Functions)**
+
+> **Superseded (Pages Functions become Worker routes).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 2, GNR-16); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 * **Location:** Inside `frontend/functions`.
 * **Role:** Handles instant user interactions.
 * **Tasks:**
@@ -127,6 +140,8 @@ GNRdigital_v2/
   * Simple data validation before hitting Supabase.
 
 ### **Backend Layer 2: The "Heavy" Microservice (Render)**
+
+> **Superseded (Render is dropped; CV Maker is a later release).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 10); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 * **Location:** `microservices/cv-generator`.
 * **Role:** CPU-intensive tasks that Cloudflare cannot handle.
 * **Tech:** Node.js + Docker + TeX Live (Minimal Install).
@@ -139,6 +154,8 @@ GNRdigital_v2/
     -Cleanup: If user closes the tab, pinging stops, and Render sleeps after inactivity.
     
 ### **Backend Layer 3: Background Automation (GitHub Actions)**
+
+> **Superseded (bulk mail is a later release and will not run on GitHub Actions).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 11); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 * **Role:** Long-running scripts.
 * **Tasks:**
   * **Bulk Mailer:** Runs a Node.js script to process CSVs and send emails sequentially.
@@ -153,6 +170,8 @@ GNRdigital_v2/
 
 ### **Required Environment Variables**
 
+> **Superseded (Supabase and Render variables go away; see the variable table in README.md).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 2, GNR-18); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
+
 |variable   | Service   | Purpose|
 |:---       |:---       |:---    |
 | VITE_SUPABASE_URL	| Frontend	| Connection to DB |
@@ -162,6 +181,8 @@ GNRdigital_v2/
 | RESEND_API_KEY	 | Cloudflare/GHA	| Sending Emails|
 
 ### **Database (Supabase)**
+
+> **Superseded (Supabase is replaced by Cloudflare D1 + Better Auth).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprints 2 and 7, GNR-132, GNR-135, GNR-136); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 * **Type:** PostgreSQL.
 * **Auth:** Handled natively by Supabase (Google Login + Email/Password).
 * **Security:** Row Level Security (RLS) ensures users only access their own data.
@@ -173,6 +194,8 @@ GNRdigital_v2/
         * preferences: JSONB (Stores theme, language, etc.)
         
 ### **Mailing Service (Resend)**
+
+> **Superseded (mail is off at launch; the hardened version returns in the mail sprint).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 11, GNR-15); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 * **Tier:** Free (3,000 emails/mo).
 * **Usage:**
   * **Transactional** (Password reset, Welcome): Triggered via Cloudflare.
@@ -181,6 +204,8 @@ GNRdigital_v2/
 ---
 
 ## **Testing & Deployment Strategy**
+
+> **Superseded (deployment and backups change with the Worker and D1 move; see README.md for the deploy and rollback steps that apply today).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 2); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 
 * **Manual Testing:** Run `npm run test:ui` locally before pushing.
 * **Automated Gatekeeper:** A GitHub Action prevents deployment if tests fail.
@@ -213,6 +238,8 @@ GitHub Actions is stateless, so we use Supabase as our "Progress Tracker".
 * **Reliability:** If the GHA fails or times out, the next run simply picks up the remaining "Pending" rows. No duplicate emails are ever sent.
 
 ### **Security Handshake (Cloudflare to Render)**
+
+> **Superseded (there is no Render service).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 6); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 Since Render's URL is public, we protect it using a **Secret Header Handshake**:
 1.  **Frontend/Worker:** Adds a custom header `X-GNRHUB-KEY: {{SECRET_PASSPHRASE}}` to the request.
 2.  **Render Backend:** The Express server checks this header against an Environment Variable. If they don't match, it returns `401 Unauthorized` instantly, saving CPU resources.
@@ -222,6 +249,8 @@ Since Render's URL is public, we protect it using a **Secret Header Handshake**:
 ---
 
 ## **Authentication & User State Strategy**
+
+> **Superseded (Supabase auth and JWT handling are replaced by Better Auth).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 7); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
 
 ### **A. Identity & Tokens (JWT)**
 * **Provider:** **Supabase Auth**.
@@ -243,7 +272,8 @@ Access levels are defined by a 'role' column in the public.profiles table and en
 #### **Define Roles & Access Matrix**
 | Role    |   Level   |   Descrip
 | :--- | :--- | :--- |
-|Admin  |100    |	Full system access. Can manage users, view all logs, and override any service.
+| SuperAdmin    |1000| admins cannot do operations wich is affect other admisn but supper admin could do exatly everything. could change the roles, could delete any user, could delete any service, could delete any log, could delete any database entry. evemn for admin level acces.
+|Admin  |100    |	Full system access. Can manage users, view all logs, and override any service. need request to do anything affects other admins.
 |Tester  |50  |Access to "Beta" or uncompleted services for debugging. Cannot manage other users.
 |Insider (Friends)  |30 |A "VIP" role for friends. Grants full access to regular services (no usage limits) but hides "Beta" dev tools.
 |Pro / Paid  |20 |Regular user with a paid subscription. High usage limits and access to PDF exports.
@@ -278,6 +308,7 @@ To prepare for future paid tiers, the 'profiles' table will track subscription s
           "dashboard_layout": "compact"
         }
         ```
+    * also DB might include USER_ID, ROLE, SUBSCRIPTION_TIER, USAGE_METADATA, PREFERENCES, Full name, Surname, emial, when registered, when did it logedin last time, how many time used the services, what services used... I wan tproper log.
 * **Loading:**
     1.  User logs in.
     2.  React app fetches `user` (Identity).
