@@ -240,11 +240,8 @@ GitHub Actions is stateless, so we use Supabase as our "Progress Tracker".
 ### **Security Handshake (Cloudflare to Render)**
 
 > **Superseded (there is no Render service).** Kept as the original design note. Current plan: the GNR tickets in the ticket board (Sprint 6); what exists today: [README.md](README.md) and [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md).
-Since Render's URL is public, we protect it using a **Secret Header Handshake**:
-1.  **Frontend/Worker:** Adds a custom header `X-GNRHUB-KEY: {{SECRET_PASSPHRASE}}` to the request.
-2.  **Render Backend:** The Express server checks this header against an Environment Variable. If they don't match, it returns `401 Unauthorized` instantly, saving CPU resources.
-3.  **Verification:** Render rejects any request missing this key.
-4.  **CORS Policy:** Both Cloudflare and Render are restricted to only accept traffic from gnrhub.pages.dev or authorized custom subdomains.
+
+Removed: the Render service and its secret-header handshake are gone, so no custom key header is needed.
 
 ---
 

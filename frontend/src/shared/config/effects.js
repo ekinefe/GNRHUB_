@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react';
 
 // "Reduce effects": the OS setting (prefers-reduced-motion) OR the visitor's own switch in the footer.
 // Everything that animates asks effectsReduced() / useReducedEffects() instead of checking on its own.
-const KEY = 'reduce-effects';
+const KEY = 'gnrdigital:reduce-effects'; // namespaced: other apps on this origin cannot collide
 const QUERY = '(prefers-reduced-motion: reduce)';
 const listeners = new Set();
 

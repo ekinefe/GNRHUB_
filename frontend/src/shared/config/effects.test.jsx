@@ -16,7 +16,7 @@ describe('reduced effects', () => {
         act(() => setReduceEffects(true))
         expect(screen.getByText('reduced')).toBeInTheDocument()
         expect(document.documentElement.dataset.reduceEffects).toBe('true')
-        expect(localStorage.getItem('reduce-effects')).toBe('1')
+        expect(localStorage.getItem('gnrdigital:reduce-effects')).toBe('1')
     })
 
     it('follows the OS prefers-reduced-motion setting', () => {

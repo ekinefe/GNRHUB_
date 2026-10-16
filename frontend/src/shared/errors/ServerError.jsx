@@ -4,7 +4,7 @@ import { ServerCrash, RefreshCw } from 'lucide-react';
 import ErrorScreen from './ErrorScreen';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
-const RETRY_KEY = 'auto-retried';
+const RETRY_KEY = 'gnrdigital:auto-retried';
 
 const reload = () => window.location.reload();
 
