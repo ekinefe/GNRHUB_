@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { brand } from '@/shared/config/brand';
 import { features } from '@/shared/config/features';
+import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { Settings, Download, ArrowLeft, Palette, Type, Image as ImageIcon, Layout, Users, Mic, Share2, X, Upload, Printer, AlertTriangle, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
@@ -17,6 +18,7 @@ const FONTS = [
 ];
 
 const BrandBookEditor = () => {
+    useDocumentMeta({ title: 'Brand book editor', description: 'Build a brand book and save it as a PDF.', noindex: true });
     // --- STATE MANAGEMENT ---
     const [config, setConfig] = useState({
         name: 'CYBER_DYNAMICS',

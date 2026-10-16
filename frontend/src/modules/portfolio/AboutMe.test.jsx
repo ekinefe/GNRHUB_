@@ -29,6 +29,14 @@ describe('About page', () => {
         expect(story).toHaveTextContent(/my surname/i)
         expect(story).toHaveTextContent(/not a studio/i)
     })
+    it('adds Person JSON-LD while mounted', () => {
+        const { unmount } = wrap()
+        const ld = JSON.parse(document.getElementById('ld-person').textContent)
+        expect(ld['@type']).toBe('Person')
+        expect(ld.sameAs).toContain(profile.github)
+        unmount()
+        expect(document.getElementById('ld-person')).toBeNull()
+    })
     it('uses the contact email from profile data', () => {
         wrap()
         expect(screen.getByRole('link', { name: /email me/i })).toHaveAttribute('href', `mailto:${profile.email}`)

@@ -4,6 +4,7 @@ import path from 'path'
 import { execSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { brand } from './src/shared/config/brand.js'
+import { sitemapXml, robotsTxt } from './src/shared/config/seo.js'
 
 // Commit SHA baked in at build time: Cloudflare Pages sets CF_PAGES_COMMIT_SHA, local builds ask git.
 function commitSha() {
@@ -30,6 +31,14 @@ export default defineConfig({
     react(),
     // Fills %BRAND_NAME% in index.html from src/config/brand.js (single source of truth)
     { name: 'brand-html', transformIndexHtml: (html) => html.replaceAll('%BRAND_NAME%', brand.name).replaceAll('%BRAND_URL%', brand.publicUrl) },
+    // sitemap.xml and robots.txt from src/shared/config/seo.js, so the URLs follow brand.publicUrl
+    {
+      name: 'seo-files',
+      generateBundle() {
+        this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemapXml() })
+        this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt() })
+      },
+    },
   ],
   build: {
     rollupOptions: {

@@ -11,9 +11,24 @@ import ProjectEntry from './ProjectEntry';
 import { about, skillsPackageJson } from '@/shared/content/about';
 import { aboutProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
+import { useJsonLd } from '@/shared/hooks/useJsonLd';
+import { brand } from '@/shared/config/brand';
+
+// schema.org Person for search engines; built from profile and about data so it never drifts from the page.
+const PERSON = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: about.name,
+    jobTitle: 'Computer science student',
+    url: brand.publicUrl,
+    sameAs: [profile.github, profile.linkedin],
+    address: { '@type': 'PostalAddress', addressLocality: profile.location.city, addressCountry: profile.location.country },
+    knowsAbout: about.skills.programming,
+};
 
 const AboutMe = () => {
     useDocumentMeta({ title: 'About', description: 'Who I am, what I have built and what I work with.' });
+    useJsonLd('person', PERSON);
     return (
         <PageShell width="5xl">
 
