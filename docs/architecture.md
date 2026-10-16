@@ -44,3 +44,8 @@ frontend/functions/
 - Heavy effects (canvas, WebGL) go inside `SceneBoundary` so a failure shows a fallback, not an error page.
 - Canvas loops stop while the tab is hidden or the element is off screen (`useInView`, `document.hidden`).
 - Use the duration tokens (`duration-fast|base|slow`) and `Decrypt` for text effects.
+
+## Accessibility notes
+- Text contrast on the dark background (WCAG AA needs 4.5:1): muted 5.7, pink 5.9, offline red 5.6, cyan 14.8, amber 11.7. Borders are decorative (1.6) and never carry meaning alone.
+- `DashboardLayout` has a skip link to `#main`; the header toggle is labelled and reports `aria-expanded`; the mobile menu closes on Escape and route change.
+- Account controls (login / user menu) are behind `VITE_FEATURE_ACCOUNT` and passed to the header as a slot, so `shared/` never imports `modules/`.
