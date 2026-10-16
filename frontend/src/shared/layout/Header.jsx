@@ -36,7 +36,7 @@ const Header = ({ account = null }) => {
         // { path: "/dashboard", icon: Box, label: "Dashboard" },
         { path: "/blogs", icon: ScanText, label: "Blogs" },
         { path: "/tools", icon: Terminal, label: "Tools" },
-        { path: "/about", icon: PersonStanding, label: "About_Me" }
+        { path: "/about", icon: PersonStanding, label: "About" }
     ];
 
     return (

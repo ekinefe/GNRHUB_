@@ -38,16 +38,16 @@ const AboutMe = () => {
                             Actions
                             <div className="flex flex-wrap gap-2 pt-2">
                                 <a href={`mailto:${profile.email}`}>
-                                    <CyberButton variant="secondary" icon={PersonStanding}>EMAIL_ME</CyberButton>
+                                    <CyberButton variant="secondary" icon={PersonStanding}>Email me</CyberButton>
                                 </a>
                                 <a href={brand.publicUrl} target="_blank" rel="noreferrer">
                                     <CyberButton variant="ghost" icon={ExternalLink}>{brand.name}</CyberButton>
                                 </a>
                                 <a href={profile.github} target="_blank" rel="noreferrer">
-                                    <CyberButton variant="ghost" icon={Github}>GITHUB</CyberButton>
+                                    <CyberButton variant="ghost" icon={Github}>GitHub</CyberButton>
                                 </a>
                                 <a href={cv} target='_blank'>
-                                    <CyberButton variant="ghost" icon={Download}>DOWNLOAD_CV</CyberButton>
+                                    <CyberButton variant="ghost" icon={Download}>Download CV</CyberButton>
                                 </a>
                             </div>
                         </div>
@@ -92,7 +92,7 @@ const AboutMe = () => {
                                     </div>
                                     <div>
                                         <a href={profile.dyrk1a} target="_blank" rel="noopener noreferrer">
-                                            <CyberButton variant="ghost" icon={ExternalLink}>VISIT_SITE</CyberButton>
+                                            <CyberButton variant="ghost" icon={ExternalLink}>Visit site</CyberButton>
                                         </a>
                                     </div>
 

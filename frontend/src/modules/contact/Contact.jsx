@@ -21,7 +21,7 @@ const Contact = () => {
 
                 <div className="flex flex-wrap items-center gap-4">
                     <a href={`mailto:${profile.email}`}>
-                        <CyberButton variant="primary" icon={Mail}>SEND_EMAIL</CyberButton>
+                        <CyberButton variant="primary" icon={Mail}>Send email</CyberButton>
                     </a>
                     <CopyEmail email={profile.email} />
                 </div>

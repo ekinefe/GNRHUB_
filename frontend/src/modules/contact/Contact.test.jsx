@@ -7,15 +7,15 @@ describe('Contact', () => {
     it('shows the address once with a mailto link', () => {
         render(<Contact />)
         expect(screen.getAllByText(profile.email)).toHaveLength(1)
-        expect(screen.getByRole('link', { name: /SEND_EMAIL/ })).toHaveAttribute('href', `mailto:${profile.email}`)
+        expect(screen.getByRole('link', { name: /Send email/ })).toHaveAttribute('href', `mailto:${profile.email}`)
     })
 
     it('copies the address and confirms it', async () => {
         const writeText = vi.fn().mockResolvedValue()
         Object.assign(navigator, { clipboard: { writeText } })
         render(<Contact />)
-        fireEvent.click(screen.getByRole('button', { name: /COPY_EMAIL/ }))
-        await waitFor(() => expect(screen.getByRole('button', { name: /COPIED/ })).toBeInTheDocument())
+        fireEvent.click(screen.getByRole('button', { name: /Copy email/ }))
+        await waitFor(() => expect(screen.getByRole('button', { name: /Copied/ })).toBeInTheDocument())
         expect(writeText).toHaveBeenCalledWith(profile.email)
         expect(screen.getByRole('status')).toHaveTextContent(/copied/i)
     })
@@ -23,7 +23,7 @@ describe('Contact', () => {
     it('says so when the clipboard is blocked', async () => {
         Object.assign(navigator, { clipboard: { writeText: vi.fn().mockRejectedValue(new Error('denied')) } })
         render(<Contact />)
-        fireEvent.click(screen.getByRole('button', { name: /COPY_EMAIL/ }))
+        fireEvent.click(screen.getByRole('button', { name: /Copy email/ }))
         await waitFor(() => expect(screen.getByText(/Could not copy - select/)).toBeInTheDocument())
     })
 })
