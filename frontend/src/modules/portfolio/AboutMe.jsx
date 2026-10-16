@@ -1,13 +1,14 @@
 import React from 'react';
 import { profile } from '@/shared/config/profile';
 import { Link } from 'react-router-dom';
-import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download, Mail } from 'lucide-react';
+import { Code, Linkedin, Github, Download, Mail } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 import avatar from '@/assets/AboutMe/avatar.jpg';
 import cv from '@/assets/Ekin_Efe_GUNGOR_CV_ATS.pdf';
 import PageShell from '@/shared/layout/PageShell';
 import ProjectEntry from './ProjectEntry';
+import { about, skillsPackageJson } from '@/shared/content/about';
 import { aboutProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
@@ -54,18 +55,18 @@ const AboutMe = () => {
                             </div>
 
                             <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed max-w-2xl">
-                                I build practical tools across web, data, and embedded systems—everything from Morse code hardware to Linux automation scripts. Currently studying AI & Data Science in Warsaw, Poland.
+                                {about.intro}
                             </p>
 
                             {/* Separators */}
                             <div className="font-mono text-[10px] sm:text-xs flex flex-wrap items-center gap-x-6 gap-y-3 uppercase pt-2 pb-2">
-                                <span className="text-cyber-muted font-bold tracking-widest">WARSAW-PL</span>
-                                <span className="text-cyber-muted/40">|</span>
-                                <span className="text-cyber-muted font-bold tracking-widest">ENGLISH (C1)</span>
-                                <span className="text-cyber-muted/40">|</span>
-                                <span className="text-cyber-muted font-bold tracking-widest">TURKISH (NATIVE)</span>
-                                <span className="text-cyber-muted/40">|</span>
-                                <span className="text-cyber-muted font-bold tracking-widest">POLISH (A1)</span>
+                                <span className="text-cyber-muted font-bold tracking-widest">{profile.location.city}-{profile.location.country}</span>
+                                {Object.entries(about.languages).map(([lang, level]) => (
+                                    <React.Fragment key={lang}>
+                                        <span className="text-cyber-muted/40">|</span>
+                                        <span className="text-cyber-muted font-bold tracking-widest">{lang} ({level})</span>
+                                    </React.Fragment>
+                                ))}
                             </div>
 
                             {/* Actions */}
@@ -88,228 +89,90 @@ const AboutMe = () => {
                 </section>
 
                 {/* Details Section */}
-                <section className="mb-16">
+                <section className="mb-16 space-y-16">
 
-                    {/* FIX 1 & 2: Removed max-w-3xl, changed to w-full, and added mb-16 for spacing */}
-                    <div className="space-y-6 w-full mb-16">
-                        {/* Added a subtle bottom border to the title to separate it from the text */}
+                    <div className="space-y-6 w-full">
                         <h2 className="text-2xl font-mono font-bold uppercase tracking-wider text-white flex items-center gap-3">
                             <span className="text-cyber-pink font-bold">&lt;&gt;</span>
                             PROFESSIONAL_SUMMARY
                         </h2>
                         <div className="border border-cyber-border bg-cyber-black p-4">
-                            <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed text-justify">
-                                CS student (AI and Data Science) with 3+ years of Python and Bash on Linux and hands-on embedded work
-                                (Arduino, C/C++, KiCad). I build small, reliable tools (CLI utilities and microcontroller apps) that remove
-                                manual steps and clarify workflows. Looking for opportunities to learn quickly and contribute directly by solving
-                                real problems for teams.
-                            </p>
+                            <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed">{about.summary}</p>
                         </div>
                     </div>
 
-                    {/* Increased space-y-12 to space-y-16 to give more breathing room between Skills and Timeline */}
-                    <div className="space-y-16">
+                    {/* Skills as a package.json block */}
+                    <div>
+                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                            <Code className="w-6 h-6 text-cyber-pink" />
+                            SKILLS
+                        </h2>
+                        <pre
+                            aria-label="Skills, shown as a package.json file"
+                            className="border border-cyber-border bg-cyber-black p-4 font-mono text-sm text-cyber-cyan overflow-x-auto"
+                        >
+                            <span className="text-cyber-muted">$ cat package.json{'\n'}</span>
+                            {skillsPackageJson()}
+                        </pre>
+                    </div>
 
-                        {/* Core Skills */}
-                        <div>
-                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    {/* Education and experience as git logs */}
+                    {about.log.map((group) => (
+                        <div key={group.key}>
+                            <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
                                 <Code className="w-6 h-6 text-cyber-pink" />
-                                SKILLS
+                                {group.title}
                             </h2>
-                            <div className="border border-cyber-border bg-cyber-black p-4">
-                                {/* <div className="text-cyber-cyan mb-2">LANGUAGES</div> */}
-                                <ul className="space-y-1 text-cyber-muted">
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-base font-bold">Programming: </span> <span className="text-cyber-muted">Python, Bash, C/C++, Java, SQL</span></li>
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-base font-bold">Systems: </span> <span className="text-cyber-muted">Linux, shell scripting, cron, Git/GitHub</span></li>
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-base font-bold">Embedded/Electronics: </span> <span className="text-cyber-muted">Arduino (C/C++), microcontrollers, KiCad (schematics)</span></li>
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-base font-bold">Tools: </span> <span className="text-cyber-muted">JetBrains/VS Code, Figma, DaVinci Resolve</span></li>
-                                </ul>
-                            </div>
-                            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-sm">
-                                <div className="border border-cyber-border bg-cyber-black p-4">
-                                    <div className="text-cyber-cyan mb-2">LANGUAGES</div>
-                                    <ul className="space-y-1 text-cyber-muted">
-                                        <li><span className="text-cyber-pink">&gt;</span> Python</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> C/C++</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> JavaScript / TypeScript</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> SQL</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Bash</li>
-                                    </ul>
-                                </div>
-                                <div className="border border-cyber-border bg-cyber-black p-4">
-                                    <div className="text-cyber-cyan mb-2">FRAMEWORKS / TOOLS</div>
-                                    <ul className="space-y-1 text-cyber-muted">
-                                        <li><span className="text-cyber-pink">&gt;</span> React / Node.js</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Linux (Fedora/Debian)</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Docker</li>
-                                        <li><span className="text-cyber-pink">&gt;</span> Git & Automation</li>
-                                    </ul>
-                                </div>
-                            </div> */}
+                            <p className="font-mono text-xs text-cyber-muted mb-6">$ git log --oneline {group.key}</p>
+                            <ol className="space-y-8 border-l-2 border-cyber-border pl-6 relative">
+                                {group.entries.map((entry) => (
+                                    <li key={`${entry.when}-${entry.title}`} className="relative">
+                                        <span
+                                            aria-hidden="true"
+                                            className={`absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 ${entry.current ? 'border-cyber-pink' : 'border-cyber-border'}`}
+                                        />
+                                        <div className="text-cyber-muted text-xs font-mono mb-1">{entry.when}</div>
+                                        <h3 className="text-lg font-bold text-white">{entry.title}</h3>
+                                        {entry.org && <p className="text-cyber-cyan text-sm mb-2">{entry.org}</p>}
+                                        {entry.text && <p className="text-cyber-text/70 text-sm">{entry.text}</p>}
+                                        {entry.points && (
+                                            <ul className="text-cyber-text/70 text-sm">
+                                                {entry.points.map((point) => <li key={point}>&gt; {point}</li>)}
+                                            </ul>
+                                        )}
+                                    </li>
+                                ))}
+                            </ol>
                         </div>
+                    ))}
 
-                        {/* Timeline / Experience */}
-                        <div>
-                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                                {/* <Terminal className="w-6 h-6 text-cyber-pink" /> */}
+                    {/* Selected projects */}
+                    <div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                            <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0">
                                 <Code className="w-6 h-6 text-cyber-pink" />
-                                EDUCATION
+                                SELECTED_PROJECTS
                             </h2>
-
-                            <div className="space-y-8 border-l-2 border-cyber-border pl-6 relative">
-                                {/* Timeline Item 1 */}
-                                <div className="relative">
-                                    <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-pink" />
-                                    <div className="text-cyber-muted text-xs font-mono mb-1">2023 – Present (expected 2027)</div>
-                                    <h3 className="text-lg font-bold text-white">CS Student (AI & Data Science)</h3>
-                                    <p className="text-cyber-cyan text-sm mb-2">Uniwersytet VIZJA w Warszawie</p>
-                                    <p className="text-cyber-text/70 text-sm">
-                                        Bachelor’s Degree in Computer Science, specialization in Artificial Intelligence and Data Science                                    </p>
-                                </div>
-
-                                {/* Timeline Item 2 */}
-                                <div className="relative">
-                                    {/* <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-cyan" /> */}
-                                    <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-border" />
-                                    <div className="text-cyber-muted text-xs font-mono mb-1">2021 – 2023</div>
-                                    <h3 className="text-lg font-bold text-white">Bachelor’s Degree in Computer Science</h3>
-                                    <p className="text-cyber-cyan text-sm mb-2">Polish-Japanese Academy of Information Technology, Warsaw</p>
-                                    {/* <p className="text-cyber-text/70 text-sm">
-                                        Built micro-SaaS platforms, automated embedded deployments, and created CLI tools for sysadmin workflows.
-                                    </p> */}
-                                </div>
-                            </div>
+                            <Link to="/projects">
+                                <CyberButton variant="ghost">Other Projects</CyberButton>
+                            </Link>
                         </div>
-
-                        {/* Timeline / Experience */}
-                        <div>
-                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                                {/* <Terminal className="w-6 h-6 text-cyber-pink" /> */}
-                                <Code className="w-6 h-6 text-cyber-pink" />
-                                PROFESSIONAL_EXPERIENCE
-                            </h2>
-
-                            <div className="space-y-8 border-l-2 border-cyber-border pl-6 relative">
-                                {/* Timeline Item 1 */}
-                                <div className="relative">
-                                    <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-pink" />
-                                    <div className="text-cyber-muted text-xs font-mono mb-1">2026 – Present</div>
-                                    <h3 className="text-lg font-bold text-white">IT & Data Specialist</h3>
-                                    <p className="text-cyber-cyan text-sm mb-2">DYRK1Aprot</p>
-                                    <p className="text-cyber-text/70 text-sm">
-                                        Provides the technical backbone of the project, managing digital infrastructure and website development. He applies data science and computational methods to support the team in analyzing complex data.
-                                    </p>
-                                </div>
-
-                                {/* Timeline Item 2 */}
-                                <div className="relative">
-                                    {/* <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-cyan" /> */}
-                                    <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-border" />
-                                    <div className="text-cyber-muted text-xs font-mono mb-1">January 2024 – July 2025</div>
-                                    <h3 className="text-lg font-bold text-white">Data Science & e-Learning Intern</h3>
-                                    <p className="text-cyber-cyan text-sm mb-2">Nobel Learning PBC</p>
-                                    <ul className="text-cyber-text/70 text-sm">
-                                        <li>&gt;     Built LMS-ready modules and interactive content to enhance engagement and outcomes.</li>
-                                        <li>&gt; Partnered with instructors to scope features and ship prototypes for instructional tools.</li>
-                                        <li>&gt; Integrated modern learning tools into course workflows and wrote clear how-to docs.</li>
-                                        <li>&gt; Collected feedback and iterated to improve usability and content clarity.</li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div className="space-y-8">
+                            {aboutProjects.map((project) => <ProjectEntry key={project.id} project={project} points={2} />)}
                         </div>
+                    </div>
 
-                        {/* Timeline / Experience */}
-                        <div>
-                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                                {/* <Terminal className="w-6 h-6 text-cyber-pink" /> */}
-                                <Code className="w-6 h-6 text-cyber-pink" />
-                                OTHER_EXPERIENCE
-                            </h2>
-
-                            <div className="space-y-8 border-l-2 border-cyber-border pl-6 relative">
-                                {/* Timeline Item 1 */}
-                                <div className="relative">
-                                    <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-pink" />
-                                    <div className="text-cyber-muted text-xs font-mono mb-1">July 2024 – Present</div>
-                                    <h3 className="text-lg font-bold text-white">Part-time Bike Technician</h3>
-                                    <p className="text-cyber-cyan text-sm mb-2">Benefit Bike</p>
-                                    <ul className="text-cyber-text/70 text-sm">
-                                        <li>&gt; Diagnose mechanical issues and complete same-day repairs; perform drivetrain/brake tuning, component
-                                            replacements, and safety checks.</li>
-                                        <li>&gt; Communicate repair options, costs, and timelines; document work and maintain service logs.</li>
-                                        <li>&gt; Own the workflow end-to-end–from intake to pickup–ensuring on-time completion and QC.</li>
-                                        <li>&gt; Prepare/store bikes to preserve condition; organize parts/tools to reduce turnaround time.</li>
-                                    </ul>
-                                </div>
-
-                                {/* Timeline Item 2 */}
-                                <div className="relative">
-                                    <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-pink" />
-                                    {/* <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-cyan" /> */}
-                                    {/* <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-border" /> */}
-                                    <div className="text-cyber-muted text-xs font-mono mb-1">June 2019 – Present</div>
-                                    <h3 className="text-lg font-bold text-white">Freelance Photographer & Technical Consultant</h3>
-                                    {/* <p className="text-cyber-cyan text-sm mb-2">Nobel Learning PBC</p> */}
-                                    <ul className="text-cyber-text/70 text-sm">
-                                        <li>&gt; Managed portrait, event, and commercial shoots end-to-end (brief, shoot, edit, delivery).</li>
-                                        <li>&gt; Built a terminal utility to launch common editing workflows, improving daily throughput.</li>
-                                        <li>&gt; Scoped requirements and advised clients on asset management and color workflows.</li>
-                                    </ul>
-                                </div>
-                                {/* Timeline Item 3 */}
-                                <div className="relative">
-                                    {/* <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-pink" /> */}
-                                    {/* <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-cyan" /> */}
-                                    <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-border" />
-                                    <div className="text-cyber-muted text-xs font-mono mb-1">January 2016 – December 2020</div>
-                                    <h3 className="text-lg font-bold text-white">Leader’s Assistant & PR/Social Media Manager</h3>
-                                    <p className="text-cyber-cyan text-sm mb-2">Turkish Aeronautical Association</p>
-                                    <ul className="text-cyber-text/70 text-sm">
-                                        <li>&gt; Led a 5-member youth team to plan national events (100+ attendees); coordinated schedules, budgets, and
-                                            on-site operations.</li>
-                                        <li>&gt; Produced/published cross-channel social content; coordinated promo campaigns.</li>
-                                        <li>&gt; Liaised with local media (newspapers, radio, TV) to increase visibility and attendance.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* === SELECTED PROJECTS === */}
-                        {/* Wrapping the whole section in a single div prevents the parent's space-y from tearing it apart */}
-                        <div>
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-">
-                                <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0">
-                                    <Code className="w-6 h-6 text-cyber-pink" />
-                                    SELECTED_PROJECTS
-                                </h2>
-                                <Link to="/projects">
-                                    <CyberButton variant="ghost">Other Projects</CyberButton>
-                                </Link>
-                            </div>
-
-                            {/* Inner container for the projects with a smaller gap between each project */}
-                            <div className="space-y-8">
-
-                                {aboutProjects.map((project) => <ProjectEntry key={project.id} project={project} points={2} />)}
-
-                            </div>
-                        </div>
-
-                        <div>
-                            <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 mb-4">
-                                <Code className="w-6 h-6 text-cyber-pink" />
-                                Certificates & Courses
-                            </h2>
-
-                            <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                                <ul className="space-y-2 text-cyber-muted font-mono text-sm">
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">ChatGPT Prompt Engineering for Developers</span> DeepLearning.AI (August 2025)</li>
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">Fundamentals Program (90 hours)</span> Nobel Learning PBC (July 2025)</li>
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">Academic Skills</span> NAVOICA (January 2024)</li>
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">Website Development</span> NAVOICA (January 2024)</li>
-                                    <li><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">Daily and Business English</span> Wyższa Szkoła Ekologii i Zarządzania w Warszawie. – (2020 – 2021)</li>
-                                </ul>
-                            </div>
+                    <div>
+                        <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 mb-4">
+                            <Code className="w-6 h-6 text-cyber-pink" />
+                            Certificates & Courses
+                        </h2>
+                        <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
+                            <ul className="space-y-2 text-cyber-muted font-mono text-sm">
+                                {about.certificates.map((c) => (
+                                    <li key={c.name}><span className="text-cyber-pink">&gt;</span> <span className="text-cyber-cyan font-bold">{c.name}</span> {c.issuer} ({c.when})</li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
                 </section>
