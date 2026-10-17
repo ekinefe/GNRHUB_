@@ -33,4 +33,4 @@ Last reviewed: 2026-10-16 (GNR-155). Ticked = verified, with how. Unticked = sti
 ## Before pressing publish
 - [ ] Brand URL and OG image URL point at the final domain (`brand.publicUrl`, GNR-17).
 - [ ] Repo and old name: `GNRHUB_` repo renamed (GNR-2).
-- [ ] Supabase values or Supabase itself dealt with (GNR-135), so a fresh deploy cannot load blank.
+- [x] A deploy with empty Supabase values no longer loads blank (client falls back to placeholders). Supabase itself still goes with GNR-135.

@@ -27,8 +27,7 @@ cp .env.example .env.local     # then fill the two Supabase values, see the note
 npm run dev                    # http://localhost:5173
 ```
 
-> **Supabase values are required even though sign-in is hidden.** The client is created when the app loads and throws on empty values, which gives a blank page. Until Supabase is removed (GNR-135), any well-formed placeholder works while `VITE_FEATURES` does not include `account`:
-> `VITE_SUPABASE_URL=https://placeholder.supabase.co` and `VITE_SUPABASE_ANON_KEY=placeholder`.
+> **Supabase values are optional while sign-in is hidden.** With them empty the app still loads (the client falls back to placeholders and logs a warning), but sign-in will not work. Supabase goes away with GNR-135.
 
 ### Checks (CI runs the same)
 ```bash
@@ -73,7 +72,7 @@ The Pages project is **not created yet**; GNR-16 replaces it with a Worker. Unti
 
 1. Cloudflare dashboard, Workers & Pages, create a Pages project named `gnrdigital`, connect the GitHub repo.
 2. Build settings: root directory `frontend`, build command `npm run build`, output directory `dist`, environment variable `NODE_VERSION=24`.
-3. Set the production variables from the tables above (at minimum the two Supabase values, or the app loads blank).
+3. Set the production variables from the tables above (Supabase values only if `account` is in `VITE_FEATURES`).
 4. Push to the production branch. Pages builds and publishes. Pull requests get preview URLs.
 
 Do not run any remote or production command (`wrangler`, database migrations) without the owner's confirmation. Budget is $0.
