@@ -15,6 +15,7 @@ import CyberCard from '@/shared/ui/CyberCard';
 import { Zap, Shield, Terminal, Layout } from 'lucide-react';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { typeScale } from '@/shared/config/typeScale';
+import { CopyClass, ButtonPlayground, MotionCatalogue } from './StyleGuideLive';
 
 const DesignSystem = () => {
     useDocumentMeta({ title: 'Design system', description: 'Tokens, components and states used across GNRdigital.', noindex: true });
@@ -54,7 +55,7 @@ const DesignSystem = () => {
                         {['black', 'panel', 'border', 'text', 'muted', 'pink', 'cyan', 'purple', 'active', 'beta', 'offline', 'alert'].map((name) => (
                             <div key={name} className="border border-cyber-border">
                                 <div className={`h-10 bg-cyber-${name}`} />
-                                <p className="font-mono text-xs text-cyber-muted p-2">cyber-{name}</p>
+                                <p className="p-2"><CopyClass value={`bg-cyber-${name}`}>cyber-{name}</CopyClass></p>
                             </div>
                         ))}
                     </div>
@@ -80,7 +81,7 @@ const DesignSystem = () => {
                                 {typeScale.map(({ cls, px, use }) => (
                                     <li key={cls} className="border-b border-cyber-border/40 pb-2">
                                         <p className={`${cls} text-white [overflow-wrap:anywhere]`}>The quick brown fox</p>
-                                        <p className="font-mono text-xs text-cyber-muted">{cls} · {px}px · {use}</p>
+                                        <p className="font-mono text-xs text-cyber-muted"><CopyClass value={cls} /> · {px}px · {use}</p>
                                     </li>
                                 ))}
                             </ul>
@@ -139,6 +140,13 @@ const DesignSystem = () => {
                     </div>
                 </section>
 
+                <section className="mb-16">
+                    <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                        02b // BUTTON PLAYGROUND
+                    </h2>
+                    <ButtonPlayground />
+                </section>
+
                 {/* Section: Cards */}
                 <section className="mb-16">
                     <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
@@ -163,6 +171,13 @@ const DesignSystem = () => {
                             </div>
                         </CyberCard>
                     </div>
+                </section>
+
+                <section className="mb-16">
+                    <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                        03b // MOTION
+                    </h2>
+                    <MotionCatalogue />
                 </section>
 
                 {/* Section: Forms & feedback */}
