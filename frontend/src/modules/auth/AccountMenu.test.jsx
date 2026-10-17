@@ -6,7 +6,7 @@ import AccountMenu from './AccountMenu'
 let auth = { user: null, loading: false }
 const signOut = vi.fn()
 vi.mock('./AuthContext', () => ({ useAuth: () => auth }))
-vi.mock('@/shared/lib/supabase', () => ({ supabase: { auth: { signOut: () => signOut() } } }))
+vi.mock('./authClient', () => ({ authClient: { signOut: () => signOut() } }))
 
 const show = () => render(<MemoryRouter><AccountMenu /></MemoryRouter>)
 
