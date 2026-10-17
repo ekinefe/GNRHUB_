@@ -48,6 +48,7 @@ Build-time variables (Vite, `frontend/.env.local`, never committed):
 | `VITE_FEATURES` | Comma list that switches on unfinished areas: `account`, `tools`, `blogs`, `dashboard`. Off routes show the 404. | none |
 | `VITE_FEATURE_ACCOUNT` | Legacy alias for `account` | `false` |
 | `VITE_FEATURE_MAIL` | Shows "email report" in the brand book editor | `false` |
+| `VITE_TURNSTILE_SITE_KEY` | Public Turnstile key; the widget renders only when set | unset |
 
 Server variables (Functions; locally in `frontend/.dev.vars`, copy `.dev.vars.example`; in production set as secrets):
 
@@ -55,6 +56,8 @@ Server variables (Functions; locally in `frontend/.dev.vars`, copy `.dev.vars.ex
 |---|---|---|
 | `MAIL_ENABLED` | `true` lets `/api/send-brandbook` run. Otherwise it returns 501. | unset (off) |
 | `RESEND_API_KEY` | Resend key, only used when mail is enabled | unset |
+| `RATE_LIMIT_SALT` | Salts the IP hash for per-route rate limits (429 + Retry-After). Limiter is off without it | unset (off) |
+| `TURNSTILE_SECRET` | Server-side Turnstile check for public forms. Skipped without it | unset (off) |
 
 Bindings: `DB` (D1) and `ASSETS` arrive with the Worker (GNR-16, GNR-132; see `docs/database.md`). Planned secrets (`BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `GOOGLE_CLIENT_ID`/`SECRET`, `TURNSTILE_SECRET`) are listed, commented out, in `frontend/.dev.vars.example`. Third-party API keys are not env vars; they will live encrypted in D1. No secret belongs in `wrangler.jsonc` or the repo.
 
