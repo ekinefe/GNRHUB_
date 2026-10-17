@@ -3,6 +3,7 @@
 // is served straight from the static assets. Routes are one file each under
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
 import * as sendBrandbook from './api/send-brandbook.js';
+import { withSecurityHeaders } from './_lib/security-headers.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -58,5 +59,5 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 }
 
 export default {
-  fetch: (request: Request, env: Env) => handle(request, env),
+  fetch: async (request: Request, env: Env) => withSecurityHeaders(await handle(request, env)),
 };
