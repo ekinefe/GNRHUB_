@@ -41,4 +41,20 @@ describe('worker', () => {
     spy.mockRestore()
     routes.pop()
   })
+
+  it('answers 429 for a route that opts in once over the limit, and lets others through', async () => {
+    const { createTestD1 } = await import('./_test/testD1.js')
+    const db = createTestD1()
+    const limited = { pattern: new URLPattern({ pathname: '/api/limited' }), module: { rateLimit: { limit: 2 }, onRequestGet: () => new Response('ok') } }
+    routes.push(limited)
+    const e = { ...env, DB: db, RATE_LIMIT_SALT: 's' }
+    const hit = () => handle(new Request('https://example.com/api/limited', { headers: { 'CF-Connecting-IP': '9.9.9.9' } }), e)
+    expect((await hit()).status).toBe(200)
+    expect((await hit()).status).toBe(200)
+    const res = await hit()
+    expect(res.status).toBe(429)
+    expect(res.headers.get('Retry-After')).toBeTruthy()
+    routes.pop()
+    db.close()
+  })
 })
