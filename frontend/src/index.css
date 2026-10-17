@@ -41,6 +41,23 @@
     --motion-ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Accent switcher (GNR-41, theme.js sets data-accent on <html>). Pink is the default. Cyan swaps with pink
+     so the two-colour palette keeps contrast; amber and green are phosphor looks. */
+  [data-accent="cyan"] { --cyber-pink: 0 243 255; --cyber-cyan: 255 49 140; }
+  [data-accent="amber"] { --cyber-pink: 255 183 0; }
+  [data-accent="green"] { --cyber-pink: 51 255 102; }
+
+  /* Optional CRT scanlines (data-scanlines="on"). Off under reduced effects. Never blocks clicks. */
+  [data-scanlines="on"] body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 80;
+    background: repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.18) 0, rgb(0 0 0 / 0.18) 1px, transparent 1px, transparent 3px);
+  }
+  [data-reduce-effects="true"][data-scanlines="on"] body::after { display: none; }
+
   /* Reduced effects: the OS setting, or the footer switch (sets data-reduce-effects on <html>). */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
