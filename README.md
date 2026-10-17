@@ -45,7 +45,7 @@ Build-time variables (Vite, `frontend/.env.local`, never committed):
 | Variable | Purpose | Default |
 |---|---|---|
 | `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` | Supabase client (see note above) | required |
-| `VITE_FEATURES` | Comma list that switches on unfinished areas: `account`, `tools`, `blogs`, `dashboard`. Off routes show the 404. | none |
+| `VITE_FEATURES` | Comma list that switches on unfinished areas: `account`, `tools`, `blogs`. Off routes show the 404. | none |
 | `VITE_FEATURE_ACCOUNT` | Legacy alias for `account` | `false` |
 | `VITE_FEATURE_MAIL` | Shows "email report" in the brand book editor | `false` |
 
