@@ -1,8 +1,7 @@
 import React from 'react';
+import { ACCENT_SWATCH as SWATCH } from '@/shared/config/tokens';
 import { ACCENTS, setAccent, setScanlines, useAccent, useScanlines } from '@/shared/config/theme';
 
-// Swatch colours are the accent values from index.css, repeated here only for the preview dot.
-const SWATCH = { pink: '#ff318c', cyan: '#00f3ff', amber: '#ffb700', green: '#33ff66' };
 
 const ThemeControls = () => {
     const accent = useAccent();
