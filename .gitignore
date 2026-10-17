@@ -64,3 +64,6 @@ AccountDetails.md
 
 # graphify output
 graphify-out/
+
+# Local D1 state (wrangler)
+.wrangler/

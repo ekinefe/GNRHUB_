@@ -1,6 +1,6 @@
 # Database (Cloudflare D1)
 
-Schema lives in `frontend/db/schema.ts` (Drizzle). Migrations are generated SQL in `frontend/db/migrations/`. D1 settings for the scripts are in `frontend/wrangler.db.jsonc` (a separate file on purpose: a `wrangler.jsonc` would change how Cloudflare Pages builds the site until the Worker move, GNR-16).
+Schema lives in `frontend/db/schema.ts` (Drizzle). Migrations are generated SQL in `frontend/db/migrations/`. D1 settings are in `frontend/wrangler.jsonc` (the same file the Worker uses).
 
 No launch feature uses D1 yet. The first migration is empty.
 
@@ -30,6 +30,6 @@ Creating them is a remote action done by the owner, once:
 npx wrangler d1 create gnrdigital-prod
 npx wrangler d1 create gnrdigital-dev
 ```
-Then put the printed ids into `wrangler.db.jsonc` (`database_id` = prod, `preview_database_id` = dev). Never create them against an account holding other projects' databases without checking the name list first (`npx wrangler d1 list`).
+Then put the printed ids into `wrangler.jsonc` (`database_id` = prod, `preview_database_id` = dev). Never create them against an account holding other projects' databases without checking the name list first (`npx wrangler d1 list`).
 
 Rules: no SQL built from strings in app code; use Drizzle.

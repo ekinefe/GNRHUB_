@@ -3,7 +3,7 @@
 import { spawnSync } from 'node:child_process'
 import { createInterface } from 'node:readline/promises'
 
-const CONFIG = 'wrangler.db.jsonc'
+const CONFIG = 'wrangler.jsonc'
 export const DATABASES = { prod: 'gnrdigital-prod', dev: 'gnrdigital-dev' }
 
 const [target, ...rest] = process.argv.slice(2)

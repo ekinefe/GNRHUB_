@@ -16,7 +16,8 @@
     "db:migrate:remote": "node scripts/db.mjs migrate-remote",
     "db:migrate:preview": "node scripts/db.mjs migrate-preview",
     "db:seed:local": "node scripts/db.mjs seed-local",
-    "db:query:local": "node scripts/db.mjs query-local"
+    "db:query:local": "node scripts/db.mjs query-local",
+    "dev:worker": "vite build && wrangler dev --local"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.98.0",
