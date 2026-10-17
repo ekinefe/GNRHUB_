@@ -19,6 +19,9 @@ jobs:
       - name: Install
         working-directory: frontend
         run: npm install
+      - name: Audit shipped dependencies (high and above)
+        working-directory: frontend
+        run: npm audit --omit=dev --audit-level=high
       - name: Lint (zero warnings)
         working-directory: frontend
         run: npm run lint
