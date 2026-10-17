@@ -1,9 +1,8 @@
 // Feature flags, read from Vite env at build time. Unfinished features stay off so the launch has no dead ends.
-//   VITE_FEATURES=account,tools,blogs,dashboard   comma list of areas to switch on (default: none)
+//   VITE_FEATURES=account,tools,blogs   comma list of areas to switch on (default: none)
 //     account    login, register and the header user menu
 //     tools      /tools and the brand book editor
 //     blogs      /blogs
-//     dashboard  /dashboard
 //   VITE_FEATURE_ACCOUNT=true  legacy alias for "account"
 //   VITE_FEATURE_MAIL=true     shows "email report" in the brand book editor (server needs MAIL_ENABLED=true too)
 // A flagged-off route renders the normal 404, and nothing in the UI links to it.
@@ -13,7 +12,6 @@ export const parseFeatures = (list = '', legacyAccount = '') => {
         account: on.has('account') || legacyAccount === 'true',
         tools: on.has('tools'),
         blogs: on.has('blogs'),
-        dashboard: on.has('dashboard'),
     };
 };
 
