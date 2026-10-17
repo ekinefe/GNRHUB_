@@ -4,6 +4,7 @@
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
 import * as sendBrandbook from './api/send-brandbook.js';
 import { rateLimit } from './_lib/rateLimit.ts';
+import { runDue } from './cron/dispatcher.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -68,4 +69,8 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 
 export default {
   fetch: (request: Request, env: Env) => handle(request, env),
+  // The single cron trigger (wrangler.jsonc "triggers"); jobs are routed in cron/dispatcher.ts.
+  scheduled: (event: { scheduledTime: number }, env: Env, ctx: { waitUntil: (p: Promise<unknown>) => void }) => {
+    ctx.waitUntil(runDue(env, event.scheduledTime));
+  },
 };

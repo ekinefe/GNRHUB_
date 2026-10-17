@@ -57,4 +57,17 @@ describe('worker', () => {
     routes.pop()
     db.close()
   })
+
+  it('scheduled() hands the scheduled time to the cron dispatcher', async () => {
+    const { createTestD1 } = await import('./_test/testD1.js')
+    const db = createTestD1()
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    let pending
+    worker.scheduled({ scheduledTime: Date.parse('2026-01-01T03:00:00Z') }, { ...env, DB: db }, { waitUntil: (p) => { pending = p } })
+    await pending
+    const { results } = await db.prepare('SELECT job, ok FROM cron_runs ORDER BY job').all()
+    expect(results).toEqual([{ job: 'audit-retention', ok: 1 }, { job: 'rate-limit-retention', ok: 1 }])
+    log.mockRestore()
+    db.close()
+  })
 })
