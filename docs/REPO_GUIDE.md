@@ -25,7 +25,7 @@ A personal portfolio site (`frontend/`) that is meant to host small tools. **Onl
 cd frontend
 nvm use                      # Node 24 (.nvmrc)
 npm install
-cp .env.example .env.local   # add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+cp .env.example .env.local   # optional, only feature flags
 npm run dev                  # http://localhost:5173
 npm run lint && npm run test:unit && npm run build   # same checks CI runs
 ```
@@ -47,4 +47,4 @@ See [README.md](../README.md) (Deploy and Rollback). Hosting moves from Pages to
 ## Still open / easy to trip on
 - `frontend/functions/`, the brandbook email feature and `ProjectInfo.md` edits are uncommitted (ticket GNR-5).
 - `/api/send-brandbook` needs a Resend key and should be off until Resend is back (GNR-15).
-- Auth is Supabase now; the tickets plan to move to Better Auth + D1 later (GNR-136).
+- Sign-in is a stub behind `modules/auth/authClient.js`; Better Auth + D1 plugs in there later (GNR-136).
