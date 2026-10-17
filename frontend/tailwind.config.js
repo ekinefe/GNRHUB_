@@ -11,6 +11,9 @@ export default {
                 // This sets it as the default font stack for the whole app.
                 sans: ['"JetBrains Mono"', 'monospace'],
                 mono: ['"JetBrains Mono"', 'monospace'],
+                // Space Grotesk is self-hosted and available as `font-display` for big headings.
+                // Nothing uses it yet; the whole site is JetBrains Mono (see docs/brand.md, Typography).
+                display: ['"Space Grotesk"', '"JetBrains Mono"', 'sans-serif'],
             },
             colors: {
                 // Values live in src/index.css (:root) as RGB triplets; edit them there.

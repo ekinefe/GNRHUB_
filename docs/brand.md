@@ -27,3 +27,11 @@ To switch, change `brand.tagline` and the text in `scripts/og/og.html`, then reg
 
 ## The old name
 The rename away from GNRHUB is done in the UI. Two real URLs still contain the old name until the matching tickets land: the GitHub repo `ekinefe/GNRHUB_` (rename in GNR-2) and the live URL `gnrhub.pages.dev` (new domain in GNR-17). Both are single values in `shared/config/profile.js` and `shared/config/brand.js`.
+
+## Typography
+
+- **One face for the whole site: JetBrains Mono** (Tailwind `font-sans` and `font-mono` are both it). That is the terminal look.
+- **Space Grotesk** is self-hosted and exposed as `font-display` for big headings, but no page uses it yet. Using it is a design choice for later, not a bug.
+- Both are self-hosted woff2 from `frontend/public/fonts/` (SIL Open Font License), `font-display: swap`, latin and latin-ext only. No request goes to Google Fonts (a test checks `index.html`). The main font is preloaded; font files are cached for a year, so **rename a file when you change a font**.
+- The type scale is Tailwind's, listed in `src/shared/config/typeScale.js` and shown on `/design`.
+- The brand book editor's font picker loads Google Fonts on purpose (it previews the visitor's choice). That page is behind the `tools` flag.
