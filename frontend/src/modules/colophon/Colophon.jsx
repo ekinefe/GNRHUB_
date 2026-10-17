@@ -66,7 +66,7 @@ const Colophon = () => {
                 <ul className="font-mono text-sm text-cyber-text space-y-2 list-disc pl-5">
                     <li>No analytics, ad or tracking scripts.</li>
                     <li>No cookies of its own. Signing in stores a session in your browser's local storage.</li>
-                    <li>Fonts (JetBrains Mono, Space Grotesk) currently load from Google Fonts. Self-hosting them is planned.</li>
+                    <li>Fonts (JetBrains Mono, Space Grotesk) are served from this site, not from a font service.</li>
                     <li>Animations respect your system setting and the "Reduce effects" switch in the footer.</li>
                 </ul>
             </Section>
