@@ -44,3 +44,12 @@ describe('Error Pages Routing', () => {
         expect(screen.getByText(/CRITICAL SYSTEM FAILURE/i)).toBeInTheDocument()
     })
 })
+describe('Landmarks (GNR-39)', () => {
+    it.each([['404', <NotFound key="a" />], ['403', <Unauthorized key="b" />], ['500', <ServerError key="c" />]])(
+        '%s page has exactly one main landmark',
+        (_name, page) => {
+            render(<MemoryRouter>{page}</MemoryRouter>)
+            expect(screen.getAllByRole('main')).toHaveLength(1)
+        }
+    )
+})

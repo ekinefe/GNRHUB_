@@ -43,7 +43,7 @@ export default function ErrorScreen({ code, heading, log = [], actions, tone = '
     }, [autoRetry]);
 
     return (
-        <div className="min-h-screen bg-cyber-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
+        <main id="main" className="min-h-screen bg-cyber-black text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 pointer-events-none"
                 style={{ backgroundImage: 'radial-gradient(rgb(var(--cyber-border)) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
@@ -70,6 +70,6 @@ export default function ErrorScreen({ code, heading, log = [], actions, tone = '
 
                 <div className="pt-4 flex flex-wrap gap-4 justify-center">{actions}</div>
             </div>
-        </div>
+        </main>
     );
 }
