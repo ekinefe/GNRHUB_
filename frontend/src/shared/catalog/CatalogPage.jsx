@@ -156,7 +156,7 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                     </div>
                 </aside>
 
-                <main className="w-full lg:w-3/4">
+                <div className="w-full lg:w-3/4">
                     <div className="flex justify-end items-center mb-6">
                         <div className="hidden md:flex gap-2 text-xs font-mono">
                             {selectedCategory !== ALL && (
@@ -205,7 +205,7 @@ export default function CatalogPage({ items, heroTitle, heroText, searchPlacehol
                             </button>
                         </EmptyState>
                     )}
-                </main>
+                </div>
             </div>
         </PageShell>
     );

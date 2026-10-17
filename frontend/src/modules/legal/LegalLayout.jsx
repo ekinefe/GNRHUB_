@@ -5,7 +5,7 @@ import { features } from '@/shared/config/features';
 
 // Shared frame for Privacy and Terms: back link, themed header, numbered sections, last-updated line.
 export const LegalLayout = ({ icon: Icon, iconClass, title, tag, updated, children }) => (
-    <div className="min-h-screen p-4 py-12 flex justify-center">
+    <main id="main" className="min-h-screen p-4 py-12 flex justify-center">
         <div className="max-w-4xl w-full">
             <div className="mb-6">
                 <Link to={features.account ? '/register' : '/'} className="flex items-center gap-2 text-cyber-muted hover:text-cyber-pink transition-colors font-mono text-sm w-fit">
@@ -25,7 +25,7 @@ export const LegalLayout = ({ icon: Icon, iconClass, title, tag, updated, childr
                 <div className="space-y-8 font-mono text-sm leading-relaxed text-gray-300">{children}</div>
             </div>
         </div>
-    </div>
+    </main>
 );
 
 export const Section = ({ n, title, children }) => (

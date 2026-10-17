@@ -9,7 +9,7 @@ import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 const Unauthorized = () => {
     useDocumentMeta({ title: 'Access denied', noindex: true });
     return (
-        <div className="min-h-screen bg-cyber-black flex flex-col items-center justify-center p-4 text-center">
+        <main id="main" className="min-h-screen bg-cyber-black flex flex-col items-center justify-center p-4 text-center">
             <div className="p-6 border border-cyber-offline/50 rounded-lg bg-cyber-offline/5 max-w-md w-full">
                 <Lock className="w-16 h-16 text-cyber-offline mx-auto mb-4 animate-pulse" />
 
@@ -37,7 +37,7 @@ const Unauthorized = () => {
                     // ABORT_MISSION (GO HOME)
                 </Link>
             </div>
-        </div>
+        </main>
     );
 };
 

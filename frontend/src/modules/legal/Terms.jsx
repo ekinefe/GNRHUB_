@@ -36,7 +36,7 @@ const Terms = () => {
             </Section>
 
             <Section n="06" title="LAW AND CONTACT">
-                <p>These terms are governed by Polish law. Questions: <a className="text-cyber-pink hover:underline" href={`mailto:${profile.email}`}>{profile.email}</a>.</p>
+                <p>These terms are governed by Polish law. Questions: <a className="text-cyber-pink underline underline-offset-2 hover:no-underline" href={`mailto:${profile.email}`}>{profile.email}</a>.</p>
             </Section>
         </LegalLayout>
     );

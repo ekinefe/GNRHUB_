@@ -62,7 +62,7 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-[80vh] flex items-center justify-center p-4">
+        <main id="main" className="min-h-[80vh] flex items-center justify-center p-4">
             <div className="max-w-md w-full relative group">
                 {/* Background Glow */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-cyber-pink to-cyber-cyan opacity-20 blur transition duration-1000 group-hover:opacity-40" />
@@ -119,7 +119,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 };
 

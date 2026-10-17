@@ -16,7 +16,7 @@ const Privacy = () => {
             </p>
 
             <Section n="01" title="WHO IS RESPONSIBLE">
-                <p>Ekin Efe Gungor, Warsaw, Poland, is the controller of this site. Contact: <a className="text-cyber-pink hover:underline" href={`mailto:${profile.email}`}>{profile.email}</a>.</p>
+                <p>Ekin Efe Gungor, Warsaw, Poland, is the controller of this site. Contact: <a className="text-cyber-pink underline underline-offset-2 hover:no-underline" href={`mailto:${profile.email}`}>{profile.email}</a>.</p>
             </Section>
 
             <Section n="02" title="WHAT IS COLLECTED">

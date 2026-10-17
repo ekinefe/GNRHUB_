@@ -57,9 +57,9 @@ const AboutMe = () => {
                         </div>
 
                         {/* Right: Info */}
-                        <div className="flex-1 space-y-6">
+                        <div className="flex-1 min-w-0 space-y-6">
                             <div>
-                                <h2 className="text-4xl md:text-5xl font-mono font-bold text-white uppercase tracking-wider mb-4">
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-bold text-white uppercase tracking-wider mb-4 [overflow-wrap:anywhere]">
                                     EKIN_EFE_GUNGOR
                                 </h2>
                                 <div className="text font-mono text-lg flex flex-wrap items-center gap-2">
@@ -106,7 +106,7 @@ const AboutMe = () => {
                 <section className="mb-16 space-y-16">
 
                     <div className="space-y-6 w-full">
-                        <h2 className="text-2xl font-mono font-bold uppercase tracking-wider text-white flex items-center gap-3">
+                        <h2 className="text-2xl font-mono font-bold uppercase tracking-wider text-white flex items-center gap-3 [overflow-wrap:anywhere]">
                             <span className="text-cyber-pink font-bold">&lt;&gt;</span>
                             PROFESSIONAL_SUMMARY
                         </h2>
@@ -117,7 +117,7 @@ const AboutMe = () => {
 
                     {/* Skills as a package.json block */}
                     <div>
-                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 [overflow-wrap:anywhere]">
                             <Code className="w-6 h-6 text-cyber-pink" />
                             SKILLS
                         </h2>
@@ -133,7 +133,7 @@ const AboutMe = () => {
                     {/* Education and experience as git logs */}
                     {about.log.map((group) => (
                         <div key={group.key}>
-                            <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                            <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2 [overflow-wrap:anywhere]">
                                 <Code className="w-6 h-6 text-cyber-pink" />
                                 {group.title}
                             </h2>
@@ -163,7 +163,7 @@ const AboutMe = () => {
                     {/* Selected projects */}
                     <div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                            <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0">
+                            <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 [overflow-wrap:anywhere]">
                                 <Code className="w-6 h-6 text-cyber-pink" />
                                 SELECTED_PROJECTS
                             </h2>
@@ -177,7 +177,7 @@ const AboutMe = () => {
                     </div>
 
                     <div>
-                        <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 mb-4">
+                        <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 mb-4 [overflow-wrap:anywhere]">
                             <Code className="w-6 h-6 text-cyber-pink" />
                             Certificates & Courses
                         </h2>

@@ -16,4 +16,11 @@ describe('legal pages', () => {
         wrap(<Terms />)
         expect(screen.getByText(TERMS_UPDATED)).toBeInTheDocument()
     })
+    it('each has exactly one main landmark', () => {
+        for (const page of [<Privacy key="p" />, <Terms key="t" />]) {
+            const { unmount } = wrap(page)
+            expect(screen.getAllByRole('main')).toHaveLength(1)
+            unmount()
+        }
+    })
 })

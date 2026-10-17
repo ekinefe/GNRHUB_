@@ -16,11 +16,24 @@ jobs:
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
       
-      - name: Install & Test Frontend
-        run: |
-          cd frontend
-          npm install
-          npm run test:unit # Runs Vitest
+      - name: Install
+        working-directory: frontend
+        run: npm install
+      - name: Audit shipped dependencies (high and above)
+        working-directory: frontend
+        run: npm audit --omit=dev --audit-level=high
+      - name: Lint (zero warnings)
+        working-directory: frontend
+        run: npm run lint
+      - name: Unit tests
+        working-directory: frontend
+        run: npm run test:unit
+      - name: Build
+        working-directory: frontend
+        run: npm run build
+      - name: Initial JS budget
+        working-directory: frontend
+        run: npm run check:bundle
 
   check-links:
     runs-on: ubuntu-latest

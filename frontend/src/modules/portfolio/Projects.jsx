@@ -59,7 +59,7 @@ const AboutMe = () => {
 
                     {/* Education & Core Skills */}
                     {/* <div>
-                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 uppercase">
+                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 uppercase [overflow-wrap:anywhere]">
                             <Code className="w-6 h-6 text-cyber-pink" />
                             Education_&_Technical_Skills
                         </h2>
@@ -77,7 +77,7 @@ const AboutMe = () => {
 
                     {/* Professional & Collaborative Work */}
                     <div>
-                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 uppercase">
+                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 uppercase [overflow-wrap:anywhere]">
                             <Terminal className="w-6 h-6 text-cyber-pink" />
                             Professional_&_Collaborative_Work
                         </h2>
@@ -119,7 +119,7 @@ const AboutMe = () => {
 
                     {/* Key Hardware & Software Projects */}
                     <div>
-                        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2 uppercase">
+                        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2 uppercase [overflow-wrap:anywhere]">
                             <Code className="w-6 h-6 text-cyber-pink" />
                             Key_Hardware_&_Software_Projects
                         </h2>
@@ -132,7 +132,7 @@ const AboutMe = () => {
 
                     {/* Experimental & Utility Projects */}
                     <div>
-                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 uppercase">
+                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 uppercase [overflow-wrap:anywhere]">
                             <Terminal className="w-6 h-6 text-cyber-pink" />
                             Experimental_&_Utility_Projects
                         </h2>
