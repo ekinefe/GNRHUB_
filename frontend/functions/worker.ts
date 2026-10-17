@@ -3,6 +3,7 @@
 // is served straight from the static assets. Routes are one file each under
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
 import * as sendBrandbook from './api/send-brandbook.js';
+import { failure } from './_lib/failure.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -52,8 +53,7 @@ export async function handle(request: Request, env: Env): Promise<Response> {
   try {
     return await handler({ request, env });
   } catch (error) {
-    console.error('Unhandled route error:', error);
-    return json({ error: 'Internal error.' }, 500);
+    return failure(error, request);
   }
 }
 
