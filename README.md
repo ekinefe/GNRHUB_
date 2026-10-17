@@ -4,6 +4,7 @@ Personal portfolio of Ekin Efe Gungor ("GNR" from the surname, "digital" from wh
 
 - Where things are: [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md) · layout rules and access levels: [docs/architecture.md](docs/architecture.md)
 - How we work (branches, commits, PRs): [docs/WORKFLOW.md](docs/WORKFLOW.md), [CONTRIBUTING.md](CONTRIBUTING.md) · rules for AI assistants: [CLAUDE.md](CLAUDE.md)
+- Releases: [docs/RELEASING.md](docs/RELEASING.md) · [CHANGELOG.md](CHANGELOG.md)
 - Wording: [docs/copy.md](docs/copy.md) · brand: [docs/brand.md](docs/brand.md)
 - `ProjectInfo.md` is the **original design note**, now partly superseded (each section says so). The live plan is the GNR tickets.
 
