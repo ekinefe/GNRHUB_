@@ -2,7 +2,7 @@
 
 Schema lives in `frontend/db/schema.ts` (Drizzle). Migrations are generated SQL in `frontend/db/migrations/`. D1 settings are in `frontend/wrangler.jsonc` (the same file the Worker uses).
 
-No launch feature uses D1 yet. The first migration is empty.
+No launch feature uses D1 yet. `0000_init` is empty; `0001` creates the tables below (GNR-63), so they exist but nothing reads them until auth lands.
 
 ## Workflow (run from `frontend/`)
 1. Edit `db/schema.ts`.
@@ -33,3 +33,28 @@ npx wrangler d1 create gnrdigital-dev
 Then put the printed ids into `wrangler.jsonc` (`database_id` = prod, `preview_database_id` = dev). Never create them against an account holding other projects' databases without checking the name list first (`npx wrangler d1 list`).
 
 Rules: no SQL built from strings in app code; use Drizzle.
+
+## Schema (`frontend/db/schema.ts`)
+
+```mermaid
+erDiagram
+  users ||--o{ sessions : has
+  users ||--o{ accounts : has
+  users ||--o| admin_users : "may be"
+  users ||--o| user_preferences : owns
+  users ||--o{ consents : owns
+  users ||--o{ module_access : granted
+  modules ||--o{ module_access : "grants for"
+  users ||--o{ audit_log : "acts in"
+  verifications
+  rate_limit_hits
+```
+
+- `users`, `sessions`, `accounts`, `verifications`: the Better Auth core tables (its default field names, plus `username`, `first_name`, `last_name`).
+- `admin_users`: admin role, deliberately separate from `users`, so a user row can never grant itself admin.
+- `modules` / `module_access`: runtime on/off switches and per-person grants.
+- `rate_limit_hits`: counters keyed by route + salted IP hash and minute (GNR-133). No raw IPs.
+- `audit_log`: append-only trail of admin reads and writes.
+- `user_preferences`, `consents`: user-owned data.
+
+**No row-level security on D1.** Every query on user-owned rows filters by the session user id (see `functions/_lib/userData.ts` for the pattern), admin reads go through audited admin endpoints, and `functions/_lib/schema.test.js` checks ownership, cascades and uniqueness against the real migrations.
