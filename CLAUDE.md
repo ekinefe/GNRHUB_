@@ -3,7 +3,7 @@
 Personal portfolio site that will host small tools. Read `docs/REPO_GUIDE.md` (where things are) and `docs/architecture.md` (layout rules) first.
 
 ## Stack
-React + Vite + Tailwind (`frontend/`), Cloudflare Pages Functions (`frontend/functions/`), Vitest. Auth is Supabase today; the plan is Better Auth + D1 on a single Worker (tickets GNR-16, GNR-132, GNR-135, GNR-136). Node 24 (`.nvmrc`).
+React + Vite + Tailwind (`frontend/`), a single Cloudflare Worker (`frontend/functions/worker.ts`, ADR in `docs/adr/0001-single-worker.md`), Vitest. Auth is Supabase today; the plan is Better Auth + D1 on a single Worker (tickets GNR-16, GNR-132, GNR-135, GNR-136). Node 24 (`.nvmrc`).
 
 ## Commands (run from `frontend/`)
 | Command | What it does |
@@ -12,6 +12,8 @@ React + Vite + Tailwind (`frontend/`), Cloudflare Pages Functions (`frontend/fun
 | `npm run lint` | ESLint, zero warnings allowed |
 | `npm run test:unit` | Vitest (also covers `functions/`) |
 | `npm run build` | Production build into `dist/` |
+| `npm run dev:worker` | Builds, then serves SPA + `/api` + local D1 with `wrangler dev --local` (http://localhost:8787) |
+| `npm run db:migrate:local` | Applies D1 migrations locally (see `docs/database.md`; remote scripts need typed confirmation) |
 | `npm run check:links` | Checks every external link in `src/` still resolves (needs network) |
 
 Lint, tests and build must pass before a PR. CI (`.github/workflows/gatekeeper.yml`) runs them.

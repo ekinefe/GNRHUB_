@@ -17,7 +17,8 @@
     "db:migrate:preview": "node scripts/db.mjs migrate-preview",
     "db:seed:local": "node scripts/db.mjs seed-local",
     "db:query:local": "node scripts/db.mjs query-local",
-    "check:bundle": "node scripts/check-bundle.mjs"
+    "check:bundle": "node scripts/check-bundle.mjs",
+    "dev:worker": "vite build && wrangler dev --local"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.98.0",
