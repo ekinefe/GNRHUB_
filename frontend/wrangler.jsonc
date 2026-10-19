@@ -10,6 +10,8 @@
     // Only these prefixes run Worker code; deep links like /about stay static.
     "run_worker_first": ["/api/*"]
   },
+  // One cron trigger for every scheduled job (GNR-151); keep TRIGGER_MINUTES in cron/dispatcher.ts in sync.
+  "triggers": { "crons": ["*/15 * * * *"] },
   "d1_databases": [
     {
       "binding": "DB",
