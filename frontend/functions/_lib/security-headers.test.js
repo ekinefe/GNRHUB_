@@ -41,7 +41,8 @@ describe('public/_headers', () => {
   it('matches the Worker headers so static pages and the API agree', async () => {
     const { readFileSync } = await import('node:fs')
     const text = readFileSync('public/_headers', 'utf8')
-    const lines = text.split('\n').filter((l) => l.startsWith('  '))
+    const block = text.split('\n/*\n')[1].split('\n\n')[0] // the `/*` rule only
+    const lines = block.split('\n').filter((l) => l.startsWith('  '))
     const parsed = Object.fromEntries(lines.map((l) => { const i = l.indexOf(':'); return [l.slice(0, i).trim(), l.slice(i + 1).trim()] }))
     expect(parsed).toEqual(SECURITY_HEADERS)
   })
