@@ -18,6 +18,7 @@
     "db:seed:local": "node scripts/db.mjs seed-local",
     "db:query:local": "node scripts/db.mjs query-local",
     "check:bundle": "node scripts/check-bundle.mjs",
+    "security:sweep": "node scripts/security-sweep.mjs",
     "dev:worker": "vite build && wrangler dev --local"
   },
   "dependencies": {
