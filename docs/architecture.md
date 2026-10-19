@@ -14,7 +14,7 @@ frontend/src/
     legal/        privacy, terms
     contact/      mailto + copy-email page
     registry.js   one entry per product: key, path, minimum access level
-  shared/         ui, animations, layout, errors, lib/supabase, config/brand
+  shared/         ui, animations, layout, errors, config/brand
 frontend/functions/
   api/            Cloudflare Pages route files only (thin re-exports)
   modules/<key>/  backend logic for a module
