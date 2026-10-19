@@ -6,8 +6,10 @@ import App from '@/app/App.jsx'
 import { AuthProvider } from '@/modules/auth/AuthContext.jsx';
 import { ToastProvider } from '@/shared/ui/Toast.jsx';
 import { initEffects } from '@/shared/config/effects';
+import { initTheme } from '@/shared/config/theme';
 
 initEffects();
+initTheme();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

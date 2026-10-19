@@ -4,6 +4,7 @@ import { brand } from '@/shared/config/brand';
 import { build } from '@/shared/config/build';
 import { profile } from '@/shared/config/profile';
 import { features } from '@/shared/config/features';
+import ThemeControls from '@/shared/ui/ThemeControls';
 import { setReduceEffects, useUserReducedEffects } from '@/shared/config/effects';
 
 const nav = [
@@ -63,6 +64,7 @@ const Footer = () => {
                     &copy; {new Date().getFullYear()} {brand.name} · Code:{' '}
                     <a href={profile.license.url} target="_blank" rel="noopener noreferrer" className={linkClass}>{profile.license.name} licence</a>
                 </span>
+                <ThemeControls />
                 <button type="button" aria-pressed={reduce} onClick={() => setReduceEffects(!reduce)} className="hover:text-cyber-pink transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">
                     Reduce effects: {reduce ? 'on' : 'off'}
                 </button>
