@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'; import { Link } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
-import { Terminal, Cpu, Network, ChevronRight, LucidePersonStanding, Mail, Code } from 'lucide-react';
+import { Terminal, Cpu, Network, Globe, ChevronRight, LucidePersonStanding, Mail, Code } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
@@ -13,7 +13,7 @@ import { featuredProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 // Card icon per project kind
-const KIND_ICON = { Hardware: Cpu, Platform: Network, CLI: Terminal };
+const KIND_ICON = { Hardware: Cpu, Platform: Network, 'Web app': Globe, CLI: Terminal };
 
 // TextType types one character at a time, so its box grows and pushes the content below it.
 // An invisible copy of the full text sits in the same grid cell and reserves the final size up front.
@@ -25,7 +25,7 @@ const Reserve = ({ text, children }) => (
 );
 
 const Home = () => {
-    useDocumentMeta({ description: `Ekin Efe Gungor - CS student in ${profile.location.city} building reliable tools in Python, Bash and embedded C++.${profile.availability.open ? ` ${profile.availability.text}.` : ''}` });
+    useDocumentMeta({ description: `Ekin Efe Gungor - CS student and junior full-stack developer in ${profile.location.city}: web apps in React, TypeScript and Laravel, small tools in Python, and embedded C++.${profile.availability.open ? ` ${profile.availability.text}.` : ''}` });
     const [showProfile, setShowProfile] = useState(false);
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -107,7 +107,7 @@ const Home = () => {
                             </div>
 
                             <p className="text-lg text-cyber-text/80 max-w-lg leading-relaxed font-sans">
-                                Python and Bash automation on Linux, embedded C++ on Arduino. I build small, reliable tools that remove manual steps, and I am looking for a team to learn from and ship with.
+                                I build web apps and small tools that remove manual steps, from Laravel admin panels to a live React app on Cloudflare, plus embedded C++ on Arduino. I am looking for a team to learn from and ship with.
                             </p>
 
                         </div>
@@ -151,9 +151,9 @@ const Home = () => {
                                             </div> */}
 
                                             <div className="pl-4 space-y-2 text-cyber-text delay-1000 border-l-2 border-cyber-border ml-2">
-                                                <p><span className="text-cyber-cyan font-bold">CURRENT_ROLE:</span> Student (Uniwersytet VIZJA)</p>
-                                                <p><span className="text-cyber-cyan font-bold">FOCUS:</span> AI, Embedded C++, Bash</p>
-                                                <p><span className="text-cyber-cyan font-bold">LANGUAGES:</span> Python, SQL, C/C++</p>
+                                                <p><span className="text-cyber-cyan font-bold">CURRENT_ROLE:</span> Web developer intern, CS student (Uniwersytet VIZJA)</p>
+                                                <p><span className="text-cyber-cyan font-bold">FOCUS:</span> Web apps, Cloudflare, embedded C++</p>
+                                                <p><span className="text-cyber-cyan font-bold">LANGUAGES:</span> TypeScript, PHP, Python, C/C++</p>
                                                 <p><span className="text-cyber-cyan font-bold">LOCATION:</span> Warsaw, Poland</p>
                                                 {/* <p><span className="text-cyber-cyan font-bold">UPTIME:</span> 3+ Years Experience</p> */}
                                             </div>
@@ -214,6 +214,10 @@ const Home = () => {
                                     {project.repo ? (
                                         <a href={project.repo} target="_blank" rel="noreferrer" className="text-cyber-pink text-xs font-mono hover:underline">
                                             SOURCE_CODE &gt;&gt;
+                                        </a>
+                                    ) : project.url ? (
+                                        <a href={project.url} target="_blank" rel="noreferrer" className="text-cyber-pink text-xs font-mono hover:underline">
+                                            VISIT_SITE &gt;&gt;
                                         </a>
                                     ) : (
                                         <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>

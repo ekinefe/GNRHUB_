@@ -10,6 +10,52 @@ import { profile } from '@/shared/config/profile';
 
 export const projects = [
     {
+        id: 'planned-lost',
+        name: 'Planned Lost',
+        kind: 'Web app',
+        summary: 'A walking-route planner for four European cities: pick places, get a walking order, export to Google Maps.',
+        tech: ['React', 'TypeScript', 'Cloudflare Workers', 'D1'],
+        points: [
+            'Founder and lead developer in a team of 3. Accounts, sharing, a blog and a role-based admin panel.',
+            '236 commits, 65+ merged pull requests and 900+ automated tests (Vitest); GitHub Actions CI/CD with a preview deploy for each pull request.',
+        ],
+        status: 'live',
+        repo: null,
+        url: profile.sites.plannedLost,
+        featured: true,
+        inAbout: true,
+    },
+    {
+        id: 'ticket-manager',
+        name: 'Ticket Manager',
+        kind: 'Web app',
+        summary: 'A free Kanban board with per-project roles, live updates and email digests.',
+        tech: ['Cloudflare Workers', 'Server-sent events'],
+        points: [
+            'Unique ticket IDs, drag and drop, rich-text descriptions, roles per project, live updates (SSE) and email digests.',
+            'Moved from a Linux server (systemd, nginx) to Cloudflare Workers.',
+        ],
+        status: 'live',
+        repo: profile.repos.ticketManager,
+        featured: true,
+        inAbout: true,
+    },
+    {
+        id: 'voucher-tool',
+        name: 'Accounting Voucher Tool',
+        kind: 'Tool',
+        summary: 'Turns bank exports into balanced accounting vouchers for a housing cooperative.',
+        tech: ['Python', 'FastAPI', 'Selenium'],
+        points: [
+            'Replaced a broken Excel VBA macro for a housing cooperative (834 members), with optional auto-fill into its web portal.',
+            '46 pytest tests; builds for Windows, Linux and macOS.',
+        ],
+        status: 'live',
+        repo: null,
+        featured: false,
+        inAbout: true,
+    },
+    {
         id: 'cw-keyer',
         name: 'CW Keyer',
         kind: 'Hardware',
@@ -55,8 +101,8 @@ export const projects = [
         image: '/projects/gnrdigital.png',
         imageAlt: 'The GNRdigital home page: availability badge, name, role, call to action, a spinning ASCII donut and a terminal bio',
         caseStudy: '/colophon',
-        featured: true,
-        inAbout: true,
+        featured: false,
+        inAbout: false,
     },
     {
         id: 'easyadmin',
@@ -70,8 +116,8 @@ export const projects = [
         ],
         status: 'live',
         repo: null,
-        featured: true,
-        inAbout: true,
+        featured: false,
+        inAbout: false,
     },
 ];
 

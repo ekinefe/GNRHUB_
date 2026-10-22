@@ -18,7 +18,7 @@ const PERSON = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: about.name,
-    jobTitle: 'Computer science student',
+    jobTitle: 'Computer science student and junior full-stack developer',
     url: brand.publicUrl,
     sameAs: [profile.github, profile.linkedin],
     address: { '@type': 'PostalAddress', addressLocality: profile.location.city, addressCountry: profile.location.country },
@@ -60,11 +60,13 @@ const AboutMe = () => {
                         <div className="flex-1 min-w-0 space-y-6">
                             <div>
                                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-bold text-white uppercase tracking-wider mb-4 [overflow-wrap:anywhere]">
-                                    EKIN_EFE_GUNGOR
+                                    {about.name.replace(/ /g, '_')}
                                 </h2>
                                 <div className="text font-mono text-lg flex flex-wrap items-center gap-2">
                                     <span className="text-cyber-pink">&gt;</span>
-                                    <span>CS_STUDENT <span className="text-cyber-pink mx-2">|</span> AI_&_Data_Science</span>
+                                    <span>{about.role.split(' | ').map((part, i) => (
+                                        <React.Fragment key={part}>{i > 0 && <span className="text-cyber-pink mx-2">|</span>}{part.replace(/ /g, '_')}</React.Fragment>
+                                    ))}</span>
                                 </div>
                             </div>
 

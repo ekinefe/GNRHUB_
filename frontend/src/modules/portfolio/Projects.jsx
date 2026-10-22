@@ -1,5 +1,4 @@
 import React from 'react';
-import { profile } from '@/shared/config/profile';
 import { User, Code, Terminal, ExternalLink, PersonStanding, Linkedin, Github, Download } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
@@ -75,53 +74,11 @@ const AboutMe = () => {
                         </div>
                     </div> */}
 
-                    {/* Professional & Collaborative Work */}
-                    <div>
-                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 uppercase [overflow-wrap:anywhere]">
-                            <Terminal className="w-6 h-6 text-cyber-pink" />
-                            Professional_&_Collaborative_Work
-                        </h2>
-
-                        <div className="space-y-8 border-l-2 border-cyber-border pl-6 relative">
-                            {/* Experience 1 */}
-                            <div className="relative">
-                                <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-pink" />
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
-                                    <div>
-                                        <h3 className="text-lg font-bold text-white">DYRK1Aprot.com</h3>
-                                        <p className="text-cyber-cyan text-sm mb-3 font-mono">Data Management & Web Development</p>
-                                    </div>
-                                    <div>
-                                        <a href={profile.dyrk1a} target="_blank" rel="noopener noreferrer">
-                                            <CyberButton variant="ghost" icon={ExternalLink}>Visit site</CyberButton>
-                                        </a>
-                                    </div>
-
-                                </div>
-                                <ul className="text-cyber-text/70 text-sm space-y-1 font-mono">
-                                    <li><span className="text-cyber-pink">&gt;</span> Collaborating with a 6-student team in Warsaw to develop a solution for DYRK1A syndrome.</li>
-                                    <li><span className="text-cyber-pink">&gt;</span> Responsible for website architecture and future data management systems to support research goals.</li>
-                                </ul>
-                            </div>
-
-                            {/* Experience 2 */}
-                            <div className="relative">
-                                <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-border" />
-                                <h3 className="text-lg font-bold text-white">EKK Accounting Automation</h3>
-                                <p className="text-cyber-cyan text-sm mb-3 font-mono">Python, Excel/Data Processing</p>
-                                <ul className="text-cyber-text/70 text-sm space-y-1 font-mono">
-                                    <li><span className="text-cyber-pink">&gt;</span> Developed a custom Python tool to eliminate manual data entry for a Turkish institution.</li>
-                                    <li><span className="text-cyber-pink">&gt;</span> Audits Excel records, generates filtered reports, and uses web automation to stage data in accounting software.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     {/* Key Hardware & Software Projects */}
                     <div>
                         <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2 uppercase [overflow-wrap:anywhere]">
                             <Code className="w-6 h-6 text-cyber-pink" />
-                            Key_Hardware_&_Software_Projects
+                            Projects
                         </h2>
 
                         <div className="space-y-8">

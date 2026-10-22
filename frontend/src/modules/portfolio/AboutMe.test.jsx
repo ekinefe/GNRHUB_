@@ -14,6 +14,7 @@ describe('About page', () => {
         wrap()
         const block = screen.getByLabelText(/package\.json/i)
         expect(block).toHaveTextContent('"programming"')
+        for (const group of Object.keys(about.skills)) expect(block).toHaveTextContent(`"${group}"`)
         for (const skill of about.skills.programming) expect(block).toHaveTextContent(skill)
     })
     it('renders every education and experience entry as a git log', () => {

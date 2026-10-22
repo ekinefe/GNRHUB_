@@ -7,8 +7,8 @@ import { projectsUsing } from './projectsUsing';
 // Nothing here is typed twice: add a skill in about.js or a tech tag in projects.js and this follows.
 const GROUPS = [
     { key: 'programming', label: 'Languages' },
-    { key: 'systems', label: 'Systems' },
-    { key: 'embedded', label: 'Embedded' },
+    { key: 'web', label: 'Web' },
+    { key: 'tools', label: 'Tools' },
 ];
 
 const SkillsStrip = () => (
