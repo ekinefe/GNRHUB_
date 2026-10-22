@@ -19,6 +19,10 @@ describe('About page', () => {
         }
         expect(list.textContent).not.toMatch(/[{}[\]"]/)
     })
+    it('shows project cards without screenshots here (the Projects page has the previews)', () => {
+        wrap()
+        expect(document.querySelector('img[src^="/projects/"]')).toBeNull()
+    })
     it('explains what the pink and grey dots in the timelines mean, and lists current entries first', () => {
         wrap()
         expect(screen.getAllByText(/still doing this/).length).toBe(about.log.length)

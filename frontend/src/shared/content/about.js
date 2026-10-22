@@ -27,7 +27,7 @@ export const about = {
         data: ['MySQL', 'SQLite', 'Cloudflare D1'],
         testing: ['PHPUnit', 'Vitest', 'pytest'],
         tools: ['Git', 'GitHub Actions', 'Bitbucket', 'Jira', 'Docker', 'Cloudflare Workers', 'Linux (Fedora, Ubuntu)', 'nginx', 'systemd'],
-        ai: ['Claude Code', 'OpenAI API'],
+        ai: ['Claude Code', 'OpenAI API', 'Gemini API'],
         hardware: ['Arduino', 'KiCad'],
     },
     // Each group renders as a `git log`. Newest first. `current: true` gets the highlighted node.
