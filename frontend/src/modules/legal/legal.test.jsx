@@ -12,6 +12,7 @@ describe('legal pages', () => {
         expect(screen.getByText(PRIVACY_UPDATED)).toBeInTheDocument()
         expect(screen.getAllByText(/sets no cookies/i).length).toBeGreaterThan(0)
         expect(screen.getByText(/keyed hash of their network address/i)).toBeInTheDocument()
+        expect(screen.getByText(/I store your name, email address/i)).toBeInTheDocument()
     })
     it('Terms shows its last-updated date', () => {
         wrap(<Terms />)

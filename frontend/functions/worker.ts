@@ -6,6 +6,8 @@ import { withSecurityHeaders } from './_lib/security-headers.ts';
 import { failure, isAdminPath } from './_lib/failure.ts';
 import { currentAdmin } from './_lib/adminGuard.ts';
 import { loginRoute, logoutRoute, meRoute } from './modules/admin/auth.ts';
+import { messagesRoute, messageRoute } from './modules/admin/messages.ts';
+import { contactRoute } from './modules/contact/api.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -26,6 +28,9 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/admin/login' }), module: loginRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/logout' }), module: logoutRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/me' }), module: meRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/messages' }), module: messagesRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/messages/:id' }), module: messageRoute },
+  { pattern: new URLPattern({ pathname: '/api/contact' }), module: contactRoute },
 ];
 
 const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>

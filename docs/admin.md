@@ -28,5 +28,8 @@ For `npm run dev:worker` put the same three names in `frontend/.dev.vars` (git-i
 - Every other admin route must start with `requireAdmin(request, env)` (and `{ changes: true }` when it changes data). No cookie, no answer.
 - Two-factor login with an authenticator app is planned, not built.
 
+## Contact messages
+`/admin/messages` lists what the contact form stored, newest first, with an unread count. Open one to read it (it is marked read), reply with a mailto link, mark it unread, or delete it (asks first). Messages are shown as plain text. The form itself is `POST /api/contact`: same-site only, validated, 3 messages per hour per client and 30 per hour overall, a hidden trap field for bots, and it answers 503 ("email me instead") if the database is missing, never silently losing a message.
+
 ## The screen
 `/admin` (not linked anywhere, not in the sitemap, `noindex`) shows the sign-in form, then the admin shell. Plain `npm run dev` has no API behind it, so there you only see the form and sign-in cannot succeed; to try the whole thing run `npm run dev:worker` (builds first) and open http://localhost:8787/admin.
