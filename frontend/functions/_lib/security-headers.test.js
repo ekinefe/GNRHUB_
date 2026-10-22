@@ -1,18 +1,23 @@
-import { describe, it, expect } from 'vitest'
-import worker from '../worker.ts'
+/* global URLPattern */
+import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import worker, { routes } from '../worker.ts'
 import { CSP, SECURITY_HEADERS } from './security-headers.ts'
 
 const env = { ASSETS: { fetch: async () => new Response('<div id="root"></div>', { headers: { 'Content-Type': 'text/html' } }) }, DB: {} }
+const ping = { pattern: new URLPattern({ pathname: '/api/ping' }), module: { onRequestPost: () => new Response('pong') } }
+beforeAll(() => { routes.push(ping) })
+afterAll(() => { routes.splice(routes.indexOf(ping), 1) })
+
 const get = (path, method = 'GET') => worker.fetch(new Request(`https://example.com${path}`, { method }), env)
 
 describe('security headers', () => {
-  it.each(['/', '/about', '/api/nope', '/api/send-brandbook'])('are set on %s', async (path) => {
-    const res = await get(path, path === '/api/send-brandbook' ? 'POST' : 'GET')
+  it.each(['/', '/about', '/api/nope', '/api/ping'])('are set on %s', async (path) => {
+    const res = await get(path, path === '/api/ping' ? 'POST' : 'GET')
     for (const [name, value] of Object.entries(SECURITY_HEADERS)) expect(res.headers.get(name)).toBe(value)
   })
 
   it('are set on error responses too', async () => {
-    const res = await get('/api/send-brandbook', 'GET')
+    const res = await get('/api/ping', 'GET')
     expect(res.status).toBe(405)
     expect(res.headers.get('X-Content-Type-Options')).toBe('nosniff')
   })

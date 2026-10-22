@@ -25,7 +25,7 @@ const Login = () => {
             const { error: authError } = await authClient.signIn({ identifier, password });
             if (authError) throw authError;
 
-            navigate('/tools');
+            navigate('/');
         } catch (error) {
             setError(error.message);
         } finally {

@@ -11,7 +11,6 @@ The site's own code is under the project [LICENSE](LICENSE) (MIT), except the th
 | Lucide icons (`lucide-react`) | 0.475.0 | ISC |
 | clsx | 2.1.1 | MIT |
 | tailwind-merge | 3.4.1 | MIT |
-| html2pdf.js (brand book editor, off at launch) | 0.14.0 | MIT |
 | GSAP | 3.14.2 | GSAP "Standard 'no charge'" license (<https://gsap.com/standard-license>): free to use, including commercially, but not an open-source license; it may not be used to build tools that compete with Webflow's visual animation builder. A personal portfolio is fine. |
 
 Build and test tools (not shipped): Vite, Tailwind CSS (MIT), Vitest, Testing Library, ESLint.

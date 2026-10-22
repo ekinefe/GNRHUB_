@@ -1,6 +1,6 @@
 # GNRdigital
 
-Personal portfolio of Ekin Efe Gungor ("GNR" from the surname, "digital" from what I make with it). It launches as a static site and is meant to grow into a host for small tools (Brandbook Maker today; Gym Tracker, CV Maker and Mail Sender planned).
+Personal portfolio of Ekin Efe Gungor ("GNR" from the surname, "digital" from what I make with it). It is only the portfolio. Brandbook Maker, CV Maker and Gym Tracker (on hold) are separate projects with their own Workers; this site links to them (ADR 0007).
 
 - Where things are: [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md) · layout rules and access levels: [docs/architecture.md](docs/architecture.md)
 - How we work (branches, commits, PRs): [docs/WORKFLOW.md](docs/WORKFLOW.md), [CONTRIBUTING.md](CONTRIBUTING.md) · rules for AI assistants: [CLAUDE.md](CLAUDE.md)
@@ -14,8 +14,7 @@ Personal portfolio of Ekin Efe Gungor ("GNR" from the surname, "digital" from wh
 |---|---|---|
 | Hosting | Cloudflare Pages (static site + Functions) | One Cloudflare Worker (GNR-16) |
 | Data and auth | None yet; sign-in is a stub (`modules/auth/authClient.js`), hidden at launch | D1 + Better Auth (GNR-132, GNR-136) |
-| Email | Off (`MAIL_ENABLED` unset) | Rebuilt behind auth in the mail sprint |
-| Launch pages | Home, About, Projects, Contact, Colophon, Privacy, Terms | Tools, Blogs, accounts switch on per release |
+| Launch pages | Home, About, Projects, Contact, Colophon, Privacy, Terms | Blogs and accounts are flagged off and may be removed |
 
 ## Quickstart
 
@@ -42,17 +41,14 @@ Build-time variables (Vite, `frontend/.env.local`, never committed):
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `VITE_FEATURES` | Comma list that switches on unfinished areas: `account`, `tools`, `blogs`. Off routes show the 404. | none |
+| `VITE_FEATURES` | Comma list that switches on unfinished areas: `account`, `blogs`. Off routes show the 404. | none |
 | `VITE_FEATURE_ACCOUNT` | Legacy alias for `account` | `false` |
-| `VITE_FEATURE_MAIL` | Shows "email report" in the brand book editor | `false` |
 | `VITE_TURNSTILE_SITE_KEY` | Public Turnstile key; the widget renders only when set | unset |
 
 Server variables (Functions; locally in `frontend/.dev.vars`, copy `.dev.vars.example`; in production set as secrets):
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `MAIL_ENABLED` | `true` lets `/api/send-brandbook` run. Otherwise it returns 501. | unset (off) |
-| `RESEND_API_KEY` | Resend key, only used when mail is enabled | unset |
 | `RATE_LIMIT_SALT` | Salts the IP hash for per-route rate limits (429 + Retry-After). Limiter is off without it | unset (off) |
 | `TURNSTILE_SECRET` | Server-side Turnstile check for public forms. Skipped without it | unset (off) |
 
@@ -67,7 +63,7 @@ browser --> Cloudflare Worker --> static site (Vite build, React SPA)
                 +--> D1 (bindings and migrations ready, no tables yet)
 ```
 
-The site is a client-rendered SPA. Every page except Home loads on demand. Content (profile, projects, tools) is plain data in `frontend/src/shared/content/`. Fonts are self-hosted and the site sets no cookies (see the Privacy page). Next: a single Worker serving the SPA and the API, with D1 and Better Auth, as tickets GNR-16, GNR-132 and GNR-136 describe.
+The site is a client-rendered SPA. Every page except Home loads on demand. Content (profile, projects) is plain data in `frontend/src/shared/content/`. Fonts are self-hosted and the site sets no cookies (see the Privacy page). Next: a single Worker serving the SPA and the API, with D1 and Better Auth, as tickets GNR-16, GNR-132 and GNR-136 describe.
 
 ## Deploy
 
@@ -103,6 +99,6 @@ GNRdigital_v2/
 Decisions (GNR-141): the app folder stays `frontend/` (no rename to `web/`; it would conflict with every open branch and buy nothing), and the future Worker is named `gnrdigital`. CI runs from `frontend/` (`cd frontend`, cache key `frontend/package-lock.json`), so keep those paths in `gatekeeper.yml` in sync with any move.
 
 Inside the app folder:
-- `frontend/src/modules/<feature>`: one folder per feature (auth, brandbook, tools, blog, portfolio, legal, contact, colophon)
+- `frontend/src/modules/<feature>`: one folder per feature (auth, blog, portfolio, legal, contact, colophon)
 - `frontend/src/shared`: UI, layout, config, content and helpers any module may use
 - `frontend/functions`: Pages Functions (`api/` route files, logic in `modules/`)

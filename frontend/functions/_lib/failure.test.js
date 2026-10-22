@@ -6,7 +6,7 @@ const req = (path) => new Request(`https://example.com${path}`, { method: 'POST'
 describe('failure', () => {
   it('logs and returns a generic JSON 500 on public routes without leaking internals', async () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const res = failure(new Error('secret db password in stack'), req('/api/send-brandbook'))
+    const res = failure(new Error('secret db password in stack'), req('/api/ping'))
     expect(res.status).toBe(500)
     expect(res.headers.get('Content-Type')).toBe('application/json')
     const text = await res.text()
@@ -34,6 +34,6 @@ describe('failure', () => {
     expect(isAdminPath('/api/admin')).toBe(true)
     expect(isAdminPath('/api/admin/users')).toBe(true)
     expect(isAdminPath('/api/administrator')).toBe(false)
-    expect(isAdminPath('/api/send-brandbook')).toBe(false)
+    expect(isAdminPath('/api/ping')).toBe(false)
   })
 })

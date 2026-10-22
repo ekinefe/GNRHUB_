@@ -8,7 +8,6 @@ import ThemeControls from '@/shared/ui/ThemeControls';
 import { setReduceEffects, useUserReducedEffects } from '@/shared/config/effects';
 
 const nav = [
-    features.tools && { to: '/tools', label: 'Tools' },
     features.blogs && { to: '/blogs', label: 'Blogs' },
     { to: '/projects', label: 'Projects' },
     { to: '/about', label: 'About' },
@@ -30,7 +29,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 grid gap-8 md:grid-cols-4">
             <div>
                 <p className="text-white font-bold tracking-wider mb-2">{brand.name}</p>
-                <p className="text-cyber-muted leading-relaxed">Portfolio and small tools.</p>
+                <p className="text-cyber-muted leading-relaxed">Portfolio.</p>
             </div>
 
             <nav aria-label="Footer" className="space-y-2">

@@ -3,10 +3,10 @@ import { parseFeatures } from './features'
 
 describe('parseFeatures', () => {
     it('has everything off by default', () => {
-        expect(parseFeatures()).toEqual({ account: false, tools: false, blogs: false })
+        expect(parseFeatures()).toEqual({ account: false, blogs: false })
     })
     it('switches on listed areas, ignoring spaces and unknown names', () => {
-        expect(parseFeatures(' tools, blogs ,nope')).toEqual({ account: false, tools: true, blogs: true })
+        expect(parseFeatures(' tools, blogs ,nope')).toEqual({ account: false, blogs: true })
     })
     it('keeps VITE_FEATURE_ACCOUNT as an alias for account', () => {
         expect(parseFeatures('', 'true').account).toBe(true)

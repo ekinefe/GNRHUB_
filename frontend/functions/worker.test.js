@@ -21,15 +21,21 @@ describe('worker', () => {
     expect(assets.fetch).not.toHaveBeenCalled()
   })
 
-  it('calls the handler with { request, env } (mail stays off by default)', async () => {
-    const res = await handle(req('/api/send-brandbook', 'POST'), env)
-    expect(res.status).toBe(501)
+  it('calls the handler with { request, env }', async () => {
+    const ping = vi.fn(() => new Response('pong'))
+    routes.push({ pattern: new URLPattern({ pathname: '/api/ping' }), module: { onRequestPost: ping } })
+    const res = await handle(req('/api/ping', 'POST'), env)
+    expect(res.status).toBe(200)
+    expect(ping.mock.calls[0][0].env).toBe(env)
+    routes.pop()
   })
 
   it('answers 405 with Allow for a wrong method', async () => {
-    const res = await handle(req('/api/send-brandbook', 'GET'), env)
+    routes.push({ pattern: new URLPattern({ pathname: '/api/ping' }), module: { onRequestPost: () => new Response('pong') } })
+    const res = await handle(req('/api/ping', 'GET'), env)
     expect(res.status).toBe(405)
     expect(res.headers.get('Allow')).toBe('POST')
+    routes.pop()
   })
 
   it('turns a thrown handler into JSON 500', async () => {

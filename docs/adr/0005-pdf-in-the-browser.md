@@ -1,6 +1,6 @@
 # ADR 0005: PDFs are generated in the browser
 
-Status: accepted. Date: 2026-10-17.
+Status: accepted; the brand book editor (and `html2pdf.js`) moved out of this repo under ADR 0007, the decision now belongs to that project. Date: 2026-10-17.
 
 ## Context
 The brand book editor exports a PDF. A server renderer would cost money and need a queue; the data never needs to leave the user's browser for this.

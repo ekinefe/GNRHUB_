@@ -34,4 +34,3 @@ The rename away from GNRHUB is done in the UI. Two real URLs still contain the o
 - **Space Grotesk** is self-hosted and exposed as `font-display` for big headings, but no page uses it yet. Using it is a design choice for later, not a bug.
 - Both are self-hosted woff2 from `frontend/public/fonts/` (SIL Open Font License), `font-display: swap`, latin and latin-ext only. No request goes to Google Fonts (a test checks `index.html`). The main font is preloaded; font files are cached for a year, so **rename a file when you change a font**.
 - The type scale is Tailwind's, listed in `src/shared/config/typeScale.js` and shown on `/design`.
-- The brand book editor's font picker loads Google Fonts on purpose (it previews the visitor's choice). That page is behind the `tools` flag.

@@ -13,7 +13,6 @@ export function buildCommands({ navigate, user = null }) {
         { title: 'Go to Projects', to: '/projects' },
         { title: 'Go to About', to: '/about' },
         { title: 'Go to Contact', to: '/contact' },
-        features.tools && { title: 'Go to Tools', to: '/tools' },
         features.blogs && { title: 'Go to Blogs', to: '/blogs' },
         { title: 'Go to Colophon', to: '/colophon' },
         { title: 'Go to Privacy', to: '/privacy' },

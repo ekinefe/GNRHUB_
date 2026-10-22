@@ -7,7 +7,7 @@ const routes = [...readFileSync('src/app/App.jsx', 'utf8').matchAll(/path="([^"]
 
 describe('sitemap and robots', () => {
     it('lists only real routes that are live at launch', () => {
-        const gated = ['/login', '/register', '/dashboard', '/blogs', '/tools', '/tools/brandbook', '/403', '/500']
+        const gated = ['/login', '/register', '/dashboard', '/blogs', '/403', '/500']
         for (const p of sitemapPaths) {
             expect(routes).toContain(p)
             expect(gated).not.toContain(p)
