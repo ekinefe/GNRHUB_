@@ -5,7 +5,7 @@ One short file per decision: context, decision, consequences. Numbered, never re
 | # | Decision | Status |
 |---|---|---|
 | [0001](0001-single-worker.md) | One Cloudflare Worker serves site and API | accepted |
-| [0002](0002-d1-and-drizzle.md) | D1 with Drizzle, no Supabase | accepted |
+| [0002](0002-d1-and-drizzle.md) | D1 with Drizzle, no Supabase | superseded by 0007 (removed) |
 | [0003](0003-auth-better-auth.md) | Better Auth on D1 | proposed, needs owner approval |
 | [0004](0004-typescript-for-backend-first.md) | TypeScript for new backend code first | accepted (frontend migration proposed) |
 | [0005](0005-pdf-in-the-browser.md) | PDFs generated in the browser | accepted |

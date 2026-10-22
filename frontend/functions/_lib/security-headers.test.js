@@ -3,7 +3,7 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import worker, { routes } from '../worker.ts'
 import { CSP, SECURITY_HEADERS } from './security-headers.ts'
 
-const env = { ASSETS: { fetch: async () => new Response('<div id="root"></div>', { headers: { 'Content-Type': 'text/html' } }) }, DB: {} }
+const env = { ASSETS: { fetch: async () => new Response('<div id="root"></div>', { headers: { 'Content-Type': 'text/html' } }) } }
 const ping = { pattern: new URLPattern({ pathname: '/api/ping' }), module: { onRequestPost: () => new Response('pong') } }
 beforeAll(() => { routes.push(ping) })
 afterAll(() => { routes.splice(routes.indexOf(ping), 1) })
@@ -27,12 +27,13 @@ describe('security headers', () => {
     expect(res.headers.get('Content-Type')).toBe('text/html')
   })
 
-  it('CSP forbids framing, plugins and external scripts other than Turnstile', () => {
+  it('CSP forbids framing, plugins and any external origin', () => {
     expect(CSP).toContain("frame-ancestors 'none'")
     expect(CSP).toContain("object-src 'none'")
     expect(CSP).not.toContain('*')
     const scriptSrc = CSP.split('; ').find((d) => d.startsWith('script-src'))
-    expect(scriptSrc).toBe("script-src 'self' https://challenges.cloudflare.com")
+    expect(scriptSrc).toBe("script-src 'self'")
+    expect(CSP).not.toMatch(/https?:/)
   })
 
   it('exposes the required headers', () => {

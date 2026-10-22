@@ -9,7 +9,7 @@ The site ran on Cloudflare Pages with `functions/api/*` as Pages Functions. The 
 - One Worker named `gnrdigital` (the name never changes after the first deploy). `frontend/wrangler.jsonc`: `main = functions/worker.ts`, `nodejs_compat`, static assets from `dist/` with SPA fallback.
 - `run_worker_first: ["/api/*"]`: only `/api/*` runs Worker code. Every other path, including deep links like `/about`, is served from assets, so refreshes never 404 and static hits cost no Worker request.
 - `functions/worker.ts` is a small routing table using `URLPattern` (a Workers built-in). No Hono or other framework.
-- A route is one file in `functions/api/` that re-exports from `functions/modules/<key>/`. Handlers keep the Pages signature, `onRequestGet` / `onRequestPost` taking `{ request, env }`, so they move without changes.
+- A route is one file in `functions/api/` that re-exports from `functions/modules/<key>/` (no routes exist today, see ADR 0007). Handlers keep the Pages signature, `onRequestGet` / `onRequestPost` taking `{ request, env }`, so they move without changes.
 - Unknown `/api/*` returns JSON 404; a known route with the wrong method returns 405 with `Allow`; a thrown handler returns JSON 500.
 
 ## Consequences
