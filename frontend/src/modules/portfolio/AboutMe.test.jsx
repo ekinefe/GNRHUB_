@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect, vi } from 'vitest'
 import AboutMe from './AboutMe'
-import { about } from '@/shared/content/about'
+import { about, skillGroups } from '@/shared/content/about'
 import { profile } from '@/shared/config/profile'
 
 vi.mock('@/shared/animations/TextType', () => ({ default: ({ text }) => <span>{text}</span> }))
@@ -10,12 +10,22 @@ vi.mock('@/shared/animations/TextType', () => ({ default: ({ text }) => <span>{t
 const wrap = () => render(<MemoryRouter><AboutMe /></MemoryRouter>)
 
 describe('About page', () => {
-    it('shows skills as a package.json block built from the data file', () => {
+    it('shows the skills as plain labelled lines built from the data file', () => {
         wrap()
-        const block = screen.getByLabelText(/package\.json/i)
-        expect(block).toHaveTextContent('"programming"')
-        for (const group of Object.keys(about.skills)) expect(block).toHaveTextContent(`"${group}"`)
-        for (const skill of about.skills.programming) expect(block).toHaveTextContent(skill)
+        const list = screen.getByLabelText('Skills')
+        for (const { key, label } of skillGroups) {
+            expect(list).toHaveTextContent(label)
+            for (const skill of about.skills[key]) expect(list).toHaveTextContent(skill)
+        }
+        expect(list.textContent).not.toMatch(/[{}[\]"]/)
+    })
+    it('explains what the pink and grey dots in the timelines mean, and lists current entries first', () => {
+        wrap()
+        expect(screen.getAllByText(/still doing this/).length).toBe(about.log.length)
+        for (const group of about.log) {
+            const currents = group.entries.map((e) => !!e.current)
+            expect(currents).toEqual([...currents].sort((a, b) => Number(b) - Number(a)))
+        }
     })
     it('renders every education and experience entry as a git log', () => {
         wrap()
