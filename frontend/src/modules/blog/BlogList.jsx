@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, Tag, X } from 'lucide-react';
+import { Search, Tag, X, Rss } from 'lucide-react';
 import PageShell from '@/shared/layout/PageShell';
 import Decrypt from '@/shared/animations/Decrypt';
 import Highlight from '@/shared/ui/Highlight';
@@ -105,6 +105,8 @@ const BlogList = () => {
                             </div>
                         </div>
                     )}
+
+                    <a href="/blog/feed.xml" className="inline-flex items-center gap-2 font-mono text-xs text-cyber-muted hover:text-cyber-pink transition-colors"><Rss className="w-4 h-4" /> Subscribe with RSS</a>
 
                     <div className="space-y-3">
                         <h2 className="text-lg font-mono font-bold text-white">Order</h2>
