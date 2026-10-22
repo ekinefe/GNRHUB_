@@ -16,17 +16,26 @@ describe('failure', () => {
     spy.mockRestore()
   })
 
-  it('gives admin routes the real cause', async () => {
+  it('gives a verified admin on an admin route the real cause', async () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const res = failure(new Error('no such table: users'), req('/api/admin/users'))
+    const res = failure(new Error('no such table: users'), req('/api/admin/users'), true)
     expect(await res.json()).toEqual({ error: 'Server error: no such table: users' })
     spy.mockRestore()
   })
 
   it('handles non-Error throws', async () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const res = failure('oops', req('/api/admin/x'))
+    const res = failure('oops', req('/api/admin/x'), true)
     expect((await res.json()).error).toBe('Server error: oops')
+    spy.mockRestore()
+  })
+
+  it('keeps the cause from anyone who is not a verified admin, even on an admin path', async () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const res = failure(new Error('secret table name'), req('/api/admin/users'))
+    expect(await res.json()).toEqual({ error: 'Internal error.' })
+    const notAdminPath = failure(new Error('x'), req('/api/ping'), true)
+    expect(await notAdminPath.json()).toEqual({ error: 'Internal error.' })
     spy.mockRestore()
   })
 

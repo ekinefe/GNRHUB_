@@ -1,3 +1,6 @@
 # Copy to frontend/.dev.vars (git-ignored) for `wrangler dev --local`. Never commit real values.
 # In production these are set with `wrangler secret put <NAME>`, never in wrangler.jsonc.
-# Nothing is needed today: the Worker only serves the static site and has no API.
+# The static site needs nothing. The admin sign-in needs these three (docs/admin.md explains how to make them):
+# ADMIN_USERNAME=
+# ADMIN_PASSWORD_HASH=      made with: npm run admin:secret -- hash
+# SESSION_SECRET=           made with: npm run admin:secret -- session
