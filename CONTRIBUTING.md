@@ -17,4 +17,4 @@ Ground rules: match the surrounding code, keep `shared/` independent of `modules
 
 ## Testing
 
-Tests sit next to the code (`*.test.js`). Server code in `frontend/functions/` is tested by calling the handler with a `Request` and a fake `env`, as `functions/worker.test.js` does. The site has no database today, so there is no test database; if one is added back, test against real migrations rather than mocking queries.
+Tests sit next to the code (`*.test.js`). Server code in `frontend/functions/` is tested by calling the handler with a `Request` and a fake `env`, as `functions/worker.test.js` does. For anything that touches D1, use `frontend/functions/_test/testD1.js` instead of mocking queries: a small D1 look-alike over Node's built-in `node:sqlite` that applies the real files in `db/migrations/` first (`prepare().bind().first/all/run/raw`, `batch`, `exec`). Start such a test file with `// @vitest-environment node`.

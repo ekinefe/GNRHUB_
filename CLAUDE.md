@@ -13,13 +13,14 @@ React + Vite + Tailwind (`frontend/`), a single Cloudflare Worker (`frontend/fun
 | `npm run test:unit` | Vitest (also covers `functions/`) |
 | `npm run build` | Production build into `dist/` |
 | `npm run dev:worker` | Builds, then serves the site through the Worker with `wrangler dev --local` (http://localhost:8787) |
+| `npm run db:migrate:local` | Applies D1 migrations to the local database (see `docs/database.md`; the remote one needs a typed confirmation and is run by the owner) |
 | `npm run security:sweep` | Static security checks over tracked files (CI runs it) |
 | `npm run check:links` | Checks every external link in `src/` still resolves (needs network) |
 
 Lint, tests and build must pass before a PR. CI (`.github/workflows/gatekeeper.yml`) runs them.
 
 ## Hard rules
-- **Remote or destructive actions need confirmation first:** deploys, `wrangler` commands against production, force-push, deleting branches/files you did not create.
+- **Remote or destructive actions need confirmation first:** remote DB migrations, deploys, `wrangler` commands against production, force-push, deleting branches/files you did not create.
 - **Budget is $0** unless the owner says otherwise. No paid services, plans or dependencies on your own initiative.
 - **Secrets:** never edit or print `.env*`, `.dev.vars` or `AccountDetails.md`. Never put a secret in the repo. Server secrets go through `wrangler secret`.
 - **No new dependency** without asking.
