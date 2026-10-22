@@ -1,7 +1,7 @@
 import React from 'react';
 import { parseMarkdown } from './parse';
 
-// Renders a post to React elements. There is no dangerouslySetInnerHTML anywhere: text is always text.
+// Renders a post to React elements. No HTML string is ever inserted into the page: text is always text.
 const Inline = ({ nodes }) => nodes.map((n, i) => {
     switch (n.type) {
         case 'text': return <React.Fragment key={i}>{n.value}</React.Fragment>;
