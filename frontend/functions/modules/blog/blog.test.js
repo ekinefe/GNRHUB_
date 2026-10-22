@@ -69,6 +69,24 @@ describe('public posts', () => {
   })
 })
 
+describe('neighbouring posts', () => {
+  it('gives the older and newer public post, skipping drafts and private ones', async () => {
+    const cookie = await signIn()
+    await create(cookie, { title: 'One', status: 'public' })
+    await create(cookie, { title: 'Hidden draft', status: 'draft' })
+    await create(cookie, { title: 'Two', status: 'public' })
+    await create(cookie, { title: 'Hidden private', status: 'private' })
+    await create(cookie, { title: 'Three', status: 'public' })
+    const get = async (slug) => (await (await call(`/api/posts/${slug}`, { origin: null })).json()).post
+    const two = await get('two')
+    expect(two.older).toEqual({ slug: 'one', title: 'One' })
+    expect(two.newer).toEqual({ slug: 'three', title: 'Three' })
+    expect((await get('one')).older).toBeNull()
+    expect((await get('three')).newer).toBeNull()
+    expect(two).not.toHaveProperty('id')
+  })
+})
+
 describe('admin posts', () => {
   it('needs a signed-in admin for every route', async () => {
     expect((await call('/api/admin/posts', { origin: null })).status).toBe(401)
