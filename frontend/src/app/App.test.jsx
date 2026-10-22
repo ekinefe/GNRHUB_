@@ -12,7 +12,7 @@ describe('App Routing System', () => {
         render(<App />)
 
         // The logo link is labelled from brand.js, so a rename does not break this test.
-        expect(screen.getByRole('link', { name: /GNR\s*digital/i })).toBeInTheDocument()
+        expect(within(screen.getByRole('banner')).getByRole('link', { name: /GNR\s*digital/i })).toBeInTheDocument()
 
         const nav = screen.getByRole('navigation', { name: 'Main' })
         for (const label of ['Home', 'About']) {

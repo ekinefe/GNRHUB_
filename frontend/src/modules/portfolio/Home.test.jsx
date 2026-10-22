@@ -19,9 +19,11 @@ describe('Home hero', () => {
         expect(screen.getByText(profile.availability.text.toUpperCase())).toBeInTheDocument()
         expect(document.querySelector('time')?.textContent).toMatch(/^\d{2}:\d{2}$/)
     })
-    it('keeps the featured GNRdigital card instead of the old GNRHUB one', () => {
+    it('shows the featured project cards and nothing with the old GNRHUB name', () => {
         wrap()
-        expect(screen.getByText(/GNRDIGITAL \(PLATFORM\)/)).toBeInTheDocument()
+        expect(screen.getByText(/PLANNED LOST \(WEB APP\)/)).toBeInTheDocument()
+        expect(screen.getByText(/TICKET MANAGER \(WEB APP\)/)).toBeInTheDocument()
+        expect(screen.getByText(/CW KEYER \(HARDWARE\)/)).toBeInTheDocument()
         expect(screen.queryByText(/GNRHUB/i)).not.toBeInTheDocument()
     })
 })

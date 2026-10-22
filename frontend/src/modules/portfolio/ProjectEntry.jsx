@@ -27,7 +27,7 @@ const ProjectEntry = ({ project, points = project.points.length, detailed = fals
                     ) : project.status === 'live' ? (
                         <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
                     ) : null}
-                    {detailed && project.url && (
+                    {project.url && (
                         <a href={project.url} target="_blank" rel="noreferrer">
                             <CyberButton variant="ghost" icon={ExternalLink}>Live site</CyberButton>
                         </a>

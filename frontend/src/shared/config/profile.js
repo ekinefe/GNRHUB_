@@ -8,8 +8,11 @@ export const profile = {
     repos: {
         cwKeyer: 'https://github.com/ekinefe/CW_keyer-GNR',
         cwTrainer: 'https://github.com/ekinefe/CW_trainer-GNR',
+        ticketManager: 'https://github.com/ekinefe/ticket-manager',
         platform: 'https://github.com/ekinefe/GNRHUB_', // GitHub redirects automatically if the repo is renamed
     },
+    // Live sites of my own projects.
+    sites: { plannedLost: 'https://plannedlost.gnrdigital.workers.dev/' },
     location: { city: 'Warsaw', country: 'PL', timeZone: 'Europe/Warsaw' },
     // Shown as the badge on Home. Set open: false to hide it.
     availability: { open: true, text: 'Open to internships' },

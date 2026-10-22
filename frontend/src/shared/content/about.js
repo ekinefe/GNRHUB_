@@ -3,17 +3,21 @@
 
 export const about = {
     name: 'Ekin Efe Gungor',
-    role: 'CS Student | AI & Data Science',
-    intro: 'I build practical tools across web, data, and embedded systems—everything from Morse code hardware to Linux automation scripts. Currently studying AI & Data Science in Warsaw, Poland.',
+    role: 'CS Student | Junior Full-Stack Developer',
+    intro: 'Web apps, internal tools and a bit of hardware. I like finding out why things break.',
     // First person on purpose: a personal brand, not a studio.
     nameStory: 'GNR comes from my surname, Gungor, and “digital” is what I make with it. This is my personal portfolio and workshop, not a studio or a company.',
-    summary: 'CS student (AI and Data Science) with 3+ years of Python and Bash on Linux and hands-on embedded work (Arduino, C/C++, KiCad). I build small, reliable tools (CLI utilities and microcontroller apps) that remove manual steps and clarify workflows. Looking for opportunities to learn quickly and contribute directly by solving real problems for teams.',
-    languages: { English: 'C1', Turkish: 'native', Polish: 'A1' },
+    summary: 'Final-year Computer Science student (AI and Data Science, graduating June 2027) and web developer intern in Warsaw. I build with Laravel, Vue and React, run my own live project on Cloudflare with CI/CD, and designed and soldered an Arduino Morse code keyer. I use Claude Code every day and test every change myself.',
+    // CEFR levels as on my CV.
+    languages: { Turkish: 'native', English: 'B2 to C1', Polish: 'A1, learning' },
     skills: {
-        programming: ['Python', 'Bash', 'C/C++', 'Java', 'SQL'],
-        systems: ['Linux', 'shell scripting', 'cron', 'Git/GitHub'],
-        embedded: ['Arduino (C/C++)', 'microcontrollers', 'KiCad (schematics)'],
-        tools: ['JetBrains/VS Code', 'Figma', 'DaVinci Resolve'],
+        programming: ['PHP', 'JavaScript', 'TypeScript', 'Python', 'SQL', 'Bash', 'C/C++'],
+        web: ['Laravel', 'Filament', 'Vue', 'Nuxt', 'React', 'Tailwind CSS', 'REST APIs'],
+        data: ['MySQL', 'SQLite', 'Cloudflare D1'],
+        testing: ['PHPUnit', 'Vitest', 'pytest'],
+        tools: ['Git', 'GitHub Actions', 'Bitbucket', 'Jira', 'Docker', 'Cloudflare Workers', 'Linux (Fedora, Ubuntu)', 'nginx', 'systemd'],
+        ai: ['Claude Code', 'OpenAI API'],
+        hardware: ['Arduino', 'KiCad'],
     },
     // Each group renders as a `git log`. Newest first. `current: true` gets the highlighted node.
     log: [
@@ -22,16 +26,10 @@ export const about = {
             title: 'EDUCATION',
             entries: [
                 {
-                    when: '2023 – Present (expected 2027)',
-                    title: 'CS Student (AI & Data Science)',
-                    org: 'Uniwersytet VIZJA w Warszawie',
-                    text: 'Bachelor’s Degree in Computer Science, specialization in Artificial Intelligence and Data Science',
+                    when: '2023 – June 2027 (expected)',
+                    title: 'BSc Computer Science (AI and Data Science)',
+                    org: 'Uniwersytet VIZJA, Warsaw',
                     current: true,
-                },
-                {
-                    when: '2021 – 2023',
-                    title: 'Bachelor’s Degree in Computer Science',
-                    org: 'Polish-Japanese Academy of Information Technology, Warsaw',
                 },
             ],
         },
@@ -40,21 +38,26 @@ export const about = {
             title: 'PROFESSIONAL_EXPERIENCE',
             entries: [
                 {
-                    when: '2026 – Present',
-                    title: 'IT & Data Specialist',
-                    org: 'DYRK1Aprot',
-                    text: 'Provides the technical backbone of the project, managing digital infrastructure and website development. He applies data science and computational methods to support the team in analyzing complex data.',
+                    when: 'August 2026 – Present',
+                    title: 'Web Developer Intern',
+                    org: 'IT team, Warsaw',
                     current: true,
+                    points: [
+                        'Delivered 40 Jira tickets and about 60 pull requests across 5 client projects (Laravel, Filament, Nuxt/Vue) in a 6-person IT team: scoped each ticket, guided the build with Claude Code, tested in the browser, and ran a 400+ test PHPUnit suite before team-lead review.',
+                        'Built an employee onboarding and offboarding system that creates and removes Google Workspace, Jira, Bitbucket and Slack accounts from one admin panel. The company adopted it internally.',
+                        'Upgraded the company site from Laravel 8 to 13, one major version per step. Replaced the old admin panel with Filament 5, reached zero Composer security advisories, then settled on Laravel 12 to match the production server.',
+                        'Cut layout shift (CLS) on a university listing page from 0.313 to 0.006, and shrank the site’s cache from 9.9 MB to 2.7 MB (Endless Abroad).',
+                        'Built an admin panel and an AI blog CMS (OpenAI text and image generation) from scratch for a foundation’s website. Cut the blog listing image payload from 2.6 MB to 92 KB.',
+                        'Fixed an email header injection on a public contact form and unsafe session serialization. Caught a billing leak where test runs created paid Google accounts, and added a live/test switch.',
+                    ],
                 },
                 {
-                    when: 'January 2024 – July 2025',
-                    title: 'Data Science & e-Learning Intern',
-                    org: 'Nobel Learning PBC',
+                    when: 'December 2025 – Present',
+                    title: 'IT and Data Management',
+                    org: 'DYRK1A PROT Initiative',
+                    current: true,
                     points: [
-                        'Built LMS-ready modules and interactive content to enhance engagement and outcomes.',
-                        'Partnered with instructors to scope features and ship prototypes for instructional tools.',
-                        'Integrated modern learning tools into course workflows and wrote clear how-to docs.',
-                        'Collected feedback and iterated to improve usability and content clarity.',
+                        'Built the student research team’s bilingual (EN/PL) React and TypeScript website (11 pages), including event pages for a February 2026 forum at the University of Warsaw.',
                     ],
                 },
             ],
@@ -72,8 +75,13 @@ export const about = {
                         'Diagnose mechanical issues and complete same-day repairs; perform drivetrain/brake tuning, component replacements, and safety checks.',
                         'Communicate repair options, costs, and timelines; document work and maintain service logs.',
                         'Own the workflow end-to-end–from intake to pickup–ensuring on-time completion and QC.',
-                        'Prepare/store bikes to preserve condition; organize parts/tools to reduce turnaround time.',
                     ],
+                },
+                {
+                    when: '2025',
+                    title: 'Trainee Instructor',
+                    org: 'Nobel Learning PBC',
+                    points: ['Taught a beginner internet-basics course after a 90-hour training program.'],
                 },
                 {
                     when: 'June 2019 – Present',
@@ -110,5 +118,8 @@ export const about = {
 // Skills shown as a package.json block on the About page.
 export const skillsPackageJson = () =>
     JSON.stringify({ name: 'ekin-efe-gungor', languages: about.languages, skills: about.skills }, null, 2)
-        // keep short string arrays on one line, like a hand-written package.json
-        .replace(/\[\s+([^\]]*?)\s+\]/g, (_, inner) => `[${inner.replace(/\s*\n\s*/g, ' ')}]`);
+        // keep short string arrays on one line, like a hand-written package.json; long ones stay one item per line
+        .replace(/\[\s+([^\]]*?)\s+\]/g, (whole, inner) => {
+            const line = `[${inner.replace(/\s*\n\s*/g, ' ')}]`;
+            return line.length <= 84 ? line : whole;
+        });

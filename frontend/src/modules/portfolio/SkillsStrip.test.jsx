@@ -18,7 +18,7 @@ describe('projectsUsing', () => {
 describe('SkillsStrip', () => {
     it('groups the skills and links the ones used in projects to /projects', () => {
         render(<MemoryRouter><SkillsStrip /></MemoryRouter>)
-        for (const g of ['Languages', 'Systems', 'Embedded']) expect(screen.getByRole('heading', { name: g })).toBeInTheDocument()
+        for (const g of ['Languages', 'Web', 'Tools']) expect(screen.getByRole('heading', { name: g })).toBeInTheDocument()
         expect(screen.getByText('Python')).toBeInTheDocument()
         const used = screen.getAllByRole('link', { name: /used in/ })
         expect(used.length).toBeGreaterThan(0)
