@@ -37,7 +37,7 @@ const Header = () => {
 
     return (
         <header className="fixed top-0 left-0 w-full z-header border-b border-cyber-border bg-cyber-black/90 backdrop-blur-md">
-            <div className={`max-w-7xl mx-auto px-4 md:px-6 ${scrolled ? 'h-14' : 'h-16'} transition-[height] duration-base flex items-center justify-between`}>
+            <div className={`max-w-screen-2xl mx-auto px-4 md:px-10 ${scrolled ? 'h-14' : 'h-16'} transition-[height] duration-base flex items-center justify-between`}>
 
                 {/* === LEFT: LOGO === */}
                 <Link to="/" className="group z-header flex-shrink-0" onClick={() => setIsMobileMenuOpen(false)}>

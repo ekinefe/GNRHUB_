@@ -37,7 +37,7 @@ const Home = () => {
         <PageShell width="7xl">
 
                 {/* === HERO SECTION === */}
-                <section className="relative pt-8 md:pt-16 pb-16 px-4 md:px-12 max-w-7xl mx-auto">
+                <section className="relative pt-8 md:pt-16 pb-16">
 
                     {/* Decorative Top Line */}
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-border to-transparent" />
@@ -181,7 +181,7 @@ const Home = () => {
 
                 {/* === FEATURED PROJECTS SECTION === */}
                 <section className="py-20 border-t border-cyber-border">
-                    <div className="max-w-7xl mx-auto px-4 md:px-12">
+                    <div>
 
                         <div className="flex items-end justify-between mb-12">
                             <div>
@@ -225,7 +225,7 @@ const Home = () => {
 
                 {/* === TECH STACK TICKER === */}
                 <section className="py-12 border-t border-cyber-border">
-                    <div className="max-w-7xl mx-auto px-4 md:px-12 text-center">
+                    <div className="text-center">
                         <p className="font-mono text-cyber-muted text-xs tracking-[0.3em] mb-6">
                             CORE_OPERATING_PROTOCOLS
                         </p>

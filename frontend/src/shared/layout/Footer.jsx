@@ -24,7 +24,7 @@ const Footer = () => {
     const reduce = useUserReducedEffects();
     return (
     <footer className="border-t border-cyber-border bg-cyber-black font-mono text-xs">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 grid gap-8 md:grid-cols-4">
+        <div className="max-w-screen-2xl mx-auto px-4 md:px-10 py-8 grid gap-8 md:grid-cols-4">
             <div>
                 <p className="text-white font-bold tracking-wider mb-2">{brand.name}</p>
                 <p className="text-cyber-muted leading-relaxed">Portfolio.</p>
@@ -56,7 +56,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-cyber-border/60">
-            <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-wrap items-center justify-between gap-2 text-cyber-muted">
+            <div className="max-w-screen-2xl mx-auto px-4 md:px-10 py-4 flex flex-wrap items-center justify-between gap-2 text-cyber-muted">
                 <span>
                     &copy; {new Date().getFullYear()} {brand.name} · Code:{' '}
                     <a href={profile.license.url} target="_blank" rel="noopener noreferrer" className={linkClass}>{profile.license.name} licence</a>

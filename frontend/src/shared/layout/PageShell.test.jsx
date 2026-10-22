@@ -11,6 +11,6 @@ describe('PageShell', () => {
 
     it('widens for the 7xl variant', () => {
         const { container } = render(<PageShell width="7xl"><p>hi</p></PageShell>)
-        expect(container.querySelector('.max-w-7xl')).not.toBeNull()
+        expect(container.querySelector('.max-w-screen-2xl')).not.toBeNull()
     })
 })
