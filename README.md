@@ -37,7 +37,7 @@ npm run check:links   # every external link in src/ (needs network)
 
 ## Configuration
 
-Nothing is required to run or build the site. Build-time variables would go in `frontend/.env.local` (never committed; `.env.example` is a template), server secrets in `frontend/.dev.vars` (copy `.dev.vars.example`) locally and `wrangler secret put` in production. No secret belongs in `wrangler.jsonc` or the repo. The only binding is `ASSETS` (the built site).
+Nothing is required to run or build the site. Build-time variables would go in `frontend/.env.local` (never committed; `.env.example` is a template), server secrets in `frontend/.dev.vars` (copy `.dev.vars.example`) locally and `wrangler secret put` in production. No secret belongs in `wrangler.jsonc` or the repo. Bindings: `ASSETS` (the built site) and `DB` (D1, content only; see `docs/database.md`).
 
 ## Architecture (now)
 
