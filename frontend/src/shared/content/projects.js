@@ -22,6 +22,8 @@ export const projects = [
         status: 'live',
         repo: null,
         url: profile.sites.plannedLost,
+        image: '/projects/planned-lost.png',
+        imageAlt: 'The Planned Lost home page: a headline about planning a perfect day in a minute and an isometric city block with a walking route',
         featured: true,
         inAbout: true,
     },

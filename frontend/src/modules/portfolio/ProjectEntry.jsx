@@ -40,7 +40,7 @@ const ProjectEntry = ({ project, points = project.points.length, detailed = fals
                 </div>
             </div>
             <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
-                {detailed && project.image && (
+                {project.image && (
                     <img src={project.image} alt={project.imageAlt} loading="lazy" width="1280" height="720" className="w-full h-auto border border-cyber-border mb-5" />
                 )}
                 <ul className="space-y-2 text-cyber-muted font-mono text-sm">
