@@ -67,6 +67,32 @@ describe('AdminApp', () => {
     })
 })
 
+describe('AdminApp two-factor', () => {
+    it('asks for the authentication code only when the server says it is needed, and sends it', async () => {
+        const fetchMock = vi.spyOn(globalThis, 'fetch')
+            .mockResolvedValueOnce(reply(200, { ok: false, needsCode: true }))
+            .mockResolvedValueOnce(reply(401, { error: 'Wrong username, password or code.' }))
+        page()
+        fireEvent.change(await screen.findByLabelText(/Username/), { target: { value: 'ekin' } })
+        fireEvent.change(screen.getByLabelText(/Password/), { target: { value: 'pw pw pw pw pw' } })
+        const code = screen.getByLabelText(/Authentication code/)
+        expect(code).toHaveAttribute('autocomplete', 'one-time-code')
+        expect(code).toHaveAttribute('inputmode', 'numeric')
+        fireEvent.change(code, { target: { value: '123 456' } })
+        fireEvent.click(screen.getByRole('button', { name: 'Sign in' }))
+        await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('Wrong username, password or code.'))
+        expect(JSON.parse(fetchMock.mock.calls[1][1].body)).toEqual({ username: 'ekin', password: 'pw pw pw pw pw', code: '123 456' })
+        expect(screen.getByLabelText(/Authentication code/)).toHaveValue('') // cleared after a failed try
+    })
+
+    it('has no code field when two-factor is not set up', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { ok: false, needsCode: false }))
+        page()
+        await screen.findByLabelText(/Username/)
+        expect(screen.queryByLabelText(/Authentication code/)).toBeNull()
+    })
+})
+
 describe('AdminApp home', () => {
     it('shows what needs attention and an unread badge in the menu', async () => {
         vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => (url === '/api/admin/me' ? reply(200, { ok: true, user: 'owner' }) : reply(200, SUMMARY)))

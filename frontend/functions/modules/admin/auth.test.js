@@ -5,6 +5,7 @@ import worker from '../../worker.ts'
 import { hashPassword } from '../../_lib/password.ts'
 import { PER_CLIENT_LIMIT } from '../../_lib/loginLimit.ts'
 import { requireAdmin } from '../../_lib/adminGuard.ts'
+import { newTotpSecret, totpCode, stepAt } from '../../_lib/totp.ts'
 
 const ORIGIN = 'https://site.test'
 const SECRET = 'k'.repeat(40)
@@ -92,11 +93,11 @@ describe('POST /api/admin/login', () => {
 describe('/api/admin/me and logout', () => {
   it('/me says ok:false (status 200, no error) with no cookie, a forged cookie or a cookie signed with another secret', async () => {
     const anon = async (cookie) => { const r = await call('/api/admin/me', { method: 'GET', origin: null, cookie }); return [r.status, await r.json()] }
-    expect(await anon()).toEqual([200, { ok: false }])
-    expect(await anon('gnr_admin=a.b')).toEqual([200, { ok: false }])
+    expect(await anon()).toEqual([200, { ok: false, needsCode: false }])
+    expect(await anon('gnr_admin=a.b')).toEqual([200, { ok: false, needsCode: false }])
     const other = await call('/api/admin/login', { body: good })
     env.SESSION_SECRET = 'z'.repeat(40)
-    expect(await anon(cookieOf(other))).toEqual([200, { ok: false }])
+    expect(await anon(cookieOf(other))).toEqual([200, { ok: false, needsCode: false }])
   })
 
   it('logout clears the cookie and needs the same origin', async () => {
@@ -117,5 +118,59 @@ describe('requireAdmin', () => {
     expect((await requireAdmin(withCookie({ Origin: ORIGIN }), env, { changes: true })).sub).toBe('owner')
     const anonymous = await requireAdmin(new Request(`${ORIGIN}/api/admin/x`), env)
     expect(anonymous.status).toBe(401)
+  })
+})
+
+describe('two-factor sign-in (ADMIN_TOTP_SECRET set)', () => {
+  let secret
+  beforeEach(() => { secret = newTotpSecret(); env.ADMIN_TOTP_SECRET = secret })
+  const nowCode = (offset = 0) => totpCode(secret, stepAt(Date.now()) + offset)
+  const login = (extra) => call('/api/admin/login', { body: { ...good, ...extra } })
+
+  it('/me says a code is needed, only to someone who is not signed in', async () => {
+    const res = await call('/api/admin/me', { method: 'GET', origin: null })
+    expect(await res.json()).toEqual({ ok: false, needsCode: true })
+  })
+
+  it('needs the code as well as the password', async () => {
+    expect((await login({})).status).toBe(401)
+    expect((await login({ code: '000000' })).status).toBe(401)
+    expect((await login({ code: await nowCode() })).status).toBe(200)
+  })
+
+  it('a right code does not help with a wrong password, and the answers look the same', async () => {
+    const wrongPass = await login({ password: 'nope nope nope', code: await nowCode(1) })
+    const wrongCode = await login({ code: '123456' })
+    expect(wrongPass.status).toBe(401)
+    expect(await wrongPass.text()).toBe(await wrongCode.text())
+    expect(wrongPass.headers.get('Set-Cookie')).toBeNull()
+  })
+
+  it('takes a code from the step before or after (clock drift), not two away', async () => {
+    expect((await login({ code: await nowCode(-1) })).status).toBe(200)
+    expect((await login({ code: await nowCode(3) })).status).toBe(401)
+  })
+
+  it('refuses a code that was already used', async () => {
+    const code = await nowCode()
+    expect((await login({ code })).status).toBe(200)
+    expect((await login({ code })).status).toBe(401)
+    expect((await login({ code: await nowCode(-1) })).status).toBe(401) // an older step than the one used
+  })
+
+  it('counts wrong codes toward the lock', async () => {
+    for (let i = 0; i < PER_CLIENT_LIMIT; i++) await login({ code: '000000' })
+    expect((await login({ code: await nowCode() })).status).toBe(429)
+  })
+
+  it('accepts a code typed with a space in the middle', async () => {
+    const code = await nowCode()
+    expect((await login({ code: `${code.slice(0, 3)} ${code.slice(3)}` })).status).toBe(200)
+  })
+
+  it('is not asked for when the secret is not set', async () => {
+    delete env.ADMIN_TOTP_SECRET
+    expect(await (await call('/api/admin/me', { method: 'GET', origin: null })).json()).toEqual({ ok: false, needsCode: false })
+    expect((await login({})).status).toBe(200)
   })
 })

@@ -26,7 +26,20 @@ For `npm run dev:worker` put the same three names in `frontend/.dev.vars` (git-i
 - 5 wrong guesses per client and 40 in total per 15 minutes lock the login (429 with `Retry-After`). The counter stores a keyed hash of the address, never the address. If a secret or the database is missing, the login is unavailable (503), never open.
 - `GET /api/admin/me` says whether you are signed in (`{ ok: true, user }` or `{ ok: false }`, both status 200, so a signed-out page load is not logged as an error); `POST /api/admin/logout` clears the cookie.
 - Every other admin route must start with `requireAdmin(request, env)` (and `{ changes: true }` when it changes data). No cookie, no answer.
-- Two-factor login with an authenticator app is planned, not built.
+- **Two-factor (optional, ADR 0010):** with `ADMIN_TOTP_SECRET` set, sign-in also needs a 6-digit code from an authenticator app. See below.
+
+## Two-factor sign-in (optional)
+```bash
+cd frontend
+npm run admin:secret -- totp                 # prints ADMIN_TOTP_SECRET and the address to add it to your app
+npx wrangler secret put ADMIN_TOTP_SECRET    # paste the value
+npm run db:migrate:remote                    # migration 0004 (a code can be used once); you type the database name
+```
+In Proton Authenticator (or any authenticator app) add the key by hand: account `admin`, issuer `GNRdigital`, time-based, 6 digits, 30 seconds. The sign-in form then shows an "Authentication code" field. A wrong code looks the same as a wrong password and counts toward the lock; a code works once; one step either side is accepted for clock drift.
+
+**If you lose the phone:** `npx wrangler secret delete ADMIN_TOTP_SECRET`, sign in with the password alone, then set a new secret. There are no recovery codes: the Cloudflare account is what you fall back on.
+
+To compare this setup with Better Auth, see ADR 0010.
 
 ## Home
 `/admin` shows what needs attention: unread messages and posts by status (`GET /api/admin/summary`, which needs a session like every admin route), and the menu shows an unread badge on Messages. The posts list can be searched (forgiving, like the blog) and filtered by who can see a post; Messages can show unread only.

@@ -4,3 +4,4 @@
 # ADMIN_USERNAME=
 # ADMIN_PASSWORD_HASH=      made with: npm run admin:secret -- hash
 # SESSION_SECRET=           made with: npm run admin:secret -- session
+# ADMIN_TOTP_SECRET=        optional two-factor, made with: npm run admin:secret -- totp

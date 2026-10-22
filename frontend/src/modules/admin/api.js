@@ -17,8 +17,8 @@ export async function adminFetch(path, { method = 'GET', body } = {}) {
 }
 
 /** What to tell the owner when a sign-in did not work. */
-export function loginMessage({ status, retryAfter }) {
-    if (status === 401) return 'Wrong username or password.';
+export function loginMessage({ status, retryAfter }, needsCode = false) {
+    if (status === 401) return needsCode ? 'Wrong username, password or code.' : 'Wrong username or password.';
     if (status === 429) return `Too many attempts. Try again in ${Math.max(1, Math.ceil(retryAfter / 60))} minutes.`;
     if (status === 503) return 'Sign-in is not set up yet: the admin secrets or the database are missing (see docs/admin.md).';
     if (status === 403) return 'The request was refused. Open the site from its own address and try again.';

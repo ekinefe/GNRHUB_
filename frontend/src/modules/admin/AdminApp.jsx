@@ -15,10 +15,12 @@ import { sections } from './sections';
 const AdminApp = () => {
     useDocumentMeta({ title: 'Admin', noindex: true });
     const [state, setState] = useState('checking'); // checking | signedOut | signedIn
+    const [needsCode, setNeedsCode] = useState(false);
     const [summary, setSummary] = useState(null);
 
     const check = useCallback(async () => {
         const result = await adminFetch('/api/admin/me');
+        setNeedsCode(result.data?.needsCode === true);
         // A 200 is not enough: without the API (plain `npm run dev`) the page itself answers with HTML.
         setState(result.ok && result.data?.ok === true ? 'signedIn' : 'signedOut');
     }, []);
@@ -41,7 +43,7 @@ const AdminApp = () => {
         <PageShell width="5xl">
             <div className="pt-16 pb-24">
                 {state === 'checking' && <p role="status" className="font-mono text-cyber-muted">Checking sign-in...</p>}
-                {state === 'signedOut' && <AdminLogin onSignedIn={check} />}
+                {state === 'signedOut' && <AdminLogin onSignedIn={check} needsCode={needsCode} />}
                 {state === 'signedIn' && (
                     <AdminContext.Provider value={{ summary, refreshSummary }}>
                     <div className="space-y-8">
