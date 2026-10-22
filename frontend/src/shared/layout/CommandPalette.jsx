@@ -5,15 +5,15 @@ import { fuzzyFilter } from '@/shared/lib/fuzzy';
 import { buildCommands, konamiTracker } from '@/shared/commands/commands';
 import { setScanlines, getScanlines } from '@/shared/config/theme';
 
-// Ctrl/Cmd+K from any route (GNR-49). `user` comes from the app; the palette itself knows nothing about auth.
-const CommandPalette = ({ user = null }) => {
+// Ctrl/Cmd+K from any route (GNR-49).
+const CommandPalette = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState('');
     const [active, setActive] = useState(0);
     const [output, setOutput] = useState([]);
     const input = useRef(null);
-    const { visible, hidden } = useMemo(() => buildCommands({ navigate, user }), [navigate, user]);
+    const { visible, hidden } = useMemo(() => buildCommands({ navigate }), [navigate]);
 
     const results = useMemo(() => fuzzyFilter(visible, query), [visible, query]);
     const close = () => { setOpen(false); setQuery(''); setOutput([]); setActive(0); };

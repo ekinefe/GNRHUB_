@@ -1,11 +1,10 @@
-import { features } from '@/shared/config/features';
 import { profile } from '@/shared/config/profile';
 import { ACCENTS, setAccent, getScanlines, setScanlines } from '@/shared/config/theme';
 import { setReduceEffects, userReducedEffects } from '@/shared/config/effects';
 
 // Command palette entries (GNR-49). `run` either navigates/acts (returns nothing, the palette closes)
 // or returns text lines to show inside the palette. Hidden commands only appear when typed exactly.
-export function buildCommands({ navigate, user = null }) {
+export function buildCommands({ navigate }) {
     const go = (to) => () => navigate(to);
     const open = (url) => () => { window.open(url, '_blank', 'noopener,noreferrer'); };
     const pages = [
@@ -13,7 +12,6 @@ export function buildCommands({ navigate, user = null }) {
         { title: 'Go to Projects', to: '/projects' },
         { title: 'Go to About', to: '/about' },
         { title: 'Go to Contact', to: '/contact' },
-        features.blogs && { title: 'Go to Blogs', to: '/blogs' },
         { title: 'Go to Colophon', to: '/colophon' },
         { title: 'Go to Privacy', to: '/privacy' },
         { title: 'Go to Terms', to: '/terms' },
@@ -30,7 +28,7 @@ export function buildCommands({ navigate, user = null }) {
 
     const hidden = {
         help: () => ['Commands: type to search, Enter to run, Esc to close.', 'Try: whoami, sudo. There may be a code.'],
-        whoami: () => [user ? `${user.email ?? 'signed in'} (signed in)` : 'guest (not signed in)', `${profile.location.city}, ${profile.location.country}`],
+        whoami: () => ['guest (the site has no accounts)', `${profile.location.city}, ${profile.location.country}`],
         sudo: () => ['guest is not in the sudoers file. This incident will be reported.', '(it will not)'],
     };
     return { visible, hidden };

@@ -5,7 +5,7 @@ Personal site, first person, plain English.
 ## Where each voice goes
 | Place | Voice | Examples |
 |---|---|---|
-| Navigation, headings people scan, primary buttons | Plain words | Home, Tools, Blogs, About, Contact, Download CV, Email me, Send email, Copy email |
+| Navigation, headings people scan, primary buttons | Plain words | Home, Projects, About, Contact, Download CV, Email me, Send email, Copy email |
 | Tool screens and small details (empty states, loading, status lines, errors) | Terminal voice, kept short | ACCESS_TOOL, AUTH_REQUIRED, INITIALIZE_USER, `Found 3 results`, ERR_PAGE_NOT_FOUND |
 | Legal pages | Plain, short, accurate | Terms, Privacy |
 

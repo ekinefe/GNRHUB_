@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
 import { build } from '@/shared/config/build';
 import { profile } from '@/shared/config/profile';
-import { features } from '@/shared/config/features';
 import ThemeControls from '@/shared/ui/ThemeControls';
 import { setReduceEffects, useUserReducedEffects } from '@/shared/config/effects';
 
 const nav = [
-    features.blogs && { to: '/blogs', label: 'Blogs' },
     { to: '/projects', label: 'Projects' },
     { to: '/about', label: 'About' },
     { to: '/contact', label: 'Contact' },

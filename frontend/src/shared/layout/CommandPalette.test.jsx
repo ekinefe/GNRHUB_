@@ -53,25 +53,19 @@ describe('CommandPalette', () => {
         expect(getScanlines()).toBe(true)
     })
 
-    it('does not list flagged-off areas', () => {
+    it('does not list removed areas', () => {
         page()
         openIt()
         expect(screen.queryByRole('option', { name: /Go to Tools/ })).toBeNull()
         expect(screen.queryByRole('option', { name: /Go to Blogs/ })).toBeNull()
     })
 
-    it('whoami says guest, or shows the signed-in user', () => {
-        const { unmount } = page()
+    it('whoami says guest', () => {
+        page()
         openIt()
         fireEvent.change(box(), { target: { value: 'whoami' } })
         fireEvent.keyDown(box(), { key: 'Enter' })
-        expect(screen.getByRole('status')).toHaveTextContent('guest (not signed in)')
-        unmount()
-        page({ user: { email: 'a@b.test' } })
-        openIt()
-        fireEvent.change(box(), { target: { value: 'whoami' } })
-        fireEvent.keyDown(box(), { key: 'Enter' })
-        expect(screen.getByRole('status')).toHaveTextContent('a@b.test (signed in)')
+        expect(screen.getByRole('status')).toHaveTextContent('guest')
     })
 
     it('has hidden help and sudo commands', () => {

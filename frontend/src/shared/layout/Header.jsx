@@ -1,11 +1,9 @@
 import React, { useEffect, useId, useState } from 'react';
 import Wordmark from '@/shared/ui/Wordmark';
-import { features } from '@/shared/config/features';
 import { Link, useLocation } from 'react-router-dom';
-import { House, ScanText, Menu, X, PersonStanding } from 'lucide-react';
+import { House, Menu, X, PersonStanding } from 'lucide-react';
 
-// `account` is an optional slot for login / user-menu controls (kept out of shared/ so it does not import modules/).
-const Header = ({ account = null }) => {
+const Header = () => {
     const location = useLocation();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -34,7 +32,6 @@ const Header = ({ account = null }) => {
     // Centralized Navigation Data (keeps code DRY)
     const navItems = [
         { path: "/", icon: House, label: "Home" },
-        features.blogs && { path: "/blogs", icon: ScanText, label: "Blogs" },
         { path: "/about", icon: PersonStanding, label: "About" }
     ].filter(Boolean);
 
@@ -72,8 +69,7 @@ const Header = ({ account = null }) => {
                     ))}
                 </nav>
 
-                {/* === RIGHT: ACCOUNT + MOBILE MENU TOGGLE === */}
-                {account && <div className="hidden md:flex items-center">{account}</div>}
+                {/* === RIGHT: MOBILE MENU TOGGLE === */}
                 <div className="md:hidden flex items-center z-header">
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -109,7 +105,6 @@ const Header = ({ account = null }) => {
                             </Link>
                         ))}
                     </nav>
-                    {account && <div className="px-4 pb-6">{account}</div>}
                 </div>
             )}
         </header>

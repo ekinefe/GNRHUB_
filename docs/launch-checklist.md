@@ -4,7 +4,7 @@ Last reviewed: 2026-10-16 (GNR-155). Ticked = verified, with how. Unticked = sti
 
 ## Links
 - [x] No internal link leads to a dead route: `src/links.test.js` checks every literal link against `App.jsx` (it found and fixed `/services/brand-book` in the editor).
-- [x] Flagged-off areas 404 and nothing links to them (GNR-152, tests in `App.test.jsx`).
+- [x] Removed areas (accounts, blogs, tools) 404 and nothing links to them (tests in `App.test.jsx`).
 - [x] External links resolve: `npm run check:links` passed, 0 broken (LinkedIn answers bots with 999 and is reported "unverified").
 - [ ] Link check green in CI: the `check-links` job is in `gatekeeper.yml`; confirm it passes on the first PR run.
 

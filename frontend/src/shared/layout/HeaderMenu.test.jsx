@@ -34,13 +34,6 @@ describe('Header mobile menu', () => {
         fireEvent.click(screen.getByText('go'))
         expect(screen.queryByRole('navigation', { name: 'Mobile' })).toBeNull()
     })
-
-    it('renders the account slot only when one is given', () => {
-        const { rerender } = wrap(<Header />)
-        expect(screen.queryByText('slot')).toBeNull()
-        rerender(<MemoryRouter><Header account={<span>slot</span>} /></MemoryRouter>)
-        expect(screen.getAllByText('slot').length).toBeGreaterThan(0)
-    })
 })
 
 describe('DashboardLayout', () => {

@@ -1,6 +1,6 @@
 // Static SEO files for the launch: sitemap.xml and robots.txt are generated at build time (vite.config.js)
 // from this list and brand.publicUrl. When the Worker arrives (GNR-16) it can generate them from D1 instead.
-// Only routes that are live at launch belong here: flagged-off areas (tools, blogs, account) are left out.
+// Only routes that are live at launch belong here: areas that are not part of this site (tools, blogs, accounts) are left out.
 import { brand } from './brand.js';
 
 export const sitemapPaths = ['/', '/about', '/projects', '/contact', '/colophon', '/privacy', '/terms'];
