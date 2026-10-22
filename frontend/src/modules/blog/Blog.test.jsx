@@ -1,6 +1,6 @@
 import React from 'react'
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import BlogList from './BlogList'
 import BlogPost from './BlogPost'
@@ -20,21 +20,73 @@ const list = (path = '/blog') => render(<MemoryRouter initialEntries={[path]}><R
 const single = (path) => render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/blog/:slug" element={<BlogPost />} /><Route path="*" element={<p>other</p>} /></Routes></MemoryRouter>)
 
 describe('BlogList', () => {
-    it('lists public posts with date, summary and tag links', async () => {
+    it('lists public posts with date, summary and tag buttons, and asks the API once', async () => {
         const f = vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
         list()
         expect(await screen.findByRole('link', { name: 'About cron' })).toHaveAttribute('href', '/blog/about-cron')
         expect(screen.getByText('How cron really works.')).toBeInTheDocument()
-        expect(screen.getByRole('link', { name: '#linux' })).toHaveAttribute('href', '/blog?tag=linux')
+        expect(f).toHaveBeenCalledTimes(1)
         expect(f.mock.calls[0][0]).toBe('/api/posts')
     })
 
-    it('filters by tag, and cleans a hostile tag before asking the API', async () => {
-        const f = vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts: [posts[0]] }))
-        list('/blog?tag=Linux%22%3E%3Cscript%3E')
+    it('has a sidebar with the tags and their counts, and filters by a tag', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        list()
         await screen.findByRole('link', { name: 'About cron' })
-        expect(f.mock.calls[0][0]).toBe('/api/posts?tag=linuxscript')
-        expect(screen.getByRole('link', { name: 'Show all' })).toHaveAttribute('href', '/blog')
+        expect(screen.getByRole('button', { name: 'all 2' })).toHaveAttribute('aria-pressed', 'true')
+        fireEvent.click(screen.getByRole('button', { name: '#linux 1' }))
+        expect(screen.getByRole('link', { name: 'About cron' })).toBeInTheDocument()
+        expect(screen.queryByRole('link', { name: 'Notes' })).toBeNull()
+        expect(screen.getByRole('button', { name: '#linux 1' })).toHaveAttribute('aria-pressed', 'true')
+        fireEvent.click(screen.getByRole('button', { name: /Clear filters/ }))
+        expect(screen.getByRole('link', { name: 'Notes' })).toBeInTheDocument()
+    })
+
+    it('reads the tag from the address and ignores hostile characters in it', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        list('/blog?tag=Linux%22%3E%3Cscript%3E')
+        expect(await screen.findByText(/No posts match your search/)).toBeInTheDocument()
+        expect(document.querySelector('script')).toBeNull()
+    })
+
+    it('keeps a line under the search box at all times: ready before you type, the count while you do', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        const { container } = list()
+        await screen.findByRole('link', { name: 'About cron' })
+        await waitFor(() => expect(container.textContent).toMatch(/2 posts\. Type to search/))
+        fireEvent.change(screen.getByLabelText('Search posts'), { target: { value: 'zzzzzz' } })
+        await waitFor(() => expect(container.textContent).toMatch(/Found 0 results/))
+        fireEvent.change(screen.getByLabelText('Search posts'), { target: { value: '' } })
+        await waitFor(() => expect(container.textContent).toMatch(/2 posts\. Type to search/))
+    })
+
+    it('searches forgivingly, shows the animated result count under the search box and highlights matches', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        const { container } = list()
+        await screen.findByRole('link', { name: 'About cron' })
+        fireEvent.change(screen.getByLabelText('Search posts'), { target: { value: 'crn' } })
+        await waitFor(() => expect(screen.queryByRole('link', { name: 'Notes' })).toBeNull())
+        expect(screen.getByRole('link', { name: 'About cron' })).toBeInTheDocument()
+        await waitFor(() => expect(container.textContent).toMatch(/Found 1 result/))
+    })
+
+    it('suggests tags when nothing matches, and picking one shows its posts', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        list()
+        await screen.findByRole('link', { name: 'About cron' })
+        fireEvent.change(screen.getByLabelText('Search posts'), { target: { value: 'zzzzzz' } })
+        expect(await screen.findByText(/No posts match your search/)).toBeInTheDocument()
+        fireEvent.click(screen.getAllByRole('button', { name: '#linux' })[0])
+        expect(await screen.findByRole('link', { name: 'About cron' })).toBeInTheDocument()
+    })
+
+    it('can show the oldest posts first', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        list()
+        await screen.findByRole('link', { name: 'About cron' })
+        fireEvent.click(screen.getByRole('button', { name: 'Oldest first' }))
+        const titles = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent).filter((t) => ['About cron', 'Notes'].includes(t))
+        expect(titles).toEqual(['Notes', 'About cron'])
     })
 
     it('says so when there are no posts, and when loading fails', async () => {
@@ -44,7 +96,7 @@ describe('BlogList', () => {
         unmount()
         vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(reply(500, {}))
         list()
-        expect(await screen.findByRole('alert')).toHaveTextContent('could not be loaded')
+        expect(await screen.findByText(/could not be loaded/)).toBeInTheDocument()
     })
 })
 

@@ -1,13 +1,24 @@
 // About page content. Edit text here; AboutMe.jsx only lays it out.
 // Contact details and public URLs live in shared/config/profile.js.
 
+// The skill groups in the order they are shown on the About page.
+export const skillGroups = [
+    { key: 'programming', label: 'Languages' },
+    { key: 'web', label: 'Web' },
+    { key: 'data', label: 'Data' },
+    { key: 'testing', label: 'Testing' },
+    { key: 'tools', label: 'Tools' },
+    { key: 'ai', label: 'AI' },
+    { key: 'hardware', label: 'Hardware' },
+];
+
 export const about = {
     name: 'Ekin Efe Gungor',
     role: 'CS Student | Junior Full-Stack Developer',
     intro: 'Web apps, internal tools and a bit of hardware. I like finding out why things break.',
     // First person on purpose: a personal brand, not a studio.
     nameStory: 'GNR comes from my surname, Gungor, and “digital” is what I make with it. This is my personal portfolio and workshop, not a studio or a company.',
-    summary: 'Final-year Computer Science student (AI and Data Science, graduating June 2027) and web developer intern in Warsaw. I build with Laravel, Vue and React, run my own live project on Cloudflare with CI/CD, and designed and soldered an Arduino Morse code keyer. I use Claude Code every day and test every change myself.',
+    summary: 'Final-year Computer Science student (AI and Data Science, graduating June 2027) and web developer intern, working remotely. I build with Laravel, Vue and React, run my own live project on Cloudflare with CI/CD, and designed and soldered an Arduino Morse code keyer. I use Claude Code every day and test every change myself.',
     // CEFR levels as on my CV.
     languages: { Turkish: 'native', English: 'B2 to C1', Polish: 'A1, learning' },
     skills: {
@@ -16,7 +27,7 @@ export const about = {
         data: ['MySQL', 'SQLite', 'Cloudflare D1'],
         testing: ['PHPUnit', 'Vitest', 'pytest'],
         tools: ['Git', 'GitHub Actions', 'Bitbucket', 'Jira', 'Docker', 'Cloudflare Workers', 'Linux (Fedora, Ubuntu)', 'nginx', 'systemd'],
-        ai: ['Claude Code', 'OpenAI API'],
+        ai: ['Claude Code', 'OpenAI API', 'Gemini API'],
         hardware: ['Arduino', 'KiCad'],
     },
     // Each group renders as a `git log`. Newest first. `current: true` gets the highlighted node.
@@ -40,7 +51,7 @@ export const about = {
                 {
                     when: 'August 2026 – Present',
                     title: 'Web Developer Intern',
-                    org: 'IT team, Warsaw',
+                    org: 'IT team, remote (company based in Istanbul)',
                     current: true,
                     points: [
                         'Delivered 40 Jira tickets and about 60 pull requests across 5 client projects (Laravel, Filament, Nuxt/Vue) in a 6-person IT team: scoped each ticket, guided the build with Claude Code, tested in the browser, and ran a 400+ test PHPUnit suite before team-lead review.',
@@ -78,12 +89,6 @@ export const about = {
                     ],
                 },
                 {
-                    when: '2025',
-                    title: 'Trainee Instructor',
-                    org: 'Nobel Learning PBC',
-                    points: ['Taught a beginner internet-basics course after a 90-hour training program.'],
-                },
-                {
                     when: 'June 2019 – Present',
                     title: 'Freelance Photographer & Technical Consultant',
                     current: true,
@@ -92,6 +97,12 @@ export const about = {
                         'Built a terminal utility to launch common editing workflows, improving daily throughput.',
                         'Scoped requirements and advised clients on asset management and color workflows.',
                     ],
+                },
+                {
+                    when: '2025',
+                    title: 'Trainee Instructor',
+                    org: 'Nobel Learning PBC',
+                    points: ['Taught a beginner internet-basics course after a 90-hour training program.'],
                 },
                 {
                     when: 'January 2016 – December 2020',
@@ -114,12 +125,3 @@ export const about = {
         { name: 'Daily and Business English', issuer: 'Wyższa Szkoła Ekologii i Zarządzania w Warszawie', when: '2020 – 2021' },
     ],
 };
-
-// Skills shown as a package.json block on the About page.
-export const skillsPackageJson = () =>
-    JSON.stringify({ name: 'ekin-efe-gungor', languages: about.languages, skills: about.skills }, null, 2)
-        // keep short string arrays on one line, like a hand-written package.json; long ones stay one item per line
-        .replace(/\[\s+([^\]]*?)\s+\]/g, (whole, inner) => {
-            const line = `[${inner.replace(/\s*\n\s*/g, ' ')}]`;
-            return line.length <= 84 ? line : whole;
-        });

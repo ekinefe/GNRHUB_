@@ -7,7 +7,7 @@ import TextType from '@/shared/animations/TextType';
 import avatar from '@/assets/AboutMe/avatar.jpg';
 import PageShell from '@/shared/layout/PageShell';
 import ProjectEntry from './ProjectEntry';
-import { about, skillsPackageJson } from '@/shared/content/about';
+import { about, skillGroups } from '@/shared/content/about';
 import { aboutProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { useJsonLd } from '@/shared/hooks/useJsonLd';
@@ -117,19 +117,20 @@ const AboutMe = () => {
                         </div>
                     </div>
 
-                    {/* Skills as a package.json block */}
+                    {/* Skills, grouped and readable */}
                     <div>
                         <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 [overflow-wrap:anywhere]">
                             <Code className="w-6 h-6 text-cyber-pink" />
                             SKILLS
                         </h2>
-                        <pre
-                            aria-label="Skills, shown as a package.json file"
-                            className="border border-cyber-border bg-cyber-black p-4 font-mono text-sm text-cyber-cyan overflow-x-auto"
-                        >
-                            <span className="text-cyber-muted">$ cat package.json{'\n'}</span>
-                            {skillsPackageJson()}
-                        </pre>
+                        <dl className="border border-cyber-border bg-cyber-black divide-y divide-cyber-border/60" aria-label="Skills">
+                            {skillGroups.map(({ key, label }) => (
+                                <div key={key} className="grid gap-1 sm:grid-cols-[9rem_1fr] sm:gap-6 px-5 py-4">
+                                    <dt className="font-mono text-sm text-cyber-cyan">{label}</dt>
+                                    <dd className="font-mono text-sm text-cyber-text leading-relaxed">{about.skills[key].join(', ')}</dd>
+                                </div>
+                            ))}
+                        </dl>
                     </div>
 
                     {/* Education and experience as git logs */}
@@ -139,7 +140,11 @@ const AboutMe = () => {
                                 <Code className="w-6 h-6 text-cyber-pink" />
                                 {group.title}
                             </h2>
-                            <p className="font-mono text-xs text-cyber-muted mb-6">$ git log --oneline {group.key}</p>
+                            <p className="font-mono text-xs text-cyber-muted mb-1">$ git log --oneline {group.key}</p>
+                            <p className="font-mono text-xs text-cyber-muted mb-6" aria-hidden="true">
+                                <span className="inline-block w-2.5 h-2.5 rounded-full border-2 border-cyber-pink align-middle mr-1" /> still doing this
+                                <span className="inline-block w-2.5 h-2.5 rounded-full border-2 border-cyber-border align-middle ml-4 mr-1" /> finished
+                            </p>
                             <ol className="space-y-8 border-l-2 border-cyber-border pl-6 relative">
                                 {group.entries.map((entry) => (
                                     <li key={`${entry.when}-${entry.title}`} className="relative">

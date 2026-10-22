@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { about } from '@/shared/content/about';
+import { about, skillGroups } from '@/shared/content/about';
 import { projectsUsing } from './projectsUsing';
 
 // The skills from the About data, grouped, each with the projects whose tech list mentions it.
 // Nothing here is typed twice: add a skill in about.js or a tech tag in projects.js and this follows.
-const GROUPS = [
-    { key: 'programming', label: 'Languages' },
-    { key: 'web', label: 'Web' },
-    { key: 'tools', label: 'Tools' },
-];
+const GROUPS = skillGroups.filter(({ key }) => ['programming', 'web', 'tools'].includes(key));
 
 const SkillsStrip = () => (
     <section aria-labelledby="skills-heading" className="py-16 border-t border-cyber-border">
