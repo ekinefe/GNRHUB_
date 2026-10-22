@@ -28,6 +28,11 @@ For `npm run dev:worker` put the same three names in `frontend/.dev.vars` (git-i
 - Every other admin route must start with `requireAdmin(request, env)` (and `{ changes: true }` when it changes data). No cookie, no answer.
 - Two-factor login with an authenticator app is planned, not built.
 
+## Posts
+`/admin/posts` lists every post with its status; New post opens a plain form with a live preview. Fields: title, address (follows the title until you edit it), who can see it, summary, tags, and the text in Markdown (`# heading`, `**bold**`, `*italic*`, `` `code` ``, `[link](https://...)`, lists, `>` quotes, fenced code). Raw HTML is shown as text, never run, and only `http`, `https`, `mailto` and site links are kept.
+- **Draft:** only here. **Private:** your notebook, never returned by the public API. **Public:** listed on the blog. A draft or private post answers 404 on the public API, exactly like one that does not exist.
+- API: public `GET /api/posts` (list, `?tag=`) and `GET /api/posts/:slug`; admin `GET`/`POST /api/admin/posts` and `GET`/`POST /api/admin/posts/:id` with `{ action: 'save' | 'delete' }`.
+
 ## Contact messages
 `/admin/messages` lists what the contact form stored, newest first, with an unread count. Open one to read it (it is marked read), reply with a mailto link, mark it unread, or delete it (asks first). Messages are shown as plain text. The form itself is `POST /api/contact`: same-site only, validated, 3 messages per hour per client and 30 per hour overall, a hidden trap field for bots, and it answers 503 ("email me instead") if the database is missing, never silently losing a message.
 
