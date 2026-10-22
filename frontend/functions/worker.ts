@@ -3,12 +3,18 @@
 // is served straight from the static assets. Routes are one file each under
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
 import { withSecurityHeaders } from './_lib/security-headers.ts';
-import { failure } from './_lib/failure.ts';
+import { failure, isAdminPath } from './_lib/failure.ts';
+import { currentAdmin } from './_lib/adminGuard.ts';
+import { loginRoute, logoutRoute, meRoute } from './modules/admin/auth.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
   // D1, bound in wrangler.jsonc. Absent until the database exists, so code must handle `undefined`.
   DB?: unknown;
+  // Admin sign-in secrets (ADR 0009); set with `wrangler secret put`, never in wrangler.jsonc.
+  ADMIN_USERNAME?: string;
+  ADMIN_PASSWORD_HASH?: string;
+  SESSION_SECRET?: string;
 }
 
 type Context = { request: Request; env: Env };
@@ -16,8 +22,11 @@ type Handler = (context: Context) => Response | Promise<Response>;
 type RouteModule = { onRequestGet?: Handler; onRequestPost?: Handler };
 
 // URLPattern is a Workers built-in; no router dependency.
-// Empty today: the site has no API. A route is added here when a feature needs one.
-export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [];
+export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
+  { pattern: new URLPattern({ pathname: '/api/admin/login' }), module: loginRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/logout' }), module: logoutRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/me' }), module: meRoute },
+];
 
 const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), {
@@ -51,7 +60,8 @@ export async function handle(request: Request, env: Env): Promise<Response> {
   try {
     return await handler({ request, env });
   } catch (error) {
-    return failure(error, request);
+    const verifiedAdmin = isAdminPath(url.pathname) && !!(await currentAdmin(request, env));
+    return failure(error, request, verifiedAdmin);
   }
 }
 

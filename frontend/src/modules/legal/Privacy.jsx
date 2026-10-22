@@ -12,7 +12,7 @@ const Privacy = () => {
     return (
         <LegalLayout icon={Database} iconClass="text-cyber-cyan" title="Privacy" tag="DATA_DIRECTIVES" updated={PRIVACY_UPDATED}>
             <p className="text-white">
-                Short version: {brand.name} is a personal portfolio. It has no accounts, no analytics, no advertising and no cookies. The only data processed is the standard hosting log described below.
+                Short version: {brand.name} is a personal portfolio. Visitors have no accounts, and the site has no analytics, no advertising and sets no cookies for visitors. The only data processed is the standard hosting log described below, plus a short-lived counter if someone tries to sign in to the owner's admin area.
             </p>
 
             <Section n="01" title="WHO IS RESPONSIBLE">
@@ -21,11 +21,12 @@ const Privacy = () => {
 
             <Section n="02" title="WHAT IS COLLECTED">
                 <p><strong className="text-white">Hosting logs.</strong> The site is served by Cloudflare. When you load a page, Cloudflare processes technical request data (IP address, browser type, requested URL, time) to deliver the site and protect it from abuse. I do not receive this data in a form that identifies visitors and I do not use it for profiling. How long Cloudflare keeps it is set by Cloudflare; see its privacy policy.</p>
-                <p><strong className="text-white">Nothing else.</strong> There are no accounts or forms, no analytics or tracking scripts, no advertising and no social-media embeds.</p>
+                <p><strong className="text-white">Admin sign-in attempts.</strong> The site has a private admin area for its owner. If someone tries to sign in there, a keyed hash of their network address (not the address itself) is counted for up to about an hour to stop password guessing. Nothing else about the attempt is kept.</p>
+                <p><strong className="text-white">Nothing else.</strong> There are no visitor accounts or forms, no analytics or tracking scripts, no advertising and no social-media embeds.</p>
             </Section>
 
             <Section n="03" title="COOKIES AND LOCAL STORAGE">
-                <p>This site sets no cookies. Your browser keeps your display choices on your own device (the "Reduce effects" switch, the accent colour and the scanlines switch in the footer) and, if a page fails to load, a short-lived flag that limits automatic reload to one try. These stay in your browser, are never sent to a server, and are needed to make the site work as you asked, so no consent banner is needed.</p>
+                <p>This site sets no cookies for visitors (the owner's admin sign-in sets one session cookie, only after a correct sign-in). Your browser keeps your display choices on your own device (the "Reduce effects" switch, the accent colour and the scanlines switch in the footer) and, if a page fails to load, a short-lived flag that limits automatic reload to one try. These stay in your browser, are never sent to a server, and are needed to make the site work as you asked, so no consent banner is needed.</p>
             </Section>
 
             <Section n="04" title="FONTS AND THIRD PARTIES">
