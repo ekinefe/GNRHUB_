@@ -16,7 +16,7 @@ export default [
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: { ...globals.browser, __BUILD_SHA__: 'readonly', __BUILD_DATE__: 'readonly', __STACK__: 'readonly' },
+      globals: { ...globals.browser, __APP_VERSION__: 'readonly', __BUILD_SHA__: 'readonly', __BUILD_DATE__: 'readonly', __STACK__: 'readonly' },
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
     rules: {

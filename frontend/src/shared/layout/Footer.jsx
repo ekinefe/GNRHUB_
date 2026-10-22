@@ -68,7 +68,7 @@ const Footer = () => {
                 <button type="button" aria-pressed={reduce} onClick={() => setReduceEffects(!reduce)} className="hover:text-cyber-pink transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">
                     Reduce effects: {reduce ? 'on' : 'off'}
                 </button>
-                <span data-testid="build-info">build {build.sha}{build.date ? ` · ${build.date}` : ''}</span>
+                <span data-testid="build-info">v{build.version} · build {build.sha}{build.date ? ` · ${build.date}` : ''}</span>
             </div>
         </div>
     </footer>

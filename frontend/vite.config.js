@@ -23,6 +23,7 @@ function installedVersions(names) {
 // https://vite.dev/config/
 export default defineConfig({
   define: {
+    __APP_VERSION__: JSON.stringify(JSON.parse(readFileSync('./package.json', 'utf8')).version),
     __BUILD_SHA__: JSON.stringify(commitSha()),
     __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
     __STACK__: JSON.stringify(installedVersions(['react', 'react-router-dom', 'vite', 'tailwindcss', 'vitest', 'gsap', 'lucide-react'])),
