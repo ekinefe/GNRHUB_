@@ -4,6 +4,9 @@ import { describe, it, expect } from 'vitest'
 const html = readFileSync('index.html', 'utf8')
 
 describe('index.html', () => {
+    it('declares English as the page language (ADR 0011: the site is English only)', () => {
+        expect(html).toMatch(/<html lang="en">/)
+    })
     it('has a title, description and theme color', () => {
         expect(html).toMatch(/<title>%BRAND_NAME%<\/title>/)
         expect(html).toMatch(/name="description"/)
