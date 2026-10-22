@@ -10,5 +10,6 @@ One short file per decision: context, decision, consequences. Numbered, never re
 | [0004](0004-typescript-for-backend-first.md) | TypeScript for new backend code first | accepted (frontend migration proposed) |
 | [0005](0005-pdf-in-the-browser.md) | PDFs generated in the browser | accepted |
 | [0006](0006-mail-deferred-and-queue-privacy.md) | Mail off by default; queue retention open | partly open |
+| [0007](0007-portfolio-only.md) | GNRdigital is only the portfolio; tools are separate projects | accepted |
 
 Not recorded yet: CV rendering approach (needs an owner decision).

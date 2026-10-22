@@ -1,6 +1,6 @@
 # ADR 0003: Better Auth on D1 for sign-in
 
-Status: proposed. Waiting on the dependency approval and the first-superadmin choice (GNR-136). Date: 2026-10-17.
+Status: superseded by ADR 0007 (accounts are out of scope for the portfolio; a tool that needs them can reuse this design). Was: proposed. Waiting on the dependency approval and the first-superadmin choice (GNR-136). Date: 2026-10-17.
 
 ## Context
 Accounts are needed for the tools (brand book, later Gym, CV, mail). The owner wants the same shape as the Planned_Lost project: Better Auth, Drizzle and D1 on a Worker.

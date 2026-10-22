@@ -6,6 +6,7 @@ import CyberButton from '@/shared/ui/CyberButton';
 const STATUS = {
     live: { label: 'LIVE', className: 'text-cyber-active border-cyber-active/40' },
     soon: { label: 'COMING SOON', className: 'text-cyber-muted border-cyber-border' },
+    paused: { label: 'ON HOLD', className: 'text-cyber-beta border-cyber-beta/40' },
 };
 
 // One project block, shared by Projects (detailed) and About (compact). `points` limits how many bullets show.
@@ -23,9 +24,9 @@ const ProjectEntry = ({ project, points = project.points.length, detailed = fals
                         <a href={project.repo} target="_blank" rel="noreferrer">
                             <CyberButton variant="ghost" icon={Github}>Source Code</CyberButton>
                         </a>
-                    ) : (
+                    ) : project.status === 'live' ? (
                         <span className="text-cyber-muted text-xs font-mono">PRIVATE REPO</span>
-                    )}
+                    ) : null}
                     {detailed && project.url && (
                         <a href={project.url} target="_blank" rel="noreferrer">
                             <CyberButton variant="ghost" icon={ExternalLink}>Live site</CyberButton>

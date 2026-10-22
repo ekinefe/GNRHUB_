@@ -5,7 +5,7 @@ import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
 import ProjectEntry from './ProjectEntry';
-import { projects, experiments } from '@/shared/content/projects';
+import { projects, toolProjects, experiments } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const AboutMe = () => {
@@ -127,6 +127,17 @@ const AboutMe = () => {
                         <div className="space-y-8">
                             {projects.map((project) => <ProjectEntry key={project.id} project={project} detailed />)}
 
+                        </div>
+                    </div>
+
+                    {/* Tools that are their own projects */}
+                    <div>
+                        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2 uppercase [overflow-wrap:anywhere]">
+                            <Terminal className="w-6 h-6 text-cyber-pink" />
+                            Separate_Tools
+                        </h2>
+                        <div className="space-y-8">
+                            {toolProjects.map((project) => <ProjectEntry key={project.id} project={project} detailed />)}
                         </div>
                     </div>
 
