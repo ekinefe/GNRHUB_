@@ -52,4 +52,4 @@ One app folder, `frontend/`, holds both the SPA (`src/`) and the backend (`funct
 ## Accessibility notes
 - Text contrast on the dark background (WCAG AA needs 4.5:1): muted 5.7, pink 5.9, offline red 5.6, cyan 14.8, amber 11.7. Borders are decorative (1.6) and never carry meaning alone.
 - `DashboardLayout` has a skip link to `#main`; the header toggle is labelled and reports `aria-expanded`; the mobile menu closes on Escape and route change.
-- Unfinished areas (account, tools, blogs, dashboard) are behind `VITE_FEATURES` (comma list, default none): flagged-off routes 404 and nothing links to them. Account controls (login / user menu) are also behind the legacy alias `VITE_FEATURE_ACCOUNT` and passed to the header as a slot, so `shared/` never imports `modules/`.
+- Unfinished areas (account, tools, blogs) are behind `VITE_FEATURES` (comma list, default none): flagged-off routes 404 and nothing links to them. Account controls (login / user menu) are also behind the legacy alias `VITE_FEATURE_ACCOUNT` and passed to the header as a slot, so `shared/` never imports `modules/`.

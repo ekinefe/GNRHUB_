@@ -29,7 +29,7 @@ cp .env.example .env.local   # optional, only feature flags
 npm run dev                  # http://localhost:5173
 npm run lint && npm run test:unit && npm run build   # same checks CI runs
 ```
-Optional: `VITE_FEATURES=account,tools,blogs,dashboard` switches on unfinished areas (all off by default; off routes show the 404). `VITE_FEATURE_ACCOUNT=true` is an alias for `account`. `.dev.vars` (copy `.dev.vars.example`) holds the Resend key for the mail function.
+Optional: `VITE_FEATURES=account,tools,blogs` switches on unfinished areas (all off by default; off routes show the 404). `VITE_FEATURE_ACCOUNT=true` is an alias for `account`. `.dev.vars` (copy `.dev.vars.example`) holds the Resend key for the mail function.
 
 ## Access levels
 `guest` (no login) < `member` (logged in) < `admin` (`profiles.role = 'admin'`). Guard a route with `<ProtectedRoute minAccess="member" />`. Nothing is guarded yet.

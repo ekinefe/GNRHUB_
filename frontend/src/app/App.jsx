@@ -61,7 +61,6 @@ function App() {
           <Route path="/design" element={<DesignSystem />} />
 
           {/* Unfinished areas: flagged off, they fall through to the 404 route (see shared/config/features.js) */}
-          {features.dashboard && <Route path="/dashboard" element={<div className="p-12">Dashboard Coming Soon</div>} />}
           {features.blogs && <Route path="/blogs" element={<BlogsMain />} />}
           {features.tools && <Route path="/tools" element={<ToolsMain />} />}
           {features.tools && <Route path="/tools/brandbook" element={<BrandBookStart />} />}
