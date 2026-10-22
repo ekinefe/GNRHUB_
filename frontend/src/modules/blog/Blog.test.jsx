@@ -80,6 +80,12 @@ describe('BlogList', () => {
         expect(await screen.findByRole('link', { name: 'About cron' })).toBeInTheDocument()
     })
 
+    it('offers the RSS feed in the sidebar', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        list()
+        expect(await screen.findByRole('link', { name: /Subscribe with RSS/ })).toHaveAttribute('href', '/blog/feed.xml')
+    })
+
     it('can show the oldest posts first', async () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
         list()

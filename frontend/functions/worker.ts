@@ -1,5 +1,5 @@
 // Single Worker entry (GNR-16, docs/adr/0001-single-worker.md).
-// Only /api/* and /sitemap.xml reach this code (wrangler.jsonc run_worker_first); everything else
+// Only /api/*, /sitemap.xml and /blog/feed.xml reach this code (wrangler.jsonc run_worker_first); everything else
 // is served straight from the static assets. Routes are one file each under
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
 import { withSecurityHeaders } from './_lib/security-headers.ts';
@@ -11,6 +11,7 @@ import { contactRoute } from './modules/contact/api.ts';
 import { adminPostsRoute, adminPostRoute } from './modules/admin/posts.ts';
 import { postsRoute, postRoute } from './modules/blog/api.ts';
 import { sitemapRoute } from './modules/blog/sitemap.ts';
+import { feedRoute } from './modules/blog/feed.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -39,6 +40,7 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/posts' }), module: postsRoute },
   { pattern: new URLPattern({ pathname: '/api/posts/:slug' }), module: postRoute },
   { pattern: new URLPattern({ pathname: '/sitemap.xml' }), module: sitemapRoute },
+  { pattern: new URLPattern({ pathname: '/blog/feed.xml' }), module: feedRoute },
 ];
 
 const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>

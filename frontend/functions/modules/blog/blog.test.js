@@ -160,3 +160,31 @@ describe('sitemap.xml', () => {
     expect(xml).toContain('<loc>https://site.test/about</loc>')
   })
 })
+
+describe('RSS feed', () => {
+  it('lists public posts only, newest first, as RSS 2.0 with escaped text and a self link', async () => {
+    const cookie = await signIn()
+    await create(cookie, { title: 'Old & first <post>', summary: 'Tom & "Jerry"', status: 'public', tags: 'linux,cron' })
+    await create(cookie, { title: 'Second', status: 'public', tags: '' })
+    await create(cookie, { title: 'Draft one', status: 'draft' })
+    await create(cookie, { title: 'Private one', status: 'private' })
+    const res = await call('/blog/feed.xml', { origin: null })
+    expect(res.status).toBe(200)
+    expect(res.headers.get('Content-Type')).toContain('application/rss+xml')
+    const xml = await res.text()
+    expect(xml).toContain('<rss version="2.0"')
+    expect(xml).toContain('<atom:link href="https://site.test/blog/feed.xml" rel="self"')
+    expect(xml).toContain('<title>Old &amp; first &lt;post&gt;</title>')
+    expect(xml).toContain('<description>Tom &amp; &quot;Jerry&quot;</description>')
+    expect(xml).toContain('<link>https://site.test/blog/old-first-post</link>')
+    expect(xml).toContain('<category>cron</category>')
+    expect(xml.indexOf('Second')).toBeLessThan(xml.indexOf('Old &amp;'))
+    expect(xml).not.toContain('Draft one')
+    expect(xml).not.toContain('Private one')
+  })
+
+  it('answers 503 without a database, never an empty feed', async () => {
+    delete env.DB
+    expect((await call('/blog/feed.xml', { origin: null })).status).toBe(503)
+  })
+})
