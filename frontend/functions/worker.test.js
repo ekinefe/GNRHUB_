@@ -49,11 +49,17 @@ describe('worker', () => {
     routes.pop()
   })
 
-  it('shows the real cause only on admin routes', async () => {
+  it('shows the real cause on admin routes only to a signed-in admin', async () => {
+    const { signSession, COOKIE_NAME } = await import('./_lib/session.ts')
+    const secret = 's'.repeat(40)
     routes.push({ pattern: new URLPattern({ pathname: '/api/admin/boom' }), module: { onRequestGet: () => { throw new Error('db down') } } })
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const res = await handle(req('/api/admin/boom'), env)
-    expect(await res.json()).toEqual({ error: 'Server error: db down' })
+    const e = { ...env, SESSION_SECRET: secret }
+    const anonymous = await handle(req('/api/admin/boom'), e)
+    expect(await anonymous.json()).toEqual({ error: 'Internal error.' })
+    const token = await signSession(secret, 'owner')
+    const signedIn = await handle(new Request('https://example.com/api/admin/boom', { headers: { Cookie: `${COOKIE_NAME}=${token}` } }), e)
+    expect(await signedIn.json()).toEqual({ error: 'Server error: db down' })
     spy.mockRestore()
     routes.pop()
   })

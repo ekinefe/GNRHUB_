@@ -14,4 +14,5 @@ D1 holds **content only** (ADR 0009): contact messages and blog posts. Admin log
 The binding has no `database_id` on purpose. The first `npx wrangler deploy` creates the database `gnrdigital` (answer yes if wrangler asks). If it does not, run `npx wrangler d1 create gnrdigital` and put the printed id in `wrangler.jsonc` as `database_id`. Then `npm run db:migrate:remote`. Never create or migrate it against an account that holds other projects' data without checking the name first.
 
 ## Tables
-Added with the features that need them (contact form, blog): see the migration files.
+- `login_attempts`: failed admin sign-ins per 15-minute window (keyed hash of the client, or `*` for all). Added in `0001`.
+- Contact messages and blog posts arrive with those features: see the migration files.
