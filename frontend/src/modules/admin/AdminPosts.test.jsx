@@ -74,7 +74,7 @@ describe('post editor', () => {
         expect(preview.querySelector('h2')).toHaveTextContent('Heading')
         expect(preview.querySelector('strong')).toHaveTextContent('bold')
         expect(container.querySelector('script')).toBeNull()
-        expect(preview.querySelector('a')).toBeNull()
+        expect(preview.querySelector('a[href^="javascript"]')).toBeNull()
     })
 
     it('creates a post and moves to its page; shows the server messages under bad fields', async () => {

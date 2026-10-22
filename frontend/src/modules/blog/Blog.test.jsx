@@ -1,6 +1,6 @@
 import React from 'react'
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import BlogList from './BlogList'
 import BlogPost from './BlogPost'
@@ -113,11 +113,30 @@ describe('BlogPost', () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { post }))
         const { container } = single('/blog/about-cron')
         expect(await screen.findByRole('heading', { level: 1, name: 'About cron' })).toBeInTheDocument()
-        expect(screen.getByRole('heading', { level: 2, name: 'Hello' })).toBeInTheDocument()
+        expect(screen.getByRole('heading', { level: 2, name: /^Hello/ })).toBeInTheDocument()
         expect(container.querySelector('script')).toBeNull()
         expect(container.querySelector('a[href^="javascript"]')).toBeNull()
         expect(window.hacked).toBeUndefined()
         expect(screen.getByRole('link', { name: '#linux' })).toHaveAttribute('href', '/blog?tag=linux')
+    })
+
+    it('shows the reading time, a table of contents for longer posts, and older and newer links', async () => {
+        const long = { ...post, body: '# One\n\ntext\n\n## Two\n\ntext\n\n## Three\n\n' + 'word '.repeat(450), older: { slug: 'old-one', title: 'An older post' }, newer: { slug: 'new-one', title: 'A newer post' } }
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { post: long }))
+        single('/blog/about-cron')
+        expect(await screen.findByText(/2 min read/)).toBeInTheDocument()
+        const toc = screen.getByRole('navigation', { name: 'Contents' })
+        expect(within(toc).getAllByRole('link').map((a) => a.getAttribute('href'))).toEqual(['#one', '#two', '#three'])
+        expect(screen.getByRole('link', { name: /An older post/ })).toHaveAttribute('href', '/blog/old-one')
+        expect(screen.getByRole('link', { name: /A newer post/ })).toHaveAttribute('href', '/blog/new-one')
+    })
+
+    it('has no table of contents for a short post and no neighbours block when there are none', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { post: { ...post, older: null, newer: null } }))
+        single('/blog/about-cron')
+        await screen.findByRole('heading', { level: 1, name: 'About cron' })
+        expect(screen.queryByRole('navigation', { name: 'Contents' })).toBeNull()
+        expect(screen.queryByRole('navigation', { name: 'More posts' })).toBeNull()
     })
 
     it('shows the 404 page for a post that does not exist (or is not public)', async () => {
