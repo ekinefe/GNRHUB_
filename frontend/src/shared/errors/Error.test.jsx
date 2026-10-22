@@ -20,6 +20,21 @@ describe('Error Pages Routing', () => {
             </MemoryRouter>
         )
         expect(screen.getByText(/ERR_PAGE_NOT_FOUND/i)).toBeInTheDocument()
+        expect(screen.getByText(/cd \/bad-url/)).toBeInTheDocument()
+    })
+
+    it('offers the closest real page for a typo, and none for nonsense', () => {
+        const page = (path) => render(
+            <MemoryRouter initialEntries={[path]}>
+                <Routes><Route path="*" element={<NotFound />} /></Routes>
+            </MemoryRouter>
+        )
+        const { unmount } = page('/projetcs')
+        expect(screen.getByRole('link', { name: /Did you mean \/projects\?/ })).toHaveAttribute('href', '/projects')
+        unmount()
+        page('/qqqqqq')
+        expect(screen.queryByRole('link', { name: /Did you mean/ })).toBeNull()
+        expect(screen.getByRole('link', { name: /Back to home/ })).toHaveAttribute('href', '/')
     })
 
     it('renders the Unauthorized (403) page', () => {
