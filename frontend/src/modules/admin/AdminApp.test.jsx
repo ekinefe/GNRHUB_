@@ -74,8 +74,9 @@ describe('AdminApp home', () => {
         expect(await screen.findByText(/unread messages, 3 in total/)).toBeInTheDocument()
         expect(screen.getByText(/4 public, 2 private, 1 draft/)).toBeInTheDocument()
         expect(screen.getByLabelText('2 unread')).toBeInTheDocument()
-        expect(screen.getByRole('link', { name: /Messages/ })).toHaveAttribute('href', '/admin/messages')
-        expect(screen.getByRole('link', { name: /Posts/ })).toHaveAttribute('href', '/admin/posts')
+        for (const link of screen.getAllByRole('link', { name: /Messages/ })) expect(link).toHaveAttribute('href', '/admin/messages')
+        for (const link of screen.getAllByRole('link', { name: /Posts/ })) expect(link).toHaveAttribute('href', '/admin/posts')
+        expect(screen.getAllByRole('link', { name: /Messages/ })).toHaveLength(2) // the menu and the card
     })
 })
 
