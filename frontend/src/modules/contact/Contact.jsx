@@ -13,7 +13,7 @@ const Contact = () => {
         <PageShell width="5xl">
             <section className="relative pt-24 pb-12">
                 <h1 className="text-4xl md:text-5xl font-mono font-bold text-white tracking-tighter mb-6">/CONTACT</h1>
-                <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed mb-8">
+                <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed mb-8 max-w-2xl">
                     Email is the best way to reach me. A good first message says who you are, what you are working on, and what you would like from me.
                 </p>
 

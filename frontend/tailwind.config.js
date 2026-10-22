@@ -33,12 +33,12 @@ export default {
                     alert: 'rgb(var(--cyber-alert) / <alpha-value>)',
                 },
             },
-            // Matches your 50px graph paper grid
+            // Graph paper: cell size and line colour are tokens in src/index.css (--grid-size, --grid-line)
             backgroundImage: {
-                'grid-pattern': "linear-gradient(to right, rgb(var(--cyber-border)) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--cyber-border)) 1px, transparent 1px)",
+                'grid-pattern': 'linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px)',
             },
             backgroundSize: {
-                'grid-50': '50px 50px',
+                grid: 'var(--grid-size) var(--grid-size)',
             },
             boxShadow: {
                 'neon-pink': 'var(--glow-pink)',

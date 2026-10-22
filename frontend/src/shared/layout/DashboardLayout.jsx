@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 const DashboardLayout = () => {
     return (
-        <div className="min-h-screen bg-cyber-black text-cyber-text selection:bg-cyber-pink selection:text-black">
+        <div className="min-h-screen text-cyber-text selection:bg-cyber-pink selection:text-black">
 
             {/* 1. The Persistent Header */}
             <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-toast focus:bg-cyber-pink focus:text-black focus:px-4 focus:py-2 font-mono text-sm">
