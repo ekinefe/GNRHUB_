@@ -13,8 +13,8 @@ Personal portfolio of Ekin Efe Gungor ("GNR" from the surname, "digital" from wh
 | Area | Today | Planned |
 |---|---|---|
 | Hosting | Cloudflare Pages (static site + Functions) | One Cloudflare Worker (GNR-16) |
-| Data and auth | None yet; sign-in is a stub (`modules/auth/authClient.js`), hidden at launch | D1 + Better Auth (GNR-132, GNR-136) |
-| Launch pages | Home, About, Projects, Contact, Colophon, Privacy, Terms | Blogs and accounts are flagged off and may be removed |
+| Data | D1 is set up but unused (no accounts, ADR 0007) | Only if a feature needs it |
+| Launch pages | Home, About, Projects, Contact, Colophon, Privacy, Terms | Nothing else planned; tools are separate projects |
 
 ## Quickstart
 
@@ -23,7 +23,7 @@ Needs Node 24 (`nvm use` reads `.nvmrc`).
 ```bash
 cd frontend
 npm install
-cp .env.example .env.local     # optional, only feature flags
+cp .env.example .env.local     # optional, nothing is required
 npm run dev                    # http://localhost:5173
 ```
 
@@ -41,8 +41,6 @@ Build-time variables (Vite, `frontend/.env.local`, never committed):
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `VITE_FEATURES` | Comma list that switches on unfinished areas: `account`, `blogs`. Off routes show the 404. | none |
-| `VITE_FEATURE_ACCOUNT` | Legacy alias for `account` | `false` |
 | `VITE_TURNSTILE_SITE_KEY` | Public Turnstile key; the widget renders only when set | unset |
 
 Server variables (Functions; locally in `frontend/.dev.vars`, copy `.dev.vars.example`; in production set as secrets):
@@ -99,6 +97,6 @@ GNRdigital_v2/
 Decisions (GNR-141): the app folder stays `frontend/` (no rename to `web/`; it would conflict with every open branch and buy nothing), and the future Worker is named `gnrdigital`. CI runs from `frontend/` (`cd frontend`, cache key `frontend/package-lock.json`), so keep those paths in `gatekeeper.yml` in sync with any move.
 
 Inside the app folder:
-- `frontend/src/modules/<feature>`: one folder per feature (auth, blog, portfolio, legal, contact, colophon)
+- `frontend/src/modules/<feature>`: one folder per feature (portfolio, legal, contact, colophon)
 - `frontend/src/shared`: UI, layout, config, content and helpers any module may use
 - `frontend/functions`: Pages Functions (`api/` route files, logic in `modules/`)

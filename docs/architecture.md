@@ -6,39 +6,29 @@ Small team, one app, no tenants. Code is organised by feature module, not by fil
 frontend/src/
   app/            App.jsx (routes) - wires modules together
   modules/
-    auth/         login, register, AuthContext, ProtectedRoute, access levels
-    blog/         blog list
     portfolio/    home, about, projects, design system
     legal/        privacy, terms
     contact/      mailto + copy-email page
-    registry.js   one entry per product: key, path, minimum access level
-  shared/         ui, animations, layout, errors, config/brand
+    colophon/     how the site is built
+  shared/         ui, animations, layout, errors, commands, config, content, lib
 frontend/functions/
-  api/            Cloudflare Pages route files only (thin re-exports)
-  modules/<key>/  backend logic for a module
+  worker.ts       the Worker entry (routing table, error handling, security headers)
+  _lib/           shared server helpers
 ```
+
+GNRdigital is only the portfolio (ADR 0007). Brandbook Maker, CV Maker and Gym Tracker are separate projects; this site links to them from `shared/content/projects.js`.
 
 ## Repo layout
 One app folder, `frontend/`, holds both the SPA (`src/`) and the backend (`functions/`). `docs/` and `.github/workflows/` sit at the repo root. The folder was deliberately not renamed to `web/` (GNR-141), and the Worker will be called `gnrdigital`. See the README for the tree.
 
-## Access levels
-| Level  | Who                         | How decided                       |
-|--------|-----------------------------|-----------------------------------|
-| guest  | free, no login              | no session                        |
-| member | free, logged in             | session, `profiles.role != admin` |
-| admin  | owner                       | `profiles.role = 'admin'`         |
-
-`modules/auth/access.js` has `canAccess(user, level)`. Guard routes with
-`<ProtectedRoute minAccess="member" />`. Set each module's level in `modules/registry.js`.
-
 ## Rules (enforced by `src/architecture.test.js`)
 - `shared/` never imports from `modules/` or `app/`.
-- A module imports only `shared/`, itself, and platform modules (`auth`). To share more, move it to `shared/`.
+- A module imports only `shared/` and itself. To share more, move it to `shared/`.
 
-## Adding a product
-1. `src/modules/<key>/` for the UI, `functions/modules/<key>/` for the backend.
-2. Entry in `modules/registry.js`, route in `app/App.jsx`.
-3. A `functions/api/<name>.js` file that re-exports the handler (Pages needs it for the URL).
+## Adding a page
+1. A folder in `src/modules/<name>/` (or a file in an existing one) and a lazy route in `app/App.jsx`.
+2. Add it to the nav in `shared/layout/Header.jsx` / `Footer.jsx` and to `shared/config/seo.js` if it should be in the sitemap.
+3. Anything that needs a backend goes in `functions/` and is routed in `functions/worker.ts`; it must be off by default if it can send, write or cost money.
 
 ## Motion rules
 - Ask `shared/config/effects.js` (`effectsReduced()` / `useReducedEffects()`), never check `prefers-reduced-motion` yourself. It combines the OS setting with the footer "Reduce effects" switch.
@@ -50,4 +40,3 @@ One app folder, `frontend/`, holds both the SPA (`src/`) and the backend (`funct
 ## Accessibility notes
 - Text contrast on the dark background (WCAG AA needs 4.5:1): muted 5.7, pink 5.9, offline red 5.6, cyan 14.8, amber 11.7. Borders are decorative (1.6) and never carry meaning alone.
 - `DashboardLayout` has a skip link to `#main`; the header toggle is labelled and reports `aria-expanded`; the mobile menu closes on Escape and route change.
-- Unfinished areas (account, blogs) are behind `VITE_FEATURES` (comma list, default none): flagged-off routes 404 and nothing links to them. Account controls (login / user menu) are also behind the legacy alias `VITE_FEATURE_ACCOUNT` and passed to the header as a slot, so `shared/` never imports `modules/`.

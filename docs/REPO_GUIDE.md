@@ -9,7 +9,7 @@ A personal portfolio site (`frontend/`) that is only the portfolio. Brandbook Ma
 | Path | What it is |
 |---|---|
 | `frontend/src/app/` | `App.jsx`: the route table. Every page except Home loads on demand. |
-| `frontend/src/modules/<feature>/` | One folder per feature: `auth`, `blog`, `portfolio` (Home, About, Projects, /design), `legal`, `contact`, `colophon`. |
+| `frontend/src/modules/<feature>/` | One folder per feature: `portfolio` (Home, About, Projects, /design), `legal`, `contact`, `colophon`. |
 | `frontend/src/shared/` | Things any module may use: `ui` (buttons, inputs, modal...), `layout` (header, footer, page shell), `errors`, `animations`, `catalog` (searchable list page), `hooks`, `config` (brand, tokens, profile, effects, features). |
 | `frontend/functions/` | Cloudflare Pages Functions: `api/*` are the URL files, the logic is in `modules/<key>/`. Not tracked in git yet. |
 | `frontend/public/` | Favicon and web manifest. |
@@ -18,21 +18,18 @@ A personal portfolio site (`frontend/`) that is only the portfolio. Brandbook Ma
 | `database/`, `microservices/` | Empty. Planned only. |
 | `graphify-out/` | A graph of the code for AI tools (ignored by git; refresh with `graphify update .`). |
 
-**Rules that a test enforces:** `shared/` never imports `modules/` or `app/`; a module imports only `shared/`, itself, or `auth`. Colors are never hard-coded: use the Tailwind tokens (`text-cyber-pink`).
+**Rules that a test enforces:** `shared/` never imports `modules/` or `app/`; a module imports only `shared/` or itself. Colors are never hard-coded: use the Tailwind tokens (`text-cyber-pink`).
 
 ## Run it
 ```bash
 cd frontend
 nvm use                      # Node 24 (.nvmrc)
 npm install
-cp .env.example .env.local   # optional, only feature flags
+cp .env.example .env.local   # optional, nothing is required
 npm run dev                  # http://localhost:5173
 npm run lint && npm run test:unit && npm run build   # same checks CI runs
 ```
-Optional: `VITE_FEATURES=account,blogs` switches on unfinished areas (all off by default; off routes show the 404). `VITE_FEATURE_ACCOUNT=true` is an alias for `account`. `.dev.vars` (copy `.dev.vars.example`) holds optional server secrets.
-
-## Access levels
-`guest` (no login) < `member` (logged in) < `admin` (`profiles.role = 'admin'`). Guard a route with `<ProtectedRoute minAccess="member" />`. Nothing is guarded yet.
+Optional: `.dev.vars` (copy `.dev.vars.example`) holds optional server secrets.
 
 ## Decisions
 Architecture decisions are recorded in [adr/](adr/README.md).
@@ -48,4 +45,3 @@ Architecture decisions are recorded in [adr/](adr/README.md).
 See [README.md](../README.md) (Deploy and Rollback). Hosting moves from Pages to a Worker in GNR-16.
 
 ## Still open / easy to trip on
-- Sign-in is a stub behind `modules/auth/authClient.js`; Better Auth + D1 plugs in there later (GNR-136).
