@@ -8,6 +8,7 @@ import Textarea from '@/shared/ui/Textarea';
 import Markdown from '@/shared/lib/markdown/Markdown';
 import { slugify } from '@/shared/lib/slugify';
 import { adminFetch } from './api';
+import { useAdmin } from './AdminContext';
 
 const EMPTY = { title: '', slug: '', summary: '', tags: '', status: 'draft', body: '' };
 const STATUS_OPTIONS = [
@@ -21,6 +22,7 @@ const PostEditor = () => {
     const { id } = useParams();
     const isNew = id === undefined;
     const navigate = useNavigate();
+    const { refreshSummary } = useAdmin();
     const [values, setValues] = useState(EMPTY);
     const [slugTouched, setSlugTouched] = useState(!isNew);
     const [errors, setErrors] = useState({});
@@ -57,6 +59,7 @@ const PostEditor = () => {
         const res = await adminFetch(isNew ? '/api/admin/posts' : `/api/admin/posts/${id}`, { method: 'POST', body: isNew ? values : { action: 'save', ...values } });
         setSaving(false);
         if (res.ok) {
+            refreshSummary();
             if (isNew && res.data?.id) navigate(`/admin/posts/${res.data.id}`, { replace: true });
             else setMessage({ kind: 'ok', text: 'Saved.' });
             return;
@@ -67,7 +70,7 @@ const PostEditor = () => {
 
     const remove = async () => {
         const res = await adminFetch(`/api/admin/posts/${id}`, { method: 'POST', body: { action: 'delete' } });
-        if (res.ok) navigate('/admin/posts', { replace: true });
+        if (res.ok) { refreshSummary(); navigate('/admin/posts', { replace: true }); }
         else { setConfirming(false); setMessage({ kind: 'error', text: 'Could not delete. Try again.' }); }
     };
 

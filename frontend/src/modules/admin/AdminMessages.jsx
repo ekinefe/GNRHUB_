@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Mail, MailOpen, Trash2 } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import { adminFetch } from './api';
+import { useAdmin } from './AdminContext';
 
 const when = (seconds) => new Date(seconds * 1000).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
 
@@ -12,6 +13,8 @@ const AdminMessages = () => {
     const [open, setOpen] = useState(null);
     const [confirming, setConfirming] = useState(null);
     const [problem, setProblem] = useState('');
+    const [onlyUnread, setOnlyUnread] = useState(false);
+    const { refreshSummary } = useAdmin();
 
     const load = useCallback(async () => {
         const res = await adminFetch('/api/admin/messages');
@@ -27,12 +30,15 @@ const AdminMessages = () => {
         setConfirming(null);
         if (action === 'delete' && open === id) setOpen(null);
         await load();
+        refreshSummary();
     };
 
     const toggle = (m) => {
         setOpen(open === m.id ? null : m.id);
         if (!m.read && open !== m.id) act(m.id, 'read');
     };
+
+    const visible = onlyUnread ? state.messages.filter((m) => !m.read) : state.messages;
 
     if (state.status === 'loading') return <p role="status" className="font-mono text-cyber-muted">Loading messages...</p>;
     if (state.status === 'error') return <p role="alert" className="font-mono text-cyber-offline">Could not load the messages. The database may not be set up yet (docs/database.md).</p>;
@@ -41,9 +47,17 @@ const AdminMessages = () => {
         <section aria-labelledby="messages-title" className="space-y-4">
             <h2 id="messages-title" className="font-mono text-xl text-white">Messages <span className="text-cyber-muted text-sm">({state.unread} unread)</span></h2>
             {problem && <p role="alert" className="font-mono text-sm text-cyber-offline">{problem}</p>}
+            {state.messages.length > 0 && (
+                <div className="flex gap-2 font-mono text-xs">
+                    {[[false, 'All'], [true, 'Unread only']].map(([value, label]) => (
+                        <button key={label} type="button" aria-pressed={onlyUnread === value} onClick={() => setOnlyUnread(value)} className={`px-2 py-1 border transition-colors ${onlyUnread === value ? 'border-cyber-pink text-cyber-pink bg-cyber-pink/5' : 'border-cyber-border text-cyber-muted hover:border-cyber-text'}`}>{label}</button>
+                    ))}
+                </div>
+            )}
             {state.messages.length === 0 && <p className="font-mono text-cyber-muted">No messages yet. They appear here when someone uses the contact form.</p>}
+            {state.messages.length > 0 && visible.length === 0 && <p className="font-mono text-cyber-muted">No unread messages.</p>}
             <ul className="divide-y divide-cyber-border border border-cyber-border">
-                {state.messages.map((m) => (
+                {visible.map((m) => (
                     <li key={m.id} className={m.read ? '' : 'bg-cyber-panel'}>
                         <button type="button" onClick={() => toggle(m)} aria-expanded={open === m.id} className="w-full text-left px-4 py-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">
                             <span className={`font-mono text-sm ${m.read ? 'text-cyber-muted' : 'text-white font-bold'}`}>{m.name}</span>

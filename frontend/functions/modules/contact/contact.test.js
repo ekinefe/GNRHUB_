@@ -130,3 +130,23 @@ describe('admin messages', () => {
     expect(await rows()).toEqual([])
   })
 })
+
+describe('admin summary', () => {
+  it('needs a session, then counts unread messages and posts by status', async () => {
+    expect((await call('/api/admin/summary', { method: 'GET', origin: null })).status).toBe(401)
+    await call('/api/contact', { body: msg })
+    await call('/api/contact', { body: msg, ip: '203.0.113.9' })
+    const cookie = await signIn()
+    const post = (status) => call('/api/admin/posts', { cookie, body: { title: `T ${status} ${Math.random()}`, status, body: '' } })
+    await post('draft'); await post('public'); await post('public'); await post('private')
+    await call('/api/admin/messages/1', { cookie, body: { action: 'read' } })
+    const res = await call('/api/admin/summary', { method: 'GET', cookie, origin: null })
+    expect(res.headers.get('Cache-Control')).toBe('no-store')
+    expect(await res.json()).toEqual({ messages: { total: 2, unread: 1 }, posts: { draft: 1, private: 1, public: 2 } })
+  })
+
+  it('is all zeros on an empty database', async () => {
+    const cookie = await signIn()
+    expect(await (await call('/api/admin/summary', { method: 'GET', cookie, origin: null })).json()).toEqual({ messages: { total: 0, unread: 0 }, posts: { draft: 0, private: 0, public: 0 } })
+  })
+})
