@@ -37,7 +37,7 @@ switch (target) {
     break
   case 'migrate-preview':
     await confirm(DATABASES.dev)
-    run(['d1', 'migrations', 'apply', 'DB', '--remote', '--preview'])
+    run(['d1', 'migrations', 'apply', 'DB', '--remote', '--env', 'preview'])
     break
   case 'seed-local':
     run(['d1', 'execute', 'DB', '--local', '--file', 'db/seed.sql'])

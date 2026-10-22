@@ -6,6 +6,8 @@ import DashboardLayout from '@/shared/layout/DashboardLayout';
 import AccountMenu from '@/modules/auth/AccountMenu';
 import { features } from '@/shared/config/features';
 import ScrollToTop from '@/shared/layout/ScrollToTop';
+import CommandPalette from '@/shared/layout/CommandPalette';
+import { useAuth } from '@/modules/auth/AuthContext';
 import ErrorBoundary from '@/shared/errors/ErrorBoundary';
 import { ListSkeleton } from '@/shared/ui/Skeleton';
 
@@ -38,9 +40,11 @@ import Unauthorized from '@/shared/errors/Unauthorized';
 import ServerError from '@/shared/errors/ServerError';
 
 function App() {
+  const user = useAuth()?.user ?? null;
   return (
     <Router>
       <ScrollToTop />
+      <CommandPalette user={user} />
       <ErrorBoundary>
       <Suspense fallback={<div className="min-h-screen bg-cyber-black p-12"><ListSkeleton /></div>}>
       <Routes>

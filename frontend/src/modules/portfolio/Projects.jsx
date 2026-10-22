@@ -47,7 +47,7 @@ const AboutMe = () => {
                                 <a href={profile.github} target="_blank" rel="noreferrer">
                                     <CyberButton variant="ghost" icon={Github}>GitHub</CyberButton>
                                 </a>
-                                <a href={cv} target='_blank'>
+                                <a href={cv} target='_blank' rel="noreferrer">
                                     <CyberButton variant="ghost" icon={Download}>Download CV</CyberButton>
                                 </a>
                             </div>

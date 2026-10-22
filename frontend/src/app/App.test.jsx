@@ -2,19 +2,9 @@ import { render, screen, within } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import App from './App'
 
-// Heavy canvas animation and the real Supabase client (needs env vars that CI does not have)
-// are replaced; this test is about routing and layout, not those.
+// The heavy canvas animation is replaced; this test is about routing and layout, not that.
 vi.mock('@/shared/animations/FuzzyText', () => ({
     default: ({ children }) => <div data-testid="mock-fuzzy">{children}</div>
-}))
-vi.mock('@/shared/lib/supabase', () => ({
-    supabase: {
-        auth: {
-            getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
-            onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
-        },
-        rpc: vi.fn(),
-    },
 }))
 
 describe('App Routing System', () => {

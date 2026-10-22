@@ -12,7 +12,7 @@ Personal portfolio of Ekin Efe Gungor ("GNR" from the surname, "digital" from wh
 | Area | Today | Planned |
 |---|---|---|
 | Hosting | Cloudflare Pages (static site + Functions) | One Cloudflare Worker (GNR-16) |
-| Data and auth | Supabase sign-in, hidden at launch | D1 + Better Auth (GNR-132, GNR-136) |
+| Data and auth | None yet; sign-in is a stub (`modules/auth/authClient.js`), hidden at launch | D1 + Better Auth (GNR-132, GNR-136) |
 | Email | Off (`MAIL_ENABLED` unset) | Rebuilt behind auth in the mail sprint |
 | Launch pages | Home, About, Projects, Contact, Colophon, Privacy, Terms | Tools, Blogs, accounts switch on per release |
 
@@ -23,12 +23,9 @@ Needs Node 24 (`nvm use` reads `.nvmrc`).
 ```bash
 cd frontend
 npm install
-cp .env.example .env.local     # then fill the two Supabase values, see the note below
+cp .env.example .env.local     # optional, only feature flags
 npm run dev                    # http://localhost:5173
 ```
-
-> **Supabase values are required even though sign-in is hidden.** The client is created when the app loads and throws on empty values, which gives a blank page. Until Supabase is removed (GNR-135), any well-formed placeholder works while `VITE_FEATURES` does not include `account`:
-> `VITE_SUPABASE_URL=https://placeholder.supabase.co` and `VITE_SUPABASE_ANON_KEY=placeholder`.
 
 ### Checks (CI runs the same)
 ```bash
@@ -44,10 +41,10 @@ Build-time variables (Vite, `frontend/.env.local`, never committed):
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` | Supabase client (see note above) | required |
 | `VITE_FEATURES` | Comma list that switches on unfinished areas: `account`, `tools`, `blogs`. Off routes show the 404. | none |
 | `VITE_FEATURE_ACCOUNT` | Legacy alias for `account` | `false` |
 | `VITE_FEATURE_MAIL` | Shows "email report" in the brand book editor | `false` |
+| `VITE_TURNSTILE_SITE_KEY` | Public Turnstile key; the widget renders only when set | unset |
 
 Server variables (Functions; locally in `frontend/.dev.vars`, copy `.dev.vars.example`; in production set as secrets):
 
@@ -55,16 +52,18 @@ Server variables (Functions; locally in `frontend/.dev.vars`, copy `.dev.vars.ex
 |---|---|---|
 | `MAIL_ENABLED` | `true` lets `/api/send-brandbook` run. Otherwise it returns 501. | unset (off) |
 | `RESEND_API_KEY` | Resend key, only used when mail is enabled | unset |
+| `RATE_LIMIT_SALT` | Salts the IP hash for per-route rate limits (429 + Retry-After). Limiter is off without it | unset (off) |
+| `TURNSTILE_SECRET` | Server-side Turnstile check for public forms. Skipped without it | unset (off) |
 
-Bindings: `DB` (D1) and `ASSETS` arrive with the Worker (GNR-16, GNR-132; see `docs/database.md`). Planned secrets (`BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `GOOGLE_CLIENT_ID`/`SECRET`, `TURNSTILE_SECRET`) are listed, commented out, in `frontend/.dev.vars.example`. Third-party API keys are not env vars; they will live encrypted in D1. No secret belongs in `wrangler.jsonc` or the repo.
+Bindings in `frontend/wrangler.jsonc`: `DB` (D1: `gnrdigital-prod`; the `preview` environment binds `gnrdigital-dev`) and `ASSETS` (see `docs/database.md`). Planned secrets (`BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `GOOGLE_CLIENT_ID`/`SECRET`, `TURNSTILE_SECRET`) are listed, commented out, in `frontend/.dev.vars.example`. Third-party API keys are not env vars; they will live encrypted in D1. No secret belongs in `wrangler.jsonc` or the repo.
 
 ## Architecture (now)
 
 ```
-browser --> Cloudflare Pages --> static site (Vite build, React SPA)
+browser --> Cloudflare Worker --> static site (Vite build, React SPA)
                 |
-                +--> /api/*  Pages Functions (frontend/functions)
-                +--> Supabase (sign-in only, hidden at launch)
+                +--> /api/*  Worker routes (frontend/functions)
+                +--> D1 (bindings and migrations ready, no tables yet)
 ```
 
 The site is a client-rendered SPA. Every page except Home loads on demand. Content (profile, projects, tools) is plain data in `frontend/src/shared/content/`. Fonts are self-hosted and the site sets no cookies (see the Privacy page). Next: a single Worker serving the SPA and the API, with D1 and Better Auth, as tickets GNR-16, GNR-132 and GNR-136 describe.
@@ -75,7 +74,7 @@ The Pages project is **not created yet**; GNR-16 replaces it with a Worker. Unti
 
 1. Cloudflare dashboard, Workers & Pages, create a Pages project named `gnrdigital`, connect the GitHub repo.
 2. Build settings: root directory `frontend`, build command `npm run build`, output directory `dist`, environment variable `NODE_VERSION=24`.
-3. Set the production variables from the tables above (at minimum the two Supabase values, or the app loads blank).
+3. Set the production variables from the tables above (none are required for the static launch).
 4. Push to the production branch. Pages builds and publishes. Pull requests get preview URLs.
 
 Do not run any remote or production command (`wrangler`, database migrations) without the owner's confirmation. Budget is $0.

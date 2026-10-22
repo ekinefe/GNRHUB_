@@ -11,6 +11,10 @@ RESEND_API_KEY=
 # BETTER_AUTH_URL=http://localhost:8787
 # GOOGLE_CLIENT_ID=
 # GOOGLE_CLIENT_SECRET=
+
+# Rate limiting is off until this is set (any long random string; salts the IP hash)
+# RATE_LIMIT_SALT=
+# Turnstile checks are skipped until this is set (GNR-133)
 # TURNSTILE_SECRET=
 
 # Third-party API keys (mail, AI) are NOT env vars: they will be typed into the admin panel

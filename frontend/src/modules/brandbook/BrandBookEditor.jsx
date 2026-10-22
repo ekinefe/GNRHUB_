@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ColorChecks from './ColorChecks';
 import { brand } from '@/shared/config/brand';
 import { features } from '@/shared/config/features';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
@@ -350,6 +351,7 @@ const BrandBookEditor = () => {
                                 </div>
                             ))}
                         </div>
+                        <ColorChecks colors={config} />
                         <label className="font-mono text-xs text-cyber-muted block mt-4 mb-2">Border Radius</label>
                         <div className="flex gap-2">
                             {[{ label: 'Sharp', val: '0px' }, { label: 'Soft', val: '8px' }, { label: 'Round', val: '24px' }].map(btn => (
