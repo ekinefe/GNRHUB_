@@ -31,7 +31,12 @@ const Block = ({ block }) => {
     switch (block.type) {
         case 'heading': {
             const Tag = `h${Math.min(block.level + 1, 6)}`; // the page title is the h1
-            return <Tag className={`${HEADING[block.level]} font-bold text-white`}><Inline nodes={block.children} /></Tag>;
+            return (
+                <Tag id={block.id} className={`${HEADING[block.level]} font-bold text-white scroll-mt-24 group`}>
+                    <Inline nodes={block.children} />
+                    {block.id && <a href={`#${block.id}`} aria-label="Link to this section" className="ml-2 text-cyber-muted opacity-0 group-hover:opacity-100 focus:opacity-100 hover:text-cyber-pink">#</a>}
+                </Tag>
+            );
         }
         case 'paragraph': return <p className="my-4"><Inline nodes={block.children} /></p>;
         case 'code': return <pre className="my-4 p-4 overflow-x-auto bg-cyber-panel border border-cyber-border text-sm text-cyber-text"><code>{block.value}</code></pre>;

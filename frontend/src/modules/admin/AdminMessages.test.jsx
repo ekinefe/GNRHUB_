@@ -32,6 +32,17 @@ describe('AdminMessages', () => {
     expect(JSON.parse(fetchMock.mock.calls[1][1].body)).toEqual({ action: 'read' })
   })
 
+  it('can show only the unread messages', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { messages: [m1, m2], unread: 1 }))
+    render(<AdminMessages />)
+    await screen.findByText('Bo')
+    fireEvent.click(screen.getByRole('button', { name: 'Unread only' }))
+    expect(screen.getByText('Bo')).toBeInTheDocument()
+    expect(screen.queryByText('Ada')).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: 'All' }))
+    expect(screen.getByText('Ada')).toBeInTheDocument()
+  })
+
   it('asks before deleting, then deletes', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch')
       .mockResolvedValueOnce(reply(200, { messages: [m2], unread: 0 }))

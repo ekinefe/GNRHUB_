@@ -9,6 +9,7 @@ import { loginRoute, logoutRoute, meRoute } from './modules/admin/auth.ts';
 import { messagesRoute, messageRoute } from './modules/admin/messages.ts';
 import { contactRoute } from './modules/contact/api.ts';
 import { adminPostsRoute, adminPostRoute } from './modules/admin/posts.ts';
+import { summaryRoute } from './modules/admin/summary.ts';
 import { postsRoute, postRoute } from './modules/blog/api.ts';
 import { sitemapRoute } from './modules/blog/sitemap.ts';
 import { feedRoute } from './modules/blog/feed.ts';
@@ -34,6 +35,7 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/admin/login' }), module: loginRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/logout' }), module: logoutRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/me' }), module: meRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/summary' }), module: summaryRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/messages' }), module: messagesRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/messages/:id' }), module: messageRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/posts' }), module: adminPostsRoute },

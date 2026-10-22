@@ -63,6 +63,40 @@ describe('<Markdown>', () => {
     })
     it('starts headings at h2 because the page title is the h1', () => {
         render(<Markdown source="# Title" />)
-        expect(screen.getByRole('heading', { level: 2, name: 'Title' })).toBeInTheDocument()
+        expect(screen.getByRole('heading', { level: 2, name: /^Title/ })).toBeInTheDocument()
+    })
+})
+
+describe('headings, contents and reading time', () => {
+    it('gives each heading a unique id and lists them for a table of contents', async () => {
+        const { parseMarkdown, headingsOf } = await import('./parse')
+        const md = '# Why Cron\n\n## Notes\n\ntext\n\n## Notes\n\n### Şifreleme ve Güvenlik\n\n#### deep'
+        expect(parseMarkdown(md).filter((b) => b.type === 'heading').map((b) => b.id)).toEqual(['why-cron', 'notes', 'notes-2', 'sifreleme-ve-guvenlik', 'deep'])
+        expect(headingsOf(md)).toEqual([
+            { id: 'why-cron', level: 1, text: 'Why Cron' },
+            { id: 'notes', level: 2, text: 'Notes' },
+            { id: 'notes-2', level: 2, text: 'Notes' },
+            { id: 'sifreleme-ve-guvenlik', level: 3, text: 'Şifreleme ve Güvenlik' },
+        ])
+    })
+
+    it('takes the id from the text only, not from markup, and falls back for symbols', async () => {
+        const { parseMarkdown } = await import('./parse')
+        const ids = parseMarkdown('## **Bold** and `code`\n\n## !!!\n\n## <script>').filter((b) => b.type === 'heading').map((b) => b.id)
+        expect(ids).toEqual(['bold-and-code', 'section', 'script'])
+    })
+
+    it('puts the id and a link to it on the rendered heading', () => {
+        render(<Markdown source="## Notes" />)
+        const h = screen.getByRole('heading', { level: 3, name: /Notes/ })
+        expect(h).toHaveAttribute('id', 'notes')
+        expect(screen.getByRole('link', { name: 'Link to this section' })).toHaveAttribute('href', '#notes')
+    })
+
+    it('estimates reading time at 200 words a minute, at least a minute, skipping code', async () => {
+        const { readingMinutes } = await import('./parse')
+        expect(readingMinutes('')).toBe(1)
+        expect(readingMinutes('word '.repeat(450))).toBe(2)
+        expect(readingMinutes('word '.repeat(100) + '```\n' + 'code '.repeat(5000) + '\n```')).toBe(1)
     })
 })

@@ -41,6 +41,9 @@ In Proton Authenticator (or any authenticator app) add the key by hand: account 
 
 To compare this setup with Better Auth, see ADR 0010.
 
+## Home
+`/admin` shows what needs attention: unread messages and posts by status (`GET /api/admin/summary`, which needs a session like every admin route), and the menu shows an unread badge on Messages. The posts list can be searched (forgiving, like the blog) and filtered by who can see a post; Messages can show unread only.
+
 ## Posts
 `/admin/posts` lists every post with its status; New post opens a plain form with a live preview. Fields: title, address (follows the title until you edit it), who can see it, summary, tags, and the text in Markdown (`# heading`, `**bold**`, `*italic*`, `` `code` ``, `[link](https://...)`, lists, `>` quotes, fenced code). Raw HTML is shown as text, never run, and only `http`, `https`, `mailto` and site links are kept.
 - **Draft:** only here. **Private:** your notebook, never returned by the public API. **Public:** listed on the blog. A draft or private post answers 404 on the public API, exactly like one that does not exist.

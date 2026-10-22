@@ -7,6 +7,7 @@ import { loginMessage } from './api'
 
 globalThis.IntersectionObserver ??= class { observe() {} unobserve() {} disconnect() {} }
 
+const SUMMARY = { messages: { total: 3, unread: 2 }, posts: { draft: 1, private: 2, public: 4 } }
 const reply = (status, body = {}, headers = {}) => new Response(JSON.stringify(body), { status, headers })
 const page = () => render(<MemoryRouter initialEntries={['/admin']}><AdminApp /></MemoryRouter>)
 afterEach(() => vi.restoreAllMocks())
@@ -37,6 +38,7 @@ describe('AdminApp', () => {
             .mockResolvedValueOnce(reply(401))                 // me
             .mockResolvedValueOnce(reply(200, { ok: true }))   // login
             .mockResolvedValueOnce(reply(200, { ok: true, user: 'owner' })) // me again
+            .mockResolvedValueOnce(reply(200, SUMMARY))         // summary
             .mockResolvedValueOnce(reply(200, { ok: true }))   // logout
         page()
         fireEvent.change(await screen.findByLabelText(/Username/), { target: { value: 'ekin' } })
@@ -49,7 +51,7 @@ describe('AdminApp', () => {
         expect(JSON.parse(init.body)).toEqual({ username: 'ekin', password: 'pw pw pw pw pw' })
         fireEvent.click(screen.getByRole('button', { name: /Sign out/ }))
         expect(await screen.findByRole('heading', { name: 'Admin sign-in' })).toBeInTheDocument()
-        expect(fetchMock.mock.calls[3][0]).toBe('/api/admin/logout')
+        expect(fetchMock.mock.calls[4][0]).toBe('/api/admin/logout')
     })
 
     it('says why a sign-in failed and keeps you on the form', async () => {
@@ -88,6 +90,16 @@ describe('AdminApp two-factor', () => {
         page()
         await screen.findByLabelText(/Username/)
         expect(screen.queryByLabelText(/Authentication code/)).toBeNull()
+describe('AdminApp home', () => {
+    it('shows what needs attention and an unread badge in the menu', async () => {
+        vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => (url === '/api/admin/me' ? reply(200, { ok: true, user: 'owner' }) : reply(200, SUMMARY)))
+        page()
+        expect(await screen.findByText(/unread messages, 3 in total/)).toBeInTheDocument()
+        expect(screen.getByText(/4 public, 2 private, 1 draft/)).toBeInTheDocument()
+        expect(screen.getByLabelText('2 unread')).toBeInTheDocument()
+        for (const link of screen.getAllByRole('link', { name: /Messages/ })) expect(link).toHaveAttribute('href', '/admin/messages')
+        for (const link of screen.getAllByRole('link', { name: /Posts/ })) expect(link).toHaveAttribute('href', '/admin/posts')
+        expect(screen.getAllByRole('link', { name: /Messages/ })).toHaveLength(2) // the menu and the card
     })
 })
 

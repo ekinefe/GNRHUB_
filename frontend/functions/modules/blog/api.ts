@@ -8,7 +8,8 @@ type D1 = {
   };
 };
 type Context = { request: Request; env: { DB?: unknown } };
-type Row = { slug: string; title: string; summary: string; tags: string; body?: string; publishedAt: number };
+type Row = { id?: number; slug: string; title: string; summary: string; tags: string; body?: string; publishedAt: number };
+type Neighbour = { slug: string; title: string };
 
 const json = (body: unknown, status = 200, extra: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', ...extra } });
@@ -33,12 +34,23 @@ async function one({ request, env }: Context): Promise<Response> {
   try { slug = decodeURIComponent(new URL(request.url).pathname.split('/').pop() ?? ''); } catch { return json({ error: 'Not found.' }, 404); }
   if (!SLUG_PATTERN.test(slug)) return json({ error: 'Not found.' }, 404);
   if (!env.DB) return json({ error: 'Posts are not available right now.' }, 503);
-  const post = await (env.DB as D1)
-    .prepare("SELECT slug, title, summary, tags, body, published_at AS publishedAt FROM posts WHERE slug = ? AND status = 'public'")
+  const db = env.DB as D1;
+  const post = await db
+    .prepare("SELECT id, slug, title, summary, tags, body, published_at AS publishedAt FROM posts WHERE slug = ? AND status = 'public'")
     .bind(slug)
     .first<Row>();
   if (!post) return json({ error: 'Not found.' }, 404);
-  return json({ post: { ...post, tags: tagsOf(post.tags) } }, 200, SHORT_CACHE);
+  // The public post published just before (older) and just after (newer) this one.
+  const older = await db
+    .prepare("SELECT slug, title FROM posts WHERE status = 'public' AND (published_at < ? OR (published_at = ? AND id < ?)) ORDER BY published_at DESC, id DESC LIMIT 1")
+    .bind(post.publishedAt, post.publishedAt, post.id)
+    .first<Neighbour>();
+  const newer = await db
+    .prepare("SELECT slug, title FROM posts WHERE status = 'public' AND (published_at > ? OR (published_at = ? AND id > ?)) ORDER BY published_at ASC, id ASC LIMIT 1")
+    .bind(post.publishedAt, post.publishedAt, post.id)
+    .first<Neighbour>();
+  const { id: _id, ...rest } = post;
+  return json({ post: { ...rest, tags: tagsOf(post.tags), older, newer } }, 200, SHORT_CACHE);
 }
 
 export const postsRoute = { onRequestGet: list };

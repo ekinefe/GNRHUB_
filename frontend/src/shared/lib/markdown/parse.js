@@ -47,7 +47,7 @@ export function parseInline(text) {
     return out;
 }
 
-export function parseMarkdown(source) {
+function parseBlocks(source) {
     const lines = String(source ?? '').replace(/\r\n?/g, '\n').split('\n');
     const blocks = [];
     let i = 0;
@@ -73,7 +73,7 @@ export function parseMarkdown(source) {
         if (/^>\s?/.test(line)) {
             const quote = [];
             while (i < lines.length && /^>\s?/.test(lines[i])) { quote.push(lines[i].replace(/^>\s?/, '')); i += 1; }
-            blocks.push({ type: 'quote', children: parseMarkdown(quote.join('\n')) });
+            blocks.push({ type: 'quote', children: parseBlocks(quote.join('\n')) });
             continue;
         }
         const item = /^\s*([-*]|\d+\.)\s+(.*)$/.exec(line);
@@ -94,4 +94,42 @@ export function parseMarkdown(source) {
         blocks.push({ type: 'paragraph', children: parseInline(para.join(' ')) });
     }
     return blocks;
+}
+
+/** The visible text of inline nodes (used for heading ids and the table of contents). */
+export function plainText(nodes) {
+    return nodes.map((n) => (n.type === 'text' || n.type === 'code' ? n.value : plainText(n.children ?? []))).join('');
+}
+
+/** A URL-safe id for a heading: lower case, letters and digits joined by hyphens (accents and Turkish letters folded). */
+export function headingSlug(text) {
+    return String(text)
+        .replace(/ı/g, 'i').replace(/İ/g, 'i').replace(/ß/g, 'ss').replace(/ł/g, 'l').replace(/Ł/g, 'l')
+        .normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60).replace(/-+$/g, '') || 'section';
+}
+
+/** Parses a post; every top-level heading gets a unique `id` (the second "Notes" becomes notes-2). */
+export function parseMarkdown(source) {
+    const blocks = parseBlocks(source);
+    const used = new Map();
+    for (const b of blocks) {
+        if (b.type !== 'heading') continue;
+        const base = headingSlug(plainText(b.children));
+        const n = (used.get(base) ?? 0) + 1;
+        used.set(base, n);
+        b.id = n === 1 ? base : `${base}-${n}`;
+    }
+    return blocks;
+}
+
+/** The headings to list in a table of contents: [{ id, level, text }]. */
+export function headingsOf(source, maxLevel = 3) {
+    return parseMarkdown(source).filter((b) => b.type === 'heading' && b.level <= maxLevel).map((b) => ({ id: b.id, level: b.level, text: plainText(b.children) }));
+}
+
+/** Minutes to read at about 200 words a minute, never less than 1. Code blocks are skipped. */
+export function readingMinutes(source) {
+    const words = String(source ?? '').replace(/```[\s\S]*?```/g, ' ').split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.round(words / 200));
 }
