@@ -67,7 +67,9 @@ async function logout({ request }: Context): Promise<Response> {
 
 async function me({ request, env }: Context): Promise<Response> {
   const session = await currentAdmin(request, env);
-  return session ? jsonNoStore({ ok: true, user: session.sub }) : jsonNoStore({ error: 'Not signed in.' }, 401);
+  // Answers 200 either way: "not signed in" is a normal answer here, not an error, so the page that asks does not
+  // fill the browser console with a failed request every time a visitor-less admin page loads.
+  return jsonNoStore(session ? { ok: true, user: session.sub } : { ok: false });
 }
 
 export const loginRoute = { onRequestPost: login };
