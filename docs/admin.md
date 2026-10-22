@@ -24,7 +24,7 @@ For `npm run dev:worker` put the same three names in `frontend/.dev.vars` (git-i
 ## How it behaves
 - `POST /api/admin/login` with `{ "username", "password" }` from the same site (the `Origin` header must match). Success sets an `HttpOnly; Secure; SameSite=Strict` cookie for 8 hours. A wrong username and a wrong password get the same answer.
 - 5 wrong guesses per client and 40 in total per 15 minutes lock the login (429 with `Retry-After`). The counter stores a keyed hash of the address, never the address. If a secret or the database is missing, the login is unavailable (503), never open.
-- `GET /api/admin/me` says whether you are signed in; `POST /api/admin/logout` clears the cookie.
+- `GET /api/admin/me` says whether you are signed in (`{ ok: true, user }` or `{ ok: false }`, both status 200, so a signed-out page load is not logged as an error); `POST /api/admin/logout` clears the cookie.
 - Every other admin route must start with `requireAdmin(request, env)` (and `{ changes: true }` when it changes data). No cookie, no answer.
 - Two-factor login with an authenticator app is planned, not built.
 

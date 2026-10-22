@@ -90,12 +90,13 @@ describe('POST /api/admin/login', () => {
 })
 
 describe('/api/admin/me and logout', () => {
-  it('/me is 401 with no cookie, a forged cookie or a cookie signed with another secret', async () => {
-    expect((await call('/api/admin/me', { method: 'GET', origin: null })).status).toBe(401)
-    expect((await call('/api/admin/me', { method: 'GET', origin: null, cookie: 'gnr_admin=a.b' })).status).toBe(401)
+  it('/me says ok:false (status 200, no error) with no cookie, a forged cookie or a cookie signed with another secret', async () => {
+    const anon = async (cookie) => { const r = await call('/api/admin/me', { method: 'GET', origin: null, cookie }); return [r.status, await r.json()] }
+    expect(await anon()).toEqual([200, { ok: false }])
+    expect(await anon('gnr_admin=a.b')).toEqual([200, { ok: false }])
     const other = await call('/api/admin/login', { body: good })
     env.SESSION_SECRET = 'z'.repeat(40)
-    expect((await call('/api/admin/me', { method: 'GET', origin: null, cookie: cookieOf(other) })).status).toBe(401)
+    expect(await anon(cookieOf(other))).toEqual([200, { ok: false }])
   })
 
   it('logout clears the cookie and needs the same origin', async () => {

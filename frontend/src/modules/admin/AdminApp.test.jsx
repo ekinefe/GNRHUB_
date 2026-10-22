@@ -20,6 +20,12 @@ describe('AdminApp', () => {
         expect(screen.getByLabelText(/Password/)).toHaveAttribute('autocomplete', 'current-password')
     })
 
+    it('shows the sign-in form when the server answers 200 with ok:false (the normal signed-out answer)', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { ok: false }))
+        page()
+        expect(await screen.findByRole('heading', { name: 'Admin sign-in' })).toBeInTheDocument()
+    })
+
     it('does not treat an HTML 200 (no API behind the page) as signed in', async () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('<!doctype html><div id="root"></div>', { status: 200, headers: { 'Content-Type': 'text/html' } }))
         page()

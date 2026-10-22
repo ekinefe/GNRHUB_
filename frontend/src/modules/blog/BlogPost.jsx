@@ -28,7 +28,7 @@ const BlogPost = () => {
                         <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">{post.title}</h1>
                         <p className="font-mono text-xs text-cyber-muted mb-10">
                             <time dateTime={new Date(post.publishedAt * 1000).toISOString()}>{formatDate(post.publishedAt)}</time>
-                            {post.tags.map((t) => <React.Fragment key={t}> · <Link to={`/blog?tag=${t}`} className="text-cyber-cyan hover:underline">#{t}</Link></React.Fragment>)}
+                            {post.tags.map((t) => <React.Fragment key={t}> · <Link to={`/blog?tag=${t}`} className="text-cyber-cyan underline underline-offset-4 decoration-cyber-cyan/40 hover:decoration-cyber-cyan">#{t}</Link></React.Fragment>)}
                         </p>
                         <Markdown source={post.body} />
                     </>
