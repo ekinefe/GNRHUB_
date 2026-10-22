@@ -10,6 +10,15 @@ describe('Contact', () => {
         expect(screen.getByRole('link', { name: /Send email/ })).toHaveAttribute('href', `mailto:${profile.email}`)
     })
 
+    it('links to GitHub and LinkedIn in a new tab safely', () => {
+        render(<Contact />)
+        for (const [name, href] of [[/GitHub/, profile.github], [/LinkedIn/, profile.linkedin]]) {
+            const link = screen.getByRole('link', { name })
+            expect(link).toHaveAttribute('href', href)
+            expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'))
+        }
+    })
+
     it('copies the address and confirms it', async () => {
         const writeText = vi.fn().mockResolvedValue()
         Object.assign(navigator, { clipboard: { writeText } })
