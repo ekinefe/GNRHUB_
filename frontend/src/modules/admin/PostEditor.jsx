@@ -91,7 +91,7 @@ const PostEditor = () => {
             <Input label="Tags" name="tags" value={values.tags} onChange={set('tags')} error={errors.tags} hint="Separated by commas, for example linux, cron, notes." />
 
             <div className="grid gap-6 lg:grid-cols-2">
-                <Textarea label="Text (Markdown)" name="body" rows={20} className="font-mono text-sm" value={values.body} onChange={set('body')} error={errors.body} hint="# Heading, **bold**, *italic*, `code`, [link](https://...), - lists, > quotes, ``` code blocks." />
+                <Textarea label="Text (Markdown)" name="body" rows={20} className="font-mono text-sm" value={values.body} onChange={set('body')} error={errors.body} hint="# Heading, **bold**, *italic*, `code`, [text](address), - lists, > quotes, ``` code blocks." />
                 <div>
                     <p className="font-mono text-xs text-cyber-muted mb-2">Preview</p>
                     <div className="border border-cyber-border p-4 min-h-[16rem] overflow-x-auto" data-testid="preview">
