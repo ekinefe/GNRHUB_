@@ -1,6 +1,6 @@
 # ADR 0008: Owner-only admin login (proposed)
 
-Status: proposed, nothing built. Date: 2026-10-22. Refines ADR 0007.
+Status: superseded by ADR 0009 (the owner chose a secret username and password over Better Auth, with 2FA later). Was: proposed, nothing built. Date: 2026-10-22. Refines ADR 0007.
 
 ## Context
 Visitors never sign in. The owner wants an admin panel later, and that panel needs a login. Cloudflare Access would do it with no code but needs a payment card on file, which the owner does not want to give. The owner prefers OAuth or Better Auth, and would like two-factor login (an authenticator app such as Proton Authenticator) at a later stage, not as a launch requirement.

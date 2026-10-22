@@ -14,6 +14,7 @@
     "db:migrate:local": "node scripts/db.mjs migrate-local",
     "db:migrate:remote": "node scripts/db.mjs migrate-remote",
     "db:query:local": "node scripts/db.mjs query-local",
+    "admin:secret": "node scripts/admin-secrets.mjs",
     "check:bundle": "node scripts/check-bundle.mjs",
     "changelog": "node scripts/changelog.mjs",
     "security:sweep": "node scripts/security-sweep.mjs",

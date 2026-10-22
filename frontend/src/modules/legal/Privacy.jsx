@@ -5,7 +5,7 @@ import { profile } from '@/shared/config/profile';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { LegalLayout, Section } from './LegalLayout';
 
-export const PRIVACY_UPDATED = '2026-10-16';
+export const PRIVACY_UPDATED = '2026-10-22';
 
 const Privacy = () => {
     useDocumentMeta({ title: 'Privacy', description: 'How this site handles your data: short version, nothing is collected.' });
@@ -25,7 +25,7 @@ const Privacy = () => {
             </Section>
 
             <Section n="03" title="COOKIES AND LOCAL STORAGE">
-                <p>This site sets no cookies. Your browser keeps one preference on your own device (the "Reduce effects" switch in the footer) and, if a page fails to load, a short-lived flag that limits automatic reload to one try. These stay in your browser, are never sent to a server, and are needed to make the site work as you asked, so no consent banner is needed.</p>
+                <p>This site sets no cookies. Your browser keeps your display choices on your own device (the "Reduce effects" switch, the accent colour and the scanlines switch in the footer) and, if a page fails to load, a short-lived flag that limits automatic reload to one try. These stay in your browser, are never sent to a server, and are needed to make the site work as you asked, so no consent banner is needed.</p>
             </Section>
 
             <Section n="04" title="FONTS AND THIRD PARTIES">

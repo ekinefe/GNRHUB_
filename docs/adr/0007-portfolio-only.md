@@ -1,6 +1,6 @@
 # ADR 0007: GNRdigital is only the portfolio; tools are separate projects
 
-Status: accepted. Date: 2026-10-22. Supersedes the direction of ADR 0003 (auth), which is now out of scope here.
+Status: accepted. Amended by ADR 0009: a one-owner admin panel, a contact form and a blog are part of this site. Date: 2026-10-22. Supersedes the direction of ADR 0003 (auth), which is now out of scope here.
 
 ## Context
 The repo grew toward a platform: tools (Brand Book Maker, CV Maker, Gym Tracker), accounts, roles and an admin area. The owner decided each tool is its own project with its own repo and Worker, and GNRdigital stays a personal portfolio. Gym Tracker is on hold (good open-source options exist).
