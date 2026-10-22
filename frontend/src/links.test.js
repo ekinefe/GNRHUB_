@@ -9,7 +9,8 @@ const walk = (dir) => readdirSync(dir).flatMap((n) => {
 })
 
 const routes = [...readFileSync('src/app/App.jsx', 'utf8').matchAll(/path="([^"]+)"/g)].map((m) => m[1])
-const known = (path) => routes.includes(path) || path === '/'
+// A route written "/admin/*" covers everything beneath it.
+const known = (path) => routes.includes(path) || path === '/' || routes.some((r) => r.endsWith('/*') && path.startsWith(r.slice(0, -1)))
 
 describe('internal links', () => {
     it('every literal to="/..." and navigate(\'/...\') points at a route', () => {
