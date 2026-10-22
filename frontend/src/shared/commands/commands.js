@@ -28,8 +28,9 @@ export function buildCommands({ navigate }) {
     ];
 
     const hidden = {
-        help: () => ['Commands: type to search, Enter to run, Esc to close.', 'Try: whoami, sudo. There may be a code.'],
+        help: () => ['Commands: type to search, Enter to run, Esc to close.', 'Try: whoami, sudo, coffee. There may be a code.'],
         whoami: () => ['guest (the site has no accounts)', `${profile.location.city}, ${profile.location.country}`],
+        coffee: () => ['Brewing...', 'Out of beans. Try again tomorrow.'],
         sudo: () => ['guest is not in the sudoers file. This incident will be reported.', '(it will not)'],
     };
     return { visible, hidden };

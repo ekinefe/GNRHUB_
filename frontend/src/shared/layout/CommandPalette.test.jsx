@@ -5,6 +5,7 @@ import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom'
 import CommandPalette from './CommandPalette'
 import { konamiTracker, KONAMI } from '@/shared/commands/commands'
 import { getAccent, setAccent, getScanlines, setScanlines } from '@/shared/config/theme'
+import { setReduceEffects } from '@/shared/config/effects'
 
 const Where = () => <p data-testid="where">{useLocation().pathname}</p>
 const page = (props) => render(
@@ -16,7 +17,7 @@ const page = (props) => render(
 const openIt = () => fireEvent.keyDown(document, { key: 'k', ctrlKey: true })
 const box = () => screen.getByRole('combobox', { name: 'Type a command' })
 
-beforeEach(() => { setAccent('pink'); setScanlines(false) })
+beforeEach(() => { setAccent('pink'); setScanlines(false); setReduceEffects(false) })
 
 describe('CommandPalette', () => {
     it('opens with Ctrl+K (and Cmd+K) from any route and closes on Escape', () => {
@@ -76,10 +77,34 @@ describe('CommandPalette', () => {
         expect(screen.getByRole('status')).toHaveTextContent('sudoers')
     })
 
-    it('the Konami code toggles scanlines outside inputs', () => {
+    it('the Konami code starts the matrix rain, and Esc ends it', () => {
         page()
         for (const key of KONAMI) fireEvent.keyDown(document.body, { key })
-        expect(getScanlines()).toBe(true)
+        expect(screen.getByTestId('matrix-rain')).toHaveAttribute('aria-hidden', 'true')
+        fireEvent.keyDown(document, { key: 'Escape' })
+        expect(screen.queryByTestId('matrix-rain')).toBeNull()
+    })
+
+    it('a click ends the rain too', () => {
+        page()
+        for (const key of KONAMI) fireEvent.keyDown(document.body, { key })
+        fireEvent.pointerDown(document.body)
+        expect(screen.queryByTestId('matrix-rain')).toBeNull()
+    })
+
+    it('no rain with Reduce effects on', () => {
+        setReduceEffects(true)
+        page()
+        for (const key of KONAMI) fireEvent.keyDown(document.body, { key })
+        expect(screen.queryByTestId('matrix-rain')).toBeNull()
+    })
+
+    it('has a hidden coffee command', () => {
+        page()
+        openIt()
+        fireEvent.change(box(), { target: { value: 'coffee' } })
+        fireEvent.keyDown(box(), { key: 'Enter' })
+        expect(screen.getByRole('status')).toHaveTextContent('Out of beans')
     })
 })
 

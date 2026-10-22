@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from '@/shared/ui/Modal';
 import { fuzzyFilter } from '@/shared/lib/fuzzy';
 import { buildCommands, konamiTracker } from '@/shared/commands/commands';
-import { setScanlines, getScanlines } from '@/shared/config/theme';
+import MatrixRain from '@/shared/animations/MatrixRain';
+import { effectsReduced } from '@/shared/config/effects';
 
 // Ctrl/Cmd+K from any route (GNR-49).
 const CommandPalette = () => {
@@ -12,6 +13,8 @@ const CommandPalette = () => {
     const [query, setQuery] = useState('');
     const [active, setActive] = useState(0);
     const [output, setOutput] = useState([]);
+    const [rain, setRain] = useState(false);
+    const endRain = useCallback(() => setRain(false), []);
     const input = useRef(null);
     const { visible, hidden } = useMemo(() => buildCommands({ navigate }), [navigate]);
 
@@ -27,7 +30,8 @@ const CommandPalette = () => {
                 return;
             }
             const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target?.tagName);
-            if (!typing && konami(e.key)) setScanlines(!getScanlines());
+            // The Konami code: a few seconds of falling characters. Never under "Reduce effects", never while typing.
+            if (!typing && konami(e.key) && !effectsReduced()) setRain(true);
         };
         document.addEventListener('keydown', onKey);
         return () => document.removeEventListener('keydown', onKey);
@@ -52,6 +56,7 @@ const CommandPalette = () => {
 
     return (
         <>
+            {rain && <MatrixRain onDone={endRain} />}
             <button type="button" onClick={() => setOpen(true)} className="sr-only focus:not-sr-only focus:fixed focus:bottom-2 focus:left-2 focus:z-toast focus:bg-cyber-panel focus:border focus:border-cyber-border focus:px-3 focus:py-1 font-mono text-xs text-cyber-text">
                 Open command palette
             </button>
