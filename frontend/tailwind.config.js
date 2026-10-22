@@ -33,13 +33,6 @@ export default {
                     alert: 'rgb(var(--cyber-alert) / <alpha-value>)',
                 },
             },
-            // Graph paper: cell size and line colour are tokens in src/index.css (--grid-size, --grid-line)
-            backgroundImage: {
-                'grid-pattern': 'linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px)',
-            },
-            backgroundSize: {
-                grid: 'var(--grid-size) var(--grid-size)',
-            },
             boxShadow: {
                 'neon-pink': 'var(--glow-pink)',
                 'neon-cyan': 'var(--glow-cyan)',
