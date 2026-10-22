@@ -3,16 +3,17 @@ import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Shared frame for Privacy and Terms: back link, themed header, numbered sections, last-updated line.
+// A plain document column (no card), narrow enough for comfortable line length.
 export const LegalLayout = ({ icon: Icon, iconClass, title, tag, updated, children }) => (
     <main id="main" className="min-h-screen p-4 py-12 flex justify-center">
-        <div className="max-w-4xl w-full">
+        <div className="max-w-3xl w-full">
             <div className="mb-6">
                 <Link to="/" className="flex items-center gap-2 text-cyber-muted hover:text-cyber-pink transition-colors font-mono text-sm w-fit">
                     <ArrowLeft className="w-4 h-4" /> RETURN_TO_PREVIOUS
                 </Link>
             </div>
 
-            <div className="bg-cyber-black border border-cyber-border p-8 shadow-2xl relative">
+            <div className="relative">
                 <div className="flex items-center gap-4 border-b border-cyber-border pb-6 mb-8">
                     <Icon className={`w-8 h-8 ${iconClass}`} />
                     <div>
