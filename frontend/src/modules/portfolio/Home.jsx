@@ -8,6 +8,7 @@ import PageShell from '@/shared/layout/PageShell';
 import AsciiDonut from '@/shared/animations/AsciiDonut';
 import { profile } from '@/shared/config/profile';
 import WarsawClock from './WarsawClock';
+import SkillsStrip from './SkillsStrip';
 import { featuredProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
@@ -223,21 +224,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                {/* === TECH STACK TICKER === */}
-                <section className="py-12 border-t border-cyber-border">
-                    <div className="text-center">
-                        <p className="font-mono text-cyber-muted text-xs tracking-[0.3em] mb-6">
-                            CORE_OPERATING_PROTOCOLS
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70">
-                            {['PYTHON', 'LINUX (FEDORA)', 'C/C++', 'REACT', 'SQL', 'BASH'].map((tech) => (
-                                <span key={tech} className="text-2xl font-sans font-bold text-cyber-text hover:text-cyber-pink transition-colors cursor-default">
-                                    {tech}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+                <SkillsStrip />
         </PageShell>
     );
 };
