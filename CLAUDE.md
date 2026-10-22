@@ -12,16 +12,16 @@ React + Vite + Tailwind (`frontend/`), a single Cloudflare Worker (`frontend/fun
 | `npm run lint` | ESLint, zero warnings allowed |
 | `npm run test:unit` | Vitest (also covers `functions/`) |
 | `npm run build` | Production build into `dist/` |
-| `npm run dev:worker` | Builds, then serves SPA + `/api` + local D1 with `wrangler dev --local` (http://localhost:8787) |
-| `npm run db:migrate:local` | Applies D1 migrations locally (see `docs/database.md`; remote scripts need typed confirmation) |
+| `npm run dev:worker` | Builds, then serves the site through the Worker with `wrangler dev --local` (http://localhost:8787) |
+| `npm run security:sweep` | Static security checks over tracked files (CI runs it) |
 | `npm run check:links` | Checks every external link in `src/` still resolves (needs network) |
 
 Lint, tests and build must pass before a PR. CI (`.github/workflows/gatekeeper.yml`) runs them.
 
 ## Hard rules
-- **Remote or destructive actions need confirmation first:** remote DB migrations, deploys, `wrangler` commands against production, force-push, deleting branches/files you did not create.
+- **Remote or destructive actions need confirmation first:** deploys, `wrangler` commands against production, force-push, deleting branches/files you did not create.
 - **Budget is $0** unless the owner says otherwise. No paid services, plans or dependencies on your own initiative.
-- **Secrets:** never edit or print `.env*`, `.dev.vars` or `AccountDetails.md`. Never put a secret in the repo. Server secrets go through `wrangler secret`; third-party API keys will be stored encrypted in D1, not in env vars.
+- **Secrets:** never edit or print `.env*`, `.dev.vars` or `AccountDetails.md`. Never put a secret in the repo. Server secrets go through `wrangler secret`.
 - **No new dependency** without asking.
 - **Branches:** one `feature/GNR-<n>` (or `hotfix/GNR-<n>`) branch per ticket, taken from the integration branch named in `docs/REPO_GUIDE.md`. Never commit to `main` or the integration branch. No git worktrees.
 - **Commits:** `type(scope): summary`, small and focused. Stage only the files of the task.

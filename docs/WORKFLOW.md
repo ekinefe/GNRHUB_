@@ -6,7 +6,7 @@ How a ticket goes from the board to the integration branch. (`docs/workflow_guid
 `feature/GNR-<n>` (or `hotfix/GNR-<n>`) → integration branch `feat/auth-and-BrandBookEditor` → `main` at launch. `develop` is retired. One branch per ticket, named for its ticket id; delete the branch (local and remote) after it merges. A stacked branch is only safe to delete once its parent has merged into the integration branch.
 
 ## 1. Pick a ticket
-Tickets live in the ticket tool (export: `GNR-export.json`). Work one at a time, highest priority first. Skip anything that depends on an unfinished ticket (for example D1 or Better Auth work).
+Tickets live in the ticket tool (export: `GNR-export.json`). Work one at a time, highest priority first. Skip anything that depends on an unfinished ticket or on a decision only the owner can make.
 
 ## 2. Branch
 ```bash
