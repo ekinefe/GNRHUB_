@@ -21,6 +21,8 @@ export interface Env {
   ADMIN_USERNAME?: string;
   ADMIN_PASSWORD_HASH?: string;
   SESSION_SECRET?: string;
+  // Optional: when set, sign-in also needs a code from an authenticator app (ADR 0010).
+  ADMIN_TOTP_SECRET?: string;
 }
 
 type Context = { request: Request; env: Env };

@@ -31,7 +31,7 @@ Last reviewed: 2026-10-16 (GNR-155). Ticked = verified, with how. Unticked = sti
 - [ ] Security headers grade A on the deployed site (needs hosting and GNR-26).
 
 ## Before pressing publish
-- [ ] Admin secrets set with `wrangler secret put` (`ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `SESSION_SECRET`), the database created and migrated (docs/admin.md, docs/database.md), and a sign-in tested.
+- [ ] Admin secrets set with `wrangler secret put` (`ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `SESSION_SECRET`, and optionally `ADMIN_TOTP_SECRET` for two-factor), the database created and migrated (docs/admin.md, docs/database.md), and a sign-in tested.
 - [ ] Brand URL and OG image URL point at the final domain (`brand.publicUrl`, GNR-17).
 - [ ] Repo and old name: `GNRHUB_` repo renamed (GNR-2).
 - [x] Supabase removed (GNR-135).

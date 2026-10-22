@@ -5,9 +5,10 @@ import { signSession, sessionCookie, clearSessionCookie } from '../../_lib/sessi
 import { safeEqual } from '../../_lib/safeEqual.ts';
 import { jsonNoStore, sameOrigin, currentAdmin } from '../../_lib/adminGuard.ts';
 import { clientKey, lockedFor, recordFailure } from '../../_lib/loginLimit.ts';
+import { verifyTotp, acceptStep } from '../../_lib/totp.ts';
 
 type D1 = Parameters<typeof lockedFor>[0];
-export type AuthEnv = { DB?: unknown; ADMIN_USERNAME?: string; ADMIN_PASSWORD_HASH?: string; SESSION_SECRET?: string };
+export type AuthEnv = { DB?: unknown; ADMIN_USERNAME?: string; ADMIN_PASSWORD_HASH?: string; SESSION_SECRET?: string; ADMIN_TOTP_SECRET?: string };
 type Context = { request: Request; env: AuthEnv };
 
 const MAX_BODY = 2048;
@@ -17,7 +18,7 @@ const MAX_FIELD = 200;
 let dummy: Promise<string> | undefined;
 const dummyHash = () => (dummy ??= hashPassword('not the password'));
 
-async function readCredentials(request: Request): Promise<{ username: string; password: string } | null> {
+async function readCredentials(request: Request): Promise<{ username: string; password: string; code: string } | null> {
   if (Number(request.headers.get('Content-Length') ?? 0) > MAX_BODY) return null;
   const text = await request.text();
   if (text.length > MAX_BODY) return null;
@@ -25,14 +26,15 @@ async function readCredentials(request: Request): Promise<{ username: string; pa
     const body = JSON.parse(text);
     if (typeof body?.username !== 'string' || typeof body?.password !== 'string') return null;
     if (body.username.length > MAX_FIELD || body.password.length > MAX_FIELD) return null;
-    return { username: body.username, password: body.password };
+    const code = typeof body.code === 'string' && body.code.length <= 20 ? body.code : '';
+    return { username: body.username, password: body.password, code };
   } catch {
     return null;
   }
 }
 
 async function login({ request, env }: Context): Promise<Response> {
-  const { ADMIN_USERNAME, ADMIN_PASSWORD_HASH, SESSION_SECRET, DB } = env;
+  const { ADMIN_USERNAME, ADMIN_PASSWORD_HASH, SESSION_SECRET, ADMIN_TOTP_SECRET, DB } = env;
   if (!ADMIN_USERNAME || !ADMIN_PASSWORD_HASH || !SESSION_SECRET || SESSION_SECRET.length < 32 || !DB) {
     return jsonNoStore({ error: 'Admin sign-in is not available.' }, 503);
   }
@@ -47,9 +49,20 @@ async function login({ request, env }: Context): Promise<Response> {
   const userOk = credentials ? await safeEqual(credentials.username, ADMIN_USERNAME) : false;
   const passOk = await verifyPassword(credentials?.password ?? '', userOk ? ADMIN_PASSWORD_HASH : await dummyHash());
 
-  if (!credentials || !userOk || !passOk) {
+  // Two-factor, when ADMIN_TOTP_SECRET is set (ADR 0010). The code is always checked, so a wrong password and a wrong
+  // code take the same time and get the same answer.
+  let step: number | null = null;
+  if (ADMIN_TOTP_SECRET) step = await verifyTotp(ADMIN_TOTP_SECRET, credentials?.code ?? '');
+  const codeOk = !ADMIN_TOTP_SECRET || step !== null;
+
+  if (!credentials || !userOk || !passOk || !codeOk) {
     await recordFailure(db, client);
-    return jsonNoStore({ error: 'Wrong username or password.' }, 401);
+    return jsonNoStore({ error: ADMIN_TOTP_SECRET ? 'Wrong username, password or code.' : 'Wrong username or password.' }, 401);
+  }
+  // A code works once: a step that was already used (or an older one) is refused like a wrong code.
+  if (ADMIN_TOTP_SECRET && !(await acceptStep(db as Parameters<typeof acceptStep>[0], step as number))) {
+    await recordFailure(db, client);
+    return jsonNoStore({ error: 'Wrong username, password or code.' }, 401);
   }
 
   const token = await signSession(SESSION_SECRET, 'owner');
@@ -69,7 +82,7 @@ async function me({ request, env }: Context): Promise<Response> {
   const session = await currentAdmin(request, env);
   // Answers 200 either way: "not signed in" is a normal answer here, not an error, so the page that asks does not
   // fill the browser console with a failed request every time a visitor-less admin page loads.
-  return jsonNoStore(session ? { ok: true, user: session.sub } : { ok: false });
+  return jsonNoStore(session ? { ok: true, user: session.sub } : { ok: false, needsCode: !!env.ADMIN_TOTP_SECRET });
 }
 
 export const loginRoute = { onRequestPost: login };

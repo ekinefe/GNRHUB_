@@ -1,9 +1,11 @@
 // Makes the values for the admin secrets (ADR 0009). Run on your own machine; it prints, it does not store anything.
 //   node scripts/admin-secrets.mjs hash      asks for a password (hidden) and prints ADMIN_PASSWORD_HASH
 //   node scripts/admin-secrets.mjs session   prints a random SESSION_SECRET
+//   node scripts/admin-secrets.mjs totp      prints a new ADMIN_TOTP_SECRET and the address to add it to an authenticator app
 // Then set each one yourself:  npx wrangler secret put ADMIN_PASSWORD_HASH   (paste when asked)
 import { randomBytes } from 'node:crypto'
 import { hashPassword } from '../functions/_lib/password.ts'
+import { newTotpSecret, otpauthUri } from '../functions/_lib/totp.ts'
 
 export const newSessionSecret = () => randomBytes(36).toString('base64url')
 
@@ -42,6 +44,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const [cmd] = process.argv.slice(2)
   if (cmd === 'session') {
     console.log(newSessionSecret())
+  } else if (cmd === 'totp') {
+    const secret = newTotpSecret()
+    console.log(`ADMIN_TOTP_SECRET=${secret}`)
+    console.log('')
+    console.log('Add it to your authenticator app (Proton Authenticator, Aegis, Google Authenticator):')
+    console.log('  - enter the key by hand: account "admin", issuer "GNRdigital", type time-based, 6 digits, 30 seconds; or')
+    console.log('  - open this address in an app that reads otpauth links:')
+    console.log(otpauthUri(secret, 'admin', 'GNRdigital'))
   } else if (cmd === 'hash') {
     const password = await readHidden('New admin password (hidden): ')
     if (password.length < 12) {
@@ -50,7 +60,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     }
     console.log(await hashPassword(password))
   } else {
-    console.error('Usage: node scripts/admin-secrets.mjs hash | session')
+    console.error('Usage: node scripts/admin-secrets.mjs hash | session | totp')
     process.exit(1)
   }
 }

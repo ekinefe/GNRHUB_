@@ -15,6 +15,7 @@ The binding has no `database_id` on purpose. The first `npx wrangler deploy` cre
 
 ## Tables
 - `login_attempts`: failed admin sign-ins per 15-minute window (keyed hash of the client, or `*` for all). Added in `0001`.
+- `admin_totp`: the newest two-factor step accepted, one row, so a code cannot be used twice. Added in `0004`.
 - `contact_messages`: what the contact form stores (name, email, subject, message, time, read time). Added in `0002`. Read and deleted in the admin panel.
 - `contact_hits`: messages sent per hour by a keyed hash of the client (or `*` for everyone), to stop spam. Added in `0002`.
 - `posts`: blog posts (slug, title, summary, Markdown body, comma-separated tags, status draft / private / public, dates; `published_at` is set the first time a post becomes public). Added in `0003`.

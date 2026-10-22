@@ -29,6 +29,15 @@ describe('admin-secrets', () => {
     expect(r.stdout).toBe('')
   })
 
+  it('totp: prints a new secret and the address for an authenticator app', () => {
+    const r = run(['totp'])
+    expect(r.status).toBe(0)
+    const secret = /ADMIN_TOTP_SECRET=([A-Z2-7]{32})/.exec(r.stdout)?.[1]
+    expect(secret).toBeTruthy()
+    expect(r.stdout).toContain(`otpauth://totp/GNRdigital:admin?secret=${secret}&issuer=GNRdigital&algorithm=SHA1&digits=6&period=30`)
+    expect(run(['totp']).stdout).not.toContain(secret) // a different secret every time
+  })
+
   it('session: prints a secret; an unknown command prints usage', () => {
     expect(run(['session']).stdout.trim().length).toBeGreaterThanOrEqual(40)
     expect(run(['nope']).status).toBe(1)
