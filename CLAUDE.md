@@ -30,6 +30,7 @@ Lint, tests and build must pass before a PR. CI (`.github/workflows/gatekeeper.y
 - Match the surrounding code; do not restyle files you only touch.
 - `shared/` never imports `modules/` or `app/`; a module imports only `shared/` or itself. `src/architecture.test.js` enforces it.
 - Colors come from Tailwind tokens (`text-cyber-pink`), never hard-coded.
+- Visual changes follow "Design rules" in `docs/brand.md` (colour, type, layout, motion, components, content) and are checked by looking at the running site, not only by tests.
 - Contact details and public URLs live once in `shared/config/profile.js`. Brand text lives in `shared/config/brand.js`.
 - Motion: ask `shared/config/effects.js`; use the duration tokens. See "Motion rules" in `docs/architecture.md`.
 - Wording follows `docs/copy.md`.
