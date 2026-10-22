@@ -55,6 +55,9 @@ const BlogList = () => {
         return close.length ? close : names.slice(0, 5);
     }, [debounced, tagCounts]);
 
+    const plural = (n) => `${n} post${n !== 1 ? 's' : ''}`;
+    const resultLine = debounced || tag ? `Found ${shown.length} result${shown.length !== 1 ? 's' : ''}` : `${plural(posts.length)}. Type to search`;
+
     const pickTag = (t) => { const next = new URLSearchParams(params); if (t) next.set('tag', t); else next.delete('tag'); setParams(next); };
     const clearAll = () => { setQuery(''); pickTag(''); };
     const highlight = (text) => <Highlight text={text} query={debounced} />;
@@ -80,11 +83,10 @@ const BlogList = () => {
                             onKeyDown={(e) => e.key === 'Escape' && setQuery('')}
                             className="focus:border-cyber-pink focus-visible:ring-cyber-pink"
                         />
-                        <div className="h-6 font-mono text-xs">
-                            {debounced && (
-                                // keyed by the count: replays when the results change, not on every keystroke
-                                <Decrypt text={`Found ${shown.length} result${shown.length !== 1 ? 's' : ''}`} replayKey={shown.length} />
-                            )}
+                        <div className="h-6 font-mono text-xs" aria-live="polite">
+                            {/* Always there: ready for a search before you type, the count while you do. Keyed by the text,
+                                so it replays when the results change, not on every keystroke. */}
+                            {status === 'ready' ? <Decrypt text={resultLine} replayKey={resultLine} /> : <span className="text-cyber-muted">Loading posts...</span>}
                         </div>
                     </div>
 

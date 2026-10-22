@@ -49,6 +49,17 @@ describe('BlogList', () => {
         expect(document.querySelector('script')).toBeNull()
     })
 
+    it('keeps a line under the search box at all times: ready before you type, the count while you do', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        const { container } = list()
+        await screen.findByRole('link', { name: 'About cron' })
+        await waitFor(() => expect(container.textContent).toMatch(/2 posts\. Type to search/))
+        fireEvent.change(screen.getByLabelText('Search posts'), { target: { value: 'zzzzzz' } })
+        await waitFor(() => expect(container.textContent).toMatch(/Found 0 results/))
+        fireEvent.change(screen.getByLabelText('Search posts'), { target: { value: '' } })
+        await waitFor(() => expect(container.textContent).toMatch(/2 posts\. Type to search/))
+    })
+
     it('searches forgivingly, shows the animated result count under the search box and highlights matches', async () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
         const { container } = list()
