@@ -29,7 +29,7 @@ const AboutMe = () => {
     useDocumentMeta({ title: 'About', description: 'Who I am, what I have built and what I work with.' });
     useJsonLd('person', PERSON);
     return (
-        <PageShell width="5xl">
+        <PageShell width="7xl">
 
                 {/* Hero Section */}
                 <section className="relative pt-24 pb-16 mb-12 border-b border-cyber-border/40">
