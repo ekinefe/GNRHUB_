@@ -3,7 +3,7 @@
 // Only routes that are live at launch belong here: areas that are not part of this site (tools, blogs, accounts) are left out.
 import { brand } from './brand.js';
 
-export const sitemapPaths = ['/', '/about', '/projects', '/contact', '/colophon', '/privacy', '/terms'];
+export const sitemapPaths = ['/', '/about', '/projects', '/blog', '/contact', '/colophon', '/privacy', '/terms'];
 
 export function sitemapXml(base = brand.publicUrl, paths = sitemapPaths) {
     const urls = paths.map((p) => `  <url><loc>${base}${p === '/' ? '/' : p}</loc></url>`).join('\n');

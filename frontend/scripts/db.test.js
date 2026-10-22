@@ -14,6 +14,10 @@ describe('wrangler.jsonc', () => {
     expect(db.migrations_dir).toBe('db/migrations')
   })
 
+  it('sends only the API and the sitemap through the Worker first', () => {
+    expect(config.assets.run_worker_first).toEqual(['/api/*', '/sitemap.xml'])
+  })
+
   it('holds no secret-looking values', () => {
     const bad = []
     const walk = (o, trail = '') => {

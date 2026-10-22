@@ -31,6 +31,7 @@ For `npm run dev:worker` put the same three names in `frontend/.dev.vars` (git-i
 ## Posts
 `/admin/posts` lists every post with its status; New post opens a plain form with a live preview. Fields: title, address (follows the title until you edit it), who can see it, summary, tags, and the text in Markdown (`# heading`, `**bold**`, `*italic*`, `` `code` ``, `[link](https://...)`, lists, `>` quotes, fenced code). Raw HTML is shown as text, never run, and only `http`, `https`, `mailto` and site links are kept.
 - **Draft:** only here. **Private:** your notebook, never returned by the public API. **Public:** listed on the blog. A draft or private post answers 404 on the public API, exactly like one that does not exist.
+- Public pages: `/blog` (list, `?tag=`) and `/blog/:slug`, in the menu and footer. `/sitemap.xml` is built by the Worker on request (fixed pages plus public posts only; the static one from the build is only the fallback, and `wrangler.jsonc` sends `/sitemap.xml` through the Worker).
 - API: public `GET /api/posts` (list, `?tag=`) and `GET /api/posts/:slug`; admin `GET`/`POST /api/admin/posts` and `GET`/`POST /api/admin/posts/:id` with `{ action: 'save' | 'delete' }`.
 
 ## Contact messages

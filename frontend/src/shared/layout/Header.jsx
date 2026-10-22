@@ -1,7 +1,7 @@
 import React, { useEffect, useId, useState } from 'react';
 import Wordmark from '@/shared/ui/Wordmark';
 import { Link, useLocation } from 'react-router-dom';
-import { House, Menu, X, PersonStanding } from 'lucide-react';
+import { House, NotebookPen, Menu, X, PersonStanding } from 'lucide-react';
 
 const Header = () => {
     const location = useLocation();
@@ -27,11 +27,12 @@ const Header = () => {
     }, []);
 
     // Helper to check if link is active
-    const isActive = (path) => location.pathname === path;
+    const isActive = (path) => (path === '/' ? location.pathname === '/' : location.pathname === path || location.pathname.startsWith(`${path}/`));
 
     // Centralized Navigation Data (keeps code DRY)
     const navItems = [
         { path: "/", icon: House, label: "Home" },
+        { path: "/blog", icon: NotebookPen, label: "Blog" },
         { path: "/about", icon: PersonStanding, label: "About" }
     ].filter(Boolean);
 

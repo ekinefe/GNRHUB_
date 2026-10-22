@@ -10,6 +10,7 @@ export function buildCommands({ navigate }) {
     const pages = [
         { title: 'Go to Home', to: '/' },
         { title: 'Go to Projects', to: '/projects' },
+        { title: 'Go to Blog', to: '/blog' },
         { title: 'Go to About', to: '/about' },
         { title: 'Go to Contact', to: '/contact' },
         { title: 'Go to Colophon', to: '/colophon' },

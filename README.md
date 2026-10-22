@@ -13,8 +13,8 @@ Personal portfolio of Ekin Efe Gungor ("GNR" from the surname, "digital" from wh
 | Area | Today | Planned |
 |---|---|---|
 | Hosting | One Cloudflare Worker serving the static site (not deployed yet) | Custom domain once bought |
-| Data and sign-in | None. Visitors never sign in | An owner-only admin area is being considered |
-| Launch pages | Home, About, Projects, Contact, Colophon, Privacy, Terms | Nothing else planned; tools are separate projects |
+| Data and sign-in | D1 holds contact messages and blog posts. Visitors never sign in; the owner signs in at /admin with secrets, no accounts | Two-factor sign-in later |
+| Pages | Home, About, Projects, Blog, Contact, Colophon, Privacy, Terms, and a private /admin for the owner (messages, posts) | Tools are separate projects |
 
 ## Quickstart
 
@@ -83,6 +83,6 @@ GNRdigital_v2/
 Decisions (GNR-141): the app folder stays `frontend/` (no rename to `web/`), and the Worker is named `gnrdigital`. CI runs from `frontend/` (`cd frontend`, cache key `frontend/package-lock.json`), so keep those paths in `gatekeeper.yml` in sync with any move.
 
 Inside the app folder:
-- `frontend/src/modules/<feature>`: one folder per feature (portfolio, legal, contact, colophon)
+- `frontend/src/modules/<feature>`: one folder per feature (portfolio, blog, admin, legal, contact, colophon)
 - `frontend/src/shared`: UI, layout, config, content and helpers any module may use
 - `frontend/functions`: the Worker (`worker.ts` routing table, `_lib/` helpers)
