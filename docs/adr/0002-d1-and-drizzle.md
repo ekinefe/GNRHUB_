@@ -1,6 +1,6 @@
 # ADR 0002: Cloudflare D1 with Drizzle, no Supabase
 
-Status: accepted (GNR-132, GNR-63, GNR-135). Date: 2026-10-17.
+Status: superseded by ADR 0007 for now. The D1 foundation, schema, rate limiter, cron dispatcher and Turnstile gate were removed from this repo because the portfolio needs no data or accounts; the design below is the starting point if a feature needs a database again (see git history before this change). Was: accepted (GNR-132, GNR-63, GNR-135). Date: 2026-10-17.
 
 ## Context
 Auth and data started on Supabase, which made a fresh checkout load blank without keys and added a second vendor. The owner prefers staying on Cloudflare, and the budget is $0.
