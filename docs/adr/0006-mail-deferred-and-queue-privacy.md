@@ -1,6 +1,6 @@
 # ADR 0006: Mail is off by default; queue privacy is an open decision
 
-Status: mail deferral accepted (GNR-15); queue retention open (GNR-115). Date: 2026-10-17.
+Status: moved with the tools to their own projects (ADR 0007); the send-brandbook route was removed from this repo. Was: mail deferral accepted (GNR-15); queue retention open (GNR-115). Date: 2026-10-17.
 
 ## Context
 The first `/api/send-brandbook` was an open relay: no auth, any recipient, unescaped HTML. Separately, the original note says uploaded contact lists are never stored, but a mailing queue has to store recipient emails.

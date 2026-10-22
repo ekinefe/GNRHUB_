@@ -1,11 +1,6 @@
 # Copy to frontend/.dev.vars (git-ignored) for `wrangler dev --local`. Never commit real values.
 # In production these are set with `wrangler secret put <NAME>`, never in wrangler.jsonc.
 
-# Email is off unless this is exactly "true"
-MAIL_ENABLED=false
-# Only read when MAIL_ENABLED=true
-RESEND_API_KEY=
-
 # Planned with Better Auth (GNR-136); unused today
 # BETTER_AUTH_SECRET=
 # BETTER_AUTH_URL=http://localhost:8787
