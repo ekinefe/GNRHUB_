@@ -21,10 +21,10 @@ const DesignSystem = () => {
     useDocumentMeta({ title: 'Design system', description: 'Tokens, components and states used across GNRdigital.', noindex: true });
     return (
         // 1. The Outer Wrapper (Grid Background)
-        <div className="min-h-screen bg-cyber-black bg-grid-pattern bg-grid text-cyber-text p-4 md:p-12 flex justify-center">
+        <div className="min-h-screen text-cyber-text p-4 md:p-8 flex justify-center">
 
             {/* 2. The Content Container (The "Background behind the text") */}
-            <div className="max-w-5xl w-full bg-cyber-black border-l border-r border-cyber-border min-h-screen p-8 shadow-2xl relative">
+            <div className="max-w-6xl w-full min-h-screen p-8 relative">
 
                 {/* Optional: Top Border Line for extra style */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyber-pink to-cyber-cyan" />

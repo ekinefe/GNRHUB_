@@ -3,10 +3,10 @@ import { describe, it, expect } from 'vitest'
 import PageShell from './PageShell'
 
 describe('PageShell', () => {
-    it('renders children inside the bordered column', () => {
+    it('renders children in a centred container', () => {
         const { container, getByText } = render(<PageShell><p>hi</p></PageShell>)
         expect(getByText('hi')).toBeInTheDocument()
-        expect(container.querySelector('.max-w-5xl')).not.toBeNull()
+        expect(container.querySelector('.max-w-6xl')).not.toBeNull()
     })
 
     it('widens for the 7xl variant', () => {

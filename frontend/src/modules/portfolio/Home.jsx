@@ -5,7 +5,7 @@ import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
-import AsciiWordmark from '@/shared/ui/AsciiWordmark';
+import AsciiDonut from '@/shared/animations/AsciiDonut';
 import { profile } from '@/shared/config/profile';
 import WarsawClock from './WarsawClock';
 import { featuredProjects } from '@/shared/content/projects';
@@ -73,8 +73,8 @@ const Home = () => {
                                         cursorBlinkDuration={0.5}
                                     /></Reserve>
                                 </h1>
-                                <p className="text-xl md:text-2xl font-mono text-cyber-muted">
-                                    &gt;
+                                <p className="flex gap-3 text-xl md:text-2xl font-mono text-cyber-muted">
+                                    <span aria-hidden="true">&gt;</span>
                                     <Reserve text="CS Student (AI & Data Science)"><TextType
                                         text={["CS Student (AI & Data Science)"]}
                                         initialDelay={1000}
@@ -114,9 +114,10 @@ const Home = () => {
 
 
                         {/* Right: The "Terminal" Bio */}
-                        <div className="relative group">
+                        <div className="relative group space-y-8">
+                            <AsciiDonut className="hidden lg:block" />
                             {/* <div className="absolute -inset-1 bg-gradient-to-r from-cyber-pink to-cyber-cyan opacity-20 blur transition duration-1000 group-hover:opacity-40" /> */}
-                            <div className="relative bg-cyber-black border border-cyber-border rounded-lg p-6 font-mono text-sm shadow-2xl min-h-[300px]">
+                            <div className="relative bg-cyber-black border border-cyber-border rounded-lg p-6 font-mono text-sm shadow-2xl min-h-[240px]">
 
                                 {/* Terminal Header */}
                                 {/* <div className="flex items-center justify-between mb-4 border-b border-cyber-border pb-2">
@@ -126,7 +127,6 @@ const Home = () => {
 
                                 {/* Terminal Content */}
                                 <div className="space-y-2 overflow-x-auto">
-                                    <AsciiWordmark className="mb-3" />
                                     {/* Command Line */}
                                     <div className="flex gap-2">
                                         <span className="text-cyber-pink">{brand.prompt}#</span>
@@ -180,7 +180,7 @@ const Home = () => {
                 </section>
 
                 {/* === FEATURED PROJECTS SECTION === */}
-                <section className="py-20 border-t border-cyber-border bg-cyber-panel/30">
+                <section className="py-20 border-t border-cyber-border">
                     <div className="max-w-7xl mx-auto px-4 md:px-12">
 
                         <div className="flex items-end justify-between mb-12">

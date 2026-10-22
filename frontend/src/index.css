@@ -20,9 +20,9 @@
     --cyber-offline: 255 51 51;
     --cyber-alert: 255 0 60;
 
-    /* graph-paper background: big, quiet cells so pages feel open */
-    --grid-size: 120px;
-    --grid-line: rgb(var(--cyber-border) / 0.45);
+    /* graph-paper background (body); change the cell size or line colour here */
+    --grid-size: 50px;
+    --grid-line: rgb(var(--cyber-border));
 
     /* glow */
     --glow-pink: 0 0 5px rgb(var(--cyber-pink)), 0 0 20px rgb(var(--cyber-pink) / 0.4);
