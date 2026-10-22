@@ -2,7 +2,9 @@
 // so a feature adds its screen here and nothing else changes.
 import React from 'react';
 import AdminMessages from './AdminMessages';
+import AdminPosts from './AdminPosts';
 
 export const sections = [
+    { path: 'posts', label: 'Posts', element: React.createElement(AdminPosts) },
     { path: 'messages', label: 'Messages', element: React.createElement(AdminMessages) },
 ];

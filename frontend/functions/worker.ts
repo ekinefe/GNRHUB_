@@ -8,6 +8,8 @@ import { currentAdmin } from './_lib/adminGuard.ts';
 import { loginRoute, logoutRoute, meRoute } from './modules/admin/auth.ts';
 import { messagesRoute, messageRoute } from './modules/admin/messages.ts';
 import { contactRoute } from './modules/contact/api.ts';
+import { adminPostsRoute, adminPostRoute } from './modules/admin/posts.ts';
+import { postsRoute, postRoute } from './modules/blog/api.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -30,7 +32,11 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/admin/me' }), module: meRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/messages' }), module: messagesRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/messages/:id' }), module: messageRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/posts' }), module: adminPostsRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/posts/:id' }), module: adminPostRoute },
   { pattern: new URLPattern({ pathname: '/api/contact' }), module: contactRoute },
+  { pattern: new URLPattern({ pathname: '/api/posts' }), module: postsRoute },
+  { pattern: new URLPattern({ pathname: '/api/posts/:slug' }), module: postRoute },
 ];
 
 const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>
