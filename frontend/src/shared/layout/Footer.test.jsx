@@ -9,7 +9,8 @@ describe('Footer', () => {
         render(<MemoryRouter><Footer /></MemoryRouter>)
         expect(screen.getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy')
         expect(screen.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', '/terms')
-        expect(screen.getByTestId('build-info').textContent).toMatch(/^v\d+\.\d+\.\d+\S* · build \S+/)
+        expect(screen.getByTestId('build-info').textContent).toMatch(/^v\d+\.\d+\.\d+\S*/)
+        expect(screen.getByTestId('build-info').textContent).not.toMatch(/build/)
     })
 
     it('opens external links safely', () => {
