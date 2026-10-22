@@ -17,6 +17,7 @@ const Terms = lazy(() => import('@/modules/legal/Terms'));
 const DesignSystem = lazy(() => import('@/modules/portfolio/DesignSystem'));
 const AboutMe = lazy(() => import('@/modules/portfolio/AboutMe'));
 const Projects = lazy(() => import('@/modules/portfolio/Projects'));
+const AdminApp = lazy(() => import('@/modules/admin/AdminApp'));
 const Colophon = lazy(() => import('@/modules/colophon/Colophon'));
 const Contact = lazy(() => import('@/modules/contact/Contact'));
 
@@ -47,6 +48,8 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/colophon" element={<Colophon />} />
+          {/* Not linked anywhere and not in the sitemap; the page asks the server who you are. */}
+          <Route path="/admin/*" element={<AdminApp />} />
         </Route>
 
         {/* === ERROR ROUTES (No Header, Full Screen) === */}

@@ -27,3 +27,6 @@ For `npm run dev:worker` put the same three names in `frontend/.dev.vars` (git-i
 - `GET /api/admin/me` says whether you are signed in; `POST /api/admin/logout` clears the cookie.
 - Every other admin route must start with `requireAdmin(request, env)` (and `{ changes: true }` when it changes data). No cookie, no answer.
 - Two-factor login with an authenticator app is planned, not built.
+
+## The screen
+`/admin` (not linked anywhere, not in the sitemap, `noindex`) shows the sign-in form, then the admin shell. Plain `npm run dev` has no API behind it, so there you only see the form and sign-in cannot succeed; to try the whole thing run `npm run dev:worker` (builds first) and open http://localhost:8787/admin.
