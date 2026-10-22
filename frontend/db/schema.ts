@@ -125,6 +125,15 @@ export const auditLog = sqliteTable(
   (t) => [index('audit_log_actor_idx').on(t.actorId), index('audit_log_created_idx').on(t.createdAt)],
 );
 
+// Last run of each scheduled job, so cron failures are visible (GNR-151).
+export const cronRuns = sqliteTable('cron_runs', {
+  job: text('job').primaryKey(),
+  startedAt: integer('started_at', { mode: 'timestamp' }).notNull(),
+  durationMs: integer('duration_ms').notNull(),
+  ok: integer('ok', { mode: 'boolean' }).notNull(),
+  error: text('error'),
+});
+
 // --- User-owned data (always filter by the session user id) -------------------------
 
 export const userPreferences = sqliteTable('user_preferences', {

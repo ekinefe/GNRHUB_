@@ -58,3 +58,5 @@ erDiagram
 - `user_preferences`, `consents`: user-owned data.
 
 **No row-level security on D1.** Every query on user-owned rows filters by the session user id (see `functions/_lib/userData.ts` for the pattern), admin reads go through audited admin endpoints, and `functions/_lib/schema.test.js` checks ownership, cascades and uniqueness against the real migrations.
+
+`cron_runs` (GNR-151) holds the last run of each scheduled job (time, duration, ok, error), so a failing cron job is visible with one query.
