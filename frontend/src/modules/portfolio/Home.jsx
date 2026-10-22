@@ -5,6 +5,7 @@ import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
+import AsciiWordmark from '@/shared/ui/AsciiWordmark';
 import { profile } from '@/shared/config/profile';
 import WarsawClock from './WarsawClock';
 import { featuredProjects } from '@/shared/content/projects';
@@ -33,7 +34,7 @@ const Home = () => {
         return () => clearTimeout(timer); // Cleanup on unmount
     }, []);
     return (
-        <PageShell width="5xl">
+        <PageShell width="7xl">
 
                 {/* === HERO SECTION === */}
                 <section className="relative pt-8 md:pt-16 pb-16 px-4 md:px-12 max-w-7xl mx-auto">
@@ -125,6 +126,7 @@ const Home = () => {
 
                                 {/* Terminal Content */}
                                 <div className="space-y-2 overflow-x-auto">
+                                    <AsciiWordmark className="mb-3" />
                                     {/* Command Line */}
                                     <div className="flex gap-2">
                                         <span className="text-cyber-pink">{brand.prompt}#</span>

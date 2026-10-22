@@ -10,7 +10,7 @@ const WIDTHS = {
 export default function PageShell({ width = '5xl', children }) {
     const { max, pad } = WIDTHS[width];
     return (
-        <div className="min-h-screen bg-cyber-black bg-grid-pattern [background-size:50px_50px] text-cyber-text p-4 md:p-12 flex justify-center">
+        <div className="min-h-screen bg-cyber-black bg-grid-pattern bg-grid text-cyber-text p-4 md:p-16 lg:p-24 flex justify-center">
             <div className={`${max} w-full bg-cyber-black border-l border-r border-cyber-border min-h-screen ${pad} shadow-2xl relative`}>
                 {children}
             </div>

@@ -20,6 +20,10 @@
     --cyber-offline: 255 51 51;
     --cyber-alert: 255 0 60;
 
+    /* graph-paper background: big, quiet cells so pages feel open */
+    --grid-size: 120px;
+    --grid-line: rgb(var(--cyber-border) / 0.45);
+
     /* glow */
     --glow-pink: 0 0 5px rgb(var(--cyber-pink)), 0 0 20px rgb(var(--cyber-pink) / 0.4);
     --glow-cyan: 0 0 5px rgb(var(--cyber-cyan)), 0 0 20px rgb(var(--cyber-cyan) / 0.4);
@@ -82,9 +86,9 @@
     @apply bg-cyber-black text-cyber-text font-sans antialiased min-h-screen overflow-x-hidden;
 
     /* Graph Paper Background */
-    background-image: linear-gradient(theme('colors.cyber.border') 1px, transparent 1px),
-      linear-gradient(90deg, theme('colors.cyber.border') 1px, transparent 1px);
-    background-size: 50px 50px;
+    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
     background-position: center top;
   }
 
