@@ -5,8 +5,9 @@ import CyberButton from '@/shared/ui/CyberButton';
 import { profile } from '@/shared/config/profile';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import CopyEmail from './CopyEmail';
+import ContactForm from './ContactForm';
 
-// Launch version: no form and no backend, just a mailto link and a copy button.
+// A mailto link with a copy button, and a form whose messages are read in the admin panel (ADR 0009).
 const Contact = () => {
     useDocumentMeta({ title: 'Contact', description: 'How to get in touch.' });
     return (
@@ -26,6 +27,7 @@ const Contact = () => {
                     </a>
                     <CopyEmail email={profile.email} />
                 </div>
+                <div className="mt-14 relative"><ContactForm /></div>
                 </div>
 
                 <aside aria-labelledby="elsewhere" className="lg:border-l lg:border-cyber-border lg:pl-10 self-start">
