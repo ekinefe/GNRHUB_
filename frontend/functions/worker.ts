@@ -3,6 +3,7 @@
 // is served straight from the static assets. Routes are one file each under
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
 import * as sendBrandbook from './api/send-brandbook.js';
+import { withSecurityHeaders } from './_lib/security-headers.ts';
 import { rateLimit } from './_lib/rateLimit.ts';
 import { runDue } from './cron/dispatcher.ts';
 import { failure } from './_lib/failure.ts';
@@ -68,7 +69,7 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 }
 
 export default {
-  fetch: (request: Request, env: Env) => handle(request, env),
+  fetch: async (request: Request, env: Env) => withSecurityHeaders(await handle(request, env)),
   // The single cron trigger (wrangler.jsonc "triggers"); jobs are routed in cron/dispatcher.ts.
   scheduled: (event: { scheduledTime: number }, env: Env, ctx: { waitUntil: (p: Promise<unknown>) => void }) => {
     ctx.waitUntil(runDue(env, event.scheduledTime));

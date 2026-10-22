@@ -14,6 +14,8 @@ import { useToast } from '@/shared/ui/Toast';
 import CyberCard from '@/shared/ui/CyberCard';
 import { Zap, Shield, Terminal, Layout } from 'lucide-react';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
+import { typeScale } from '@/shared/config/typeScale';
+import { CopyClass, ButtonPlayground, MotionCatalogue } from './StyleGuideLive';
 
 const DesignSystem = () => {
     useDocumentMeta({ title: 'Design system', description: 'Tokens, components and states used across GNRdigital.', noindex: true });
@@ -53,7 +55,7 @@ const DesignSystem = () => {
                         {['black', 'panel', 'border', 'text', 'muted', 'pink', 'cyan', 'purple', 'active', 'beta', 'offline', 'alert'].map((name) => (
                             <div key={name} className="border border-cyber-border">
                                 <div className={`h-10 bg-cyber-${name}`} />
-                                <p className="font-mono text-xs text-cyber-muted p-2">cyber-{name}</p>
+                                <p className="p-2"><CopyClass value={`bg-cyber-${name}`}>cyber-{name}</CopyClass></p>
                             </div>
                         ))}
                     </div>
@@ -72,22 +74,21 @@ const DesignSystem = () => {
                     </h2>
                     <div className="space-y-6 bg-cyber-panel p-6 border border-cyber-border">
                         <div>
-                            <h1 className="text-4xl font-sans text-white mb-2">Header 1 (Space Grotesk)</h1>
-                            <p className="font-mono text-xs text-cyber-muted">Used for: Page Titles, Hero Sections</p>
+                            <p className="font-mono text-xs text-cyber-muted mb-4">
+                                Type scale. Every size is a Tailwind class. The whole site is JetBrains Mono; Space Grotesk is self-hosted and available as <code>font-display</code> for large headings.
+                            </p>
+                            <ul className="space-y-3">
+                                {typeScale.map(({ cls, px, use }) => (
+                                    <li key={cls} className="border-b border-cyber-border/40 pb-2">
+                                        <p className={`${cls} text-white [overflow-wrap:anywhere]`}>The quick brown fox</p>
+                                        <p className="font-mono text-xs text-cyber-muted"><CopyClass value={cls} /> · {px}px · {use}</p>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                         <div>
-                            <h2 className="text-2xl font-sans text-white mb-2">Header 2 (Section Title)</h2>
-                            <p className="font-mono text-xs text-cyber-muted">Used for: Section Dividers</p>
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-sans text-white mb-2">Header 3 (Section Title)</h3>
-                            <h4 className="text-lg font-sans text-white mb-2">Header 4 (Section Title)</h4>
-                            <h5 className="text-md font-sans text-white mb-2">Header 5 (Section Title)</h5>
-                            <h6 className="text-sm font-sans text-white mb-2">Header 6 (Section Title)</h6>
-                            <p className="text-base font-sans text-white mb-2">Paragraph (Section Title)</p>
-                            <p className="text-s font-sans text-white mb-2">Paragraph (Section Title)</p>
-                            <p className="text-sm font-sans text-white mb-2">Paragraph (Section Title)</p>
-                            <p className="text-xs font-sans text-white mb-2">Paragraph (Section Title)</p>
+                            <p className="font-display text-3xl text-white">Space Grotesk (font-display)</p>
+                            <p className="font-mono text-xs text-cyber-muted">Available, not used on any page yet.</p>
                         </div>
                         <div>
                             <p className="font-mono text-cyber-text leading-relaxed">
@@ -139,6 +140,13 @@ const DesignSystem = () => {
                     </div>
                 </section>
 
+                <section className="mb-16">
+                    <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                        02b // BUTTON PLAYGROUND
+                    </h2>
+                    <ButtonPlayground />
+                </section>
+
                 {/* Section: Cards */}
                 <section className="mb-16">
                     <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
@@ -163,6 +171,13 @@ const DesignSystem = () => {
                             </div>
                         </CyberCard>
                     </div>
+                </section>
+
+                <section className="mb-16">
+                    <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                        03b // MOTION
+                    </h2>
+                    <MotionCatalogue />
                 </section>
 
                 {/* Section: Forms & feedback */}
