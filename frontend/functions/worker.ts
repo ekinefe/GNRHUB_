@@ -3,25 +3,19 @@
 // is served straight from the static assets. Routes are one file each under
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
 import { withSecurityHeaders } from './_lib/security-headers.ts';
-import { rateLimit } from './_lib/rateLimit.ts';
-import { runDue } from './cron/dispatcher.ts';
 import { failure } from './_lib/failure.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
-  DB: unknown;
-  RATE_LIMIT_SALT?: string;
-  TURNSTILE_SECRET?: string;
 }
 
 type Context = { request: Request; env: Env };
 type Handler = (context: Context) => Response | Promise<Response>;
-// A route opts into rate limiting by exporting `rateLimit = { limit }` (requests per minute per caller).
-type RouteModule = { onRequestGet?: Handler; onRequestPost?: Handler; rateLimit?: { limit: number } };
+type RouteModule = { onRequestGet?: Handler; onRequestPost?: Handler };
 
 // URLPattern is a Workers built-in; no router dependency.
-export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
-];
+// Empty today: the site has no API. A route is added here when a feature needs one.
+export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [];
 
 const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), {
@@ -52,11 +46,6 @@ export async function handle(request: Request, env: Env): Promise<Response> {
     return json({ error: 'Method not allowed.' }, 405, { Allow: allow });
   }
 
-  if (route.module.rateLimit) {
-    const limited = await rateLimit(request, env, { route: url.pathname, limit: route.module.rateLimit.limit });
-    if (limited) return limited;
-  }
-
   try {
     return await handler({ request, env });
   } catch (error) {
@@ -66,8 +55,4 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 
 export default {
   fetch: async (request: Request, env: Env) => withSecurityHeaders(await handle(request, env)),
-  // The single cron trigger (wrangler.jsonc "triggers"); jobs are routed in cron/dispatcher.ts.
-  scheduled: (event: { scheduledTime: number }, env: Env, ctx: { waitUntil: (p: Promise<unknown>) => void }) => {
-    ctx.waitUntil(runDue(env, event.scheduledTime));
-  },
 };

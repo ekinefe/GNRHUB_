@@ -1,15 +1,15 @@
 // Security headers (GNR-26), added to every response the Worker returns, API and
 // static assets alike. Fonts are self-hosted; React sets inline style attributes,
-// hence 'unsafe-inline' for styles only. The only external origin is Turnstile
-// (GNR-133); fonts are self-hosted.
+// hence 'unsafe-inline' for styles only. Nothing external is loaded:
+// scripts, fonts and images all come from this origin.
 export const CSP = [
   "default-src 'self'",
-  "script-src 'self' https://challenges.cloudflare.com",
+  "script-src 'self'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
   "connect-src 'self'",
-  'frame-src https://challenges.cloudflare.com',
+  "frame-src 'none'",
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
