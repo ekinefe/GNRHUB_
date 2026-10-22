@@ -28,3 +28,13 @@ describe('launch content', () => {
         }
     })
 })
+
+describe('projects', () => {
+    it('uses known statuses, unique ids, and gives a live tool a url', async () => {
+        const { projects, toolProjects } = await import('./projects')
+        const all = [...projects, ...toolProjects]
+        expect(new Set(all.map((p) => p.id)).size).toBe(all.length)
+        for (const p of all) expect(['live', 'soon', 'paused']).toContain(p.status)
+        for (const p of toolProjects) if (p.status === 'live') expect(p.url, p.id).toMatch(/^https:\/\//)
+    })
+})

@@ -1,5 +1,7 @@
 // Launch content as plain data: Home, Projects and About all read this file.
-// status: 'live' (works today) | 'soon' (planned, shown as such). `repo: null` means a private repo.
+// status: 'live' (works today) | 'soon' (planned, shown as such) | 'paused' (on hold). `repo: null` means a private repo.
+// Tools that are their own projects (own repo, own Worker) are listed here with `url: null` until their address
+// exists; set `url` and `status: 'live'` when it does (workers.dev now, a subdomain of the portfolio domain later).
 // Public URLs come from shared/config/profile.js, never typed here.
 // Optional per project: url (live site), image + imageAlt (screenshot in public/projects/),
 // caseStudy (an internal route), learned (a short "what I learned" line, shown when present).
@@ -70,6 +72,48 @@ export const projects = [
         repo: null,
         featured: true,
         inAbout: true,
+    },
+];
+
+export const toolProjects = [
+    {
+        id: 'brandbook-maker',
+        name: 'Brandbook Maker',
+        kind: 'Web app',
+        summary: 'Build a brand book (colors, type, logos, voice) and save it as a PDF.',
+        tech: ['React', 'Cloudflare Workers'],
+        points: ['A separate project, moving to its own site.'],
+        status: 'soon',
+        repo: null,
+        url: null,
+        featured: false,
+        inAbout: false,
+    },
+    {
+        id: 'cv-maker',
+        name: 'CV Maker',
+        kind: 'Web app',
+        summary: 'Fill in a form, pick a template and export a CV.',
+        tech: ['Cloudflare Workers'],
+        points: ['A separate project, planned as its own site.'],
+        status: 'soon',
+        repo: null,
+        url: null,
+        featured: false,
+        inAbout: false,
+    },
+    {
+        id: 'gym-tracker',
+        name: 'Gym Tracker',
+        kind: 'Web app',
+        summary: 'A workout log.',
+        tech: ['Cloudflare Workers'],
+        points: ['On hold: good open-source trackers already exist.'],
+        status: 'paused',
+        repo: null,
+        url: null,
+        featured: false,
+        inAbout: false,
     },
 ];
 
