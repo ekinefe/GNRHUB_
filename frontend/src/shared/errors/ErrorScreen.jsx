@@ -50,7 +50,7 @@ export default function ErrorScreen({ code, heading, log = [], actions, tone = '
             <div className="relative z-10 text-center space-y-8 max-w-2xl">
                 {icon && <div className="flex justify-center">{icon}</div>}
 
-                <div>
+                <div className="flex justify-center">
                     <FuzzyText fontSize="clamp(4rem, 12vw, 9rem)" fontWeight={900} color={tokenColor(t.color)} baseIntensity={0.2} hoverIntensity={0.5} enableHover={true}>
                         {code}
                     </FuzzyText>
