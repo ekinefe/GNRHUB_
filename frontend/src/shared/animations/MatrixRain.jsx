@@ -38,8 +38,12 @@ const MatrixRain = ({ onDone }) => {
             last = now;
             const elapsed = (now - started) / 1000;
             if (elapsed > SECONDS) { finish(); return; }
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.12)';
+            // Fade old glyphs out (the canvas is transparent, so the page shows through) instead of painting a dark colour.
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.globalAlpha = 0.12;
             ctx.fillRect(0, 0, el.width, el.height);
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.globalAlpha = 1;
             ctx.fillStyle = color;
             ctx.font = `${size}px monospace`;
             drops.forEach((y, i) => {
