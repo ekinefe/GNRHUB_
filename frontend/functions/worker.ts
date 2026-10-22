@@ -2,7 +2,6 @@
 // Only /api/* reaches this code (wrangler.jsonc run_worker_first); everything else
 // is served straight from the static assets. Routes are one file each under
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
-import * as sendBrandbook from './api/send-brandbook.js';
 import { withSecurityHeaders } from './_lib/security-headers.ts';
 import { rateLimit } from './_lib/rateLimit.ts';
 import { runDue } from './cron/dispatcher.ts';
@@ -11,8 +10,6 @@ import { failure } from './_lib/failure.ts';
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
   DB: unknown;
-  MAIL_ENABLED?: string;
-  RESEND_API_KEY?: string;
   RATE_LIMIT_SALT?: string;
   TURNSTILE_SECRET?: string;
 }
@@ -24,7 +21,6 @@ type RouteModule = { onRequestGet?: Handler; onRequestPost?: Handler; rateLimit?
 
 // URLPattern is a Workers built-in; no router dependency.
 export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
-  { pattern: new URLPattern({ pathname: '/api/send-brandbook' }), module: sendBrandbook },
 ];
 
 const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>

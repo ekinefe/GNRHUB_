@@ -2,7 +2,7 @@ import React, { useEffect, useId, useState } from 'react';
 import Wordmark from '@/shared/ui/Wordmark';
 import { features } from '@/shared/config/features';
 import { Link, useLocation } from 'react-router-dom';
-import { Terminal, House, ScanText, Menu, X, PersonStanding } from 'lucide-react';
+import { House, ScanText, Menu, X, PersonStanding } from 'lucide-react';
 
 // `account` is an optional slot for login / user-menu controls (kept out of shared/ so it does not import modules/).
 const Header = ({ account = null }) => {
@@ -35,7 +35,6 @@ const Header = ({ account = null }) => {
     const navItems = [
         { path: "/", icon: House, label: "Home" },
         features.blogs && { path: "/blogs", icon: ScanText, label: "Blogs" },
-        features.tools && { path: "/tools", icon: Terminal, label: "Tools" },
         { path: "/about", icon: PersonStanding, label: "About" }
     ].filter(Boolean);
 

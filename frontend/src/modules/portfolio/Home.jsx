@@ -7,7 +7,6 @@ import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
 import { profile } from '@/shared/config/profile';
 import WarsawClock from './WarsawClock';
-import { features } from '@/shared/config/features';
 import { featuredProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
@@ -191,8 +190,8 @@ const Home = () => {
                                     /projects/featured
                                 </p>
                             </div>
-                            <Link to={features.tools ? '/tools' : '/projects'} className="hidden md:flex items-center gap-2 text-cyber-pink hover:text-white transition-colors font-mono text-sm">
-                                {features.tools ? 'VIEW ALL TOOLS' : 'VIEW ALL PROJECTS'} <ChevronRight className="w-4 h-4" />
+                            <Link to="/projects" className="hidden md:flex items-center gap-2 text-cyber-pink hover:text-white transition-colors font-mono text-sm">
+                                VIEW ALL PROJECTS <ChevronRight className="w-4 h-4" />
                             </Link>
                         </div>
 

@@ -19,7 +19,6 @@ import { ListSkeleton } from '@/shared/ui/Skeleton';
 import Home from '@/modules/portfolio/Home';
 
 // Every page except Home loads on demand, so the first visit downloads only what it shows.
-// (BrandBookEditor pulls in html2pdf, which now only loads on the editor route.)
 const Login = lazy(() => import('@/modules/auth/Login'));
 const Register = lazy(() => import('@/modules/auth/Register'));
 const Privacy = lazy(() => import('@/modules/legal/Privacy'));
@@ -28,9 +27,6 @@ const DesignSystem = lazy(() => import('@/modules/portfolio/DesignSystem'));
 const AboutMe = lazy(() => import('@/modules/portfolio/AboutMe'));
 const Projects = lazy(() => import('@/modules/portfolio/Projects'));
 const BlogsMain = lazy(() => import('@/modules/blog/BlogsMain'));
-const ToolsMain = lazy(() => import('@/modules/tools/ToolsMain'));
-const BrandBookStart = lazy(() => import('@/modules/brandbook/BrandbookStart'));
-const BrandBookEditor = lazy(() => import('@/modules/brandbook/BrandBookEditor'));
 const Colophon = lazy(() => import('@/modules/colophon/Colophon'));
 const Contact = lazy(() => import('@/modules/contact/Contact'));
 
@@ -62,9 +58,6 @@ function App() {
 
           {/* Unfinished areas: flagged off, they fall through to the 404 route (see shared/config/features.js) */}
           {features.blogs && <Route path="/blogs" element={<BlogsMain />} />}
-          {features.tools && <Route path="/tools" element={<ToolsMain />} />}
-          {features.tools && <Route path="/tools/brandbook" element={<BrandBookStart />} />}
-          {features.tools && <Route path="/tools/brandbook/workspace" element={<BrandBookEditor />} />}
           <Route path="/about" element={<AboutMe />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
