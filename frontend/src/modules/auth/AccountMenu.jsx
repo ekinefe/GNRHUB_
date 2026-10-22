@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { LogIn, LogOut } from 'lucide-react';
 import { useAuth } from './AuthContext';
 import { accessOf, ACCESS } from './access';
-import { supabase } from '@/shared/lib/supabase';
+import { authClient } from './authClient';
 import Badge from '@/shared/ui/Badge';
 
 // Guest: a Log in link. Signed in: email, a role badge and Log out.
@@ -26,7 +26,7 @@ export default function AccountMenu() {
             <Badge tone={level === ACCESS.ADMIN ? 'pink' : 'neutral'}>{level}</Badge>
             <button
                 type="button"
-                onClick={() => supabase.auth.signOut()}
+                onClick={() => authClient.signOut()}
                 className="inline-flex items-center gap-2 px-3 py-2 border border-cyber-border text-cyber-muted hover:text-cyber-pink hover:border-cyber-pink transition-colors focus-visible:ring-2 focus-visible:ring-cyber-cyan focus:outline-none"
             >
                 <LogOut className="w-4 h-4" aria-hidden="true" /> Log out

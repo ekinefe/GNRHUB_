@@ -6,11 +6,9 @@ import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 const DIAGRAM = `  browser
      |
      v
-  Cloudflare Pages  --->  static site (Vite build)
+  Cloudflare Worker  --->  static site (Vite build)
      |
-     +--> /api/*  (Pages Functions)
-     |
-     +--> Supabase  (sign-in, profiles)`;
+     +--> /api/*  (Worker routes)`;
 
 const STACK = [
     ['React', 'react'],
@@ -20,7 +18,6 @@ const STACK = [
     ['Vitest', 'vitest'],
     ['GSAP', 'gsap'],
     ['Lucide icons', 'lucide-react'],
-    ['Supabase JS', '@supabase/supabase-js'],
 ];
 
 const Section = ({ title, children }) => (
@@ -59,7 +56,7 @@ const Colophon = () => {
             </Section>
 
             <Section title="How it fits together">
-                <pre aria-label="Architecture diagram: browser to Cloudflare Pages, which serves the static site and API functions, with Supabase for sign-in" className="bg-cyber-panel border border-cyber-border p-4 font-mono text-xs text-cyber-pink overflow-x-auto">{DIAGRAM}</pre>
+                <pre aria-label="Architecture diagram: browser to a Cloudflare Worker, which serves the static site and the API routes" className="bg-cyber-panel border border-cyber-border p-4 font-mono text-xs text-cyber-pink overflow-x-auto">{DIAGRAM}</pre>
             </Section>
 
             <Section title="What it does and does not use">

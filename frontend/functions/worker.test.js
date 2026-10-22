@@ -38,6 +38,16 @@ describe('worker', () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
     const res = await handle(req('/api/boom'), env)
     expect(res.status).toBe(500)
+    expect(await res.json()).toEqual({ error: 'Internal error.' })
+    spy.mockRestore()
+    routes.pop()
+  })
+
+  it('shows the real cause only on admin routes', async () => {
+    routes.push({ pattern: new URLPattern({ pathname: '/api/admin/boom' }), module: { onRequestGet: () => { throw new Error('db down') } } })
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const res = await handle(req('/api/admin/boom'), env)
+    expect(await res.json()).toEqual({ error: 'Server error: db down' })
     spy.mockRestore()
     routes.pop()
   })

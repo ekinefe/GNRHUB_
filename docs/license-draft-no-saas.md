@@ -18,7 +18,7 @@ c) Contribute modifications back to the original repository.
 You may NOT use this software, or any modified version of it, to provide a commercial, hosted, or managed service (Software-as-a-Service) that competes with GNRHUB, or where the primary value of your service is derived from this codebase. You may not charge users a fee to access an instance of this software. 
 
 4. THIRD-PARTY OPEN SOURCE COMPONENTS
-This project utilizes third-party open-source libraries and frameworks (including but not limited to React, Tailwind CSS, Supabase SDKs, and React Bits). This license does not alter the rights granted by those respective original authors. Those components remain licensed under their original permissive licenses (e.g., MIT, Apache 2.0).
+This project utilizes third-party open-source libraries and frameworks (including but not limited to React, Tailwind CSS, and React Bits). This license does not alter the rights granted by those respective original authors. Those components remain licensed under their original permissive licenses (e.g., MIT, Apache 2.0).
 
 5. INTELLECTUAL PROPERTY
 Ekin Efe Gungor retains all copyrights and intellectual property rights to the core GNRHUB architecture, custom logic, and branding.

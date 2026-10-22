@@ -12,6 +12,8 @@
   <meta name="color-scheme" content="dark" />
   <!-- The one font used on every page; preloading avoids a late swap (layout shift). -->
   <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <!-- Applies the saved accent and scanlines before first paint (GNR-41). Not inline: the CSP forbids it. -->
+  <script src="/theme-init.js"></script>
 
   <!-- Open Graph / Twitter. Per-page title, description and URL are set at runtime (useDocumentMeta).
        og:image is public/og.png (regenerate with scripts/og/make-og.sh); its URL follows brand.publicUrl. -->

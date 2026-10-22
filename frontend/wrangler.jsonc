@@ -16,8 +16,31 @@
       "database_name": "gnrdigital-prod",
       // Replace with the id printed by `wrangler d1 create gnrdigital-prod`.
       "database_id": "00000000-0000-0000-0000-000000000000",
-      "preview_database_id": "00000000-0000-0000-0000-000000000001",
       "migrations_dir": "db/migrations"
     }
-  ]
+  ],
+
+  // Preview versions (`wrangler versions upload --env preview`) bind the DEV database, so
+  // unmerged code can never touch real data. Bindings and vars are not inherited by
+  // environments, so everything is repeated here. No secrets in this file: use `wrangler secret`.
+  "env": {
+    "preview": {
+      "name": "gnrdigital-preview",
+      "assets": {
+        "directory": "dist",
+        "binding": "ASSETS",
+        "not_found_handling": "single-page-application",
+        "run_worker_first": ["/api/*"]
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "gnrdigital-dev",
+          // Replace with the id printed by `wrangler d1 create gnrdigital-dev`.
+          "database_id": "00000000-0000-0000-0000-000000000001",
+          "migrations_dir": "db/migrations"
+        }
+      ]
+    }
+  }
 }

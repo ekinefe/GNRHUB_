@@ -14,7 +14,7 @@ frontend/src/
     legal/        privacy, terms
     contact/      mailto + copy-email page
     registry.js   one entry per product: key, path, minimum access level
-  shared/         ui, animations, layout, errors, lib/supabase, config/brand
+  shared/         ui, animations, layout, errors, config/brand
 frontend/functions/
   api/            Cloudflare Pages route files only (thin re-exports)
   modules/<key>/  backend logic for a module
@@ -44,6 +44,7 @@ One app folder, `frontend/`, holds both the SPA (`src/`) and the backend (`funct
 
 ## Motion rules
 - Ask `shared/config/effects.js` (`effectsReduced()` / `useReducedEffects()`), never check `prefers-reduced-motion` yourself. It combines the OS setting with the footer "Reduce effects" switch.
+- Theme: `shared/config/theme.js` holds the accent (pink, cyan, amber, green) and the scanline toggle as `data-accent` / `data-scanlines` on `<html>`; `index.css` maps them to the `--cyber-pink` token. `public/theme-init.js` applies the saved choice before React mounts (a separate file, because the CSP forbids inline scripts). Keep its keys in sync with `theme.js`; a test checks it.
 - Heavy effects (canvas, WebGL) go inside `SceneBoundary` so a failure shows a fallback, not an error page.
 - Canvas loops stop while the tab is hidden or the element is off screen (`useInView`, `document.hidden`).
 - Use the duration tokens (`duration-fast|base|slow`) and `Decrypt` for text effects.
