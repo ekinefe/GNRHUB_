@@ -23,14 +23,14 @@ No launch feature uses D1 yet. `0000_init` is empty; `0001` creates the tables b
 `db:studio` from the ticket is not included yet; it needs a table to be useful.
 
 ## Databases
-Two: `gnrdigital-prod` and `gnrdigital-dev` (previews). Check the spelling, because a typo stays forever to match the dashboard.
+Two: `gnrdigital-prod` and `gnrdigital-dev` (the `preview` environment in `wrangler.jsonc`, so unmerged code never touches real data). Check the spelling, because a typo stays forever to match the dashboard.
 
 Creating them is a remote action done by the owner, once:
 ```bash
 npx wrangler d1 create gnrdigital-prod
 npx wrangler d1 create gnrdigital-dev
 ```
-Then put the printed ids into `wrangler.jsonc` (`database_id` = prod, `preview_database_id` = dev). Never create them against an account holding other projects' databases without checking the name list first (`npx wrangler d1 list`).
+Then put the printed ids into `wrangler.jsonc` (top-level `database_id` = prod, `env.preview` `database_id` = dev). Never create them against an account holding other projects' databases without checking the name list first (`npx wrangler d1 list`).
 
 Rules: no SQL built from strings in app code; use Drizzle.
 

@@ -3,7 +3,7 @@
 Personal portfolio site that will host small tools. Read `docs/REPO_GUIDE.md` (where things are) and `docs/architecture.md` (layout rules) first.
 
 ## Stack
-React + Vite + Tailwind (`frontend/`), a single Cloudflare Worker (`frontend/functions/worker.ts`, ADR in `docs/adr/0001-single-worker.md`), Vitest. Auth is Supabase today; the plan is Better Auth + D1 on a single Worker (tickets GNR-16, GNR-132, GNR-135, GNR-136). Node 24 (`.nvmrc`).
+React + Vite + Tailwind (`frontend/`), a single Cloudflare Worker (`frontend/functions/worker.ts`, ADR in `docs/adr/0001-single-worker.md`), Vitest. Sign-in is a stub (`modules/auth/authClient.js`); the plan is Better Auth + D1 on a single Worker (tickets GNR-16, GNR-132, GNR-135, GNR-136). Node 24 (`.nvmrc`).
 
 ## Commands (run from `frontend/`)
 | Command | What it does |

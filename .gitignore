@@ -19,12 +19,6 @@ out/
 .env.production.local
 *.pem
 
-# Supabase & Database
-supabase/.temp/
-supabase/.branches/
-# We keep schema.sql but ignore local connection configs if any
-database/config.json 
-
 # Render / Docker / Microservices
 .dockerignore
 microservices/cv-generator/node_modules/

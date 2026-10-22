@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest'
 
 // Every routed page sets its own title and description (directly, or through the shared CatalogPage / LegalLayout / ErrorScreen).
 const app = readFileSync('src/app/App.jsx', 'utf8')
-const pages = [...app.matchAll(/from '@\/([^']+)'|import\('@\/([^']+)'\)/g)].map((m) => m[1] ?? m[2]).filter((p) => /^modules\/.+|^shared\/errors\//.test(p) && !/AccountMenu|ErrorBoundary/.test(p)) // components, not pages
+const pages = [...app.matchAll(/from '@\/([^']+)'|import\('@\/([^']+)'\)/g)].map((m) => m[1] ?? m[2]).filter((p) => /^modules\/.+|^shared\/errors\//.test(p) && !/AccountMenu|AuthContext|ErrorBoundary/.test(p)) // components and providers, not pages
 
 describe('document meta', () => {
     it.each(pages)('%s sets its meta', (page) => {

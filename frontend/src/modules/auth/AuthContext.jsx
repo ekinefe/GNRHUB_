@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '@/shared/lib/supabase';
+import { authClient } from './authClient';
 
 const AuthContext = createContext();
 
@@ -8,53 +8,14 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // 1. Check for an active session when the app loads
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            if (session) {
-                fetchProfile(session.user);
-            } else {
-                setLoading(false);
-            }
-        });
-
-        // 2. Listen for login/logout events
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            if (session) {
-                fetchProfile(session.user);
-            } else {
-                setUser(null);
-                setLoading(false);
-            }
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
-
-    // 3. Fetch custom RBAC data from your public.profiles table
-    const fetchProfile = async (authUser) => {
-        try {
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('role, level, preferences')
-                .eq('id', authUser.id)
-                .single();
-
-            if (error) throw error;
-
-            setUser({
-                id: authUser.id,
-                email: authUser.email,
-                role: data.role,
-                level: data.level,
-                preferences: data.preferences
-            });
-        } catch (error) {
-            console.error("Error fetching profile:", error.message);
-            setUser(null);
-        } finally {
+        let alive = true;
+        authClient.getSession().then((session) => {
+            if (!alive) return;
+            setUser(session?.user ?? null);
             setLoading(false);
-        }
-    };
+        });
+        return () => { alive = false; };
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, loading }}>

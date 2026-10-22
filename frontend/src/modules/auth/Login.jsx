@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Terminal, User, Lock, LogIn } from 'lucide-react';
-import { supabase } from '@/shared/lib/supabase';
+import { authClient } from './authClient';
 import Input from '@/shared/ui/Input';
 import CyberButton from '@/shared/ui/CyberButton';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const Login = () => {
     useDocumentMeta({ title: 'Log in', noindex: true });
-    // Changed 'email' to 'identifier' to handle both formats
+    // 'identifier' accepts an email or a username
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -21,38 +21,10 @@ const Login = () => {
         setError(null);
 
         try {
-            let loginEmail = identifier;
-
-            // 1. Is it a username? (If it doesn't contain '@', we assume it is)
-            if (!identifier.includes('@')) {
-                // Call our secure database function to get the email
-                const { data, error: rpcError } = await supabase.rpc('get_email_from_username', {
-                    p_username: identifier
-                });
-
-                if (rpcError || !data) {
-                    // We throw a generic error for security (prevents username guessing)
-                    throw new Error("Invalid username or password.");
-                }
-
-                // Swap the username out for the real email
-                loginEmail = data;
-            }
-
-            // 2. Authenticate with Supabase using the email
-            const { error: authError } = await supabase.auth.signInWithPassword({
-                email: loginEmail,
-                password,
-            });
-
+            // The identifier may be an email or a username; the backend resolves it.
+            const { error: authError } = await authClient.signIn({ identifier, password });
             if (authError) throw authError;
 
-            // === ADD THIS NEW LINE ===
-            // 3. Update the audit logs in our public.profiles table
-            await supabase.rpc('log_user_login');
-            // =========================
-
-            // 4. Success! Redirect to the tools or dashboard page
             navigate('/tools');
         } catch (error) {
             setError(error.message);
