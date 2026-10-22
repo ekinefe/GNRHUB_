@@ -9,8 +9,10 @@ const walk = (dir) => readdirSync(dir).flatMap((n) => {
 })
 
 const routes = [...readFileSync('src/app/App.jsx', 'utf8').matchAll(/path="([^"]+)"/g)].map((m) => m[1])
-// A route written "/admin/*" covers everything beneath it.
-const known = (path) => routes.includes(path) || path === '/' || routes.some((r) => r.endsWith('/*') && path.startsWith(r.slice(0, -1)))
+// A route written "/admin/*" covers everything beneath it; "/blog/:slug" covers "/blog/" followed by a value.
+const known = (path) => routes.includes(path) || path === '/'
+    || routes.some((r) => r.endsWith('/*') && path.startsWith(r.slice(0, -1)))
+    || routes.some((r) => r.includes('/:') && path.startsWith(r.slice(0, r.indexOf('/:') + 1)))
 
 describe('internal links', () => {
     it('every literal to="/..." and navigate(\'/...\') points at a route', () => {

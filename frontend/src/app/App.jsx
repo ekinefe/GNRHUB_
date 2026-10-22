@@ -18,6 +18,8 @@ const DesignSystem = lazy(() => import('@/modules/portfolio/DesignSystem'));
 const AboutMe = lazy(() => import('@/modules/portfolio/AboutMe'));
 const Projects = lazy(() => import('@/modules/portfolio/Projects'));
 const AdminApp = lazy(() => import('@/modules/admin/AdminApp'));
+const BlogList = lazy(() => import('@/modules/blog/BlogList'));
+const BlogPost = lazy(() => import('@/modules/blog/BlogPost'));
 const Colophon = lazy(() => import('@/modules/colophon/Colophon'));
 const Contact = lazy(() => import('@/modules/contact/Contact'));
 
@@ -46,6 +48,8 @@ function App() {
 
           <Route path="/about" element={<AboutMe />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/colophon" element={<Colophon />} />
           {/* Not linked anywhere and not in the sitemap; the page asks the server who you are. */}

@@ -135,3 +135,28 @@ describe('admin posts', () => {
     expect(one.body).toBe('<script>alert(1)</script>')
   })
 })
+
+describe('sitemap.xml', () => {
+  it('lists the fixed pages and public posts only, as XML', async () => {
+    const cookie = await signIn()
+    await create(cookie, { title: 'Public one', status: 'public' })
+    await create(cookie, { title: 'Draft one', status: 'draft' })
+    await create(cookie, { title: 'Private one', status: 'private' })
+    const res = await call('/sitemap.xml', { origin: null })
+    expect(res.status).toBe(200)
+    expect(res.headers.get('Content-Type')).toContain('application/xml')
+    const xml = await res.text()
+    expect(xml).toContain('<loc>https://site.test/</loc>')
+    expect(xml).toContain('<loc>https://site.test/blog</loc>')
+    expect(xml).toContain('<loc>https://site.test/blog/public-one</loc>')
+    expect(xml).not.toContain('draft-one')
+    expect(xml).not.toContain('private-one')
+    expect(xml).not.toContain('/admin')
+  })
+
+  it('still serves the fixed pages when there is no database', async () => {
+    delete env.DB
+    const xml = await (await call('/sitemap.xml', { origin: null })).text()
+    expect(xml).toContain('<loc>https://site.test/about</loc>')
+  })
+})

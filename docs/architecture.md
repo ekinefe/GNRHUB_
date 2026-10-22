@@ -7,6 +7,8 @@ frontend/src/
   app/            App.jsx (routes) - wires modules together
   modules/
     portfolio/    home, about, projects, design system
+    blog/         public blog list and post pages (posts are written in the admin panel)
+    admin/        /admin sign-in, shell, messages and posts (talks to /api/admin/*)
     legal/        privacy, terms
     contact/      mailto + copy-email page
     colophon/     how the site is built
