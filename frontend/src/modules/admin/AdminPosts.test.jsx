@@ -1,6 +1,6 @@
 import React from 'react'
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
 import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom'
 import AdminPosts from './AdminPosts'
 
@@ -24,10 +24,26 @@ describe('post list', () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
         page('/admin/posts')
         expect(await screen.findByText('Notebook day')).toBeInTheDocument()
-        expect(screen.getByText('private')).toBeInTheDocument()
-        expect(screen.getByText('public')).toBeInTheDocument()
+        const list = screen.getByRole('list')
+        expect(within(list).getByText('private')).toBeInTheDocument()
+        expect(within(list).getByText('public')).toBeInTheDocument()
         expect(screen.getByRole('link', { name: /New post/ })).toHaveAttribute('href', '/admin/posts/new')
         expect(screen.getByRole('link', { name: /About cron/ })).toHaveAttribute('href', '/admin/posts/1')
+    })
+
+    it('searches (forgivingly) and filters the list by who can see a post', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { posts }))
+        page('/admin/posts')
+        await screen.findByText('Notebook day')
+        fireEvent.change(screen.getByLabelText('Search posts'), { target: { value: 'crn' } })
+        expect(screen.getByText('About cron')).toBeInTheDocument()
+        expect(screen.queryByText('Notebook day')).toBeNull()
+        fireEvent.change(screen.getByLabelText('Search posts'), { target: { value: '' } })
+        fireEvent.click(screen.getByRole('button', { name: 'private' }))
+        expect(screen.getByText('Notebook day')).toBeInTheDocument()
+        expect(screen.queryByText('About cron')).toBeNull()
+        fireEvent.click(screen.getByRole('button', { name: 'draft' }))
+        expect(screen.getByText('No post matches.')).toBeInTheDocument()
     })
 
     it('invites you to write the first post, and explains a load failure', async () => {
