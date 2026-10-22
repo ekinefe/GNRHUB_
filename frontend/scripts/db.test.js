@@ -1,0 +1,35 @@
+// @vitest-environment node
+import { describe, it, expect } from 'vitest'
+import { readFileSync, readdirSync } from 'node:fs'
+import { DATABASE } from './db.mjs'
+
+const config = JSON.parse(readFileSync('wrangler.jsonc', 'utf8').replace(/^\s*\/\/.*$/gm, '').replace(/\s\/\/ .*$/gm, ''))
+
+describe('wrangler.jsonc', () => {
+  it('binds one D1 database as DB, with migrations in db/migrations', () => {
+    expect(config.d1_databases).toHaveLength(1)
+    const [db] = config.d1_databases
+    expect(db.binding).toBe('DB')
+    expect(db.database_name).toBe(DATABASE)
+    expect(db.migrations_dir).toBe('db/migrations')
+  })
+
+  it('holds no secret-looking values', () => {
+    const bad = []
+    const walk = (o, trail = '') => {
+      for (const [k, v] of Object.entries(o)) {
+        if (v && typeof v === 'object') walk(v, `${trail}${k}.`)
+        else if (/(secret|token|password|api[_-]?key)/i.test(k) && v) bad.push(trail + k)
+      }
+    }
+    walk(config)
+    expect(bad).toEqual([])
+  })
+})
+
+describe('migrations', () => {
+  it('are numbered files in order with no gaps', () => {
+    const files = readdirSync('db/migrations').filter((f) => f.endsWith('.sql')).sort()
+    files.forEach((f, i) => expect(f.startsWith(String(i).padStart(4, '0') + '_'), f).toBe(true))
+  })
+})

@@ -7,6 +7,8 @@ import { failure } from './_lib/failure.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
+  // D1, bound in wrangler.jsonc. Absent until the database exists, so code must handle `undefined`.
+  DB?: unknown;
 }
 
 type Context = { request: Request; env: Env };
