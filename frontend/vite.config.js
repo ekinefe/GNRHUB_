@@ -26,7 +26,7 @@ export default defineConfig({
     __APP_VERSION__: JSON.stringify(JSON.parse(readFileSync('./package.json', 'utf8')).version),
     __BUILD_SHA__: JSON.stringify(commitSha()),
     __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
-    __STACK__: JSON.stringify(installedVersions(['react', 'react-router-dom', 'vite', 'tailwindcss', 'vitest', 'gsap', 'lucide-react', '@supabase/supabase-js'])),
+    __STACK__: JSON.stringify(installedVersions(['react', 'react-router-dom', 'vite', 'tailwindcss', 'vitest', 'gsap', 'lucide-react'])),
   },
   plugins: [
     react(),
@@ -49,7 +49,6 @@ export default defineConfig({
           if (!id.includes('node_modules')) return undefined
           if (/node_modules\/(react|react-dom|react-router|react-router-dom|scheduler)\//.test(id)) return 'vendor-react'
           if (/node_modules\/(motion|framer-motion|gsap)\//.test(id)) return 'vendor-motion'
-          if (id.includes('@supabase')) return 'vendor-supabase'
           return undefined
         },
       },

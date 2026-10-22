@@ -10,3 +10,6 @@ export function tokenColor(name) {
     }
     return `rgb(${triplet || FALLBACK[name]})`;
 }
+
+// Preview dots for the accent switcher (ThemeControls). Same values as the [data-accent] rules in index.css.
+export const ACCENT_SWATCH = { pink: '#ff318c', cyan: '#00f3ff', amber: '#ffb700', green: '#33ff66' };

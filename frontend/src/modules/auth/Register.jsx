@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Terminal, Mail, Lock, UserPlus, User } from 'lucide-react';
-import { supabase } from '@/shared/lib/supabase';
+import { authClient } from './authClient';
 import Input from '@/shared/ui/Input';
 import Checkbox from '@/shared/ui/Checkbox';
 import CyberButton from '@/shared/ui/CyberButton';
@@ -49,19 +49,12 @@ const Register = () => {
             return;
         }
 
-        // --- 2. SEND TO SUPABASE ---
+        // --- 2. SEND TO THE AUTH BACKEND ---
         try {
-            const { error } = await supabase.auth.signUp({
+            const { error } = await authClient.signUp({
                 email,
                 password,
-                // Pass the extra fields into Supabase's user metadata
-                options: {
-                    data: {
-                        first_name: firstName,
-                        last_name: lastName,
-                        username: username,
-                    }
-                }
+                profile: { firstName, lastName, username },
             });
 
             if (error) throw error;
