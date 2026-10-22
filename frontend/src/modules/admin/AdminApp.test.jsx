@@ -90,6 +90,9 @@ describe('AdminApp two-factor', () => {
         page()
         await screen.findByLabelText(/Username/)
         expect(screen.queryByLabelText(/Authentication code/)).toBeNull()
+    })
+})
+
 describe('AdminApp home', () => {
     it('shows what needs attention and an unread badge in the menu', async () => {
         vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => (url === '/api/admin/me' ? reply(200, { ok: true, user: 'owner' }) : reply(200, SUMMARY)))
