@@ -11,11 +11,10 @@ A personal portfolio site (`frontend/`) that is only the portfolio. Brandbook Ma
 | `frontend/src/app/` | `App.jsx`: the route table. Every page except Home loads on demand. |
 | `frontend/src/modules/<feature>/` | One folder per feature: `portfolio` (Home, About, Projects, /design), `legal`, `contact`, `colophon`. |
 | `frontend/src/shared/` | Things any module may use: `ui` (buttons, inputs, modal...), `layout` (header, footer, page shell), `errors`, `animations`, `catalog` (searchable list page), `hooks`, `config` (brand, tokens, profile, effects, features). |
-| `frontend/functions/` | Cloudflare Pages Functions: `api/*` are the URL files, the logic is in `modules/<key>/`. Not tracked in git yet. |
+| `frontend/functions/` | The Worker: `worker.ts` (routing table, errors, security headers) and `_lib/` helpers. |
 | `frontend/public/` | Favicon and web manifest. |
 | `docs/` | This guide, architecture, copy rules, workflow guide. |
 | `.github/workflows/` | CI (`gatekeeper.yml`: unit tests on PRs). |
-| `database/`, `microservices/` | Empty. Planned only. |
 | `graphify-out/` | A graph of the code for AI tools (ignored by git; refresh with `graphify update .`). |
 
 **Rules that a test enforces:** `shared/` never imports `modules/` or `app/`; a module imports only `shared/` or itself. Colors are never hard-coded: use the Tailwind tokens (`text-cyber-pink`).
@@ -42,6 +41,6 @@ Architecture decisions are recorded in [adr/](adr/README.md).
 - **Tickets** live in your ticket tool (export: `GNR-export.json`). A ticket is Done when its PR has merged into the integration branch.
 
 ## Deploying
-See [README.md](../README.md) (Deploy and Rollback). Hosting moves from Pages to a Worker in GNR-16.
+See [README.md](../README.md) (Deploy and Rollback). Hosting is a single Worker (ADR 0001).
 
 ## Still open / easy to trip on
