@@ -14,5 +14,6 @@ One short file per decision: context, decision, consequences. Numbered, never re
 | [0008](0008-owner-admin-login.md) | Owner-only admin login | superseded by 0009 |
 | [0009](0009-admin-contact-blog.md) | One-owner admin, contact messages and a blog | accepted |
 | [0010](0010-admin-two-factor.md) | Two-factor sign-in (authenticator app) and the Better Auth comparison | accepted |
+| [0011](0011-english-only.md) | The site is English only | accepted |
 
 Not recorded yet: CV rendering approach (needs an owner decision).
