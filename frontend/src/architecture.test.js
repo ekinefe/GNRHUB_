@@ -7,7 +7,7 @@ import { describe, it, expect } from 'vitest';
 //   modules/ a module only imports shared/, itself, and the platform modules below
 //   app/     wires everything together and may import anything
 const SRC = join(process.cwd(), 'src');
-const PLATFORM = new Set(['auth']); // modules any other module may use
+const PLATFORM = new Set(); // modules any other module may use (none today)
 
 function walk(dir, out = []) {
     for (const name of readdirSync(dir)) {

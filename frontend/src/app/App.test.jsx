@@ -18,7 +18,7 @@ describe('App Routing System', () => {
         for (const label of ['Home', 'About']) {
             expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument()
         }
-        // Unfinished areas are flagged off at launch (shared/config/features.js)
+        // Accounts, blogs and tools are not part of this site (ADR 0007)
         for (const label of ['Blogs', 'Tools']) {
             expect(within(nav).queryByRole('link', { name: label })).not.toBeInTheDocument()
         }
@@ -27,7 +27,7 @@ describe('App Routing System', () => {
         expect(screen.getByRole('link', { name: /More About Me/i })).toBeInTheDocument()
     })
 
-    it.each(['/login', '/register', '/dashboard', '/blogs'])('flagged-off route %s shows the 404', async (path) => {
+    it.each(['/login', '/register', '/dashboard', '/blogs', '/tools'])('removed route %s shows the 404', async (path) => {
         window.history.pushState({}, '', path)
         render(<App />)
         expect(await screen.findByText(/404/)).toBeInTheDocument()

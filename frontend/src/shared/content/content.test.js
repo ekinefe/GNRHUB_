@@ -1,14 +1,10 @@
 import { readFileSync, existsSync } from 'node:fs'
 import { describe, it, expect } from 'vitest'
 import { projects } from './projects'
-import { blogs } from './blogs'
 
 const routes = [...readFileSync('src/app/App.jsx', 'utf8').matchAll(/path="([^"]+)"/g)].map((m) => m[1])
 
 describe('launch content', () => {
-    it('every blog link points at a real route', () => {
-        for (const { link } of blogs) expect(routes).toContain(link)
-    })
     it('every project link resolves: case studies are routes, screenshots exist, live URLs are https', () => {
         for (const p of projects) {
             if (p.caseStudy) expect(routes).toContain(p.caseStudy)
