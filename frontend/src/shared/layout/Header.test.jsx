@@ -32,4 +32,10 @@ describe('Header navigation', () => {
         expect(link.className).toMatch(/text-cyber-pink/)
         expect(screen.getByRole('navigation', { name: 'Main' }).querySelector('a[href="/about"]').className).not.toMatch(/text-cyber-pink/)
     })
+
+    it('lists Home, Projects, Blog, About and Contact in that order', () => {
+        render(<MemoryRouter><Header /></MemoryRouter>)
+        const hrefs = [...screen.getByRole('navigation', { name: 'Main' }).querySelectorAll('a')].map((a) => a.getAttribute('href'))
+        expect(hrefs).toEqual(['/', '/projects', '/blog', '/about', '/contact'])
+    })
 })
