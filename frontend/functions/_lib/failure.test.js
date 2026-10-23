@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { failure, isAdminPath } from './failure.ts'
+import { failure, isAdminPath, isQuotaError } from './failure.ts'
 
 const req = (path) => new Request(`https://example.com${path}`, { method: 'POST' })
 
@@ -44,5 +44,22 @@ describe('failure', () => {
     expect(isAdminPath('/api/admin/users')).toBe(true)
     expect(isAdminPath('/api/administrator')).toBe(false)
     expect(isAdminPath('/api/ping')).toBe(false)
+  })
+})
+
+describe('free-plan limits', () => {
+  it('answers 503 with Retry-After, not 500, when D1 says a daily limit is used up', async () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const res = failure(new Error('D1_ERROR: Exceeded daily rows read limit'), req('/api/posts'))
+    expect(res.status).toBe(503)
+    expect(res.headers.get('Retry-After')).toBe('3600')
+    expect((await res.json()).error).toMatch(/try again later/)
+    spy.mockRestore()
+  })
+
+  it('does not mistake ordinary errors for a limit', () => {
+    expect(isQuotaError(new Error('no such table: posts'))).toBe(false)
+    expect(isQuotaError(new Error('D1_ERROR: UNIQUE constraint failed: posts.slug'))).toBe(false)
+    expect(isQuotaError('Exceeded daily rows written limit')).toBe(true)
   })
 })
