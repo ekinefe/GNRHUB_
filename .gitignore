@@ -61,3 +61,6 @@ graphify-out/
 
 # Local D1 state (wrangler)
 .wrangler/
+
+# D1 exports (contain contact messages): never commit
+backups/

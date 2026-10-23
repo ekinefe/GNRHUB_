@@ -2,9 +2,13 @@
 // The remote command refuses to run until you type the database name, and never without a terminal.
 import { spawnSync } from 'node:child_process'
 import { createInterface } from 'node:readline/promises'
+import { mkdirSync } from 'node:fs'
 
 const CONFIG = 'wrangler.jsonc'
 export const DATABASE = 'gnrdigital'
+
+// Where an export goes: backups/ is git-ignored, and the file name says which database and when.
+export const backupPath = (where, now = new Date()) => `backups/${DATABASE}-${where}-${now.toISOString().slice(0, 10)}.sql`
 
 const run = (args) => {
   const r = spawnSync('npx', ['wrangler', ...args, '--config', CONFIG], { stdio: 'inherit' })
@@ -35,6 +39,16 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       await confirm(DATABASE)
       run(['d1', 'migrations', 'apply', 'DB', '--remote'])
       break
+    case 'export-local':
+    case 'export-remote': {
+      const remote = target === 'export-remote'
+      if (remote) await confirm(DATABASE)
+      const file = backupPath(remote ? 'remote' : 'local')
+      mkdirSync('backups', { recursive: true })
+      console.log(`Writing ${file}. It holds every contact message (names and emails): encrypt it before it leaves this computer (docs/backup.md).`)
+      run(['d1', 'export', 'DB', remote ? '--remote' : '--local', '--output', file])
+      break
+    }
     case 'query-local':
       if (!rest[0]) {
         console.error('Usage: npm run db:query:local -- "SELECT 1"')

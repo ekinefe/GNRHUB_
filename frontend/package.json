@@ -13,6 +13,8 @@
     "check:links": "node scripts/check-links.mjs",
     "db:migrate:local": "node scripts/db.mjs migrate-local",
     "db:migrate:remote": "node scripts/db.mjs migrate-remote",
+    "db:export:local": "node scripts/db.mjs export-local",
+    "db:export:remote": "node scripts/db.mjs export-remote",
     "db:query:local": "node scripts/db.mjs query-local",
     "admin:secret": "node scripts/admin-secrets.mjs",
     "check:bundle": "node scripts/check-bundle.mjs",
