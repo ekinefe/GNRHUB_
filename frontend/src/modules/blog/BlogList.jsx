@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Tag, X, Rss } from 'lucide-react';
 import PageShell from '@/shared/layout/PageShell';
 import Decrypt from '@/shared/animations/Decrypt';
+import AnimatedList from '@/shared/animations/AnimatedList';
 import Highlight from '@/shared/ui/Highlight';
 import Input from '@/shared/ui/Input';
 import EmptyState from '@/shared/ui/EmptyState';
@@ -144,22 +145,23 @@ const BlogList = () => {
                         </EmptyState>
                     )}
                     {shown.length > 0 && (
-                        <ul className="space-y-6">
-                            {shown.map((p) => (
-                                <li key={p.slug}>
-                                    <article className="border border-cyber-border bg-cyber-black p-6 transition-colors hover:border-cyber-pink/50 group">
-                                        <p className="font-mono text-xs text-cyber-muted mb-2"><time dateTime={new Date(p.publishedAt * 1000).toISOString()}>{formatDate(p.publishedAt)}</time></p>
-                                        <h2 className="text-2xl font-bold text-white mb-2"><Link to={`/blog/${p.slug}`} className="group-hover:text-cyber-pink transition-colors">{highlight(p.title)}</Link></h2>
-                                        {p.summary && <p className="font-mono text-sm text-cyber-muted leading-relaxed max-w-2xl mb-4">{highlight(p.summary)}</p>}
-                                        {p.tags.length > 0 && (
-                                            <p className="flex flex-wrap gap-3 font-mono text-xs">
-                                                {p.tags.map((t) => <button key={t} type="button" onClick={() => pickTag(t)} className="text-cyber-cyan hover:underline">#{t}</button>)}
-                                            </p>
-                                        )}
-                                    </article>
-                                </li>
-                            ))}
-                        </ul>
+                        <AnimatedList
+                            className="space-y-6"
+                            items={shown}
+                            getKey={(p) => p.slug}
+                            renderItem={(p) => (
+                                <article className="border border-cyber-border bg-cyber-black p-6 transition-colors hover:border-cyber-pink/50 group">
+                                    <p className="font-mono text-xs text-cyber-muted mb-2"><time dateTime={new Date(p.publishedAt * 1000).toISOString()}>{formatDate(p.publishedAt)}</time></p>
+                                    <h2 className="text-2xl font-bold text-white mb-2"><Link to={`/blog/${p.slug}`} className="group-hover:text-cyber-pink transition-colors">{highlight(p.title)}</Link></h2>
+                                    {p.summary && <p className="font-mono text-sm text-cyber-muted leading-relaxed max-w-2xl mb-4">{highlight(p.summary)}</p>}
+                                    {p.tags.length > 0 && (
+                                        <p className="flex flex-wrap gap-3 font-mono text-xs">
+                                            {p.tags.map((t) => <button key={t} type="button" onClick={() => pickTag(t)} className="text-cyber-cyan hover:underline">#{t}</button>)}
+                                        </p>
+                                    )}
+                                </article>
+                            )}
+                        />
                     )}
                 </div>
             </div>

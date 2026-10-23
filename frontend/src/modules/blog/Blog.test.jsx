@@ -36,7 +36,7 @@ describe('BlogList', () => {
         expect(screen.getByRole('button', { name: 'all 2' })).toHaveAttribute('aria-pressed', 'true')
         fireEvent.click(screen.getByRole('button', { name: '#linux 1' }))
         expect(screen.getByRole('link', { name: 'About cron' })).toBeInTheDocument()
-        expect(screen.queryByRole('link', { name: 'Notes' })).toBeNull()
+        await waitFor(() => expect(screen.queryByRole('link', { name: 'Notes' })).toBeNull()) // leaves after its short fade-out
         expect(screen.getByRole('button', { name: '#linux 1' })).toHaveAttribute('aria-pressed', 'true')
         fireEvent.click(screen.getByRole('button', { name: /Clear filters/ }))
         expect(screen.getByRole('link', { name: 'Notes' })).toBeInTheDocument()
