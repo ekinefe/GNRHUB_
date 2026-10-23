@@ -33,7 +33,7 @@ const Header = () => {
     // Centralized Navigation Data (keeps code DRY)
     const navItems = [
         { path: "/", icon: House, label: "Home" },
-        { path: "/projects", icon: Code, label: "Projects" },
+        { path: "/projects", icon: Code, label: "Portfolio" },
         { path: "/blog", icon: NotebookPen, label: "Blog" },
         { path: "/about", icon: PersonStanding, label: "About" },
         { path: "/contact", icon: Mail, label: "Contact" }
