@@ -8,6 +8,7 @@ const TONES = {
     alert: 'text-cyber-offline font-bold',
     pink: 'text-cyber-pink font-bold',
     muted: 'text-cyber-muted',
+    inherit: '', // keeps the colour of the surrounding text, for headings
 };
 
 // The "Found 3 results" scramble-to-text effect, for counters, status lines, toasts, titles and success messages.
