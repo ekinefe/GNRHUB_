@@ -5,6 +5,7 @@ import AboutMe from './AboutMe'
 import { about, skillGroups } from '@/shared/content/about'
 import { profile } from '@/shared/config/profile'
 
+globalThis.IntersectionObserver ??= class { observe() {} unobserve() {} disconnect() {} }
 vi.mock('@/shared/animations/TextType', () => ({ default: ({ text }) => <span>{text}</span> }))
 
 const wrap = () => render(<MemoryRouter><AboutMe /></MemoryRouter>)
@@ -55,5 +56,11 @@ describe('About page', () => {
     it('uses the contact email from profile data', () => {
         wrap()
         expect(screen.getByRole('link', { name: /email me/i })).toHaveAttribute('href', `mailto:${profile.email}`)
+    })
+
+    it('keeps its section headings readable for screen readers while they decrypt in', () => {
+        wrap()
+        expect(screen.getByRole('heading', { name: 'SKILLS' })).toBeInTheDocument()
+        expect(screen.getByRole('heading', { name: 'PROFESSIONAL_SUMMARY' })).toBeInTheDocument()
     })
 })

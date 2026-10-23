@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useState } from 'react';
 import Wordmark from '@/shared/ui/Wordmark';
+import ScrollProgress from './ScrollProgress';
 import { Link, useLocation } from 'react-router-dom';
 import { House, NotebookPen, Menu, X, PersonStanding } from 'lucide-react';
 
@@ -84,6 +85,8 @@ const Header = () => {
                 </div>
 
             </div>
+
+            <ScrollProgress />
 
             {/* === MOBILE MENU OVERLAY === */}
             {isMobileMenuOpen && (

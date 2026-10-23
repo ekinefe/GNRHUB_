@@ -3,6 +3,7 @@ import { profile } from '@/shared/config/profile';
 import { Link } from 'react-router-dom';
 import { Code, Linkedin, Github, Mail } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
+import Decrypt from '@/shared/animations/Decrypt';
 import TextType from '@/shared/animations/TextType';
 import avatar from '@/assets/AboutMe/avatar.jpg';
 import PageShell from '@/shared/layout/PageShell';
@@ -109,8 +110,8 @@ const AboutMe = () => {
 
                     <div className="space-y-6 w-full">
                         <h2 className="text-2xl font-mono font-bold uppercase tracking-wider text-white flex items-center gap-3 [overflow-wrap:anywhere]">
-                            <span className="text-cyber-pink font-bold">&lt;&gt;</span>
-                            PROFESSIONAL_SUMMARY
+                            <span aria-hidden="true" className="text-cyber-pink font-bold">&lt;&gt;</span>
+                            <Decrypt text="PROFESSIONAL_SUMMARY" tone="inherit" />
                         </h2>
                         <div className="border border-cyber-border bg-cyber-black p-4">
                             <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed">{about.summary}</p>
@@ -121,7 +122,7 @@ const AboutMe = () => {
                     <div>
                         <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 [overflow-wrap:anywhere]">
                             <Code className="w-6 h-6 text-cyber-pink" />
-                            SKILLS
+                            <Decrypt text="SKILLS" tone="inherit" />
                         </h2>
                         <dl className="border border-cyber-border bg-cyber-black divide-y divide-cyber-border/60" aria-label="Skills">
                             {skillGroups.map(({ key, label }) => (
@@ -138,7 +139,7 @@ const AboutMe = () => {
                         <div key={group.key}>
                             <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2 [overflow-wrap:anywhere]">
                                 <Code className="w-6 h-6 text-cyber-pink" />
-                                {group.title}
+                                <Decrypt text={group.title} tone="inherit" />
                             </h2>
                             <p className="font-mono text-xs text-cyber-muted mb-1">$ git log --oneline {group.key}</p>
                             <p className="font-mono text-xs text-cyber-muted mb-6" aria-hidden="true">
@@ -172,7 +173,7 @@ const AboutMe = () => {
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                             <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 [overflow-wrap:anywhere]">
                                 <Code className="w-6 h-6 text-cyber-pink" />
-                                SELECTED_PROJECTS
+                                <Decrypt text="SELECTED_PROJECTS" tone="inherit" />
                             </h2>
                             <Link to="/projects">
                                 <CyberButton variant="ghost">Other Projects</CyberButton>
@@ -186,7 +187,7 @@ const AboutMe = () => {
                     <div>
                         <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 mb-4 [overflow-wrap:anywhere]">
                             <Code className="w-6 h-6 text-cyber-pink" />
-                            Certificates & Courses
+                            <Decrypt text="Certificates & Courses" tone="inherit" />
                         </h2>
                         <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
                             <ul className="space-y-2 text-cyber-muted font-mono text-sm">
