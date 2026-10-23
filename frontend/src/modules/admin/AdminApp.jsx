@@ -40,7 +40,7 @@ const AdminApp = () => {
     };
 
     return (
-        <PageShell width="5xl">
+        <PageShell width="7xl">
             <div className="pt-16 pb-24">
                 {state === 'checking' && <p role="status" className="font-mono text-cyber-muted">Checking sign-in...</p>}
                 {state === 'signedOut' && <AdminLogin onSignedIn={check} needsCode={needsCode} />}
@@ -53,6 +53,7 @@ const AdminApp = () => {
                         </div>
                         {sections.length > 0 && (
                             <nav aria-label="Admin sections" className="flex flex-wrap gap-6 font-mono text-sm">
+                                <NavLink to="/admin" end className={({ isActive }) => (isActive ? 'text-cyber-pink' : 'text-cyber-muted hover:text-cyber-pink')}>Overview</NavLink>
                                 {sections.map((s) => (
                                     <NavLink key={s.path} to={`/admin/${s.path}`} className={({ isActive }) => (isActive ? 'text-cyber-pink' : 'text-cyber-muted hover:text-cyber-pink')}>
                                         {s.label}{s.path === 'messages' && summary?.messages.unread > 0 && <span className="ml-2 px-1.5 py-0.5 text-xs bg-cyber-pink text-black" aria-label={`${summary.messages.unread} unread`}>{summary.messages.unread}</span>}
