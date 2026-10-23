@@ -117,6 +117,13 @@ export const about = {
             ],
         },
     ],
+    // Measured results shown on Home. Each one is also in a point of the internship entry above.
+    results: [
+        { before: '0.313', after: '0.006', what: 'layout shift (CLS) on a university listing page' },
+        { before: '9.9 MB', after: '2.7 MB', what: 'size of a client site cache' },
+        { before: '2.6 MB', after: '92 KB', what: 'image payload of a blog listing' },
+        { before: '', after: '60 pull requests', what: '40 Jira tickets across 5 client projects, with a 400+ test suite run before each review' },
+    ],
     certificates: [
         { name: 'ChatGPT Prompt Engineering for Developers', issuer: 'DeepLearning.AI', when: 'August 2025' },
         { name: 'Fundamentals Program (90 hours)', issuer: 'Nobel Learning PBC', when: 'July 2025' },

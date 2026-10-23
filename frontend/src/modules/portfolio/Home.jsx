@@ -9,6 +9,8 @@ import AsciiDonut from '@/shared/animations/AsciiDonut';
 import { profile } from '@/shared/config/profile';
 import WarsawClock from './WarsawClock';
 import SkillsStrip from './SkillsStrip';
+import HomeResults from './HomeResults';
+import HomeContact from './HomeContact';
 import { featuredProjects } from '@/shared/content/projects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
@@ -228,7 +230,9 @@ const Home = () => {
                     </div>
                 </section>
 
+                <HomeResults />
                 <SkillsStrip />
+                <HomeContact />
         </PageShell>
     );
 };
