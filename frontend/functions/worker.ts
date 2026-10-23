@@ -13,6 +13,7 @@ import { summaryRoute } from './modules/admin/summary.ts';
 import { postsRoute, postRoute } from './modules/blog/api.ts';
 import { sitemapRoute } from './modules/blog/sitemap.ts';
 import { feedRoute } from './modules/blog/feed.ts';
+import { statusRoute } from './modules/status/api.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -40,6 +41,7 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/admin/messages/:id' }), module: messageRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/posts' }), module: adminPostsRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/posts/:id' }), module: adminPostRoute },
+  { pattern: new URLPattern({ pathname: '/api/status' }), module: statusRoute },
   { pattern: new URLPattern({ pathname: '/api/contact' }), module: contactRoute },
   { pattern: new URLPattern({ pathname: '/api/posts' }), module: postsRoute },
   { pattern: new URLPattern({ pathname: '/api/posts/:slug' }), module: postRoute },
@@ -84,6 +86,24 @@ export async function handle(request: Request, env: Env): Promise<Response> {
   }
 }
 
+// One structured log line per request (shown in Workers observability, wrangler.jsonc). It holds a request id, the
+// method, the path without its query string, the status and the time taken: never an IP address, cookie or body.
+// The same id goes back in the X-Request-Id header so a visitor's report can be matched to a log line.
+export async function observed(request: Request, env: Env): Promise<Response> {
+  const id = crypto.randomUUID();
+  const started = Date.now();
+  let response: Response;
+  try {
+    response = withSecurityHeaders(await handle(request, env));
+  } catch (error) {
+    console.error(JSON.stringify({ id, method: request.method, path: new URL(request.url).pathname, error: error instanceof Error ? error.name : 'Error' }));
+    throw error;
+  }
+  response.headers.set('X-Request-Id', id);
+  console.log(JSON.stringify({ id, method: request.method, path: new URL(request.url).pathname, status: response.status, ms: Date.now() - started }));
+  return response;
+}
+
 export default {
-  fetch: async (request: Request, env: Env) => withSecurityHeaders(await handle(request, env)),
+  fetch: observed,
 };
