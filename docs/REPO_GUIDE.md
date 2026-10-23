@@ -13,7 +13,7 @@ A personal portfolio site (`frontend/`) that is only the portfolio. Brandbook Ma
 | `frontend/src/shared/` | Things any module may use: `ui` (buttons, inputs, modal...), `layout` (header, footer, page shell), `errors`, `animations`, `catalog` (searchable list page), `hooks`, `config` (brand, tokens, profile, effects, features). |
 | `frontend/functions/` | The Worker: `worker.ts` (routing table, errors, security headers) and `_lib/` helpers. |
 | `frontend/public/` | Favicon and web manifest. |
-| `docs/` | This guide, architecture, copy rules, workflow guide, [easter eggs](easter-eggs.md). |
+| `docs/` | This guide, architecture, copy rules, workflow guide, [easter eggs](easter-eggs.md), [observability](observability.md). |
 | `.github/workflows/` | CI (`gatekeeper.yml`: unit tests on PRs). |
 | `graphify-out/` | A graph of the code for AI tools (ignored by git; refresh with `graphify update .`). |
 

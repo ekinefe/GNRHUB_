@@ -64,3 +64,24 @@ describe('worker', () => {
     routes.pop()
   })
 })
+
+describe('observability (GNR-126)', () => {
+  it('adds a request id header and logs one line without IP or query string', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const res = await worker.fetch(new Request('https://example.com/api/nope?secret=1', { headers: { 'CF-Connecting-IP': '203.0.113.9' } }), env)
+    const id = res.headers.get('X-Request-Id')
+    expect(id).toMatch(/^[0-9a-f-]{36}$/)
+    const line = log.mock.calls.at(-1)[0]
+    log.mockRestore()
+    expect(JSON.parse(line)).toMatchObject({ id, method: 'GET', path: '/api/nope', status: 404 })
+    expect(line).not.toMatch(/203\.0\.113\.9|secret/)
+  })
+
+  it('gives each request its own id', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const a = (await worker.fetch(req('/api/nope'), env)).headers.get('X-Request-Id')
+    const b = (await worker.fetch(req('/api/nope'), env)).headers.get('X-Request-Id')
+    log.mockRestore()
+    expect(a).not.toBe(b)
+  })
+})
