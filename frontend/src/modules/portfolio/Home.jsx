@@ -38,7 +38,7 @@ const Home = () => {
         <PageShell width="7xl">
 
                 {/* === HERO SECTION === */}
-                <section className="relative pt-8 md:pt-16 pb-16">
+                <section className="relative pt-4 md:pt-10 pb-10">
 
                     {/* Decorative Top Line */}
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-border to-transparent" />
@@ -115,10 +115,10 @@ const Home = () => {
 
 
                         {/* Right: The "Terminal" Bio */}
-                        <div className="relative group space-y-8">
+                        <div className="relative group space-y-4">
                             <AsciiDonut className="hidden lg:block" />
                             {/* <div className="absolute -inset-1 bg-gradient-to-r from-cyber-pink to-cyber-cyan opacity-20 blur transition duration-1000 group-hover:opacity-40" /> */}
-                            <div className="relative bg-cyber-black border border-cyber-border rounded-lg p-6 font-mono text-sm shadow-2xl min-h-[240px]">
+                            <div className="relative bg-cyber-black border border-cyber-border rounded-lg p-6 font-mono text-sm shadow-2xl min-h-[200px]">
 
                                 {/* Terminal Header */}
                                 {/* <div className="flex items-center justify-between mb-4 border-b border-cyber-border pb-2">
@@ -181,10 +181,10 @@ const Home = () => {
                 </section>
 
                 {/* === FEATURED PROJECTS SECTION === */}
-                <section className="py-20 border-t border-cyber-border">
+                <section className="pt-12 pb-20 border-t border-cyber-border">
                     <div>
 
-                        <div className="flex items-end justify-between mb-12">
+                        <div className="flex items-end justify-between mb-8">
                             <div>
                                 <h2 className="text-3xl font-sans font-bold text-white mb-2">
                                     <span className="text-cyber-pink">//</span> SELECTED PROJECTS
