@@ -14,6 +14,8 @@ import { postsRoute, postRoute } from './modules/blog/api.ts';
 import { sitemapRoute } from './modules/blog/sitemap.ts';
 import { feedRoute } from './modules/blog/feed.ts';
 import { statusRoute } from './modules/status/api.ts';
+import { projectsRoute } from './modules/projects/api.ts';
+import { adminProjectsRoute, adminProjectRoute } from './modules/admin/projects.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -42,6 +44,9 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/admin/posts' }), module: adminPostsRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/posts/:id' }), module: adminPostRoute },
   { pattern: new URLPattern({ pathname: '/api/status' }), module: statusRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/projects' }), module: adminProjectsRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/projects/:id' }), module: adminProjectRoute },
+  { pattern: new URLPattern({ pathname: '/api/projects' }), module: projectsRoute },
   { pattern: new URLPattern({ pathname: '/api/contact' }), module: contactRoute },
   { pattern: new URLPattern({ pathname: '/api/posts' }), module: postsRoute },
   { pattern: new URLPattern({ pathname: '/api/posts/:slug' }), module: postRoute },

@@ -4,10 +4,12 @@ import CyberButton from '@/shared/ui/CyberButton';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
 import ProjectEntry from './ProjectEntry';
-import { projects, toolProjects, experiments } from '@/shared/content/projects';
+import { experiments } from '@/shared/content/projects';
+import { useProjects } from '@/shared/content/useProjects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 const AboutMe = () => {
+    const { projects, toolProjects } = useProjects();
     useDocumentMeta({ title: 'Projects', description: 'Selected projects: repos, status and the tech behind them.' });
     return (
         <PageShell width="5xl">

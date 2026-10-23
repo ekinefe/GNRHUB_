@@ -1,4 +1,6 @@
-// Launch content as plain data: Home, Projects and About all read this file.
+// The built-in (default) projects. Home, Projects and About read the owner's list from the database first (ADR 0012,
+// shared/content/useProjects.js) and fall back to this file while it loads, when it fails, or while the database has none.
+// Editing this file changes only that fallback; day-to-day changes are made in the admin panel.
 // status: 'live' (works today) | 'soon' (planned, shown as such) | 'paused' (on hold). `repo: null` means a private repo.
 // Tools that are their own projects (own repo, own Worker) are listed here with `url: null` until their address
 // exists; set `url` and `status: 'live'` when it does (workers.dev now, a subdomain of the portfolio domain later).

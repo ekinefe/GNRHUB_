@@ -11,7 +11,7 @@ import WarsawClock from './WarsawClock';
 import SkillsStrip from './SkillsStrip';
 import HomeResults from './HomeResults';
 import HomeContact from './HomeContact';
-import { featuredProjects } from '@/shared/content/projects';
+import { useProjects } from '@/shared/content/useProjects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
 // Card icon per project kind
@@ -28,6 +28,7 @@ const Reserve = ({ text, children }) => (
 
 const Home = () => {
     useDocumentMeta({ description: `Ekin Efe Gungor - CS student and junior full-stack developer in ${profile.location.city}: web apps in React, TypeScript and Laravel, small tools in Python, and embedded C++.${profile.availability.open ? ` ${profile.availability.text}.` : ''}` });
+    const { featuredProjects } = useProjects();
     const [showProfile, setShowProfile] = useState(false);
     useEffect(() => {
         const timer = setTimeout(() => {
