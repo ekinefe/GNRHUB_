@@ -42,7 +42,7 @@ describe('Home below the hero', () => {
 
     it('ends with a contact call to action', () => {
         wrap()
-        expect(screen.getByRole('heading', { name: /looking for a junior developer/i })).toBeInTheDocument()
+        expect(screen.getByRole('heading', { name: /looking for a full-stack developer/i })).toBeInTheDocument()
     })
 
     it('every result is backed by a point in the internship entry, so the numbers are not invented twice', () => {
