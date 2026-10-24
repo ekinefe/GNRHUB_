@@ -9,7 +9,7 @@ import avatar from '@/assets/AboutMe/avatar.jpg';
 import PageShell from '@/shared/layout/PageShell';
 import ProjectEntry from './ProjectEntry';
 import { about, skillGroups } from '@/shared/content/about';
-import { aboutProjects } from '@/shared/content/projects';
+import { useProjects } from '@/shared/content/useProjects';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { useJsonLd } from '@/shared/hooks/useJsonLd';
 import { brand } from '@/shared/config/brand';
@@ -27,6 +27,7 @@ const PERSON = {
 };
 
 const AboutMe = () => {
+    const { aboutProjects } = useProjects();
     useDocumentMeta({ title: 'About', description: 'Who I am, what I have built and what I work with.' });
     useJsonLd('person', PERSON);
     return (

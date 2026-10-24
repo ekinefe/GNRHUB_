@@ -3,8 +3,10 @@
 import React from 'react';
 import AdminMessages from './AdminMessages';
 import AdminPosts from './AdminPosts';
+import AdminProjects from './AdminProjects';
 
 export const sections = [
     { path: 'posts', label: 'Posts', element: React.createElement(AdminPosts) },
+    { path: 'projects', label: 'Portfolio', element: React.createElement(AdminProjects) },
     { path: 'messages', label: 'Messages', element: React.createElement(AdminMessages) },
 ];

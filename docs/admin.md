@@ -50,6 +50,9 @@ To compare this setup with Better Auth, see ADR 0010.
 - Public pages: `/blog` (list, `?tag=`) and `/blog/:slug`, in the menu and footer. `/blog/feed.xml` is an RSS 2.0 feed of the latest 20 public posts (also linked from the page head and the sidebar; 503 if the database cannot be read). `/sitemap.xml` is built by the Worker on request (fixed pages plus public posts only; the static one from the build is only the fallback, and `wrangler.jsonc` sends `/sitemap.xml` through the Worker).
 - API: public `GET /api/posts` (list, `?tag=`) and `GET /api/posts/:slug`; admin `GET`/`POST /api/admin/posts` and `GET`/`POST /api/admin/posts/:id` with `{ action: 'save' | 'delete' }`.
 
+## Portfolio projects
+`/admin/projects` (menu: Portfolio) edits the projects shown on Home, About and the Portfolio page (ADR 0012). The first time, press **Import the built-in projects** to copy the list that ships with the site into the database; after that edit, add, reorder (the Order number, smaller first) or delete projects there. Until the database has a project, the site shows the built-in list, so nothing breaks if you never use this. Tick "Show on the Home page" or "Show on the About page" to choose where a project appears. A screenshot is a file already in `frontend/public/projects/`, written as `/projects/name.png`. Changes show on the site within about a minute.
+
 ## Contact messages
 `/admin/messages` lists what the contact form stored, newest first, with an unread count. Open one to read it (it is marked read), reply with a mailto link, mark it unread, or delete it (asks first). Messages are shown as plain text. The form itself is `POST /api/contact`: same-site only, validated, 3 messages per hour per client and 30 per hour overall, a hidden trap field for bots, and it answers 503 ("email me instead") if the database is missing, never silently losing a message.
 
