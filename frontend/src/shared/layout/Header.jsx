@@ -2,7 +2,7 @@ import React, { useEffect, useId, useState } from 'react';
 import Wordmark from '@/shared/ui/Wordmark';
 import ScrollProgress from './ScrollProgress';
 import { Link, useLocation } from 'react-router-dom';
-import { House, NotebookPen, Menu, X, PersonStanding } from 'lucide-react';
+import { House, NotebookPen, Menu, X, PersonStanding, Mail, Code } from 'lucide-react';
 
 const Header = () => {
     const location = useLocation();
@@ -33,8 +33,10 @@ const Header = () => {
     // Centralized Navigation Data (keeps code DRY)
     const navItems = [
         { path: "/", icon: House, label: "Home" },
+        { path: "/projects", icon: Code, label: "Portfolio" },
         { path: "/blog", icon: NotebookPen, label: "Blog" },
-        { path: "/about", icon: PersonStanding, label: "About" }
+        { path: "/about", icon: PersonStanding, label: "About" },
+        { path: "/contact", icon: Mail, label: "Contact" }
     ].filter(Boolean);
 
     return (

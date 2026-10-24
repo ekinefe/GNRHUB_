@@ -23,3 +23,20 @@ describe('Header mobile menu', () => {
         expect(screen.getAllByText('About')).toHaveLength(1)
     })
 })
+
+describe('Header navigation', () => {
+    it('has Contact in the main navigation, marked as the current page on /contact', () => {
+        render(<MemoryRouter initialEntries={['/contact']}><Header /></MemoryRouter>)
+        const link = screen.getByRole('navigation', { name: 'Main' }).querySelector('a[href="/contact"]')
+        expect(link).toHaveTextContent('Contact')
+        expect(link.className).toMatch(/text-cyber-pink/)
+        expect(screen.getByRole('navigation', { name: 'Main' }).querySelector('a[href="/about"]').className).not.toMatch(/text-cyber-pink/)
+    })
+
+    it('lists Home, Portfolio, Blog, About and Contact in that order', () => {
+        render(<MemoryRouter><Header /></MemoryRouter>)
+        const hrefs = [...screen.getByRole('navigation', { name: 'Main' }).querySelectorAll('a')].map((a) => a.getAttribute('href'))
+        expect(hrefs).toEqual(['/', '/projects', '/blog', '/about', '/contact'])
+        expect(screen.getByRole('link', { name: 'Portfolio' })).toHaveAttribute('href', '/projects')
+    })
+})
