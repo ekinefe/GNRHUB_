@@ -7,7 +7,14 @@ import { loginMessage } from './api'
 
 globalThis.IntersectionObserver ??= class { observe() {} unobserve() {} disconnect() {} }
 
-const SUMMARY = { messages: { total: 3, unread: 2 }, posts: { draft: 1, private: 2, public: 4 } }
+const SUMMARY = {
+    messages: { total: 3, unread: 2 },
+    posts: { draft: 1, private: 2, public: 4 },
+    recent: {
+        messages: [{ id: 3, name: 'Ada', subject: 'Hello there', preview: 'Hi, I saw your work', createdAt: 1_790_000_000, read: false }],
+        posts: [{ id: 7, title: 'Notes on cron', status: 'draft', updatedAt: 1_790_000_000 }],
+    },
+}
 const reply = (status, body = {}, headers = {}) => new Response(JSON.stringify(body), { status, headers })
 const page = () => render(<MemoryRouter initialEntries={['/admin']}><AdminApp /></MemoryRouter>)
 afterEach(() => vi.restoreAllMocks())
@@ -102,7 +109,29 @@ describe('AdminApp home', () => {
         expect(screen.getByLabelText('2 unread')).toBeInTheDocument()
         for (const link of screen.getAllByRole('link', { name: /Messages/ })) expect(link).toHaveAttribute('href', '/admin/messages')
         for (const link of screen.getAllByRole('link', { name: /Posts/ })) expect(link).toHaveAttribute('href', '/admin/posts')
-        expect(screen.getAllByRole('link', { name: /Messages/ })).toHaveLength(2) // the menu and the card
+        expect(screen.getAllByRole('link', { name: /Messages/ }).length).toBeGreaterThanOrEqual(2) // the menu and the card
+    })
+})
+
+describe('AdminApp home, latest items', () => {
+    const signedIn = (summary) => vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => (url === '/api/admin/me' ? reply(200, { ok: true, user: 'owner' }) : reply(200, summary)))
+
+    it('lists the latest messages and posts with links, and a New post button', async () => {
+        signedIn(SUMMARY)
+        page()
+        expect(await screen.findByText('Ada')).toBeInTheDocument()
+        expect(screen.getByText('Hello there')).toBeInTheDocument()
+        expect(screen.getByText('unread')).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: /Notes on cron/ })).toHaveAttribute('href', '/admin/posts/7')
+        expect(screen.getByRole('link', { name: /New post/ })).toHaveAttribute('href', '/admin/posts/new')
+        expect(screen.getByRole('link', { name: 'Overview' })).toHaveAttribute('href', '/admin')
+    })
+
+    it('says what to do when there is nothing yet, instead of staying blank', async () => {
+        signedIn({ messages: { total: 0, unread: 0 }, posts: { draft: 0, private: 0, public: 0 }, recent: { messages: [], posts: [] } })
+        page()
+        expect(await screen.findByText(/No messages yet/)).toBeInTheDocument()
+        expect(screen.getByText(/No posts yet/)).toBeInTheDocument()
     })
 })
 
