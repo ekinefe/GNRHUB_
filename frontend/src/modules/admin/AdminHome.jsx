@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Mail, NotebookPen, Plus } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import { useAdmin } from './AdminContext';
+import LoadingLine from '@/shared/animations/LoadingLine';
 
 const when = (seconds) => new Date(seconds * 1000).toLocaleDateString('en-GB', { dateStyle: 'medium' });
 const STATUS_TONE = { public: 'text-cyber-active', private: 'text-cyber-cyan', draft: 'text-cyber-muted' };
@@ -27,7 +28,7 @@ const Latest = ({ title, to, empty, children, count }) => (
 // The admin home: what needs attention (two counts), a way to start a post, and the latest of each so the page is never blank.
 const AdminHome = () => {
     const { summary } = useAdmin();
-    if (!summary) return <p role="status" className="font-mono text-cyber-muted">Loading...</p>;
+    if (!summary) return <LoadingLine>Loading...</LoadingLine>;
     const { messages, posts, recent } = summary;
     return (
         <div className="space-y-8">

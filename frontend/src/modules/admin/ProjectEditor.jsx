@@ -9,6 +9,7 @@ import Checkbox from '@/shared/ui/Checkbox';
 import { slugify } from '@/shared/lib/slugify';
 import { adminFetch } from './api';
 import { fromApi } from './projectForm';
+import LoadingLine from '@/shared/animations/LoadingLine';
 
 const EMPTY = { name: '', slug: '', grp: 'project', kind: 'Web app', summary: '', tech: '', points: '', status: 'live', repo: '', url: '', image: '', imageAlt: '', caseStudy: '', learned: '', featured: false, inAbout: false, sort: 100 };
 const GROUPS = [{ value: 'project', label: 'Project: in the main list' }, { value: 'tool', label: 'Tool: a separate project, shown in its own block' }];
@@ -69,7 +70,7 @@ const ProjectEditor = () => {
         else { setConfirming(false); setMessage({ kind: 'error', text: 'Could not delete. Try again.' }); }
     };
 
-    if (load === 'loading') return <p role="status" className="font-mono text-cyber-muted">Loading project...</p>;
+    if (load === 'loading') return <LoadingLine>Loading project...</LoadingLine>;
     if (load === 'missing') return <p className="font-mono text-cyber-muted">That project does not exist. <Link className="text-cyber-pink underline" to="/admin/projects">Back to the list</Link></p>;
     if (load === 'error') return <p role="alert" className="font-mono text-cyber-offline">Could not load the project.</p>;
 

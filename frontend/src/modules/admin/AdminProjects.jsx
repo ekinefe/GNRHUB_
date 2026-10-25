@@ -7,6 +7,7 @@ import { projects as builtIn, toolProjects as builtInTools } from '@/shared/cont
 import { adminFetch } from './api';
 import ProjectEditor from './ProjectEditor';
 import { fromBuiltIn } from './projectForm';
+import LoadingLine from '@/shared/animations/LoadingLine';
 
 const TONE = { live: 'success', soon: 'cyan', paused: undefined };
 
@@ -35,7 +36,7 @@ const ProjectList = () => {
         load();
     };
 
-    if (state.status === 'loading') return <p role="status" className="font-mono text-cyber-muted">Loading projects...</p>;
+    if (state.status === 'loading') return <LoadingLine>Loading projects...</LoadingLine>;
     if (state.status === 'error') return <p role="alert" className="font-mono text-cyber-offline">Could not load the projects. The database may not be set up yet (docs/database.md).</p>;
     return (
         <section aria-labelledby="projects-title" className="space-y-4">
