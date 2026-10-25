@@ -9,7 +9,7 @@ import { projects as builtIn, toolProjects as builtInTools } from '@/shared/cont
 globalThis.IntersectionObserver ??= class { observe() {} unobserve() {} disconnect() {} }
 const reply = (status, body = {}) => new Response(JSON.stringify(body), { status })
 const SUMMARY = { messages: { total: 0, unread: 0 }, posts: { draft: 0, private: 0, public: 0 }, recent: { messages: [], posts: [] } }
-const ROW = { dbId: 4, id: 'alpha', group: 'project', name: 'Alpha', kind: 'Web app', summary: 'The first.', tech: ['React', 'D1'], points: ['One', 'Two'], status: 'live', repo: 'https://github.com/x/alpha', url: null, featured: true, inAbout: false, sort: 10 }
+const ROW = { dbId: 4, id: 'alpha', group: 'project', name: 'Alpha', kind: 'Web app', summary: 'The first.', tech: ['React', 'D1'], points: ['One', 'Two'], status: 'live', repo: 'https://github.com/x/alpha', url: null, featured: true, inAbout: false, visible: true, sort: 10 }
 afterEach(() => vi.restoreAllMocks())
 
 // Signed in, with a scripted answer per admin projects call.
@@ -27,6 +27,12 @@ describe('admin portfolio list', () => {
         expect(await screen.findByRole('link', { name: /Alpha/ })).toHaveAttribute('href', '/admin/projects/4')
         expect(screen.getByText(/on Home/)).toBeInTheDocument()
         expect(screen.getByRole('link', { name: 'Portfolio' })).toHaveAttribute('href', '/admin/projects')
+    })
+
+    it('marks a hidden project in the list', async () => {
+        admin(() => reply(200, { projects: [{ ...ROW, visible: false }] }))
+        at('/admin/projects')
+        expect(await screen.findByText('hidden')).toBeInTheDocument()
     })
 
     it('offers to import the built-in projects when the database has none, creating each one', async () => {
@@ -58,10 +64,11 @@ describe('admin project editor', () => {
         fireEvent.change(screen.getByLabelText(/^Summary/), { target: { value: 'It does things.' } })
         fireEvent.change(screen.getByLabelText(/^Technologies/), { target: { value: 'React, D1' } })
         fireEvent.click(screen.getByLabelText('Show on the Home page'))
+        fireEvent.click(screen.getByLabelText(/^Show on the site/))
         fireEvent.click(screen.getByRole('button', { name: 'Save' }))
         await waitFor(() => expect(fetchMock.mock.calls.some(([u, i]) => u === '/api/admin/projects' && i?.method === 'POST')).toBe(true))
         const body = JSON.parse(fetchMock.mock.calls.find(([u, i]) => u === '/api/admin/projects' && i?.method === 'POST')[1].body)
-        expect(body).toMatchObject({ name: 'My New Thing', slug: 'my-new-thing', summary: 'It does things.', tech: 'React, D1', featured: true, inAbout: false, grp: 'project', status: 'live' })
+        expect(body).toMatchObject({ name: 'My New Thing', slug: 'my-new-thing', summary: 'It does things.', tech: 'React, D1', featured: true, inAbout: false, visible: false, grp: 'project', status: 'live' })
     })
 
     it('shows the server\'s message next to the field that is wrong', async () => {

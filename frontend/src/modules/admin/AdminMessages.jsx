@@ -3,6 +3,7 @@ import { Mail, MailOpen, Trash2 } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import { adminFetch } from './api';
 import { useAdmin } from './AdminContext';
+import LoadingLine from '@/shared/animations/LoadingLine';
 
 const when = (seconds) => new Date(seconds * 1000).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
 
@@ -40,7 +41,7 @@ const AdminMessages = () => {
 
     const visible = onlyUnread ? state.messages.filter((m) => !m.read) : state.messages;
 
-    if (state.status === 'loading') return <p role="status" className="font-mono text-cyber-muted">Loading messages...</p>;
+    if (state.status === 'loading') return <LoadingLine>Loading messages...</LoadingLine>;
     if (state.status === 'error') return <p role="alert" className="font-mono text-cyber-offline">Could not load the messages. The database may not be set up yet (docs/database.md).</p>;
 
     return (

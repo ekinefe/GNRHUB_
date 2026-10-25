@@ -37,6 +37,12 @@ describe('validateProject', () => {
     for (const bad of ['colophon', '//x', 'https://x.test', '/a b']) expect(validateProject({ ...good, caseStudy: bad }).errors?.caseStudy, bad).toBeTruthy()
   })
 
+  it('shows a project unless visible is exactly false', () => {
+    expect(validateProject(good).value.visible).toBe(true)
+    expect(validateProject({ ...good, visible: false }).value.visible).toBe(false)
+    expect(validateProject({ ...good, visible: 'no' }).value.visible).toBe(true)
+  })
+
   it('removes control characters and survives a non-object body', () => {
     expect(validateProject({ ...good, name: 'Pla\u0000nned' }).value.name).toBe('Planned')
     expect(validateProject(null).ok).toBe(false)

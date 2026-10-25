@@ -6,7 +6,7 @@ import DashboardLayout from '@/shared/layout/DashboardLayout';
 import ScrollToTop from '@/shared/layout/ScrollToTop';
 import CommandPalette from '@/shared/layout/CommandPalette';
 import ErrorBoundary from '@/shared/errors/ErrorBoundary';
-import { ListSkeleton } from '@/shared/ui/Skeleton';
+import RouteLoading from '@/shared/animations/RouteLoading';
 
 // Pages
 import Home from '@/modules/portfolio/Home';
@@ -34,7 +34,7 @@ function App() {
       <ScrollToTop />
       <CommandPalette />
       <ErrorBoundary>
-      <Suspense fallback={<div className="min-h-screen bg-cyber-black p-12"><ListSkeleton /></div>}>
+      <Suspense fallback={<RouteLoading />}>
       <Routes>
 
         {/* === LEGAL (no header) === */}

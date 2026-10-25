@@ -4,6 +4,7 @@ import { Search, Tag, X, Rss } from 'lucide-react';
 import PageShell from '@/shared/layout/PageShell';
 import Decrypt from '@/shared/animations/Decrypt';
 import AnimatedList from '@/shared/animations/AnimatedList';
+import AsciiSpinner from '@/shared/animations/AsciiSpinner';
 import Highlight from '@/shared/ui/Highlight';
 import Input from '@/shared/ui/Input';
 import EmptyState from '@/shared/ui/EmptyState';
@@ -87,7 +88,7 @@ const BlogList = () => {
                         <div className="h-6 font-mono text-xs" aria-live="polite">
                             {/* Always there: ready for a search before you type, the count while you do. Keyed by the text,
                                 so it replays when the results change, not on every keystroke. */}
-                            {status === 'ready' ? <Decrypt text={resultLine} replayKey={resultLine} /> : <span className="text-cyber-muted">Loading posts...</span>}
+                            {status === 'ready' ? <Decrypt text={resultLine} replayKey={resultLine} /> : <span className="text-cyber-muted"><AsciiSpinner className="text-cyber-pink mr-2" />Loading posts...</span>}
                         </div>
                     </div>
 

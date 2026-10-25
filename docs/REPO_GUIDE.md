@@ -14,14 +14,14 @@ A personal portfolio site (`frontend/`) that is only the portfolio. Brandbook Ma
 | `frontend/functions/` | The Worker: `worker.ts` (routing table, request id and log line, errors, security headers), `_lib/` helpers (sessions, passwords, limits) and `modules/` (admin, blog, contact, projects, status). |
 | `frontend/db/migrations/` | Plain SQL migrations for the D1 database, numbered in order (`docs/database.md`). |
 | `frontend/public/` | Favicon, web manifest, fonts and project screenshots (`projects/`). |
-| `docs/` | This guide, architecture, copy rules, workflow guide, [easter eggs](easter-eggs.md), [observability](observability.md). |
+| `docs/` | This guide, architecture, copy rules, workflow guide, [easter eggs](easter-eggs.md), [observability](observability.md), [ascii](ascii.md). |
 | `.github/workflows/` | CI (`gatekeeper.yml`: unit tests on PRs). |
 | `graphify-out/` | A graph of the code for AI tools (ignored by git; refresh with `graphify update .`). |
 
 ## Docs index
 - Decisions: `docs/adr/` (one file per decision, index in its README).
 - Running the owner's parts: `docs/admin.md` (sign-in, posts, messages, projects), `docs/database.md`, `docs/backup.md`, `docs/observability.md`, `docs/limits.md`.
-- How it should look and read: `docs/brand.md`, `docs/copy.md`, `docs/ascii.md` (once merged), `docs/easter-eggs.md`.
+- How it should look and read: `docs/brand.md`, `docs/copy.md`, `docs/ascii.md`, `docs/easter-eggs.md`.
 - Shipping: `docs/launch-checklist.md`, `docs/RELEASING.md`, `docs/WORKFLOW.md`.
 
 **Rules that a test enforces:** `shared/` never imports `modules/` or `app/`; a module imports only `shared/` or itself. Colors are never hard-coded: use the Tailwind tokens (`text-cyber-pink`).

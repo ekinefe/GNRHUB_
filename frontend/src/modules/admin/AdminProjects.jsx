@@ -7,6 +7,7 @@ import { projects as builtIn, toolProjects as builtInTools } from '@/shared/cont
 import { adminFetch } from './api';
 import ProjectEditor from './ProjectEditor';
 import { fromBuiltIn } from './projectForm';
+import LoadingLine from '@/shared/animations/LoadingLine';
 
 const TONE = { live: 'success', soon: 'cyan', paused: undefined };
 
@@ -35,7 +36,7 @@ const ProjectList = () => {
         load();
     };
 
-    if (state.status === 'loading') return <p role="status" className="font-mono text-cyber-muted">Loading projects...</p>;
+    if (state.status === 'loading') return <LoadingLine>Loading projects...</LoadingLine>;
     if (state.status === 'error') return <p role="alert" className="font-mono text-cyber-offline">Could not load the projects. The database may not be set up yet (docs/database.md).</p>;
     return (
         <section aria-labelledby="projects-title" className="space-y-4">
@@ -54,7 +55,8 @@ const ProjectList = () => {
                     {state.projects.map((p) => (
                         <li key={p.dbId}>
                             <Link to={`/admin/projects/${p.dbId}`} className="px-4 py-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 hover:bg-cyber-panel focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">
-                                <span className="font-mono text-sm text-white">{p.name}</span>
+                                <span className={`font-mono text-sm ${p.visible ? 'text-white' : 'text-cyber-muted line-through'}`}>{p.name}</span>
+                                {!p.visible && <Badge>hidden</Badge>}
                                 <Badge tone={TONE[p.status]}>{p.status}</Badge>
                                 <span className="font-mono text-xs text-cyber-muted">{p.group === 'tool' ? 'tool' : 'project'}{p.featured ? ', on Home' : ''}{p.inAbout ? ', on About' : ''} &middot; order {p.sort}</span>
                             </Link>

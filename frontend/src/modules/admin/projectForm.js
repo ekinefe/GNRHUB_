@@ -4,8 +4,8 @@
 export const fromBuiltIn = (p, grp, sort) => ({
     name: p.name, slug: p.id, grp, kind: p.kind, summary: p.summary, tech: p.tech.join(', '), points: p.points.join('\n'), status: p.status,
     repo: p.repo ?? '', url: p.url ?? '', image: p.image ?? '', imageAlt: p.imageAlt ?? '', caseStudy: p.caseStudy ?? '', learned: p.learned ?? '',
-    featured: Boolean(p.featured), inAbout: Boolean(p.inAbout), sort,
+    featured: Boolean(p.featured), inAbout: Boolean(p.inAbout), visible: true, sort,
 });
 
 // A project from /api/admin/projects to form values (the API calls the group "group" and uses the slug as "id").
-export const fromApi = (p) => ({ ...fromBuiltIn(p, p.group, p.sort), featured: p.featured, inAbout: p.inAbout });
+export const fromApi = (p) => ({ ...fromBuiltIn(p, p.group, p.sort), featured: p.featured, inAbout: p.inAbout, visible: p.visible !== false });

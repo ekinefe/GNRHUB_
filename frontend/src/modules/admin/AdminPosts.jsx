@@ -6,6 +6,7 @@ import Badge from '@/shared/ui/Badge';
 import { adminFetch } from './api';
 import { matchesQuery } from '@/shared/lib/searchText';
 import PostEditor from './PostEditor';
+import LoadingLine from '@/shared/animations/LoadingLine';
 
 const TONE = { draft: undefined, private: 'cyan', public: 'success' };
 const day = (s) => new Date(s * 1000).toLocaleDateString('en-GB', { dateStyle: 'medium' });
@@ -25,7 +26,7 @@ const PostList = () => {
 
     const visible = state.posts.filter((p) => (statusFilter === 'all' || p.status === statusFilter) && matchesQuery(query, [p.title, p.summary, ...p.tags]));
 
-    if (state.status === 'loading') return <p role="status" className="font-mono text-cyber-muted">Loading posts...</p>;
+    if (state.status === 'loading') return <LoadingLine>Loading posts...</LoadingLine>;
     if (state.status === 'error') return <p role="alert" className="font-mono text-cyber-offline">Could not load the posts. The database may not be set up yet (docs/database.md).</p>;
     return (
         <section aria-labelledby="posts-title" className="space-y-4">
