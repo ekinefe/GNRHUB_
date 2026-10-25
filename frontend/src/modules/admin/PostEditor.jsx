@@ -9,6 +9,7 @@ import Markdown from '@/shared/lib/markdown/Markdown';
 import { slugify } from '@/shared/lib/slugify';
 import { adminFetch } from './api';
 import { useAdmin } from './AdminContext';
+import LoadingLine from '@/shared/animations/LoadingLine';
 
 const EMPTY = { title: '', slug: '', summary: '', tags: '', status: 'draft', body: '' };
 const STATUS_OPTIONS = [
@@ -74,7 +75,7 @@ const PostEditor = () => {
         else { setConfirming(false); setMessage({ kind: 'error', text: 'Could not delete. Try again.' }); }
     };
 
-    if (load === 'loading') return <p role="status" className="font-mono text-cyber-muted">Loading post...</p>;
+    if (load === 'loading') return <LoadingLine>Loading post...</LoadingLine>;
     if (load === 'missing') return <p className="font-mono text-cyber-muted">That post does not exist. <Link className="text-cyber-pink underline" to="/admin/posts">Back to the list</Link></p>;
     if (load === 'error') return <p role="alert" className="font-mono text-cyber-offline">Could not load the post.</p>;
 
