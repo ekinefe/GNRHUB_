@@ -9,13 +9,20 @@ A personal portfolio site (`frontend/`) that is only the portfolio. Brandbook Ma
 | Path | What it is |
 |---|---|
 | `frontend/src/app/` | `App.jsx`: the route table. Every page except Home loads on demand. |
-| `frontend/src/modules/<feature>/` | One folder per feature: `portfolio` (Home, About, Projects, /design), `legal`, `contact`, `colophon`. |
+| `frontend/src/modules/<feature>/` | One folder per feature: `portfolio` (Home, About, Portfolio, /design), `blog`, `admin` (sign-in and the owner's screens), `legal`, `contact`, `colophon`. |
 | `frontend/src/shared/` | Things any module may use: `ui` (buttons, inputs, modal...), `layout` (header, footer, page shell), `errors`, `animations`, `catalog` (searchable list page), `hooks`, `config` (brand, tokens, profile, effects, features). |
-| `frontend/functions/` | The Worker: `worker.ts` (routing table, errors, security headers) and `_lib/` helpers. |
-| `frontend/public/` | Favicon and web manifest. |
+| `frontend/functions/` | The Worker: `worker.ts` (routing table, request id and log line, errors, security headers), `_lib/` helpers (sessions, passwords, limits) and `modules/` (admin, blog, contact, projects, status). |
+| `frontend/db/migrations/` | Plain SQL migrations for the D1 database, numbered in order (`docs/database.md`). |
+| `frontend/public/` | Favicon, web manifest, fonts and project screenshots (`projects/`). |
 | `docs/` | This guide, architecture, copy rules, workflow guide, [easter eggs](easter-eggs.md), [observability](observability.md). |
 | `.github/workflows/` | CI (`gatekeeper.yml`: unit tests on PRs). |
 | `graphify-out/` | A graph of the code for AI tools (ignored by git; refresh with `graphify update .`). |
+
+## Docs index
+- Decisions: `docs/adr/` (one file per decision, index in its README).
+- Running the owner's parts: `docs/admin.md` (sign-in, posts, messages, projects), `docs/database.md`, `docs/backup.md`, `docs/observability.md`, `docs/limits.md`.
+- How it should look and read: `docs/brand.md`, `docs/copy.md`, `docs/ascii.md` (once merged), `docs/easter-eggs.md`.
+- Shipping: `docs/launch-checklist.md`, `docs/RELEASING.md`, `docs/WORKFLOW.md`.
 
 **Rules that a test enforces:** `shared/` never imports `modules/` or `app/`; a module imports only `shared/` or itself. Colors are never hard-coded: use the Tailwind tokens (`text-cyber-pink`).
 
