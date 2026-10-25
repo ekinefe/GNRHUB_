@@ -22,8 +22,8 @@ const idOf = (request: Request) => Number(new URL(request.url).pathname.split('/
 const taken = (e: unknown) => e instanceof Error && /UNIQUE/i.test(e.message);
 const SLUG_TAKEN = { error: 'Check the project.', errors: { slug: 'That address is already used by another project.' } };
 // The admin also needs the database id and the sort number, which the public list leaves out.
-const withAdminFields = (r: Record<string, unknown>) => ({ ...toProject(r as never), dbId: r.id, sort: r.sort });
-const ADMIN_COLUMNS = 'id, sort, ' + COLUMNS;
+const withAdminFields = (r: Record<string, unknown>) => ({ ...toProject(r as never), dbId: r.id, sort: r.sort, visible: r.visible === 1 });
+const ADMIN_COLUMNS = 'id, sort, visible, ' + COLUMNS;
 
 async function readJson(request: Request): Promise<unknown | undefined> {
   if (Number(request.headers.get('Content-Length') ?? 0) > MAX_BODY) return undefined;
@@ -59,8 +59,8 @@ async function create({ request, env }: Context): Promise<Response> {
   const v = result.value;
   try {
     const run = await (env.DB as D1)
-      .prepare('INSERT INTO projects (slug, grp, name, kind, summary, tech, points, status, repo, url, image, image_alt, case_study, learned, featured, in_about, sort) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
-      .bind(v.slug, v.grp, v.name, v.kind, v.summary, v.tech.join(','), v.points.join('\n'), v.status, v.repo, v.url, v.image, v.imageAlt, v.caseStudy, v.learned, v.featured ? 1 : 0, v.inAbout ? 1 : 0, v.sort)
+      .prepare('INSERT INTO projects (slug, grp, name, kind, summary, tech, points, status, repo, url, image, image_alt, case_study, learned, featured, in_about, visible, sort) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(v.slug, v.grp, v.name, v.kind, v.summary, v.tech.join(','), v.points.join('\n'), v.status, v.repo, v.url, v.image, v.imageAlt, v.caseStudy, v.learned, v.featured ? 1 : 0, v.inAbout ? 1 : 0, v.visible ? 1 : 0, v.sort)
       .run();
     return jsonNoStore({ ok: true, id: run.meta?.last_row_id }, 201);
   } catch (e) {
@@ -90,8 +90,8 @@ async function change({ request, env }: Context): Promise<Response> {
   const v = result.value;
   try {
     const run = await db
-      .prepare('UPDATE projects SET slug = ?, grp = ?, name = ?, kind = ?, summary = ?, tech = ?, points = ?, status = ?, repo = ?, url = ?, image = ?, image_alt = ?, case_study = ?, learned = ?, featured = ?, in_about = ?, sort = ?, updated_at = unixepoch() WHERE id = ?')
-      .bind(v.slug, v.grp, v.name, v.kind, v.summary, v.tech.join(','), v.points.join('\n'), v.status, v.repo, v.url, v.image, v.imageAlt, v.caseStudy, v.learned, v.featured ? 1 : 0, v.inAbout ? 1 : 0, v.sort, id)
+      .prepare('UPDATE projects SET slug = ?, grp = ?, name = ?, kind = ?, summary = ?, tech = ?, points = ?, status = ?, repo = ?, url = ?, image = ?, image_alt = ?, case_study = ?, learned = ?, featured = ?, in_about = ?, visible = ?, sort = ?, updated_at = unixepoch() WHERE id = ?')
+      .bind(v.slug, v.grp, v.name, v.kind, v.summary, v.tech.join(','), v.points.join('\n'), v.status, v.repo, v.url, v.image, v.imageAlt, v.caseStudy, v.learned, v.featured ? 1 : 0, v.inAbout ? 1 : 0, v.visible ? 1 : 0, v.sort, id)
       .run();
     return run.meta?.changes ? jsonNoStore({ ok: true }) : jsonNoStore({ error: 'Not found.' }, 404);
   } catch (e) {

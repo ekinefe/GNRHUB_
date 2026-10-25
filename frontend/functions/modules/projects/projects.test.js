@@ -24,8 +24,8 @@ const create = (cookie, over) => call('/api/admin/projects', { method: 'POST', c
 
 describe('public projects', () => {
   it('is empty before anything is added, also without a database', async () => {
-    expect(await (await call('/api/projects', { origin: null })).json()).toEqual({ projects: [] })
-    expect(await (await call('/api/projects', { origin: null, withEnv: { ASSETS: env.ASSETS } })).json()).toEqual({ projects: [] })
+    expect(await (await call('/api/projects', { origin: null })).json()).toEqual({ projects: [], managed: false })
+    expect(await (await call('/api/projects', { origin: null, withEnv: { ASSETS: env.ASSETS } })).json()).toEqual({ projects: [], managed: false })
   })
 
   it('lists projects in the shape the pages use, ordered by sort then id, with a short cache', async () => {
@@ -40,6 +40,32 @@ describe('public projects', () => {
     expect(projects[0]).toEqual({ id: 'first', group: 'project', name: 'First', kind: 'Web app', summary: 'The first.', tech: ['React', 'D1'], points: ['One', 'Two'], status: 'live', repo: 'https://github.com/x/alpha', url: null, image: '/projects/first.png', imageAlt: 'Shot', caseStudy: '/colophon', learned: 'Lots', featured: true, inAbout: true })
     expect(projects[1]).not.toHaveProperty('image')
     expect(projects[2].group).toBe('tool')
+  })
+})
+
+describe('hiding a project (GNR-159)', () => {
+  it('keeps a hidden project out of the public list but in the admin list, and shows it again when switched back', async () => {
+    const cookie = await signIn()
+    await create(cookie, { name: 'Shown' })
+    const { id } = await (await create(cookie, { name: 'Secret', visible: false })).json()
+    expect((await (await call('/api/projects', { origin: null })).json()).projects.map((p) => p.id)).toEqual(['shown'])
+    const admin = await (await call('/api/admin/projects', { cookie, origin: null })).json()
+    expect(admin.projects.map((p) => [p.id, p.visible]).sort()).toEqual([['secret', false], ['shown', true]])
+    await call(`/api/admin/projects/${id}`, { method: 'POST', cookie, body: { ...project({ name: 'Secret', visible: true }), action: 'save', slug: 'secret' } })
+    expect((await (await call('/api/projects', { origin: null })).json()).projects.map((p) => p.id).sort()).toEqual(['secret', 'shown'])
+  })
+
+  it('says "managed" once any project exists, even if all are hidden, so the pages do not fall back to the built-in list', async () => {
+    const cookie = await signIn()
+    await create(cookie, { name: 'Only', visible: false })
+    expect(await (await call('/api/projects', { origin: null })).json()).toEqual({ projects: [], managed: true })
+  })
+
+  it('treats a missing visible field as visible', async () => {
+    const cookie = await signIn()
+    const body = project({ name: 'Plain' }); delete body.visible
+    await call('/api/admin/projects', { method: 'POST', cookie, body })
+    expect((await (await call('/api/projects', { origin: null })).json()).projects).toHaveLength(1)
   })
 })
 

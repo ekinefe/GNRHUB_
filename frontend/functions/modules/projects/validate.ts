@@ -7,7 +7,7 @@ export const STATUSES = ['live', 'soon', 'paused'] as const;
 export type ProjectInput = {
   slug: string; grp: (typeof GROUPS)[number]; name: string; kind: string; summary: string; tech: string[]; points: string[];
   status: (typeof STATUSES)[number]; repo: string | null; url: string | null; image: string | null; imageAlt: string;
-  caseStudy: string | null; learned: string; featured: boolean; inAbout: boolean; sort: number;
+  caseStudy: string | null; learned: string; featured: boolean; inAbout: boolean; visible: boolean; sort: number;
 };
 export type ProjectResult = { ok: true; value: ProjectInput } | { ok: false; errors: Record<string, string> };
 
@@ -88,7 +88,7 @@ export function validateProject(body: unknown): ProjectResult {
     ok: true,
     value: {
       slug, grp: grp as ProjectInput['grp'], name, kind, summary, tech, points, status: status as ProjectInput['status'], repo, url, image, imageAlt,
-      caseStudy: caseRaw || null, learned, featured: b.featured === true, inAbout: b.inAbout === true, sort: sortNum,
+      caseStudy: caseRaw || null, learned, featured: b.featured === true, inAbout: b.inAbout === true, visible: b.visible !== false, sort: sortNum,
     },
   };
 }
