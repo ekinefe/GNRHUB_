@@ -19,7 +19,7 @@ The binding has no `database_id` on purpose. The first `npx wrangler deploy` cre
 - `contact_messages`: what the contact form stores (name, email, subject, message, time, read time). Added in `0002`. Read and deleted in the admin panel.
 - `contact_hits`: messages sent per hour by a keyed hash of the client (or `*` for everyone), to stop spam. Added in `0002`.
 - `posts`: blog posts (slug, title, summary, Markdown body, comma-separated tags, status draft / private / public, dates; `published_at` is set the first time a post becomes public). Added in `0003`.
-- `projects`: the portfolio projects (slug, group project/tool, name, kind, summary, comma-separated tech, newline-separated points, status live/soon/paused, repo, url, screenshot path and description, case-study route, learned, featured and in_about flags, sort order). Added in `0005`; edited in the admin panel (ADR 0012).
+- `projects`: the portfolio projects (slug, group project/tool, name, kind, summary, comma-separated tech, newline-separated points, status live/soon/paused, repo, url, screenshot path and description, case-study route, learned, featured and in_about flags, sort order). Added in `0005`; edited in the admin panel (ADR 0012). `visible` (hide without deleting) was added in `0006`.
 
 ## Backups
 Time Travel and your own encrypted export, plus a restore drill: see [backup.md](backup.md).
