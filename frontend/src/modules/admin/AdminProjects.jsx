@@ -55,7 +55,8 @@ const ProjectList = () => {
                     {state.projects.map((p) => (
                         <li key={p.dbId}>
                             <Link to={`/admin/projects/${p.dbId}`} className="px-4 py-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 hover:bg-cyber-panel focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">
-                                <span className="font-mono text-sm text-white">{p.name}</span>
+                                <span className={`font-mono text-sm ${p.visible ? 'text-white' : 'text-cyber-muted line-through'}`}>{p.name}</span>
+                                {!p.visible && <Badge>hidden</Badge>}
                                 <Badge tone={TONE[p.status]}>{p.status}</Badge>
                                 <span className="font-mono text-xs text-cyber-muted">{p.group === 'tool' ? 'tool' : 'project'}{p.featured ? ', on Home' : ''}{p.inAbout ? ', on About' : ''} &middot; order {p.sort}</span>
                             </Link>

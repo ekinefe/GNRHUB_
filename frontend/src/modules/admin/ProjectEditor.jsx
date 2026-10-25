@@ -11,7 +11,7 @@ import { adminFetch } from './api';
 import { fromApi } from './projectForm';
 import LoadingLine from '@/shared/animations/LoadingLine';
 
-const EMPTY = { name: '', slug: '', grp: 'project', kind: 'Web app', summary: '', tech: '', points: '', status: 'live', repo: '', url: '', image: '', imageAlt: '', caseStudy: '', learned: '', featured: false, inAbout: false, sort: 100 };
+const EMPTY = { name: '', slug: '', grp: 'project', kind: 'Web app', summary: '', tech: '', points: '', status: 'live', repo: '', url: '', image: '', imageAlt: '', caseStudy: '', learned: '', featured: false, inAbout: false, visible: true, sort: 100 };
 const GROUPS = [{ value: 'project', label: 'Project: in the main list' }, { value: 'tool', label: 'Tool: a separate project, shown in its own block' }];
 const STATUSES = [{ value: 'live', label: 'Live: it works today' }, { value: 'soon', label: 'Soon: planned, shown as coming soon' }, { value: 'paused', label: 'Paused: on hold' }];
 const KINDS = ['Web app', 'Platform', 'Hardware', 'CLI', 'Desktop', 'Tool'];
@@ -101,6 +101,7 @@ const ProjectEditor = () => {
             </div>
             <Textarea label="What I learned" name="learned" rows={2} value={values.learned} onChange={set('learned')} error={errors.learned} hint="Optional, one or two sentences." />
             <div className="flex flex-wrap gap-8">
+                <Checkbox label="Show on the site (untick to hide it without deleting)" name="visible" checked={values.visible} onChange={set('visible')} />
                 <Checkbox label="Show on the Home page" name="featured" checked={values.featured} onChange={set('featured')} />
                 <Checkbox label="Show on the About page" name="inAbout" checked={values.inAbout} onChange={set('inAbout')} />
             </div>

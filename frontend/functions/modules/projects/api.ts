@@ -33,9 +33,13 @@ export const toProject = (r: Row) => ({
 
 async function list({ env }: Context): Promise<Response> {
   const headers = { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30' };
-  if (!env.DB) return new Response(JSON.stringify({ projects: [] }), { headers });
-  const { results } = await (env.DB as D1).prepare('SELECT ' + COLUMNS + ' FROM projects ORDER BY sort, id').all<Row>();
-  return new Response(JSON.stringify({ projects: results.map(toProject) }), { headers });
+  if (!env.DB) return new Response(JSON.stringify({ projects: [], managed: false }), { headers });
+  const db = env.DB as D1;
+  const { results } = await db.prepare('SELECT ' + COLUMNS + ' FROM projects WHERE visible = 1 ORDER BY sort, id').all<Row>();
+  // "managed" is true once the owner has any project at all, hidden ones included: then the pages show this list even when it
+  // is empty (everything hidden) instead of falling back to the built-in list.
+  const { results: count } = await db.prepare('SELECT COUNT(*) AS n FROM projects').all<{ n: number }>();
+  return new Response(JSON.stringify({ projects: results.map(toProject), managed: (count[0]?.n ?? 0) > 0 }), { headers });
 }
 
 export const projectsRoute = { onRequestGet: list };

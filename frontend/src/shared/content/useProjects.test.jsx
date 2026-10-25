@@ -42,6 +42,12 @@ describe('useProjects', () => {
         }
     })
 
+    it('uses the owner\'s list even when it is empty, once the owner has projects (all hidden), instead of the built-in list', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(reply(200, { projects: [], managed: true }))
+        render(<Probe />)
+        await waitFor(() => expect(out()).toBe('|||'))
+    })
+
     it('keeps the built-in list when the request throws', async () => {
         vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('offline'))
         render(<Probe />)

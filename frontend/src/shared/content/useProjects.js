@@ -14,7 +14,8 @@ function load() {
     pending ??= fetch('/api/projects')
         .then((res) => (res.ok ? res.json() : null))
         .then((data) => {
-            if (Array.isArray(data?.projects) && data.projects.length > 0) loaded = split(data.projects);
+            // "managed" means the owner has projects in the database (even if all are hidden); then that list is the truth.
+            if (Array.isArray(data?.projects) && (data.projects.length > 0 || data.managed === true)) loaded = split(data.projects);
             return loaded;
         })
         .catch(() => null);
