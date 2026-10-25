@@ -57,7 +57,7 @@ The look is a terminal: a plain near-black background, monospace, one pink accen
 ### Motion and effects
 - Motion is rare and means something. The Home donut is the one always-moving thing; everything else moves only in answer to the visitor (hover, focus, open, copy).
 - Always go through `shared/config/effects.js`; respect the OS setting and the footer "Reduce effects" switch. Use the duration tokens (`duration-fast`, `-base`, `-slow`). Heavy effects sit in `SceneBoundary` and stop off screen or in a hidden tab. More in `docs/architecture.md` (Motion rules).
-- ASCII art is decorative: `aria-hidden`, never the only place something is said, and limited to the Home donut. The scanline overlay is a visitor choice, off by default.
+- ASCII art is decorative: `aria-hidden`, never the only place something is said, and limited to the places in `docs/ascii.md` (the Home donut, the 404 and empty states, and two loading patterns that exist only while something loads). The scanline overlay is a visitor choice, off by default.
 
 ### Components and states
 - Build from `shared/ui` (`CyberButton`, `Input`, `Modal`, `Tabs`, `Toast`...). If a variant is missing, add it there and show it on `/design`; do not restyle in a page.
