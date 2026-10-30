@@ -36,5 +36,5 @@ Lint, tests and build must pass before a PR. CI (`.github/workflows/gatekeeper.y
 - Motion: ask `shared/config/effects.js`; use the duration tokens. See "Motion rules" in `docs/architecture.md`.
 - Wording follows `docs/copy.md`.
 - Portfolio projects are edited in the admin panel (ADR 0012); `shared/content/projects.js` holds only the built-in fallback. Tools that are separate projects are listed there too (`url: null` until they have an address); do not add their code here.
-- Backend: routes are listed in `functions/worker.ts`. Anything that can send, write or cost money is off by default behind a flag.
+- Backend: routes are listed in `functions/worker.ts`; rules and SQL live in `functions/domain/<subject>/`, handlers in `functions/app/{public,admin}/` (ADR 0013, `functions/architecture.test.js`). Anything that can send, write or cost money is off by default behind a flag.
 - Add or update a test with each behavior change. Check for an existing test first.
