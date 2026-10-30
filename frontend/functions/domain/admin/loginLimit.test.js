@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { createTestD1 } from '../_test/testD1.js'
+import { createTestD1 } from '../../_test/testD1.js'
 import { clientKey, lockedFor, recordFailure, PER_CLIENT_LIMIT, GLOBAL_LIMIT, WINDOW_SECONDS } from './loginLimit.ts'
 
 let db

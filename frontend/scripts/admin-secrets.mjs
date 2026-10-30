@@ -4,8 +4,8 @@
 //   node scripts/admin-secrets.mjs totp      prints a new ADMIN_TOTP_SECRET and the address to add it to an authenticator app
 // Then set each one yourself:  npx wrangler secret put ADMIN_PASSWORD_HASH   (paste when asked)
 import { randomBytes } from 'node:crypto'
-import { hashPassword } from '../functions/_lib/password.ts'
-import { newTotpSecret, otpauthUri } from '../functions/_lib/totp.ts'
+import { hashPassword } from '../functions/domain/admin/password.ts'
+import { newTotpSecret, otpauthUri } from '../functions/domain/admin/totp.ts'
 
 export const newSessionSecret = () => randomBytes(36).toString('base64url')
 

@@ -50,7 +50,7 @@ describe('worker', () => {
   })
 
   it('shows the real cause on admin routes only to a signed-in admin', async () => {
-    const { signSession, COOKIE_NAME } = await import('./_lib/session.ts')
+    const { signSession, COOKIE_NAME } = await import('./domain/admin/session.ts')
     const secret = 's'.repeat(40)
     routes.push({ pattern: new URLPattern({ pathname: '/api/admin/boom' }), module: { onRequestGet: () => { throw new Error('db down') } } })
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})

@@ -1,11 +1,11 @@
 // @vitest-environment node
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { createTestD1 } from '../../_test/testD1.js'
-import worker from '../../worker.ts'
-import { hashPassword } from '../../_lib/password.ts'
-import { PER_CLIENT_LIMIT } from '../../_lib/loginLimit.ts'
-import { requireAdmin } from '../../app/admin/guard.ts'
-import { newTotpSecret, totpCode, stepAt } from '../../_lib/totp.ts'
+import { createTestD1 } from '../_test/testD1.js'
+import worker from '../worker.ts'
+import { hashPassword } from '../domain/admin/password.ts'
+import { PER_CLIENT_LIMIT } from '../domain/admin/loginLimit.ts'
+import { requireAdmin } from './admin/guard.ts'
+import { newTotpSecret, totpCode, stepAt } from '../domain/admin/totp.ts'
 
 const ORIGIN = 'https://site.test'
 const SECRET = 'k'.repeat(40)
