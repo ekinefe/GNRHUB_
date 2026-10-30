@@ -14,7 +14,7 @@ A personal portfolio site (`frontend/`) that is only the portfolio. Brandbook Ma
 | `frontend/functions/` | The Worker: `worker.ts` (routing table, request id and log line, errors, security headers), `_lib/` helpers (sessions, passwords, limits) and `modules/` (admin, blog, contact, projects, status). |
 | `frontend/db/migrations/` | Plain SQL migrations for the D1 database, numbered in order (`docs/database.md`). |
 | `frontend/public/` | Favicon, web manifest, fonts and project screenshots (`projects/`). |
-| `docs/` | This guide, architecture, copy rules, workflow guide, [easter eggs](easter-eggs.md), [observability](observability.md), [ascii](ascii.md). |
+| `docs/` | This guide, architecture, copy rules, workflow guide, [easter eggs](easter-eggs.md), [observability](observability.md), [ascii](ascii.md), [architecture plan](architecture-plan.md). |
 | `.github/workflows/` | CI (`gatekeeper.yml`: unit tests on PRs). |
 | `graphify-out/` | A graph of the code for AI tools (ignored by git; refresh with `graphify update .`). |
 
