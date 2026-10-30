@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { validatePost, LIMITS } from './validate.ts'
+import { validatePost } from './validate.ts'
+import { LIMITS } from './types.ts'
 
 const good = { title: 'What I learned about cron', slug: '', summary: 'A short note.', body: '# Heading\n\ntext', tags: 'Linux, cron,linux', status: 'draft' }
 

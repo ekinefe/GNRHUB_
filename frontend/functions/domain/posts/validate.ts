@@ -1,11 +1,7 @@
 // Checks a blog post from the editor (pure, no database): clean values, or one plain message per bad field.
 import { slugify, SLUG_PATTERN } from '../../../src/shared/lib/slugify.js';
 
-export const LIMITS = { title: 150, slug: 80, summary: 300, body: 50_000, tags: 8, tag: 30 };
-export const STATUSES = ['draft', 'private', 'public'] as const;
-export type Status = (typeof STATUSES)[number];
-export type PostInput = { title: string; slug: string; summary: string; body: string; tags: string; status: Status };
-export type PostResult = { ok: true; value: PostInput } | { ok: false; errors: Record<string, string> };
+import { LIMITS, STATUSES, type PostInput, type PostResult, type Status } from './types.ts';
 
 // eslint-disable-next-line no-control-regex
 const CONTROL = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g;
