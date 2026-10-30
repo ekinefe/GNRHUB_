@@ -28,3 +28,5 @@ export async function adminEnv(db, extra = {}) {
 }
 
 export const loginBody = (over = {}) => ({ username: ADMIN_USERNAME, password: ADMIN_PASSPHRASE, ...over })
+
+export const makeRedirect = (over = {}) => ({ slug: 'cv', target: 'https://example.com/cv.pdf', permanent: false, ...over })

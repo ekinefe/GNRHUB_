@@ -16,6 +16,8 @@ import { feedRoute } from './app/public/feed.ts';
 import { statusRoute } from './app/public/status.ts';
 import { projectsRoute } from './app/public/projects.ts';
 import { adminProjectsRoute, adminProjectRoute } from './app/admin/projects.ts';
+import { adminRedirectsRoute, adminRedirectRoute } from './app/admin/redirects.ts';
+import { redirectRoute } from './app/public/redirects.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -46,6 +48,9 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/status' }), module: statusRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/projects' }), module: adminProjectsRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/projects/:id' }), module: adminProjectRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/redirects' }), module: adminRedirectsRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/redirects/:id' }), module: adminRedirectRoute },
+  { pattern: new URLPattern({ pathname: '/r/:slug' }), module: redirectRoute },
   { pattern: new URLPattern({ pathname: '/api/projects' }), module: projectsRoute },
   { pattern: new URLPattern({ pathname: '/api/contact' }), module: contactRoute },
   { pattern: new URLPattern({ pathname: '/api/posts' }), module: postsRoute },
