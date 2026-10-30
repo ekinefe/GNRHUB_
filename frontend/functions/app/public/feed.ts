@@ -1,23 +1,20 @@
 // GET /blog/feed.xml: an RSS 2.0 feed of the latest public posts (ADR 0009). Drafts and private posts never appear.
 // Built on request; if the database cannot be read it answers 503 rather than an empty feed that readers would cache.
-import { type D1 } from '../../infra/d1.ts';
+import { feedPosts } from '../../domain/posts/actions.ts';
+import { dbOf } from '../../infra/d1.ts';
 import { brand } from '../../../src/shared/config/brand.js';
 
 type Context = { request: Request; env: { DB?: unknown } };
-type Row = { slug: string; title: string; summary: string; tags: string; publishedAt: number };
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const LIMIT = 20;
 
 async function feed({ request, env }: Context): Promise<Response> {
-  if (!env.DB) return new Response('The feed is not available right now.', { status: 503 });
+  const db = dbOf(env);
+  if (!db) return new Response('The feed is not available right now.', { status: 503 });
   const origin = new URL(request.url).origin;
-  let results: Row[];
+  let results;
   try {
-    ({ results } = await (env.DB as D1)
-      .prepare("SELECT slug, title, summary, tags, published_at AS publishedAt FROM posts WHERE status = 'public' ORDER BY published_at DESC, id DESC LIMIT ?")
-      .bind(LIMIT)
-      .all<Row>());
+    results = await feedPosts(db);
   } catch (error) {
     console.error('feed: could not read posts', error);
     return new Response('The feed is not available right now.', { status: 503 });
