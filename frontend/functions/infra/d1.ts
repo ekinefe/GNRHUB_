@@ -10,3 +10,16 @@ export type D1 = { prepare: (sql: string) => D1Statement };
 
 /** The binding from `env.DB`, or null while the database does not exist yet. */
 export const dbOf = (env: { DB?: unknown }): D1 | null => (env.DB ? (env.DB as D1) : null);
+
+export type DbState = 'ok' | 'missing' | 'error';
+
+/** Whether the database answers a trivial query: 'missing' when it is not bound yet, 'error' when it is bound but fails. */
+export async function checkDb(binding: unknown): Promise<DbState> {
+  if (!binding) return 'missing';
+  try {
+    await (binding as D1).prepare('SELECT 1 AS up').first();
+    return 'ok';
+  } catch {
+    return 'error';
+  }
+}

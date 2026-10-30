@@ -85,4 +85,4 @@ Decisions (GNR-141): the app folder stays `frontend/` (no rename to `web/`), and
 Inside the app folder:
 - `frontend/src/modules/<feature>`: one folder per feature (portfolio, blog, admin, legal, contact, colophon)
 - `frontend/src/shared`: UI, layout, config, content and helpers any module may use
-- `frontend/functions`: the Worker (`worker.ts` routing table, `_lib/` helpers)
+- `frontend/functions`: the Worker (`worker.ts` routing table, `domain/` rules and SQL, `app/` HTTP handlers, `infra/` helpers)

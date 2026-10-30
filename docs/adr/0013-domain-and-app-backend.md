@@ -7,11 +7,11 @@ Status: accepted. Date: 2026-10-30. Source: Brent Roose, *Laravel Beyond CRUD* (
 
 ## Decision
 Two layers, as in the book:
-- **`functions/domain/<subject>/`** holds what the site *is*: types, validation (the book's DTO step), the SQL (`repository.ts`), use cases as plain functions (`actions.ts`, for example `saveProject`), and the shape sent to the client (`present.ts`, the book's view model). It knows nothing about `Request` or `Response`.
+- **`functions/domain/<subject>/`** holds what the site *is*: types, validation (the book's DTO step), the SQL (`repository.ts`), use cases as plain functions (`actions.ts`, for example `saveProject`), and the shape sent to the client (`present.ts`, the book's view model). It builds no `Response`. A few helpers take a standard `Request` where they need a header (the hashed address for a rate limit, the session cookie); that is allowed, an `app/` import is not.
 - **`functions/app/public/`** and **`functions/app/admin/`** are the two applications. They read the request, run the guard, call a domain action, and turn the result into a `Response`. No SQL and no business rules.
 - **`functions/infra/`** holds helpers that belong to neither: the D1 type, `readJson`, `jsonNoStore`, security headers, failure handling.
 
-Rules, enforced by a test: `domain/` never imports `app/`; `app/public/` and `app/admin/` never import each other; both may import `domain/` and `infra/`.
+Rules, enforced by `functions/architecture.test.js`: `domain/` never imports `app/`; `app/public/` and `app/admin/` never import each other; both may import `domain/` and `infra/`. A domain subject never imports another subject (the admin overview combines posts and messages in `app/admin/summary.ts`). `app/` holds no SQL.
 
 ## What is taken from the book, and what is not
 Taken: domains, the application layer, actions, keeping SQL out of handlers, view models, small state helpers (post draft/private/public, message read), test factories. Not taken: event-driven models, DTO factories, jobs and queues, a class per action. The site has one author and a few thousand lines, so each of these would add files without removing a problem.

@@ -15,10 +15,12 @@ frontend/src/
   shared/         ui, animations, layout, errors, commands, config, content, lib
 frontend/functions/
   worker.ts       the Worker entry (routing table, error handling, security headers)
-  _lib/           shared server helpers (moving to domain/, app/ and infra/, see below)
+  domain/         what the site is: one folder per subject (projects, posts, messages, admin)
+  app/            the two applications: public/ (visitors) and admin/ (the owner), HTTP only
+  infra/          D1 type, HTTP helpers, security headers, failure handling
 ```
 
-The backend is being split into `domain/` (types, validation, SQL, actions), `app/` (HTTP handlers) and `infra/` (shared helpers), step by step. Reasons in [ADR 0013](adr/0013-domain-and-app-backend.md), steps in [architecture-plan.md](architecture-plan.md). The frontend keeps its feature modules; `modules/admin` is an application over several subjects.
+The backend follows [ADR 0013](adr/0013-domain-and-app-backend.md) (after *Laravel Beyond CRUD*). The frontend keeps its feature modules; `modules/admin` is an application over several subjects.
 
 GNRdigital is only the portfolio (ADR 0007). Brandbook Maker, CV Maker and Gym Tracker are separate projects; this site links to them from `shared/content/projects.js`.
 
@@ -28,6 +30,18 @@ One app folder, `frontend/`, holds both the SPA (`src/`) and the backend (`funct
 ## Rules (enforced by `src/architecture.test.js`)
 - `shared/` never imports from `modules/` or `app/`.
 - A module imports only `shared/` and itself. To share more, move it to `shared/`.
+
+## Backend rules (enforced by `functions/architecture.test.js`)
+- `domain/<subject>/` holds `types.ts`, `validate.ts` (the form reduced to clean values), `repository.ts` (all SQL), `present.ts` (the shape sent to the browser) and `actions.ts` (plain functions with a database and plain values in, a result out). It never imports `app/` and never another subject.
+- `app/public/` and `app/admin/` read the request, run the guard, call an action and build the `Response`. No SQL, no business rules, and they never import each other.
+- `infra/` imports neither `domain/` nor `app/`.
+- A result that can fail says why (`{ ok: false, reason: 'slug-taken' }`); the handler maps the reason to a status code. Actions do not throw for bad input.
+- Domain tests call the actions with a test database (`_test/testD1.js`), no Request. HTTP tests live in `app/*.test.js` and go through `worker.ts`.
+
+## Adding a backend feature
+1. A folder in `functions/domain/<subject>/` with the five files above (skip the ones you do not need) and a migration in `db/migrations/`.
+2. A handler in `app/public/` or `app/admin/` (admin handlers start with `requireAdmin`).
+3. A route in `functions/worker.ts`.
 
 ## Adding a page
 1. A folder in `src/modules/<name>/` (or a file in an existing one) and a lazy route in `app/App.jsx`.
