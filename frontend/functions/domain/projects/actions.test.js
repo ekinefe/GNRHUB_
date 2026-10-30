@@ -1,10 +1,11 @@
 // @vitest-environment node
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createTestD1 } from '../../_test/testD1.js'
+import { makeProject } from '../../_test/factories.js'
 import { adminProject, adminProjects, createProject, deleteProject, publicProjects, saveProject } from './actions.ts'
 
 // No Request, no Response, no worker: the domain is used the way app/ uses it.
-const input = (over = {}) => ({ name: 'Alpha', slug: '', grp: 'project', kind: 'Web app', summary: 'The first.', tech: 'React, D1', points: 'One\nTwo', status: 'live', repo: '', url: '', image: '', imageAlt: '', caseStudy: '', learned: '', featured: false, inAbout: false, sort: 100, ...over })
+const input = makeProject
 let db
 beforeEach(() => { db = createTestD1() })
 afterEach(() => db.close())

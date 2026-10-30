@@ -3,17 +3,18 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createTestD1 } from '../../_test/testD1.js'
 import { checkSignIn } from './signin.ts'
 import { hashPassword } from './password.ts'
+import { ADMIN_PASSPHRASE, ADMIN_USERNAME, loginBody } from '../../_test/factories.js'
 import { PER_CLIENT_LIMIT } from './loginLimit.ts'
 import { newTotpSecret, totpCode, stepAt } from './totp.ts'
 
 let db, secrets
 beforeEach(async () => {
   db = createTestD1()
-  secrets = { username: 'ekin', passwordHash: await hashPassword('a long passphrase here', 2000) }
+  secrets = { username: ADMIN_USERNAME, passwordHash: await hashPassword(ADMIN_PASSPHRASE, 2000) }
 })
 afterEach(() => db.close())
 
-const creds = (over = {}) => ({ username: 'ekin', password: 'a long passphrase here', code: '', ...over })
+const creds = (over = {}) => ({ ...loginBody(), code: '', ...over })
 
 describe('checkSignIn', () => {
   it('accepts the right username and password', async () => {
