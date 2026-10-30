@@ -1,11 +1,7 @@
 // Limits wrong sign-in guesses (ADR 0009). Failures are counted per client and for everyone together, in 15-minute
 // windows, in the login_attempts table. The client key is an HMAC of the address, so no address is stored.
 // Unlike the public-form limiters this one fails closed: if the counter cannot be read, the caller refuses to sign in.
-type D1 = {
-  prepare: (sql: string) => {
-    bind: (...v: unknown[]) => { first: <T = unknown>() => Promise<T | null>; run: () => Promise<unknown> };
-  };
-};
+import { type D1 } from '../infra/d1.ts';
 
 export const WINDOW_SECONDS = 15 * 60;
 export const PER_CLIENT_LIMIT = 5;

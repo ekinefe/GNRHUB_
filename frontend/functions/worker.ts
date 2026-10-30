@@ -2,8 +2,8 @@
 // Only /api/*, /sitemap.xml and /blog/feed.xml reach this code (wrangler.jsonc run_worker_first); everything else
 // is served straight from the static assets. Routes are one file each under
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
-import { withSecurityHeaders } from './_lib/security-headers.ts';
-import { failure, isAdminPath } from './_lib/failure.ts';
+import { withSecurityHeaders } from './infra/security-headers.ts';
+import { failure, isAdminPath } from './infra/failure.ts';
 import { currentAdmin } from './_lib/adminGuard.ts';
 import { loginRoute, logoutRoute, meRoute } from './modules/admin/auth.ts';
 import { messagesRoute, messageRoute } from './modules/admin/messages.ts';

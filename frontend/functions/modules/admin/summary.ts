@@ -1,8 +1,9 @@
 // GET /api/admin/summary: what the admin home shows at a glance (ADR 0009): unread messages, posts by status, and the
 // five newest messages and most recently edited posts (a short preview only, never a whole message or post body).
-import { jsonNoStore, requireAdmin } from '../../_lib/adminGuard.ts';
+import { requireAdmin } from '../../_lib/adminGuard.ts';
+import { type D1 } from '../../infra/d1.ts';
+import { jsonNoStore } from '../../infra/http.ts';
 
-type D1 = { prepare: (sql: string) => { first: <T>() => Promise<T | null>; all: <T>() => Promise<{ results: T[] }> } };
 type Context = { request: Request; env: { DB?: unknown; SESSION_SECRET?: string } };
 
 async function summary({ request, env }: Context): Promise<Response> {

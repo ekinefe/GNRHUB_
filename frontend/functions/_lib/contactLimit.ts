@@ -1,11 +1,7 @@
 // Limits how many messages one client (and everyone together) can send through the contact form, per hour, in
 // contact_hits. The client key is an HMAC of the address, so no address is stored. Fails closed: if the counter cannot
 // be read or written the form answers 503, because an unlimited form is a spam hole.
-type D1 = {
-  prepare: (sql: string) => {
-    bind: (...v: unknown[]) => { first: <T = unknown>() => Promise<T | null>; run: () => Promise<unknown> };
-  };
-};
+import { type D1 } from '../infra/d1.ts';
 
 export const WINDOW_SECONDS = 60 * 60;
 export const PER_CLIENT_LIMIT = 3;

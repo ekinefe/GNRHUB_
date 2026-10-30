@@ -1,8 +1,8 @@
 // GET /api/status (GNR-126): the address an uptime monitor pings. Public, so it says only whether the site and its
 // database answer: no secrets, no counts, no versions. 200 when fine, 503 when the database is bound but fails.
-import { jsonNoStore } from '../../_lib/adminGuard.ts';
+import { type D1 } from '../../infra/d1.ts';
+import { jsonNoStore } from '../../infra/http.ts';
 
-type D1 = { prepare: (sql: string) => { first: <T>() => Promise<T | null> } };
 type Context = { request: Request; env: { DB?: unknown } };
 
 export type Db = 'ok' | 'missing' | 'error';

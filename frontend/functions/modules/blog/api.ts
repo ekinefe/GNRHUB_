@@ -1,18 +1,12 @@
 // Public blog API (ADR 0009): GET /api/posts and GET /api/posts/:slug. Only posts with status "public" are ever
 // returned; a draft or private post answers exactly like one that does not exist (404).
 import { SLUG_PATTERN } from '../../../src/shared/lib/slugify.js';
+import { type D1 } from '../../infra/d1.ts';
+import { json } from '../../infra/http.ts';
 
-type D1 = {
-  prepare: (sql: string) => {
-    bind: (...v: unknown[]) => { all: <T>() => Promise<{ results: T[] }>; first: <T>() => Promise<T | null> };
-  };
-};
 type Context = { request: Request; env: { DB?: unknown } };
 type Row = { id?: number; slug: string; title: string; summary: string; tags: string; body?: string; publishedAt: number };
 type Neighbour = { slug: string; title: string };
-
-const json = (body: unknown, status = 200, extra: Record<string, string> = {}) =>
-  new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', ...extra } });
 
 const SHORT_CACHE = { 'Cache-Control': 'public, max-age=60' };
 const tagsOf = (csv: string) => (csv ? csv.split(',') : []);

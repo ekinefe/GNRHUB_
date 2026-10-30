@@ -1,6 +1,6 @@
 // Public list of the projects shown on Home, About and Portfolio (ADR 0012): GET /api/projects.
 // Nothing here is private; it is the same text as the page. Empty until the owner adds projects in the admin panel.
-type D1 = { prepare: (sql: string) => { all: <T>() => Promise<{ results: T[] }> } };
+import { type D1 } from '../../infra/d1.ts';
 type Context = { request: Request; env: { DB?: unknown } };
 
 type Row = {

@@ -3,11 +3,12 @@
 import { hashPassword, verifyPassword } from '../../_lib/password.ts';
 import { signSession, sessionCookie, clearSessionCookie } from '../../_lib/session.ts';
 import { safeEqual } from '../../_lib/safeEqual.ts';
-import { jsonNoStore, sameOrigin, currentAdmin } from '../../_lib/adminGuard.ts';
+import { currentAdmin } from '../../_lib/adminGuard.ts';
+import { type D1 } from '../../infra/d1.ts';
+import { jsonNoStore, readJson, sameOrigin } from '../../infra/http.ts';
 import { clientKey, lockedFor, recordFailure } from '../../_lib/loginLimit.ts';
 import { verifyTotp, acceptStep } from '../../_lib/totp.ts';
 
-type D1 = Parameters<typeof lockedFor>[0];
 export type AuthEnv = { DB?: unknown; ADMIN_USERNAME?: string; ADMIN_PASSWORD_HASH?: string; SESSION_SECRET?: string; ADMIN_TOTP_SECRET?: string };
 type Context = { request: Request; env: AuthEnv };
 
@@ -19,18 +20,11 @@ let dummy: Promise<string> | undefined;
 const dummyHash = () => (dummy ??= hashPassword('not the password'));
 
 async function readCredentials(request: Request): Promise<{ username: string; password: string; code: string } | null> {
-  if (Number(request.headers.get('Content-Length') ?? 0) > MAX_BODY) return null;
-  const text = await request.text();
-  if (text.length > MAX_BODY) return null;
-  try {
-    const body = JSON.parse(text);
-    if (typeof body?.username !== 'string' || typeof body?.password !== 'string') return null;
-    if (body.username.length > MAX_FIELD || body.password.length > MAX_FIELD) return null;
-    const code = typeof body.code === 'string' && body.code.length <= 20 ? body.code : '';
-    return { username: body.username, password: body.password, code };
-  } catch {
-    return null;
-  }
+  const body = (await readJson(request, MAX_BODY)) as { username?: unknown; password?: unknown; code?: unknown } | undefined | null;
+  if (typeof body?.username !== 'string' || typeof body?.password !== 'string') return null;
+  if (body.username.length > MAX_FIELD || body.password.length > MAX_FIELD) return null;
+  const code = typeof body.code === 'string' && body.code.length <= 20 ? body.code : '';
+  return { username: body.username, password: body.password, code };
 }
 
 async function login({ request, env }: Context): Promise<Response> {

@@ -6,7 +6,7 @@ Free and built in: no Sentry or other service (it would be a new dependency).
 - `observability.enabled` in `frontend/wrangler.jsonc` turns on Workers Logs in the Cloudflare dashboard (Workers & Pages, `gnrdigital`, Observability).
 - Every request writes one JSON line: `{ id, method, path, status, ms }`. The path has no query string. There is **no IP address, cookie, header or body** in it (a test checks this).
 - The same `id` is returned in the `X-Request-Id` response header. If something fails for you, copy the header from DevTools and search the logs for it.
-- Unexpected errors are logged as `{ id, method, path, error }` where `error` is only the error class name; the message never reaches the log or the visitor (`functions/_lib/failure.ts`).
+- Unexpected errors are logged as `{ id, method, path, error }` where `error` is only the error class name; the message never reaches the log or the visitor (`functions/infra/failure.ts`).
 
 ## `GET /api/status`
 Public, answers `{ "ok": true, "db": "ok" }`.
