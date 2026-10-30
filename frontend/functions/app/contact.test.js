@@ -1,9 +1,9 @@
 // @vitest-environment node
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { createTestD1 } from '../../_test/testD1.js'
-import worker from '../../worker.ts'
-import { hashPassword } from '../../_lib/password.ts'
-import { PER_CLIENT_LIMIT, GLOBAL_LIMIT, contactClientKey } from '../../_lib/contactLimit.ts'
+import { createTestD1 } from '../_test/testD1.js'
+import worker from '../worker.ts'
+import { hashPassword } from '../_lib/password.ts'
+import { PER_CLIENT_LIMIT, GLOBAL_LIMIT, contactClientKey } from '../domain/messages/limit.ts'
 
 const ORIGIN = 'https://site.test'
 let db, env
