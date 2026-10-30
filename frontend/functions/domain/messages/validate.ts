@@ -1,8 +1,5 @@
 // Checks a contact form submission (pure, no database). Returns clean values or one plain message per bad field.
-export const LIMITS = { name: 100, email: 200, subject: 150, messageMin: 10, message: 5000 };
-
-export type ContactInput = { name: string; email: string; subject: string; message: string };
-export type ContactResult = { ok: true; value: ContactInput } | { ok: false; errors: Record<string, string> };
+import { LIMITS, type ContactInput, type ContactResult } from './types.ts';
 
 // Letters, digits and the usual punctuation, one @, a dot in the domain, no spaces. Not a full RFC check on purpose.
 const EMAIL = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
