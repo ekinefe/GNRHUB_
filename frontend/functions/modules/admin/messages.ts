@@ -1,6 +1,6 @@
 // Contact messages in the admin panel (ADR 0009): GET /api/admin/messages lists them, POST /api/admin/messages/:id
 // marks one read or unread, or deletes it. Every handler starts with requireAdmin.
-import { requireAdmin } from '../../_lib/adminGuard.ts';
+import { requireAdmin } from '../../app/admin/guard.ts';
 import { type D1 } from '../../infra/d1.ts';
 import { idOf, jsonNoStore, validId } from '../../infra/http.ts';
 

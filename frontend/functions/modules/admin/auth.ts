@@ -3,7 +3,7 @@
 import { hashPassword, verifyPassword } from '../../_lib/password.ts';
 import { signSession, sessionCookie, clearSessionCookie } from '../../_lib/session.ts';
 import { safeEqual } from '../../_lib/safeEqual.ts';
-import { currentAdmin } from '../../_lib/adminGuard.ts';
+import { currentAdmin } from '../../app/admin/guard.ts';
 import { type D1 } from '../../infra/d1.ts';
 import { jsonNoStore, readJson, sameOrigin } from '../../infra/http.ts';
 import { clientKey, lockedFor, recordFailure } from '../../_lib/loginLimit.ts';

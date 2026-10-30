@@ -1,6 +1,6 @@
 // GET /api/admin/summary: what the admin home shows at a glance (ADR 0009): unread messages, posts by status, and the
 // five newest messages and most recently edited posts (a short preview only, never a whole message or post body).
-import { requireAdmin } from '../../_lib/adminGuard.ts';
+import { requireAdmin } from '../../app/admin/guard.ts';
 import { type D1 } from '../../infra/d1.ts';
 import { jsonNoStore } from '../../infra/http.ts';
 

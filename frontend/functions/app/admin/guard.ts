@@ -1,6 +1,6 @@
 // What every admin route uses (ADR 0009): fail closed. No valid session cookie, no answer.
-import { readSessionCookie, verifySession, type Session } from './session.ts';
-import { jsonNoStore, sameOrigin } from '../infra/http.ts';
+import { readSessionCookie, verifySession, type Session } from '../../_lib/session.ts';
+import { jsonNoStore, sameOrigin } from '../../infra/http.ts';
 
 export type GuardEnv = { SESSION_SECRET?: string };
 
