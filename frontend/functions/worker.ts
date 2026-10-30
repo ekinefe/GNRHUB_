@@ -4,7 +4,7 @@
 // functions/api/, exporting onRequestGet / onRequestPost taking { request, env }.
 import { withSecurityHeaders } from './infra/security-headers.ts';
 import { failure, isAdminPath } from './infra/failure.ts';
-import { currentAdmin } from './_lib/adminGuard.ts';
+import { currentAdmin } from './app/admin/guard.ts';
 import { loginRoute, logoutRoute, meRoute } from './modules/admin/auth.ts';
 import { messagesRoute, messageRoute } from './modules/admin/messages.ts';
 import { contactRoute } from './modules/contact/api.ts';
@@ -14,8 +14,8 @@ import { postsRoute, postRoute } from './modules/blog/api.ts';
 import { sitemapRoute } from './modules/blog/sitemap.ts';
 import { feedRoute } from './modules/blog/feed.ts';
 import { statusRoute } from './modules/status/api.ts';
-import { projectsRoute } from './modules/projects/api.ts';
-import { adminProjectsRoute, adminProjectRoute } from './modules/admin/projects.ts';
+import { projectsRoute } from './app/public/projects.ts';
+import { adminProjectsRoute, adminProjectRoute } from './app/admin/projects.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };

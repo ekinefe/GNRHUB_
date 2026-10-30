@@ -4,7 +4,7 @@ import { createTestD1 } from '../../_test/testD1.js'
 import worker from '../../worker.ts'
 import { hashPassword } from '../../_lib/password.ts'
 import { PER_CLIENT_LIMIT } from '../../_lib/loginLimit.ts'
-import { requireAdmin } from '../../_lib/adminGuard.ts'
+import { requireAdmin } from '../../app/admin/guard.ts'
 import { newTotpSecret, totpCode, stepAt } from '../../_lib/totp.ts'
 
 const ORIGIN = 'https://site.test'

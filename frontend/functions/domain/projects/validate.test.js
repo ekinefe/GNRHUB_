@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, it, expect } from 'vitest'
-import { validateProject, LIMITS } from './validate.ts'
+import { validateProject } from './validate.ts'
+import { LIMITS } from './types.ts'
 
 const good = { name: 'Planned Lost', slug: '', grp: 'project', kind: 'Web app', summary: 'A route planner.', tech: 'React, TypeScript, react', points: 'First point\n\n  Second   point ', status: 'live', repo: '', url: 'https://example.com/app', image: '/projects/planned-lost.png', imageAlt: 'The home page', caseStudy: '/colophon', learned: '', featured: true, inAbout: false, sort: '5' }
 

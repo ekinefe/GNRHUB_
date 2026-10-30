@@ -1,7 +1,7 @@
 // Blog posts in the admin panel (ADR 0009). Every handler starts with requireAdmin; changes also need the same origin.
 //   GET  /api/admin/posts        list (no bodies)        POST /api/admin/posts       create
 //   GET  /api/admin/posts/:id    one, with the body      POST /api/admin/posts/:id   { action: 'save', ...fields } or { action: 'delete' }
-import { requireAdmin } from '../../_lib/adminGuard.ts';
+import { requireAdmin } from '../../app/admin/guard.ts';
 import { type D1 } from '../../infra/d1.ts';
 import { idOf, jsonNoStore, readJson as readBody, validId } from '../../infra/http.ts';
 import { validatePost } from '../blog/validate.ts';
