@@ -19,7 +19,7 @@ Budget is $0, so the site must work inside the Workers Free plan. Numbers below 
 | Over the D1 daily limit | queries fail with an error until 00:00 UTC | D1 pricing |
 | Over the Worker daily limit | Cloudflare error 1027 (what visitors see depends on the route's fail mode) | Workers limits |
 
-Pages like `/about` are static files and do not run Worker code (`run_worker_first` lists only `/api/*`, `/sitemap.xml` and `/blog/feed.xml`). Whether static asset requests count against the 100,000 is **not confirmed here**; check the Workers pricing page when deploying.
+Pages like `/about` are static files and do not run Worker code (`run_worker_first` lists only `/api/*`, `/sitemap.xml`, `/blog/feed.xml` and the short links `/r/*`). Whether static asset requests count against the 100,000 is **not confirmed here**; check the Workers pricing page when deploying.
 
 ## Worst case per feature
 Estimates from the queries in the code, not measurements. "Rows" means D1 rows read or written.
