@@ -1,10 +1,11 @@
 // @vitest-environment node
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createTestD1 } from '../../_test/testD1.js'
+import { makeMessage } from '../../_test/factories.js'
 import { adminMessages, changeMessage, messageOverview, receiveMessage } from './actions.ts'
 import { PER_CLIENT_LIMIT } from './limit.ts'
 
-const form = (over = {}) => ({ name: 'Ada', email: 'ada@example.com', subject: 'Hello', message: 'I would like to talk about an internship.', ...over })
+const form = makeMessage
 const client = (key = 'a') => async () => key
 let db
 beforeEach(() => { db = createTestD1() })

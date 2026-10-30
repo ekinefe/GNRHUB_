@@ -2,20 +2,14 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createTestD1 } from '../_test/testD1.js'
 import worker from '../worker.ts'
-import { hashPassword } from '../domain/admin/password.ts'
+import { adminEnv, makePost } from '../_test/factories.js'
 
 const ORIGIN = 'https://site.test'
 let db, env
 
 beforeEach(async () => {
   db = createTestD1()
-  env = {
-    ASSETS: { fetch: async () => new Response('x') },
-    DB: db,
-    ADMIN_USERNAME: 'ekin',
-    ADMIN_PASSWORD_HASH: await hashPassword('a long passphrase here', 2000),
-    SESSION_SECRET: 'k'.repeat(40),
-  }
+  env = await adminEnv(db)
 })
 afterEach(() => db.close())
 
@@ -27,7 +21,7 @@ const call = (path, { method = 'GET', body, origin = ORIGIN, cookie } = {}) =>
   }), env)
 
 const signIn = async () => (await call('/api/admin/login', { method: 'POST', body: { username: 'ekin', password: 'a long passphrase here' } })).headers.get('Set-Cookie').split(';')[0]
-const post = (over = {}) => ({ title: 'First note', slug: '', summary: 'Sum', body: 'Body **text**', tags: 'notes', status: 'draft', ...over })
+const post = makePost
 const create = async (cookie, over) => (await call('/api/admin/posts', { method: 'POST', cookie, body: post(over) }))
 
 describe('public posts', () => {

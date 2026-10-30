@@ -2,13 +2,13 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createTestD1 } from '../_test/testD1.js'
 import worker from '../worker.ts'
-import { hashPassword } from '../domain/admin/password.ts'
+import { adminEnv, makeProject } from '../_test/factories.js'
 
 const ORIGIN = 'https://site.test'
 let db, env
 beforeEach(async () => {
   db = createTestD1()
-  env = { ASSETS: { fetch: async () => new Response('x') }, DB: db, ADMIN_USERNAME: 'ekin', ADMIN_PASSWORD_HASH: await hashPassword('a long passphrase here', 2000), SESSION_SECRET: 'k'.repeat(40) }
+  env = await adminEnv(db)
 })
 afterEach(() => db.close())
 
@@ -19,7 +19,7 @@ const call = (path, { method = 'GET', body, origin = ORIGIN, cookie, withEnv = e
     body: body === undefined ? undefined : JSON.stringify(body),
   }), withEnv)
 const signIn = async () => (await call('/api/admin/login', { method: 'POST', body: { username: 'ekin', password: 'a long passphrase here' } })).headers.get('Set-Cookie').split(';')[0]
-const project = (over = {}) => ({ name: 'Alpha', slug: '', grp: 'project', kind: 'Web app', summary: 'The first.', tech: 'React, D1', points: 'One\nTwo', status: 'live', repo: 'https://github.com/x/alpha', url: '', image: '', imageAlt: '', caseStudy: '', learned: '', featured: false, inAbout: false, sort: 100, ...over })
+const project = (over = {}) => makeProject({ repo: 'https://github.com/x/alpha', ...over })
 const create = (cookie, over) => call('/api/admin/projects', { method: 'POST', cookie, body: project(over) })
 
 describe('public projects', () => {

@@ -29,7 +29,7 @@ functions/
 | 5 | `domain/posts/` (#111) (draft, private, public as a small state helper) | same |
 | 6 | `domain/messages/` (#112) and contact (read state, rate limit) | same |
 | 7 | Auth moved (#113) to `domain/admin/` | `_lib/` is empty or gone |
-| 8 | Architecture test and docs | `domain` -> `app` import fails the build; `REPO_GUIDE.md` and `CLAUDE.md` updated |
+| 8 | Architecture test and docs (#114) | `domain` -> `app` import fails the build; `REPO_GUIDE.md` and `CLAUDE.md` updated |
 | 9 | Test factories (`_test/factories.js`) | repeated test data replaced |
 
 ## Rules for every step

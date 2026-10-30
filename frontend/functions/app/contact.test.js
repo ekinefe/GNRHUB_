@@ -2,7 +2,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createTestD1 } from '../_test/testD1.js'
 import worker from '../worker.ts'
-import { hashPassword } from '../domain/admin/password.ts'
+import { adminEnv } from '../_test/factories.js'
 import { PER_CLIENT_LIMIT, GLOBAL_LIMIT, contactClientKey } from '../domain/messages/limit.ts'
 
 const ORIGIN = 'https://site.test'
@@ -10,13 +10,7 @@ let db, env
 
 beforeEach(async () => {
   db = createTestD1()
-  env = {
-    ASSETS: { fetch: async () => new Response('x') },
-    DB: db,
-    ADMIN_USERNAME: 'ekin',
-    ADMIN_PASSWORD_HASH: await hashPassword('a long passphrase here', 2000),
-    SESSION_SECRET: 'k'.repeat(40),
-  }
+  env = await adminEnv(db)
 })
 afterEach(() => db.close())
 

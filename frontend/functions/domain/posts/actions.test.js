@@ -1,9 +1,11 @@
 // @vitest-environment node
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createTestD1 } from '../../_test/testD1.js'
+import { makePost } from '../../_test/factories.js'
 import { adminPost, adminPosts, createPost, deletePost, postOverview, publicPost, publicPosts, savePost } from './actions.ts'
 
-const input = (over = {}) => ({ title: 'First note', slug: '', summary: 'Short.', body: 'Text', tags: 'Linux, cron', status: 'public', ...over })
+// Most of these tests are about what visitors see, so the default here is public.
+const input = (over = {}) => makePost({ status: 'public', tags: 'Linux, cron', ...over })
 let db
 beforeEach(() => { db = createTestD1() })
 afterEach(() => db.close())

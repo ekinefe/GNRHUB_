@@ -36,7 +36,7 @@ One app folder, `frontend/`, holds both the SPA (`src/`) and the backend (`funct
 - `app/public/` and `app/admin/` read the request, run the guard, call an action and build the `Response`. No SQL, no business rules, and they never import each other.
 - `infra/` imports neither `domain/` nor `app/`.
 - A result that can fail says why (`{ ok: false, reason: 'slug-taken' }`); the handler maps the reason to a status code. Actions do not throw for bad input.
-- Domain tests call the actions with a test database (`_test/testD1.js`), no Request. HTTP tests live in `app/*.test.js` and go through `worker.ts`.
+- Domain tests call the actions with a test database (`_test/testD1.js`), no Request. Test data comes from `_test/factories.js` (`makePost`, `makeProject`, `makeMessage`, `adminEnv`): pass only what the test is about. HTTP tests live in `app/*.test.js` and go through `worker.ts`.
 
 ## Adding a backend feature
 1. A folder in `functions/domain/<subject>/` with the five files above (skip the ones you do not need) and a migration in `db/migrations/`.
