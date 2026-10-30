@@ -2,7 +2,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createTestD1 } from '../_test/testD1.js'
 import worker from '../worker.ts'
-import { hashPassword } from '../_lib/password.ts'
+import { hashPassword } from '../domain/admin/password.ts'
 import { PER_CLIENT_LIMIT, GLOBAL_LIMIT, contactClientKey } from '../domain/messages/limit.ts'
 
 const ORIGIN = 'https://site.test'

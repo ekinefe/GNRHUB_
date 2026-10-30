@@ -3,7 +3,7 @@
 import { describe, it, expect } from 'vitest'
 import { spawnSync } from 'node:child_process'
 import { newSessionSecret } from './admin-secrets.mjs'
-import { verifyPassword } from '../functions/_lib/password.ts'
+import { verifyPassword } from '../functions/domain/admin/password.ts'
 
 const run = (args, input) => spawnSync(process.execPath, ['scripts/admin-secrets.mjs', ...args], { input, encoding: 'utf8' })
 

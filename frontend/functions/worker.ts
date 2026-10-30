@@ -5,7 +5,7 @@
 import { withSecurityHeaders } from './infra/security-headers.ts';
 import { failure, isAdminPath } from './infra/failure.ts';
 import { currentAdmin } from './app/admin/guard.ts';
-import { loginRoute, logoutRoute, meRoute } from './modules/admin/auth.ts';
+import { loginRoute, logoutRoute, meRoute } from './app/admin/auth.ts';
 import { messagesRoute, messageRoute } from './app/admin/messages.ts';
 import { contactRoute } from './app/public/contact.ts';
 import { adminPostsRoute, adminPostRoute } from './app/admin/posts.ts';
