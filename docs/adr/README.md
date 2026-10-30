@@ -16,5 +16,6 @@ One short file per decision: context, decision, consequences. Numbered, never re
 | [0010](0010-admin-two-factor.md) | Two-factor sign-in (authenticator app) and the Better Auth comparison | accepted |
 | [0011](0011-english-only.md) | The site is English only | accepted |
 | [0012](0012-admin-managed-projects.md) | Portfolio projects are managed in the admin panel | accepted |
+| [0013](0013-domain-and-app-backend.md) | Backend split into domain, app and infra layers | accepted |
 
 Not recorded yet: CV rendering approach (needs an owner decision).

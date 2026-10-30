@@ -15,8 +15,10 @@ frontend/src/
   shared/         ui, animations, layout, errors, commands, config, content, lib
 frontend/functions/
   worker.ts       the Worker entry (routing table, error handling, security headers)
-  _lib/           shared server helpers
+  _lib/           shared server helpers (moving to domain/, app/ and infra/, see below)
 ```
+
+The backend is being split into `domain/` (types, validation, SQL, actions), `app/` (HTTP handlers) and `infra/` (shared helpers), step by step. Reasons in [ADR 0013](adr/0013-domain-and-app-backend.md), steps in [architecture-plan.md](architecture-plan.md). The frontend keeps its feature modules; `modules/admin` is an application over several subjects.
 
 GNRdigital is only the portfolio (ADR 0007). Brandbook Maker, CV Maker and Gym Tracker are separate projects; this site links to them from `shared/content/projects.js`.
 
