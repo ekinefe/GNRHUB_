@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { createTestD1 } from '../_test/testD1.js'
+import { createTestD1 } from '../../_test/testD1.js'
 import { base32Encode, base32Decode, newTotpSecret, totpCode, verifyTotp, stepAt, otpauthUri, acceptStep } from './totp.ts'
 
 // RFC 6238, appendix B: secret "12345678901234567890", SHA-1. The RFC lists 8 digits; the last 6 are the 6-digit code.
