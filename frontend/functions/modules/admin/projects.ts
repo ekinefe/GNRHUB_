@@ -1,36 +1,22 @@
 // Portfolio projects in the admin panel (ADR 0012). Every handler starts with requireAdmin; changes also need the same origin.
 //   GET  /api/admin/projects        list            POST /api/admin/projects       create
 //   GET  /api/admin/projects/:id    one             POST /api/admin/projects/:id   { action: 'save', ...fields } or { action: 'delete' }
-import { jsonNoStore, requireAdmin } from '../../_lib/adminGuard.ts';
+import { requireAdmin } from '../../_lib/adminGuard.ts';
+import { type D1 } from '../../infra/d1.ts';
+import { idOf, jsonNoStore, readJson as readBody, validId } from '../../infra/http.ts';
 import { validateProject } from '../projects/validate.ts';
 import { COLUMNS, toProject } from '../projects/api.ts';
 
-type D1 = {
-  prepare: (sql: string) => {
-    bind: (...v: unknown[]) => {
-      all: <T>() => Promise<{ results: T[] }>;
-      first: <T>() => Promise<T | null>;
-      run: () => Promise<{ meta?: { changes?: number; last_row_id?: number } }>;
-    };
-    all: <T>() => Promise<{ results: T[] }>;
-  };
-};
 type Context = { request: Request; env: { DB?: unknown; SESSION_SECRET?: string } };
 
 const MAX_BODY = 40_000;
-const idOf = (request: Request) => Number(new URL(request.url).pathname.split('/').pop());
 const taken = (e: unknown) => e instanceof Error && /UNIQUE/i.test(e.message);
 const SLUG_TAKEN = { error: 'Check the project.', errors: { slug: 'That address is already used by another project.' } };
 // The admin also needs the database id and the sort number, which the public list leaves out.
 const withAdminFields = (r: Record<string, unknown>) => ({ ...toProject(r as never), dbId: r.id, sort: r.sort, visible: r.visible === 1 });
 const ADMIN_COLUMNS = 'id, sort, visible, ' + COLUMNS;
 
-async function readJson(request: Request): Promise<unknown | undefined> {
-  if (Number(request.headers.get('Content-Length') ?? 0) > MAX_BODY) return undefined;
-  const text = await request.text();
-  if (text.length > MAX_BODY) return undefined;
-  try { return JSON.parse(text); } catch { return undefined; }
-}
+const readJson = (request: Request) => readBody(request, MAX_BODY);
 
 async function list({ request, env }: Context): Promise<Response> {
   const guard = await requireAdmin(request, env);
@@ -45,7 +31,7 @@ async function get({ request, env }: Context): Promise<Response> {
   if (guard instanceof Response) return guard;
   if (!env.DB) return jsonNoStore({ error: 'The database is not available.' }, 503);
   const id = idOf(request);
-  if (!Number.isInteger(id) || id < 1) return jsonNoStore({ error: 'Not found.' }, 404);
+  if (!validId(id)) return jsonNoStore({ error: 'Not found.' }, 404);
   const row = await (env.DB as D1).prepare('SELECT ' + ADMIN_COLUMNS + ' FROM projects WHERE id = ?').bind(id).first<Record<string, unknown>>();
   return row ? jsonNoStore({ project: withAdminFields(row) }) : jsonNoStore({ error: 'Not found.' }, 404);
 }
@@ -74,7 +60,7 @@ async function change({ request, env }: Context): Promise<Response> {
   if (guard instanceof Response) return guard;
   if (!env.DB) return jsonNoStore({ error: 'The database is not available.' }, 503);
   const id = idOf(request);
-  if (!Number.isInteger(id) || id < 1) return jsonNoStore({ error: 'Not found.' }, 404);
+  if (!validId(id)) return jsonNoStore({ error: 'Not found.' }, 404);
   const body = await readJson(request);
   const action = (body as { action?: unknown } | undefined)?.action;
   const db = env.DB as D1;

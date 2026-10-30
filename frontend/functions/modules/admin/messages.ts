@@ -1,13 +1,9 @@
 // Contact messages in the admin panel (ADR 0009): GET /api/admin/messages lists them, POST /api/admin/messages/:id
 // marks one read or unread, or deletes it. Every handler starts with requireAdmin.
-import { jsonNoStore, requireAdmin } from '../../_lib/adminGuard.ts';
+import { requireAdmin } from '../../_lib/adminGuard.ts';
+import { type D1 } from '../../infra/d1.ts';
+import { idOf, jsonNoStore, validId } from '../../infra/http.ts';
 
-type D1 = {
-  prepare: (sql: string) => {
-    bind: (...v: unknown[]) => { all: <T>() => Promise<{ results: T[] }>; run: () => Promise<{ meta?: { changes?: number } }> };
-    all: <T>() => Promise<{ results: T[] }>;
-  };
-};
 type Context = { request: Request; env: { DB?: unknown; SESSION_SECRET?: string } };
 
 const LIST_LIMIT = 200;
@@ -28,8 +24,8 @@ async function change({ request, env }: Context): Promise<Response> {
   if (guard instanceof Response) return guard;
   if (!env.DB) return jsonNoStore({ error: 'The database is not available.' }, 503);
 
-  const id = Number(new URL(request.url).pathname.split('/').pop());
-  if (!Number.isInteger(id) || id < 1) return jsonNoStore({ error: 'Not found.' }, 404);
+  const id = idOf(request);
+  if (!validId(id)) return jsonNoStore({ error: 'Not found.' }, 404);
   let action: unknown;
   try { action = (await request.json() as { action?: unknown }).action; } catch { return jsonNoStore({ error: 'Bad request.' }, 400); }
 

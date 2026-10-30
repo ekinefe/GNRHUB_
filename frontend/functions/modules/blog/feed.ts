@@ -1,8 +1,8 @@
 // GET /blog/feed.xml: an RSS 2.0 feed of the latest public posts (ADR 0009). Drafts and private posts never appear.
 // Built on request; if the database cannot be read it answers 503 rather than an empty feed that readers would cache.
+import { type D1 } from '../../infra/d1.ts';
 import { brand } from '../../../src/shared/config/brand.js';
 
-type D1 = { prepare: (sql: string) => { bind: (...v: unknown[]) => { all: <T>() => Promise<{ results: T[] }> } } };
 type Context = { request: Request; env: { DB?: unknown } };
 type Row = { slug: string; title: string; summary: string; tags: string; publishedAt: number };
 

@@ -1,9 +1,9 @@
 // Public contact form endpoint: POST /api/contact (ADR 0009). Stored in D1, read in the admin panel.
-import { jsonNoStore, sameOrigin } from '../../_lib/adminGuard.ts';
+import { type D1 } from '../../infra/d1.ts';
+import { jsonNoStore, sameOrigin } from '../../infra/http.ts';
 import { contactClientKey, contactLockedFor, contactRecord } from '../../_lib/contactLimit.ts';
 import { validateContact } from './validate.ts';
 
-type D1 = Parameters<typeof contactLockedFor>[0];
 type Context = { request: Request; env: { DB?: unknown; SESSION_SECRET?: string } };
 
 const MAX_BODY = 12_000;
@@ -26,7 +26,7 @@ async function send({ request, env }: Context): Promise<Response> {
   const result = validateContact(body);
   if (!result.ok) return jsonNoStore({ error: 'Check the form.', errors: result.errors }, 400);
 
-  const db = env.DB as D1 & { prepare: (sql: string) => { bind: (...v: unknown[]) => { run: () => Promise<unknown> } } };
+  const db = env.DB as D1;
   const client = await contactClientKey(request, env.SESSION_SECRET);
   const wait = await contactLockedFor(db, client);
   if (wait > 0) return jsonNoStore({ error: 'You sent several messages recently. Please try again later or email me.' }, 429, { 'Retry-After': String(wait) });

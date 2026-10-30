@@ -1,8 +1,8 @@
 // GET /sitemap.xml, built on request (ADR 0009): the fixed pages plus every public post. Drafts and private posts
 // are never in it. If the database cannot be read, the fixed pages are still served.
+import { type D1 } from '../../infra/d1.ts';
 import { sitemapPaths } from '../../../src/shared/config/seo.js';
 
-type D1 = { prepare: (sql: string) => { bind: (...v: unknown[]) => { all: <T>() => Promise<{ results: T[] }> } } };
 type Context = { request: Request; env: { DB?: unknown } };
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
