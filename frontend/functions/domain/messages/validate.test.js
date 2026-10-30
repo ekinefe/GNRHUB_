@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { validateContact, LIMITS } from './validate.ts'
+import { validateContact } from './validate.ts'
+import { LIMITS } from './types.ts'
 
 const good = { name: 'Ada', email: 'ada@example.com', subject: 'Hello', message: 'I would like to talk about an internship.' }
 

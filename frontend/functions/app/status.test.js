@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { createTestD1 } from '../../_test/testD1.js'
-import worker from '../../worker.ts'
+import { createTestD1 } from '../_test/testD1.js'
+import worker from '../worker.ts'
 
 const ASSETS = { fetch: async () => new Response('x') }
 const get = (env) => worker.fetch(new Request('https://site.test/api/status'), { ASSETS, ...env })

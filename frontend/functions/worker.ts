@@ -6,14 +6,14 @@ import { withSecurityHeaders } from './infra/security-headers.ts';
 import { failure, isAdminPath } from './infra/failure.ts';
 import { currentAdmin } from './app/admin/guard.ts';
 import { loginRoute, logoutRoute, meRoute } from './modules/admin/auth.ts';
-import { messagesRoute, messageRoute } from './modules/admin/messages.ts';
-import { contactRoute } from './modules/contact/api.ts';
+import { messagesRoute, messageRoute } from './app/admin/messages.ts';
+import { contactRoute } from './app/public/contact.ts';
 import { adminPostsRoute, adminPostRoute } from './app/admin/posts.ts';
-import { summaryRoute } from './modules/admin/summary.ts';
+import { summaryRoute } from './app/admin/summary.ts';
 import { postsRoute, postRoute } from './app/public/posts.ts';
 import { sitemapRoute } from './app/public/sitemap.ts';
 import { feedRoute } from './app/public/feed.ts';
-import { statusRoute } from './modules/status/api.ts';
+import { statusRoute } from './app/public/status.ts';
 import { projectsRoute } from './app/public/projects.ts';
 import { adminProjectsRoute, adminProjectRoute } from './app/admin/projects.ts';
 
