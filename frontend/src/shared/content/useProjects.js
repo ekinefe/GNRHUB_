@@ -27,13 +27,17 @@ export const resetProjectsCache = () => { loaded = null; pending = null; };
 
 export function useProjects() {
     const [lists, setLists] = useState(loaded ?? BUILT_IN);
+    // ready: the answer from the server has arrived (or failed), so what is shown is final. A page for one project waits for it
+    // before saying "not found", because a project added in the admin panel is not in the built-in list.
+    const [ready, setReady] = useState(loaded !== null);
     useEffect(() => {
         let alive = true;
-        if (!loaded) load().then((result) => { if (alive && result) setLists(result); });
+        if (!loaded) load().then((result) => { if (!alive) return; if (result) setLists(result); setReady(true); });
         return () => { alive = false; };
     }, []);
     return {
         ...lists,
+        ready,
         featuredProjects: lists.projects.filter((p) => p.featured),
         aboutProjects: lists.projects.filter((p) => p.inAbout),
     };
