@@ -17,6 +17,7 @@ const Privacy = lazy(() => import('@/modules/legal/Privacy'));
 const Terms = lazy(() => import('@/modules/legal/Terms'));
 const DesignSystem = lazy(() => import('@/modules/portfolio/DesignSystem'));
 const AboutMe = lazy(() => import('@/modules/portfolio/AboutMe'));
+const ProjectDetail = lazy(() => import('@/modules/portfolio/ProjectDetail'));
 const Projects = lazy(() => import('@/modules/portfolio/Projects'));
 const AdminApp = lazy(() => import('@/modules/admin/AdminApp'));
 const BlogList = lazy(() => import('@/modules/blog/BlogList'));
@@ -51,6 +52,7 @@ function App() {
 
           <Route path="/about" element={<AboutMe />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />

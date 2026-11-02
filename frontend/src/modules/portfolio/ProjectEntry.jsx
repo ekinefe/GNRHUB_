@@ -2,12 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Github, ExternalLink, BookOpen } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
-
-const STATUS = {
-    live: { label: 'LIVE', className: 'text-cyber-active border-cyber-active/40' },
-    soon: { label: 'COMING SOON', className: 'text-cyber-muted border-cyber-border' },
-    paused: { label: 'ON HOLD', className: 'text-cyber-beta border-cyber-beta/40' },
-};
+import { STATUS } from './projectStatus';
 
 // One project block, shared by Projects (detailed) and About (compact). `points` limits how many bullets show.
 const ProjectEntry = ({ project, points = project.points.length, detailed = false }) => {
@@ -16,7 +11,8 @@ const ProjectEntry = ({ project, points = project.points.length, detailed = fals
         <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-1">
                 <h3 className="text-xl font-bold text-white mb-3 flex flex-wrap items-center gap-2">
-                    <span className="text-cyber-pink">&gt;</span> {project.name}
+                    <span className="text-cyber-pink">&gt;</span>{' '}
+                    {detailed ? <Link to={`/projects/${project.id}`} className="hover:text-cyber-pink transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan">{project.name}</Link> : project.name}
                     {detailed && <span className={`px-2 py-0.5 border rounded text-xs font-mono ${status.className}`}>{status.label}</span>}
                 </h3>
                 <div className="flex flex-wrap items-center gap-2">
