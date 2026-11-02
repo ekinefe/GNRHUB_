@@ -22,6 +22,7 @@ const AdminApp = lazy(() => import('@/modules/admin/AdminApp'));
 const BlogList = lazy(() => import('@/modules/blog/BlogList'));
 const BlogPost = lazy(() => import('@/modules/blog/BlogPost'));
 const Colophon = lazy(() => import('@/modules/colophon/Colophon'));
+const Feedback = lazy(() => import('@/modules/feedback/Feedback'));
 const Contact = lazy(() => import('@/modules/contact/Contact'));
 
 // Error Pages
@@ -53,6 +54,7 @@ function App() {
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/feedback" element={<Feedback />} />
           <Route path="/colophon" element={<Colophon />} />
           {/* Not linked anywhere and not in the sitemap; the page asks the server who you are. */}
           <Route path="/admin/*" element={<AdminApp />} />

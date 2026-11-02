@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { brand } from '@/shared/config/brand';
 import { build } from '@/shared/config/build';
 import { profile } from '@/shared/config/profile';
@@ -23,6 +23,7 @@ const linkClass = 'text-cyber-muted hover:text-cyber-pink transition-colors';
 
 const Footer = () => {
     const reduce = useUserReducedEffects();
+    const { pathname } = useLocation();
     return (
     <footer className="border-t border-cyber-border bg-cyber-black font-mono text-xs">
         <div className="max-w-screen-2xl mx-auto px-4 md:px-10 py-8 grid gap-8 md:grid-cols-4">
@@ -46,6 +47,7 @@ const Footer = () => {
                         {item.label}
                     </a>
                 ))}
+                <Link to={`/feedback?page=${encodeURIComponent(pathname)}`} className={`block ${linkClass}`}>Report a problem</Link>
             </div>
 
             <div className="space-y-2">

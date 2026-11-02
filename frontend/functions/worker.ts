@@ -19,6 +19,8 @@ import { adminProjectsRoute, adminProjectRoute } from './app/admin/projects.ts';
 import { adminRedirectsRoute, adminRedirectRoute } from './app/admin/redirects.ts';
 import { redirectRoute } from './app/public/redirects.ts';
 import { hitRoute } from './app/public/hit.ts';
+import { feedbackRoute } from './app/public/feedback.ts';
+import { adminFeedbackRoute, adminFeedbackItemRoute } from './app/admin/feedback.ts';
 import { analyticsRoute } from './app/admin/analytics.ts';
 
 export interface Env {
@@ -55,6 +57,9 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/r/:slug' }), module: redirectRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/analytics' }), module: analyticsRoute },
   { pattern: new URLPattern({ pathname: '/api/hit' }), module: hitRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/feedback' }), module: adminFeedbackRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/feedback/:id' }), module: adminFeedbackItemRoute },
+  { pattern: new URLPattern({ pathname: '/api/feedback' }), module: feedbackRoute },
   { pattern: new URLPattern({ pathname: '/api/projects' }), module: projectsRoute },
   { pattern: new URLPattern({ pathname: '/api/contact' }), module: contactRoute },
   { pattern: new URLPattern({ pathname: '/api/posts' }), module: postsRoute },
