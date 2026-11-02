@@ -61,7 +61,7 @@ const Colophon = () => {
 
             <Section title="What it does and does not use">
                 <ul className="font-mono text-sm text-cyber-text space-y-2 list-disc pl-5">
-                    <li>No analytics, ad or tracking scripts.</li>
+                    <li>No ad or third-party tracking scripts. Page views are only counted per page and day, with no cookie or address.</li>
                     <li>No cookies of its own. Signing in stores a session in your browser's local storage.</li>
                     <li>Fonts (JetBrains Mono, Space Grotesk) are served from this site, not from a font service.</li>
                     <li>Animations respect your system setting and the "Reduce effects" switch in the footer.</li>
