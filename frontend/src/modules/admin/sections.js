@@ -2,6 +2,7 @@
 // so a feature adds its screen here and nothing else changes.
 import React from 'react';
 import AdminFeedback from './AdminFeedback';
+import AdminLegal from './AdminLegal';
 import AdminMessages from './AdminMessages';
 import AdminPosts from './AdminPosts';
 import AdminProjects from './AdminProjects';
@@ -14,5 +15,6 @@ export const sections = [
     { path: 'redirects', label: 'Links', element: React.createElement(AdminRedirects) },
     { path: 'visits', label: 'Visits', element: React.createElement(AdminVisits) },
     { path: 'feedback', label: 'Feedback', element: React.createElement(AdminFeedback) },
+    { path: 'legal', label: 'Legal', element: React.createElement(AdminLegal) },
     { path: 'messages', label: 'Messages', element: React.createElement(AdminMessages) },
 ];

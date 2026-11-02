@@ -22,6 +22,7 @@ The binding has no `database_id` on purpose. The first `npx wrangler deploy` cre
 - `redirects`: short links `/r/<slug>` (slug, target https address or site path, permanent 0/1, a visit counter). Added in `0007` (GNR-147).
 - `page_views`: opens per day and page (day, path, views), nothing about the visitor; rows older than 90 days are deleted. Added in `0008` (GNR-82).
 - `feedback`: reports from the "Report a problem" page (kind problem/idea/other, page, message, optional email, time, read time). Added in `0009` (GNR-148). `feedback_hits` limits them per hour like `contact_hits`.
+- `legal_documents`: versioned Privacy and Terms text (doc privacy/terms, version, summary, Markdown body, time); every save adds a version. Added in `0010` (GNR-161).
 - `projects`: the portfolio projects (slug, group project/tool, name, kind, summary, comma-separated tech, newline-separated points, status live/soon/paused, repo, url, screenshot path and description, case-study route, learned, featured and in_about flags, sort order). Added in `0005`; edited in the admin panel (ADR 0012). `visible` (hide without deleting) was added in `0006`.
 
 ## Backups

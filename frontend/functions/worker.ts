@@ -20,6 +20,8 @@ import { adminRedirectsRoute, adminRedirectRoute } from './app/admin/redirects.t
 import { redirectRoute } from './app/public/redirects.ts';
 import { hitRoute } from './app/public/hit.ts';
 import { feedbackRoute } from './app/public/feedback.ts';
+import { legalRoute } from './app/public/legal.ts';
+import { adminLegalRoute } from './app/admin/legal.ts';
 import { adminFeedbackRoute, adminFeedbackItemRoute } from './app/admin/feedback.ts';
 import { analyticsRoute } from './app/admin/analytics.ts';
 
@@ -60,6 +62,8 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/admin/feedback' }), module: adminFeedbackRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/feedback/:id' }), module: adminFeedbackItemRoute },
   { pattern: new URLPattern({ pathname: '/api/feedback' }), module: feedbackRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/legal/:doc' }), module: adminLegalRoute },
+  { pattern: new URLPattern({ pathname: '/api/legal/:doc' }), module: legalRoute },
   { pattern: new URLPattern({ pathname: '/api/projects' }), module: projectsRoute },
   { pattern: new URLPattern({ pathname: '/api/contact' }), module: contactRoute },
   { pattern: new URLPattern({ pathname: '/api/posts' }), module: postsRoute },

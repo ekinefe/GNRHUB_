@@ -4,11 +4,15 @@ import { brand } from '@/shared/config/brand';
 import { profile } from '@/shared/config/profile';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { LegalLayout, Section } from './LegalLayout';
+import SavedDocument from './SavedDocument';
+import { useLegalDocument } from './useLegalDocument';
 
 export const PRIVACY_UPDATED = '2026-11-03';
 
 const Privacy = () => {
+    const saved = useLegalDocument('privacy');
     useDocumentMeta({ title: 'Privacy', description: 'How this site handles your data: short version, almost nothing is collected.' });
+    if (saved) return <SavedDocument saved={saved} icon={Database} iconClass="text-cyber-cyan" title="Privacy" />;
     return (
         <LegalLayout icon={Database} iconClass="text-cyber-cyan" title="Privacy" tag="DATA_DIRECTIVES" updated={PRIVACY_UPDATED}>
             <p className="text-white">
@@ -37,7 +41,7 @@ const Privacy = () => {
             </Section>
 
             <Section n="05" title="EMAIL">
-                <p>The contact page is a plain email link; there is no contact form. If you write to me, I use your message and address only to reply, and delete the conversation when it is no longer needed.</p>
+                <p>If you write to me by email instead of using a form, I use your message and address only to reply, and delete the conversation when it is no longer needed.</p>
             </Section>
 
             <Section n="06" title="YOUR RIGHTS">
