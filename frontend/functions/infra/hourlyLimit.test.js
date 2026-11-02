@@ -24,8 +24,8 @@ describe('hourlyLimit', () => {
     expect(await limit.lockedFor(db, 'c', NOW)).toBeGreaterThan(0)
     expect(await limit.lockedFor(db, 'c', NOW + 3_600_000)).toBe(0)
   })
-  it('refuses a table name that is not plain', () => {
-    expect(() => hourlyLimit('x; DROP TABLE y', 1, 1)).toThrow()
+  it('refuses a table it has no statements for', () => {
+    expect(() => hourlyLimit('x; DROP TABLE y', 1, 1)).toThrow('Unknown table')
   })
   it('makes a key from the address without storing it, different per purpose', async () => {
     const req = new Request('https://x.test', { headers: { 'CF-Connecting-IP': '203.0.113.9' } })
