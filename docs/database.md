@@ -1,0 +1,26 @@
+# Database (Cloudflare D1)
+
+D1 holds **content only** (ADR 0009): contact messages and blog posts. Admin login never uses it (the login is Worker secrets). One database, `gnrdigital`, bound as `DB` in `frontend/wrangler.jsonc`.
+
+## Workflow (run from `frontend/`)
+1. Add a numbered SQL file in `db/migrations/` (`0001_name.sql`, plain SQL, never edit an applied one).
+2. `npm run db:migrate:local` applies it to the local database in `.wrangler/` (safe).
+3. Test it: tests run on the real migration files through `functions/_test/testD1.js` (a D1 look-alike over Node's built-in `node:sqlite`). Use bound values (`prepare(...).bind(...)`) only, never string-built SQL (the security sweep flags it).
+4. Commit. Only then the owner runs `npm run db:migrate:remote`, which asks you to type the database name and refuses to run without a terminal.
+
+`npm run db:query:local -- "SELECT 1"` runs one statement against the local database.
+
+## Creating the real database (owner, once)
+The binding has no `database_id` on purpose. The first `npx wrangler deploy` creates the database `gnrdigital` (answer yes if wrangler asks). If it does not, run `npx wrangler d1 create gnrdigital` and put the printed id in `wrangler.jsonc` as `database_id`. Then `npm run db:migrate:remote`. Never create or migrate it against an account that holds other projects' data without checking the name first.
+
+## Tables
+- `login_attempts`: failed admin sign-ins per 15-minute window (keyed hash of the client, or `*` for all). Added in `0001`.
+- `admin_totp`: the newest two-factor step accepted, one row, so a code cannot be used twice. Added in `0004`.
+- `contact_messages`: what the contact form stores (name, email, subject, message, time, read time). Added in `0002`. Read and deleted in the admin panel.
+- `contact_hits`: messages sent per hour by a keyed hash of the client (or `*` for everyone), to stop spam. Added in `0002`.
+- `posts`: blog posts (slug, title, summary, Markdown body, comma-separated tags, status draft / private / public, dates; `published_at` is set the first time a post becomes public). Added in `0003`.
+- `redirects`: short links `/r/<slug>` (slug, target https address or site path, permanent 0/1, a visit counter). Added in `0007` (GNR-147).
+- `projects`: the portfolio projects (slug, group project/tool, name, kind, summary, comma-separated tech, newline-separated points, status live/soon/paused, repo, url, screenshot path and description, case-study route, learned, featured and in_about flags, sort order). Added in `0005`; edited in the admin panel (ADR 0012). `visible` (hide without deleting) was added in `0006`.
+
+## Backups
+Time Travel and your own encrypted export, plus a restore drill: see [backup.md](backup.md).

@@ -1,0 +1,77 @@
+name: 🛡️ Gatekeeper (CI)
+
+on:
+  pull_request:
+    branches: [main, develop, feat/auth-and-BrandBookEditor]
+
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Install
+        working-directory: frontend
+        run: npm install
+      - name: Audit shipped dependencies (high and above)
+        working-directory: frontend
+        run: npm audit --omit=dev --audit-level=high
+      - name: Security sweep
+        working-directory: frontend
+        run: npm run security:sweep
+      - name: Lint (zero warnings)
+        working-directory: frontend
+        run: npm run lint
+      - name: Unit tests
+        working-directory: frontend
+        run: npm run test:unit
+      - name: Build
+        working-directory: frontend
+        run: npm run build
+      - name: Initial JS budget
+        working-directory: frontend
+        run: npm run check:bundle
+
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      - name: Check external links (fails on a broken link; bot-blocked sites are reported, not failed)
+        run: |
+          cd frontend
+          npm install
+          npm run check:links
+      # Internal links are checked by the unit tests (src/links.test.js).
+
+  test-microservices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the CV generator exists yet
+        id: cv
+        run: |
+          if [ -f microservices/cv-generator/package.json ]; then echo "exists=true" >> "$GITHUB_OUTPUT"; else echo "exists=false" >> "$GITHUB_OUTPUT"; echo "microservices/cv-generator not created yet, skipping"; fi
+      - name: Setup Node.js
+        if: steps.cv.outputs.exists == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      
+      - name: Install & Test CV Generator
+        if: steps.cv.outputs.exists == 'true'
+        run: |
+          cd microservices/cv-generator
+          npm install
+          npm test

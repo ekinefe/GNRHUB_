@@ -1,0 +1,63 @@
+# Admin sign-in (ADR 0009)
+
+One admin: you. Visitors never sign in. The login is three Worker secrets, not database rows, so a database leak cannot leak it.
+
+| Secret | What it is |
+|---|---|
+| `ADMIN_USERNAME` | The username you choose |
+| `ADMIN_PASSWORD_HASH` | A PBKDF2 hash of your password, made by the script below (never the password itself) |
+| `SESSION_SECRET` | 32+ random characters that sign the session cookie. Changing it signs everyone out |
+
+## Set them up (once, on your machine)
+```bash
+cd frontend
+npm run admin:secret -- hash       # asks for a password (hidden, 12+ characters) and prints ADMIN_PASSWORD_HASH
+npm run admin:secret -- session    # prints a random SESSION_SECRET
+npx wrangler secret put ADMIN_USERNAME
+npx wrangler secret put ADMIN_PASSWORD_HASH
+npx wrangler secret put SESSION_SECRET   # each asks you to paste the value
+```
+Use a passphrase of several words. The hash is stored with a random salt and the iteration count (100,000, the most Workers allow). If you forget the password, make a new hash and run `wrangler secret put ADMIN_PASSWORD_HASH` again.
+
+For `npm run dev:worker` put the same three names in `frontend/.dev.vars` (git-ignored; see `.dev.vars.example`). Create the database tables with `npm run db:migrate:local` first, because failed sign-ins are counted in D1.
+
+## How it behaves
+- `POST /api/admin/login` with `{ "username", "password" }` from the same site (the `Origin` header must match). Success sets an `HttpOnly; Secure; SameSite=Strict` cookie for 8 hours. A wrong username and a wrong password get the same answer.
+- 5 wrong guesses per client and 40 in total per 15 minutes lock the login (429 with `Retry-After`). The counter stores a keyed hash of the address, never the address. If a secret or the database is missing, the login is unavailable (503), never open.
+- `GET /api/admin/me` says whether you are signed in (`{ ok: true, user }` or `{ ok: false }`, both status 200, so a signed-out page load is not logged as an error); `POST /api/admin/logout` clears the cookie.
+- Every other admin route must start with `requireAdmin(request, env)` (and `{ changes: true }` when it changes data). No cookie, no answer.
+- **Two-factor (optional, ADR 0010):** with `ADMIN_TOTP_SECRET` set, sign-in also needs a 6-digit code from an authenticator app. See below.
+
+## Two-factor sign-in (optional)
+```bash
+cd frontend
+npm run admin:secret -- totp                 # prints ADMIN_TOTP_SECRET and the address to add it to your app
+npx wrangler secret put ADMIN_TOTP_SECRET    # paste the value
+npm run db:migrate:remote                    # migration 0004 (a code can be used once); you type the database name
+```
+In Proton Authenticator (or any authenticator app) add the key by hand: account `admin`, issuer `GNRdigital`, time-based, 6 digits, 30 seconds. The sign-in form then shows an "Authentication code" field. A wrong code looks the same as a wrong password and counts toward the lock; a code works once; one step either side is accepted for clock drift.
+
+**If you lose the phone:** `npx wrangler secret delete ADMIN_TOTP_SECRET`, sign in with the password alone, then set a new secret. There are no recovery codes: the Cloudflare account is what you fall back on.
+
+To compare this setup with Better Auth, see ADR 0010.
+
+## Home
+`/admin` shows what needs attention: unread messages and posts by status (`GET /api/admin/summary`, which needs a session like every admin route), and the menu shows an unread badge on Messages. The posts list can be searched (forgiving, like the blog) and filtered by who can see a post; Messages can show unread only.
+
+## Posts
+`/admin/posts` lists every post with its status; New post opens a plain form with a live preview. Fields: title, address (follows the title until you edit it), who can see it, summary, tags, and the text in Markdown (`# heading`, `**bold**`, `*italic*`, `` `code` ``, `[link](https://...)`, lists, `>` quotes, fenced code). Raw HTML is shown as text, never run, and only `http`, `https`, `mailto` and site links are kept.
+- **Draft:** only here. **Private:** your notebook, never returned by the public API. **Public:** listed on the blog. A draft or private post answers 404 on the public API, exactly like one that does not exist.
+- Public pages: `/blog` (list, `?tag=`) and `/blog/:slug`, in the menu and footer. `/blog/feed.xml` is an RSS 2.0 feed of the latest 20 public posts (also linked from the page head and the sidebar; 503 if the database cannot be read). `/sitemap.xml` is built by the Worker on request (fixed pages plus public posts only; the static one from the build is only the fallback, and `wrangler.jsonc` sends `/sitemap.xml` through the Worker).
+- API: public `GET /api/posts` (list, `?tag=`) and `GET /api/posts/:slug`; admin `GET`/`POST /api/admin/posts` and `GET`/`POST /api/admin/posts/:id` with `{ action: 'save' | 'delete' }`.
+
+## Short links
+`/admin/redirects` (menu: Links) makes addresses such as `/r/cv` that send the visitor on to another address (GNR-147). Use one on a CV, a LinkedIn profile or a QR code, so it keeps working when the address behind it changes. "Goes to" is a `https://` address or a page of this site (`/about`). A link answers 302 (can change any time); tick "Permanent" for 301 only if you will never change it, because browsers remember a 301. Each link counts its visits (just a number: no address, no time). An unknown name is a plain 404. Needs migration `0007` and `/r/*` in `run_worker_first` (already set).
+
+## Portfolio projects
+`/admin/projects` (menu: Portfolio) edits the projects shown on Home, About and the Portfolio page (ADR 0012). The first time, press **Import the built-in projects** to copy the list that ships with the site into the database; after that edit, add, reorder (the Order number, smaller first) or delete projects there. Until the database has a project, the site shows the built-in list, so nothing breaks if you never use this. Untick "Show on the site" to hide a project without deleting it (it stays in the admin list, struck through). Tick "Show on the Home page" or "Show on the About page" to choose where a project appears. A screenshot is a file already in `frontend/public/projects/`, written as `/projects/name.png`. Changes show on the site within about a minute.
+
+## Contact messages
+`/admin/messages` lists what the contact form stored, newest first, with an unread count. Open one to read it (it is marked read), reply with a mailto link, mark it unread, or delete it (asks first). Messages are shown as plain text. The form itself is `POST /api/contact`: same-site only, validated, 3 messages per hour per client and 30 per hour overall, a hidden trap field for bots, and it answers 503 ("email me instead") if the database is missing, never silently losing a message.
+
+## The screen
+`/admin` (not linked anywhere, not in the sitemap, `noindex`) shows the sign-in form, then the admin shell. Plain `npm run dev` has no API behind it, so there you only see the form and sign-in cannot succeed; to try the whole thing run `npm run dev:worker` (builds first) and open http://localhost:8787/admin.

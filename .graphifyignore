@@ -1,0 +1,16 @@
+node_modules/
+dist/
+build/
+.wrangler/
+.git/
+coverage/
+graphify-out/
+package-lock.json
+frontend/package-lock.json
+frontend/public/
+frontend/src/assets/
+# secrets and local env: never index
+.env
+.env.*
+.dev.vars
+AccountDetails.md

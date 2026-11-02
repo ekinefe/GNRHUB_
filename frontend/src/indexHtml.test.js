@@ -1,0 +1,40 @@
+import { readFileSync, existsSync } from 'node:fs'
+import { describe, it, expect } from 'vitest'
+
+const html = readFileSync('index.html', 'utf8')
+
+describe('index.html', () => {
+    it('declares English as the page language (ADR 0011: the site is English only)', () => {
+        expect(html).toMatch(/<html lang="en">/)
+    })
+    it('has a title, description and theme color', () => {
+        expect(html).toMatch(/<title>%BRAND_NAME%<\/title>/)
+        expect(html).toMatch(/name="description"/)
+        expect(html).toMatch(/name="theme-color" content="#050505"/)
+    })
+    it('has Open Graph and Twitter tags', () => {
+        for (const tag of ['og:type', 'og:title', 'og:description', 'twitter:card']) expect(html).toContain(tag)
+    })
+    it('points at icon files that exist (not the Vite default)', () => {
+        expect(html).not.toContain('vite.svg')
+        for (const href of ['favicon.svg', 'site.webmanifest']) {
+            expect(html).toContain(href)
+            expect(existsSync(`public/${href}`)).toBe(true)
+        }
+    })
+})
+
+describe('index.html privacy', () => {
+    it('loads no third-party stylesheets or fonts (the Privacy page says fonts are self-hosted)', () => {
+        expect(html).not.toMatch(/<link[^>]+href="https?:/)
+        expect(html).not.toMatch(/fonts\.(googleapis|gstatic)\.com/)
+    })
+})
+
+describe('index.html social image', () => {
+    it('points og:image and twitter:image at the generated 1200x630 PNG', () => {
+        expect(html).toContain('property="og:image" content="%BRAND_URL%/og.png"')
+        expect(html).toContain('name="twitter:image" content="%BRAND_URL%/og.png"')
+        expect(existsSync('public/og.png')).toBe(true)
+    })
+})

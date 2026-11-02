@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- A plain monospace-style G, pink, with a thin black outline so it reads on dark and light tab bars. -->
+  <path d="M52 15H15v34h37V35H35" fill="none" stroke="#000" stroke-width="12" stroke-linejoin="miter" stroke-linecap="butt"/>
+  <path d="M52 15H15v34h37V35H35" fill="none" stroke="#FF318C" stroke-width="6" stroke-linejoin="miter" stroke-linecap="butt"/>
+</svg>

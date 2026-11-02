@@ -1,0 +1,13 @@
+{
+    "name": "gnrdigital-v2-root",
+    "private": true,
+    "license": "MIT",
+    "scripts": {
+        "dev:frontend": "npm run dev --prefix frontend",
+        "test:frontend": "npm run test:unit --prefix frontend",
+        "dev:micro": "npm run dev --prefix microservices/cv-generator"
+    },
+    "engines": {
+        "node": ">=24"
+    }
+}

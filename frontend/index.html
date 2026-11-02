@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>%BRAND_NAME%</title>
+  <meta name="description" content="%BRAND_NAME% - portfolio and small tools by Ekin Efe Gungor." />
+  <meta name="theme-color" content="#050505" />
+  <link rel="alternate" type="application/rss+xml" title="GNRdigital blog" href="/blog/feed.xml" />
+  <meta name="color-scheme" content="dark" />
+  <!-- The one font used on every page; preloading avoids a late swap (layout shift). -->
+  <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <!-- Applies the saved accent and scanlines before first paint (GNR-41). Not inline: the CSP forbids it. -->
+  <script src="/theme-init.js"></script>
+
+  <!-- Open Graph / Twitter. Per-page title, description and URL are set at runtime (useDocumentMeta).
+       og:image is public/og.png (regenerate with scripts/og/make-og.sh); its URL follows brand.publicUrl. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="%BRAND_NAME%" />
+  <meta property="og:title" content="%BRAND_NAME%" />
+  <meta property="og:description" content="%BRAND_NAME% - portfolio and small tools by Ekin Efe Gungor." />
+  <meta property="og:image" content="%BRAND_URL%/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="%BRAND_NAME%: bold GNR, light digital, pink cursor and v2 tag" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="%BRAND_URL%/og.png" />
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
