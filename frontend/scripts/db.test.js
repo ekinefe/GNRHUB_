@@ -15,7 +15,7 @@ describe('wrangler.jsonc', () => {
   })
 
   it('sends only the API, the sitemap and the feed through the Worker first', () => {
-    expect(config.assets.run_worker_first).toEqual(['/api/*', '/sitemap.xml', '/blog/feed.xml'])
+    expect(config.assets.run_worker_first).toEqual(['/api/*', '/sitemap.xml', '/blog/feed.xml', '/r/*'])
   })
 
   it('holds no secret-looking values', () => {

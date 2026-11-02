@@ -7,8 +7,8 @@
     "directory": "dist",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
-    // Only these paths run Worker code (the API, the sitemap and the RSS feed, both built from the blog posts); deep links like /about stay static.
-    "run_worker_first": ["/api/*", "/sitemap.xml", "/blog/feed.xml"]
+    // Only these paths run Worker code (the API, the sitemap and the RSS feed, both built from the blog posts, and the owner's short links /r/*); deep links like /about stay static.
+    "run_worker_first": ["/api/*", "/sitemap.xml", "/blog/feed.xml", "/r/*"]
   },
   // Logs and request traces in the Cloudflare dashboard (GNR-126); the Worker writes one JSON line per request, see worker.ts.
   "observability": { "enabled": true },
