@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Layouts
 import DashboardLayout from '@/shared/layout/DashboardLayout';
 import ScrollToTop from '@/shared/layout/ScrollToTop';
+import PageViews from '@/shared/layout/PageViews';
 import CommandPalette from '@/shared/layout/CommandPalette';
 import ErrorBoundary from '@/shared/errors/ErrorBoundary';
 import RouteLoading from '@/shared/animations/RouteLoading';
@@ -32,6 +33,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <PageViews />
       <CommandPalette />
       <ErrorBoundary>
       <Suspense fallback={<RouteLoading />}>

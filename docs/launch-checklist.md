@@ -9,7 +9,7 @@ Last reviewed: 2026-10-25 (GNR-155, refreshed after the admin, blog, projects an
 - [x] Link check green in CI: the `check-links` job in `gatekeeper.yml` passes on the pull requests merged since (checked on PR #93 to #105).
 
 ## Privacy and tracking
-- [x] No cookies, analytics or tracking scripts: no such code in `src/`, no `document.cookie`; the only browser storage is the "Reduce effects" preference and a reload flag, both disclosed on the Privacy page.
+- [x] No cookies or third-party tracking scripts: no such code in `src/`, no `document.cookie`; page views are a per-page, per-day count in D1 (GNR-82) described on the Privacy page; the only browser storage is the "Reduce effects" preference and a reload flag, both disclosed on the Privacy page.
 - [x] Fonts self-hosted: built `dist/index.html` and CSS contain no third-party URLs (GNR-81).
 - [x] Privacy and Terms match what the site does (GNR-81).
 - [ ] Confirm in DevTools on the deployed site: Application tab shows no cookies, Network tab shows no third-party requests.

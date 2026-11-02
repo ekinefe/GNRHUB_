@@ -18,6 +18,8 @@ import { projectsRoute } from './app/public/projects.ts';
 import { adminProjectsRoute, adminProjectRoute } from './app/admin/projects.ts';
 import { adminRedirectsRoute, adminRedirectRoute } from './app/admin/redirects.ts';
 import { redirectRoute } from './app/public/redirects.ts';
+import { hitRoute } from './app/public/hit.ts';
+import { analyticsRoute } from './app/admin/analytics.ts';
 
 export interface Env {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -51,6 +53,8 @@ export const routes: Array<{ pattern: URLPattern; module: RouteModule }> = [
   { pattern: new URLPattern({ pathname: '/api/admin/redirects' }), module: adminRedirectsRoute },
   { pattern: new URLPattern({ pathname: '/api/admin/redirects/:id' }), module: adminRedirectRoute },
   { pattern: new URLPattern({ pathname: '/r/:slug' }), module: redirectRoute },
+  { pattern: new URLPattern({ pathname: '/api/admin/analytics' }), module: analyticsRoute },
+  { pattern: new URLPattern({ pathname: '/api/hit' }), module: hitRoute },
   { pattern: new URLPattern({ pathname: '/api/projects' }), module: projectsRoute },
   { pattern: new URLPattern({ pathname: '/api/contact' }), module: contactRoute },
   { pattern: new URLPattern({ pathname: '/api/posts' }), module: postsRoute },
