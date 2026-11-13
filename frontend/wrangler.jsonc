@@ -1,5 +1,5 @@
 {
-  "name": "gnrdigital", // the Worker name never changes after the first deploy
+  "name": "portfolio", // the Worker name never changes after the first deploy; must match the Cloudflare project name
   "main": "functions/worker.ts",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
