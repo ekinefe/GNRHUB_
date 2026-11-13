@@ -11,5 +11,5 @@ export const brand = {
     slug: name.toLowerCase(),               // gnrdigital    (terminal prompts, ids)
     prompt: `root@${name.toLowerCase()}:~`, // root@gnrdigital:~
     tagline: 'Small, reliable tools.',     // see docs/brand.md for the alternatives
-    publicUrl: 'https://gnrhub.pages.dev',  // current live URL; change when the new domain is attached
+    publicUrl: 'https://portfolio.gnrdigital.workers.dev', // current live URL; change when the new domain is attached
 };
