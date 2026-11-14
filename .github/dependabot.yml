@@ -9,6 +9,10 @@ updates:
     groups:
       minor-and-patch:
         update-types: [minor, patch]
+    ignore:
+      # 0.5 needs eslint 9 (we are on 8). Remove this when eslint is upgraded.
+      - dependency-name: eslint-plugin-react-refresh
+        versions: [">=0.5.0"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
