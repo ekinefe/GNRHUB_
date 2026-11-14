@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Tag, X, Rss } from 'lucide-react';
 import PageShell from '@/shared/layout/PageShell';
+import PageHeader from '@/shared/layout/PageHeader';
 import Decrypt from '@/shared/animations/Decrypt';
 import AnimatedList from '@/shared/animations/AnimatedList';
 import AsciiSpinner from '@/shared/animations/AsciiSpinner';
@@ -65,13 +66,10 @@ const BlogList = () => {
     const highlight = (text) => <Highlight text={text} query={debounced} />;
 
     return (
-        <PageShell width="7xl">
-            <section className="pt-24 pb-10 border-b border-cyber-border/40">
-                <h1 className="text-4xl md:text-5xl font-mono font-bold text-white tracking-tighter mb-4">/BLOG</h1>
-                <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed max-w-2xl">Research notes and things I learned, written down so I remember them.</p>
-            </section>
+        <PageShell>
+            <PageHeader title="Blog" description="Research notes and things I learned, written down so I remember them." />
 
-            <div className="grid gap-10 lg:grid-cols-[17rem_1fr] pt-10 pb-24">
+            <div className="grid gap-10 lg:grid-cols-[17rem_1fr] pb-24">
                 <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start" aria-label="Search and filters">
                     <div className="space-y-3">
                         <h2 className="text-lg font-mono font-bold text-white flex items-center gap-2"><Search className="w-5 h-5 text-cyber-pink" /> Search</h2>

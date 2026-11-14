@@ -58,9 +58,10 @@ describe('About page', () => {
         expect(screen.getByRole('link', { name: /email me/i })).toHaveAttribute('href', `mailto:${profile.email}`)
     })
 
-    it('keeps its section headings readable for screen readers while they decrypt in', () => {
+    it('uses the shared page title and section headings', () => {
         wrap()
-        expect(screen.getByRole('heading', { name: 'SKILLS' })).toBeInTheDocument()
-        expect(screen.getByRole('heading', { name: 'PROFESSIONAL_SUMMARY' })).toBeInTheDocument()
+        expect(screen.getByRole('heading', { level: 1, name: '/ABOUT' })).toBeInTheDocument()
+        expect(screen.getByRole('heading', { level: 2, name: 'Skills' })).toBeInTheDocument()
+        expect(screen.getByRole('heading', { level: 2, name: 'Professional summary' })).toBeInTheDocument()
     })
 })
