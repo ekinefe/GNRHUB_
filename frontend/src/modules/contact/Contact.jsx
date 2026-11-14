@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, Github, Linkedin } from 'lucide-react';
 import PageShell from '@/shared/layout/PageShell';
+import PageHeader from '@/shared/layout/PageHeader';
 import CyberButton from '@/shared/ui/CyberButton';
 import { profile } from '@/shared/config/profile';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
@@ -11,14 +12,10 @@ import ContactForm from './ContactForm';
 const Contact = () => {
     useDocumentMeta({ title: 'Contact', description: 'How to get in touch.' });
     return (
-        <PageShell width="5xl">
-            <section className="relative pt-24 pb-24 grid gap-16 lg:grid-cols-[3fr_2fr]">
+        <PageShell>
+            <PageHeader title="Contact" description="Email is the best way to reach me. A good first message says who you are, what you are working on, and what you would like from me." />
+            <section className="pb-24 grid gap-16 lg:grid-cols-[3fr_2fr]">
                 <div>
-                <h1 className="text-4xl md:text-5xl font-mono font-bold text-white tracking-tighter mb-6">/CONTACT</h1>
-                <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed mb-8 max-w-2xl">
-                    Email is the best way to reach me. A good first message says who you are, what you are working on, and what you would like from me.
-                </p>
-
                 <p className="font-mono text-lg text-cyber-cyan mb-6 break-all">{profile.email}</p>
 
                 <div className="flex flex-wrap items-center gap-4">

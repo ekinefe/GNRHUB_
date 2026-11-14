@@ -26,7 +26,7 @@ const BlogPost = () => {
     if (status === 'missing') return <NotFound />;
 
     return (
-        <PageShell width="5xl">
+        <PageShell>
             <article className="pt-24 pb-24">
                 <Link to="/blog" className="inline-flex items-center gap-2 font-mono text-sm text-cyber-muted hover:text-cyber-pink mb-10"><ArrowLeft className="w-4 h-4" /> All posts</Link>
                 {status === 'loading' && <ListSkeleton count={1} />}

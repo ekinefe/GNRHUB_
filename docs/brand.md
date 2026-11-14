@@ -50,7 +50,9 @@ The look is a terminal: a plain near-black background, monospace, one pink accen
 
 ### Layout
 - The background is plain near-black (no grid or pattern; the grid was removed). Do not put a box or bordered column around page content; `PageShell` is just a centred container.
-- Widths: `PageShell width="5xl"` (really `max-w-6xl`, about 1150px) for narrow text pages (Projects, Contact, a blog post), `7xl` (really `max-w-screen-2xl`, 1536px) for Home, Blog list and About. The header and footer use the same 1536px width and gutters so the logo lines up with the content. Gutters are `px-4` on phones and `md:px-10` above. Content is left-aligned.
+- Width: every page uses `PageShell`, which has one width (`max-w-screen-2xl`, 1536px), the same as the header and footer, so the content always lines up with the logo. Text-heavy content keeps its line length inside it (`max-w-2xl` to `max-w-4xl`), left-aligned. Gutters are `px-4` on phones and `md:px-10` above.
+- Page top: every page except Home starts with `PageHeader` (`shared/layout/PageHeader.jsx`): `/TITLE_` typed in once, an optional one-line description, then one thin rule. Do not write a page `<h1>` by hand.
+- Sections inside a page use `SectionHeading` (`shared/ui/SectionHeading.jsx`): `// TITLE` in plain words, an optional path-like line (`/projects/featured`) and an optional action on the right. Section headings do not animate.
 - Sections are separated by space and, at most, one thin rule (`border-t border-cyber-border`). Cards (`border border-cyber-border`) are for things that are really separate items such as a project, not for every group of text.
 - Mobile first: no horizontal scroll from 320px up. Long unbroken headings use `[overflow-wrap:anywhere]`.
 

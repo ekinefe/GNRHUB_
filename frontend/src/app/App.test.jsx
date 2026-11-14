@@ -37,7 +37,7 @@ describe('App Routing System', () => {
     it('loads a lazy route on demand', async () => {
         window.history.pushState({}, '', '/contact')
         render(<App />)
-        expect(await screen.findByText('/CONTACT')).toBeInTheDocument()
+        expect(await screen.findByRole('heading', { level: 1, name: '/CONTACT' })).toBeInTheDocument()
         window.history.pushState({}, '', '/')
     })
 })

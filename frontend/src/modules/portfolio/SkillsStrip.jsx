@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SectionHeading from '@/shared/ui/SectionHeading';
 import { about, skillGroups } from '@/shared/content/about';
 import { useProjects } from '@/shared/content/useProjects';
 import { projectsUsing } from './projectsUsing';
@@ -12,9 +13,7 @@ const SkillsStrip = () => {
     const { projects } = useProjects();
     return (
         <section aria-labelledby="skills-heading" className="py-16 border-t border-cyber-border">
-            <h2 id="skills-heading" className="text-2xl font-bold text-white mb-10 flex items-center gap-2">
-                <span className="text-cyber-pink">//</span> What I work with
-            </h2>
+            <SectionHeading id="skills-heading" title="What I work with" path="/work/stack" className="mb-10" />
             <div className="grid gap-10 md:grid-cols-3">
                 {GROUPS.map(({ key, label }) => (
                     <div key={key}>

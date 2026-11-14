@@ -12,6 +12,7 @@ import Tabs from '@/shared/ui/Tabs';
 import Tooltip from '@/shared/ui/Tooltip';
 import { useToast } from '@/shared/ui/Toast';
 import CyberCard from '@/shared/ui/CyberCard';
+import SectionHeading from '@/shared/ui/SectionHeading';
 import { Zap, Shield, Terminal, Layout } from 'lucide-react';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { typeScale } from '@/shared/config/typeScale';
@@ -145,6 +146,14 @@ const DesignSystem = () => {
                         02b // BUTTON PLAYGROUND
                     </h2>
                     <ButtonPlayground />
+                </section>
+
+                <section className="mb-16">
+                    <h2 className="text-xl font-sans text-white border-b border-cyber-border pb-2 mb-6">
+                        02c // PAGE AND SECTION HEADINGS
+                    </h2>
+                    <p className="font-mono text-sm text-cyber-muted mb-6">Every page starts with PageHeader (/TITLE_ typed in once); sections inside use SectionHeading.</p>
+                    <SectionHeading title="Section heading" path="/path/under/it" action={<CyberButton variant="ghost">Action</CyberButton>} />
                 </section>
 
                 {/* Section: Cards */}
