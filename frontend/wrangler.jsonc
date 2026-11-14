@@ -20,5 +20,9 @@
       "database_name": "gnrdigital",
       "migrations_dir": "db/migrations"
     }
-  ]
+  ],
+  // Workers Builds runs `npx wrangler preview` for every non-main branch, which needs this block (it can be empty).
+  // Previews do not inherit the production D1 database or secrets, so a preview shows the pages but its API routes
+  // (blog, contact) have no database. Production data is never touched from a preview.
+  "previews": {}
 }
