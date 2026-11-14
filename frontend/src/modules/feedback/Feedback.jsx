@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Send } from 'lucide-react';
 import PageShell from '@/shared/layout/PageShell';
+import PageHeader from '@/shared/layout/PageHeader';
 import CyberButton from '@/shared/ui/CyberButton';
 import Select from '@/shared/ui/Select';
 import Input from '@/shared/ui/Input';
@@ -58,9 +59,9 @@ const Feedback = () => {
     };
 
     return (
-        <PageShell width="5xl">
-            <section className="relative pt-24 pb-24">
-                <h1 className="text-4xl md:text-5xl font-mono font-bold text-white tracking-tighter mb-6">/REPORT</h1>
+        <PageShell>
+            <PageHeader title="Report" />
+            <section className="relative pb-24">
                 {state === 'sent' ? (
                     <div role="status" className="space-y-4 font-mono text-sm">
                         <p className="text-cyber-success">Thank you, the report was sent.</p>

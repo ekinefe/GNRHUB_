@@ -40,7 +40,7 @@ const AdminApp = () => {
     };
 
     return (
-        <PageShell width="7xl">
+        <PageShell>
             <div className="pt-16 pb-24">
                 {state === 'checking' && <p role="status" className="font-mono text-cyber-muted">Checking sign-in...</p>}
                 {state === 'signedOut' && <AdminLogin onSignedIn={check} needsCode={needsCode} />}

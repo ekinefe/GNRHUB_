@@ -24,11 +24,11 @@ const ProjectDetail = () => {
         ? { title: project.name, description: project.summary }
         : { title: 'Project', noindex: true });
 
-    if (!project) return ready ? <NotFound /> : <PageShell width="5xl"><div className="pt-24"><LoadingLine>Loading...</LoadingLine></div></PageShell>;
+    if (!project) return ready ? <NotFound /> : <PageShell><div className="pt-24"><LoadingLine>Loading...</LoadingLine></div></PageShell>;
 
     const status = STATUS[project.status] ?? STATUS.soon;
     return (
-        <PageShell width="5xl">
+        <PageShell>
             <article className="pt-24 pb-24 max-w-3xl">
                 <Link to="/projects" className="flex items-center gap-2 text-cyber-muted hover:text-cyber-pink transition-colors font-mono text-sm w-fit mb-8">
                     <ArrowLeft className="w-4 h-4" aria-hidden="true" /> All projects

@@ -1,5 +1,7 @@
 import React from 'react';
 import PageShell from '@/shared/layout/PageShell';
+import PageHeader from '@/shared/layout/PageHeader';
+import SectionHeading from '@/shared/ui/SectionHeading';
 import { build } from '@/shared/config/build';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 
@@ -21,8 +23,8 @@ const STACK = [
 ];
 
 const Section = ({ title, children }) => (
-    <section className="mb-10">
-        <h2 className="text-xl font-mono font-bold text-white border-b border-cyber-border pb-2 mb-4 uppercase tracking-wider">{title}</h2>
+    <section className="mb-12">
+        <SectionHeading title={title} className="mb-4" />
         {children}
     </section>
 );
@@ -30,12 +32,10 @@ const Section = ({ title, children }) => (
 const Colophon = () => {
     useDocumentMeta({ title: 'Colophon', description: 'How this site is built: stack, versions and what it does not use.' });
     return (
-        <PageShell width="5xl">
-            <section className="relative pt-24 pb-8">
-                <h1 className="text-4xl md:text-5xl font-mono font-bold text-white tracking-tighter mb-4">/COLOPHON</h1>
-                <p className="font-mono text-cyber-muted text-sm leading-relaxed">How this site is built. The version numbers below are read from the installed packages at build time.</p>
-            </section>
+        <PageShell>
+            <PageHeader title="Colophon" description="How this site is built. The version numbers below are read from the installed packages at build time." />
 
+            <div className="max-w-4xl pb-12">
             <Section title="Stack">
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 font-mono text-sm">
                     {STACK.map(([label, pkg]) => (
@@ -67,6 +67,7 @@ const Colophon = () => {
                     <li>Animations respect your system setting and the "Reduce effects" switch in the footer.</li>
                 </ul>
             </Section>
+            </div>
         </PageShell>
     );
 };
