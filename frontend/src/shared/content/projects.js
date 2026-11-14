@@ -96,7 +96,7 @@ export const projects = [
         summary: 'This portfolio: React, served by a single Cloudflare Worker.',
         tech: ['React', 'Cloudflare', 'Tailwind'],
         points: [
-            'A small, fast site: no cookies, no analytics, no third-party requests, with accessibility and security checks in CI.',
+            'A small, fast site: no cookies, no third-party analytics or requests, with accessibility and security checks in CI.',
             'My other tools (Brandbook Maker, CV Maker) are separate projects; this site only links to them.',
         ],
         status: 'live',

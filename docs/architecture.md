@@ -35,6 +35,7 @@ One app folder, `frontend/`, holds both the SPA (`src/`) and the backend (`funct
 - `domain/<subject>/` holds `types.ts`, `validate.ts` (the form reduced to clean values), `repository.ts` (all SQL), `present.ts` (the shape sent to the browser) and `actions.ts` (plain functions with a database and plain values in, a result out). It never imports `app/` and never another subject.
 - `app/public/` and `app/admin/` read the request, run the guard, call an action and build the `Response`. No SQL, no business rules, and they never import each other.
 - `infra/` imports neither `domain/` nor `app/`.
+- `infra/hourlyLimit.ts` is the per-hour allowance for a public form (`hourlyLimit(table, perClient, global)` and `clientKey`). Feedback uses it; the contact form keeps its own copy (`domain/messages/limit.ts`) and can move to it later.
 - `infra/secretBox.ts` encrypts third-party API keys for D1 (`seal` / `open`, AES-256-GCM, HKDF key per purpose, context bound). Rotating the server secret makes stored values unreadable; `open` then returns `null` and the key must be re-entered.
 - A result that can fail says why (`{ ok: false, reason: 'slug-taken' }`); the handler maps the reason to a status code. Actions do not throw for bad input.
 - Domain tests call the actions with a test database (`_test/testD1.js`), no Request. Test data comes from `_test/factories.js` (`makePost`, `makeProject`, `makeMessage`, `adminEnv`): pass only what the test is about. HTTP tests live in `app/*.test.js` and go through `worker.ts`.

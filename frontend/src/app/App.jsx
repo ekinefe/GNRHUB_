@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Layouts
 import DashboardLayout from '@/shared/layout/DashboardLayout';
 import ScrollToTop from '@/shared/layout/ScrollToTop';
+import PageViews from '@/shared/layout/PageViews';
 import CommandPalette from '@/shared/layout/CommandPalette';
 import ErrorBoundary from '@/shared/errors/ErrorBoundary';
 import RouteLoading from '@/shared/animations/RouteLoading';
@@ -16,11 +17,13 @@ const Privacy = lazy(() => import('@/modules/legal/Privacy'));
 const Terms = lazy(() => import('@/modules/legal/Terms'));
 const DesignSystem = lazy(() => import('@/modules/portfolio/DesignSystem'));
 const AboutMe = lazy(() => import('@/modules/portfolio/AboutMe'));
+const ProjectDetail = lazy(() => import('@/modules/portfolio/ProjectDetail'));
 const Projects = lazy(() => import('@/modules/portfolio/Projects'));
 const AdminApp = lazy(() => import('@/modules/admin/AdminApp'));
 const BlogList = lazy(() => import('@/modules/blog/BlogList'));
 const BlogPost = lazy(() => import('@/modules/blog/BlogPost'));
 const Colophon = lazy(() => import('@/modules/colophon/Colophon'));
+const Feedback = lazy(() => import('@/modules/feedback/Feedback'));
 const Contact = lazy(() => import('@/modules/contact/Contact'));
 
 // Error Pages
@@ -32,6 +35,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <PageViews />
       <CommandPalette />
       <ErrorBoundary>
       <Suspense fallback={<RouteLoading />}>
@@ -48,9 +52,11 @@ function App() {
 
           <Route path="/about" element={<AboutMe />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/feedback" element={<Feedback />} />
           <Route path="/colophon" element={<Colophon />} />
           {/* Not linked anywhere and not in the sitemap; the page asks the server who you are. */}
           <Route path="/admin/*" element={<AdminApp />} />

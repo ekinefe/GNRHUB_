@@ -1,12 +1,12 @@
 import React from 'react';
 import { profile } from '@/shared/config/profile';
 import { Link } from 'react-router-dom';
-import { Code, Linkedin, Github, Mail } from 'lucide-react';
+import { Linkedin, Github, Mail } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
-import Decrypt from '@/shared/animations/Decrypt';
-import TextType from '@/shared/animations/TextType';
 import avatar from '@/assets/AboutMe/avatar.jpg';
 import PageShell from '@/shared/layout/PageShell';
+import PageHeader from '@/shared/layout/PageHeader';
+import SectionHeading from '@/shared/ui/SectionHeading';
 import ProjectEntry from './ProjectEntry';
 import { about, skillGroups } from '@/shared/content/about';
 import { useProjects } from '@/shared/content/useProjects';
@@ -31,28 +31,12 @@ const AboutMe = () => {
     useDocumentMeta({ title: 'About', description: 'Who I am, what I have built and what I work with.' });
     useJsonLd('person', PERSON);
     return (
-        <PageShell width="7xl">
+        <PageShell>
 
-                {/* Hero Section */}
-                <section className="relative pt-24 pb-16 mb-12 border-b border-cyber-border/40">
-                    <h1 className="text-4xl md:text-5xl font-mono font-bold text-white tracking-tighter mb-12">
-                        <TextType
-                            text={["/ABOUT_ME"]}
-                            initialDelay={100}
-                            typingSpeed={75}
-                            pauseDuration={1500}
-                            loop={false}
-                            showCursor
-                            cursorCharacter="_"
-                            deletingSpeed={50}
-                            variableSpeedEnabled={false}
-                            variableSpeedMin={60}
-                            variableSpeedMax={120}
-                            cursorBlinkDuration={0.5}
-                        />
-                    </h1>
+                <PageHeader title="About" description="Who I am, what I have built and what I work with." />
 
-                    <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start mt-8 pb-8">
+                <section aria-label="Profile" className="mb-16">
+                    <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
                         {/* Left: Avatar with Pink Border */}
                         <div className="w-56 h-56 flex-shrink-0 bg-cyber-black flex items-center justify-center overflow-hidden">
                             <img src={avatar} alt="Ekin Efe Gungor" className="w-full h-full object-cover grayscale-[30%] contrast-125 hover:grayscale-0 transition-all duration-500" />
@@ -62,12 +46,12 @@ const AboutMe = () => {
                         <div className="flex-1 min-w-0 space-y-6">
                             <div>
                                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-bold text-white uppercase tracking-wider mb-4 [overflow-wrap:anywhere]">
-                                    {about.name.replace(/ /g, '_')}
+                                    {about.name}
                                 </h2>
                                 <div className="text font-mono text-lg flex flex-wrap items-center gap-2">
                                     <span className="text-cyber-pink">&gt;</span>
                                     <span>{about.role.split(' | ').map((part, i) => (
-                                        <React.Fragment key={part}>{i > 0 && <span className="text-cyber-pink mx-2">|</span>}{part.replace(/ /g, '_')}</React.Fragment>
+                                        <React.Fragment key={part}>{i > 0 && <span className="text-cyber-pink mx-2">|</span>}{part}</React.Fragment>
                                     ))}</span>
                                 </div>
                             </div>
@@ -107,13 +91,10 @@ const AboutMe = () => {
                 </section>
 
                 {/* Details Section */}
-                <section className="mb-16 space-y-16">
+                <div className="pb-16 space-y-16">
 
-                    <div className="space-y-6 w-full">
-                        <h2 className="text-2xl font-mono font-bold uppercase tracking-wider text-white flex items-center gap-3 [overflow-wrap:anywhere]">
-                            <span aria-hidden="true" className="text-cyber-pink font-bold">&lt;&gt;</span>
-                            <Decrypt text="PROFESSIONAL_SUMMARY" tone="inherit" />
-                        </h2>
+                    <div>
+                        <SectionHeading title="Professional summary" path="/about/summary" />
                         <div className="border border-cyber-border bg-cyber-black p-4">
                             <p className="font-mono text-cyber-muted text-sm md:text-base leading-relaxed">{about.summary}</p>
                         </div>
@@ -121,10 +102,7 @@ const AboutMe = () => {
 
                     {/* Skills, grouped and readable */}
                     <div>
-                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 [overflow-wrap:anywhere]">
-                            <Code className="w-6 h-6 text-cyber-pink" />
-                            <Decrypt text="SKILLS" tone="inherit" />
-                        </h2>
+                        <SectionHeading title="Skills" path="/about/skills" />
                         <dl className="border border-cyber-border bg-cyber-black divide-y divide-cyber-border/60" aria-label="Skills">
                             {skillGroups.map(({ key, label }) => (
                                 <div key={key} className="grid gap-1 sm:grid-cols-[9rem_1fr] sm:gap-6 px-5 py-4">
@@ -138,11 +116,7 @@ const AboutMe = () => {
                     {/* Education and experience as git logs */}
                     {about.log.map((group) => (
                         <div key={group.key}>
-                            <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2 [overflow-wrap:anywhere]">
-                                <Code className="w-6 h-6 text-cyber-pink" />
-                                <Decrypt text={group.title} tone="inherit" />
-                            </h2>
-                            <p className="font-mono text-xs text-cyber-muted mb-1">$ git log --oneline {group.key}</p>
+                            <SectionHeading title={group.title.replace(/_/g, ' ').toLowerCase()} path={`$ git log --oneline ${group.key}`} className="mb-2" />
                             <p className="font-mono text-xs text-cyber-muted mb-6" aria-hidden="true">
                                 <span className="inline-block w-2.5 h-2.5 rounded-full border-2 border-cyber-pink align-middle mr-1" /> still doing this
                                 <span className="inline-block w-2.5 h-2.5 rounded-full border-2 border-cyber-border align-middle ml-4 mr-1" /> finished
@@ -171,25 +145,18 @@ const AboutMe = () => {
 
                     {/* Selected projects */}
                     <div>
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                            <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 [overflow-wrap:anywhere]">
-                                <Code className="w-6 h-6 text-cyber-pink" />
-                                <Decrypt text="SELECTED_PROJECTS" tone="inherit" />
-                            </h2>
-                            <Link to="/projects">
-                                <CyberButton variant="ghost">Other Projects</CyberButton>
-                            </Link>
-                        </div>
+                        <SectionHeading
+                            title="Selected projects"
+                            path="/about/projects"
+                            action={<Link to="/projects"><CyberButton variant="ghost">Other projects</CyberButton></Link>}
+                        />
                         <div className="space-y-8">
                             {aboutProjects.map((project) => <ProjectEntry key={project.id} project={project} points={2} />)}
                         </div>
                     </div>
 
                     <div>
-                        <h2 className="text-2xl font-bold text-white flex items-center gap-2 uppercase m-0 mb-4 [overflow-wrap:anywhere]">
-                            <Code className="w-6 h-6 text-cyber-pink" />
-                            <Decrypt text="Certificates & Courses" tone="inherit" />
-                        </h2>
+                        <SectionHeading title="Certificates and courses" path="/about/certificates" />
                         <div className="border border-cyber-border bg-cyber-black p-5 transition-colors hover:border-cyber-pink/50">
                             <ul className="space-y-2 text-cyber-muted font-mono text-sm">
                                 {about.certificates.map((c) => (
@@ -198,7 +165,7 @@ const AboutMe = () => {
                             </ul>
                         </div>
                     </div>
-                </section>
+                </div>
         </PageShell>
     );
 };

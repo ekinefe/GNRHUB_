@@ -4,11 +4,15 @@ import { brand } from '@/shared/config/brand';
 import { profile } from '@/shared/config/profile';
 import { useDocumentMeta } from '@/shared/hooks/useDocumentMeta';
 import { LegalLayout, Section } from './LegalLayout';
+import SavedDocument from './SavedDocument';
+import { useLegalDocument } from './useLegalDocument';
 
 export const TERMS_UPDATED = '2026-10-16';
 
 const Terms = () => {
+    const saved = useLegalDocument('terms');
     useDocumentMeta({ title: 'Terms', description: 'Terms of use for this site.' });
+    if (saved) return <SavedDocument saved={saved} icon={ShieldAlert} iconClass="text-cyber-pink" title="Terms" />;
     return (
         <LegalLayout icon={ShieldAlert} iconClass="text-cyber-pink" title="Terms" tag="SYSTEM_PROTOCOLS" updated={TERMS_UPDATED}>
             <p className="text-white">

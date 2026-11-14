@@ -3,6 +3,7 @@ import { brand } from '@/shared/config/brand';
 import { Terminal, Cpu, Network, Globe, ChevronRight, LucidePersonStanding, Mail, Code } from 'lucide-react';
 import CyberButton from '@/shared/ui/CyberButton';
 import CyberCard from '@/shared/ui/CyberCard';
+import SectionHeading from '@/shared/ui/SectionHeading';
 import TextType from '@/shared/animations/TextType';
 import PageShell from '@/shared/layout/PageShell';
 import AsciiDonut from '@/shared/animations/AsciiDonut';
@@ -38,7 +39,7 @@ const Home = () => {
         return () => clearTimeout(timer); // Cleanup on unmount
     }, []);
     return (
-        <PageShell width="7xl">
+        <PageShell>
 
                 {/* === HERO SECTION === */}
                 <section className="relative pt-4 md:pt-10 pb-10">
@@ -184,22 +185,19 @@ const Home = () => {
                 </section>
 
                 {/* === FEATURED PROJECTS SECTION === */}
-                <section className="pt-12 pb-20 border-t border-cyber-border">
+                <section aria-labelledby="featured-heading" className="py-16 border-t border-cyber-border">
                     <div>
 
-                        <div className="flex items-end justify-between mb-8">
-                            <div>
-                                <h2 className="text-3xl font-sans font-bold text-white mb-2">
-                                    <span className="text-cyber-pink">//</span> SELECTED PROJECTS
-                                </h2>
-                                <p className="font-mono text-cyber-muted text-sm">
-                                    /projects/featured
-                                </p>
-                            </div>
-                            <Link to="/projects" className="hidden md:flex items-center gap-2 text-cyber-pink hover:text-white transition-colors font-mono text-sm">
-                                VIEW ALL PROJECTS <ChevronRight className="w-4 h-4" />
-                            </Link>
-                        </div>
+                        <SectionHeading
+                            id="featured-heading"
+                            title="Selected projects"
+                            path="/projects/featured"
+                            action={
+                                <Link to="/projects" className="flex items-center gap-2 text-cyber-pink hover:text-white transition-colors font-mono text-sm">
+                                    VIEW ALL PROJECTS <ChevronRight className="w-4 h-4" />
+                                </Link>
+                            }
+                        />
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
